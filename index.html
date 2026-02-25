@@ -17,11 +17,6 @@
         .font-cyber { font-family: 'Orbitron', sans-serif; letter-spacing: 0.1em; }
         .font-mono { font-family: 'Fira Code', monospace; letter-spacing: 0.04em; }
 
-        /* HERO SLIDER */
-        .hero-slide { display: none; opacity: 0; transition: opacity 0.8s ease-in-out; cursor: pointer; }
-        .hero-slide.active { display: flex; opacity: 1; }
-        .hero-slide:hover h1 { color: var(--neon-blue); text-shadow: 0 0 20px rgba(0,243,255,0.8); }
-        
         /* TAB MANAGEMENT */
         .tab-section { display: none !important; opacity: 0; }
         .tab-section.active-tab { display: block !important; opacity: 1 !important; animation: fadeIn 0.6s forwards; }
@@ -30,28 +25,20 @@
         /* UI ELEMENTS */
         .nav-btn.active-link { color: var(--neon-blue) !important; border-bottom: 2px solid var(--neon-blue); }
         .neon-blue-text { color: var(--neon-blue); text-shadow: 0 0 15px rgba(0, 243, 255, 0.5); }
-        .neon-border { border: 1px solid rgba(0, 243, 243, 0.1); transition: 0.3s; }
-        .neon-border:hover { border-color: var(--neon-blue); box-shadow: 0 0 25px rgba(0,243,255,0.15); }
         
         .scanline { background: linear-gradient(to bottom, transparent 50%, rgba(0, 243, 255, 0.02) 50%); background-size: 100% 4px; pointer-events: none; position: fixed; inset: 0; z-index: 50; }
         
         #preorder-modal { display: none; }
         .modal-active { display: flex !important; animation: fadeIn 0.3s forwards; }
 
-        /* MOBILE OPTIMIZATION */
         @media (max-width: 768px) {
-            .mobile-scroll-nav {
-                overflow-x: auto;
-                white-space: nowrap;
-                -webkit-overflow-scrolling: touch;
-                padding-bottom: 4px;
-                scrollbar-width: none; /* Firefox */
-            }
-            .mobile-scroll-nav::-webkit-scrollbar { display: none; } /* Chrome/Safari */
-            
-            .hero-slide h1 { font-size: 1.8rem !important; }
-            .hero-slide { cursor: default; }
+            .mobile-scroll-nav { overflow-x: auto; white-space: nowrap; -webkit-overflow-scrolling: touch; padding-bottom: 4px; scrollbar-width: none; }
+            .mobile-scroll-nav::-webkit-scrollbar { display: none; }
         }
+
+        /* Pulsing Status dot */
+        .status-pulse { width: 8px; height: 8px; background: #22c55e; border-radius: 50%; box-shadow: 0 0 10px #22c55e; animation: pulse 2s infinite; display: inline-block; margin-right: 6px; }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
@@ -62,18 +49,23 @@
         <div class="bg-zinc-900 border border-cyan-500/30 p-8 max-w-lg w-full relative">
             <button onclick="closeModal()" class="absolute top-4 right-4 text-zinc-500 hover:text-white font-mono uppercase text-[10px]">Close_X</button>
             <h2 class="font-cyber text-xl mb-6 neon-blue-text uppercase">Operational Briefing</h2>
-            <form class="space-y-4">
-                <input type="text" placeholder="OPERATOR NAME" class="w-full bg-black border border-zinc-800 p-4 text-xs font-mono outline-none focus:border-cyan-500 text-white">
-                <input type="email" placeholder="SECURE_EMAIL" class="w-full bg-black border border-zinc-800 p-4 text-xs font-mono outline-none focus:border-cyan-500 text-white">
-                <select id="modal-select" class="w-full bg-black border border-zinc-800 p-4 text-xs font-mono outline-none focus:border-cyan-500 text-white">
+            
+            <form action="https://formspree.io/f/mnjblgln" method="POST" class="space-y-4">
+                <input type="text" name="Operator_Name" placeholder="OPERATOR NAME" required class="w-full bg-black border border-zinc-800 p-4 text-xs font-mono outline-none focus:border-cyan-500 text-white">
+                <input type="email" name="_replyto" placeholder="SECURE_EMAIL" required class="w-full bg-black border border-zinc-800 p-4 text-xs font-mono outline-none focus:border-cyan-500 text-white">
+                <select id="modal-select" name="Unit_Selected" class="w-full bg-black border border-zinc-800 p-4 text-xs font-mono outline-none focus:border-cyan-500 text-white">
                     <option value="INCIDENT_RESPONSE">INCIDENT_RESPONSE (Repair/Data)</option>
                     <option value="TRIDENT">TRIDENT_APEX</option>
                     <option value="ZERO-G">ZERO-G (Xproto-L)</option>
                     <option value="ITX_SPECTRE">ITX_SPECTRE</option>
                     <option value="GEAR_DROP">GEAR_MERCH</option>
                 </select>
-                <textarea placeholder="MISSION_REQUIREMENTS / SYMPTOMS" class="w-full bg-black border border-zinc-800 p-4 text-xs font-mono h-24 outline-none focus:border-cyan-500 text-white"></textarea>
-                <button type="button" onclick="alert('Briefing Logged. Dispatch will contact you shortly.')" class="w-full py-4 bg-cyan-600 text-black font-black uppercase text-xs tracking-widest hover:bg-cyan-400">Transmit Data</button>
+                <textarea name="Mission_Parameters" placeholder="MISSION_REQUIREMENTS / SYMPTOMS" class="w-full bg-black border border-zinc-800 p-4 text-xs font-mono h-24 outline-none focus:border-cyan-500 text-white"></textarea>
+                
+                <input type="hidden" name="_next" value="https://h7k3r.com">
+                <input type="hidden" name="_subject" value="New h7k3r Operational Request">
+
+                <button type="submit" class="w-full py-4 bg-cyan-600 text-black font-black uppercase text-xs tracking-widest hover:bg-cyan-400">Transmit Data</button>
             </form>
         </div>
     </div>
@@ -90,146 +82,75 @@
                 <button onclick="showTab('merch')" id="nav-merch" class="nav-btn py-2 hover:text-white transition-colors">Gear</button>
                 <button onclick="showTab('ops')" id="nav-ops" class="nav-btn py-2 text-red-500 hover:text-red-400 transition-colors">Ops</button>
                 <button onclick="showTab('debriefs')" id="nav-debriefs" class="nav-btn py-2 hover:text-white transition-colors">Logs</button>
-                <button onclick="showTab('pro')" id="nav-pro" class="nav-btn py-2 border border-cyan-500/30 px-4 text-cyan-400 hover:bg-cyan-900/20">PRO</button>
+                <button onclick="showTab('pro')" id="nav-pro" class="nav-btn py-2 border border-cyan-500/30 px-4 text-cyan-400">PRO</button>
             </div>
             
-            <div class="font-mono text-[9px] text-zinc-600 uppercase tracking-widest hidden lg:block flex-shrink-0">
-                RANK: <span class="text-cyan-500">#01_WORLDWIDE</span>
+            <div class="font-mono text-[9px] text-zinc-600 uppercase tracking-widest hidden lg:block">
+                <span class="status-pulse"></span>BACK-ORDER_STATUS: <span class="text-green-500">OPEN</span>
             </div>
         </div>
     </nav>
 
     <main class="flex-grow pt-20">
         <section id="tab-home" class="tab-section active-tab">
-            <div class="relative h-[65vh] flex items-center justify-center overflow-hidden">
-                <div onclick="showTab('ops')" class="hero-slide active flex-col items-center text-center px-6">
-                    <h1 class="font-cyber text-4xl md:text-7xl font-black mb-4 transition-all duration-300 text-red-500">INCIDENT <span class="text-white">RESPONSE.</span></h1>
-                    <p class="text-zinc-500 uppercase tracking-[0.5em] text-[10px]">Data Recovery & Silicon-Level Intervention</p>
-                </div>
-                <div onclick="showTab('apex')" class="hero-slide flex-col items-center text-center px-6">
-                    <h1 class="font-cyber text-4xl md:text-7xl font-black mb-4 transition-all duration-300">APEX <span class="neon-blue-text">CUSTOMS.</span></h1>
-                    <p class="text-zinc-500 uppercase tracking-[0.5em] text-[10px]">The Trident & Zero-G (Xproto-L) Masterpieces</p>
-                </div>
-            </div>
-
-            <div class="bg-zinc-950 py-10 border-y border-white/5">
-                <div class="max-w-7xl mx-auto px-6 grid grid-cols-2 lg:grid-cols-4 gap-8 text-center font-cyber">
-                    <div><p class="text-xl text-cyan-400">#01</p><p class="text-[8px] text-zinc-600 uppercase">Global_Rank</p></div>
-                    <div><p class="text-xl text-white">100%</p><p class="text-[8px] text-zinc-600 uppercase">Recovery_Rate</p></div>
-                    <div><p class="text-xl text-white">Zero</p><p class="text-[8px] text-zinc-600 uppercase">Thermal_Throttle</p></div>
-                    <div><p class="text-xl text-white">UK_01</p><p class="text-[8px] text-zinc-600 uppercase">Node_Status</p></div>
-                </div>
+            <div class="relative h-[60vh] flex flex-col items-center justify-center text-center px-6">
+                <h1 class="font-cyber text-4xl md:text-7xl font-black mb-4">SYSTEMS <span class="neon-blue-text">LIVE.</span></h1>
+                <p class="text-zinc-500 uppercase tracking-[0.5em] text-[10px] mb-8">Hardware Intervention & High-Performance Deployment</p>
+                <button onclick="showTab('apex')" class="border border-cyan-500/50 px-8 py-3 text-[10px] font-cyber uppercase hover:bg-cyan-500/10 transition">Enter_Arsenal</button>
             </div>
         </section>
 
         <section id="tab-apex" class="tab-section">
             <div class="max-w-7xl mx-auto px-6 py-24">
-                <h2 class="font-cyber text-2xl md:text-3xl text-center mb-20 uppercase tracking-[0.5em]">The Apex Trilogy</h2>
+                <h2 class="font-cyber text-2xl text-center mb-16 uppercase tracking-[0.5em]">The Apex Trilogy</h2>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div class="bg-zinc-900/40 p-10 border border-white/5 rounded-2xl">
-                        <h3 class="font-cyber text-xl mb-4 neon-blue-text">TRIDENT</h3>
-                        <p class="text-[10px] text-zinc-500 mb-6 font-mono uppercase leading-relaxed">Triple Reservoir / Dual RTX 5090 / 24-Hour Decryption Duty Cycle</p>
+                    <div class="bg-zinc-900/30 p-10 border border-white/5 rounded-2xl text-center">
+                        <h3 class="font-cyber text-xl mb-4 text-white">TRIDENT</h3>
+                        <p class="text-[10px] text-zinc-500 mb-6 font-mono uppercase">Dual RTX 5090 / Extreme Watercooling</p>
                         <div class="text-2xl font-mono text-white mb-8">£8,610.00</div>
-                        <button onclick="openModal('TRIDENT')" class="w-full py-4 bg-white text-black font-black uppercase text-[10px] tracking-widest hover:bg-cyan-400 transition">Pre-Order</button>
+                        <button onclick="openModal('TRIDENT')" class="w-full py-4 bg-white text-black font-black uppercase text-[10px] tracking-widest hover:bg-cyan-400">Back-Order</button>
                     </div>
-                    <div class="bg-zinc-900/40 p-10 border border-cyan-500/20 rounded-2xl relative shadow-2xl">
-                        <div class="absolute -top-3 left-6 bg-cyan-600 px-3 py-1 text-[8px] font-black uppercase text-black">Flagship</div>
+                    <div class="bg-zinc-900/30 p-10 border border-cyan-500/30 rounded-2xl text-center shadow-xl">
                         <h3 class="font-cyber text-xl mb-4 neon-blue-text">ZERO-G</h3>
-                        <p class="text-[10px] text-zinc-500 mb-6 font-mono uppercase leading-relaxed">Xproto-L Butterfly Frame / Total Atmospheric Exchange / AI Neural Node</p>
+                        <p class="text-[10px] text-zinc-500 mb-6 font-mono uppercase">Xproto-L / Passive Thermal Exchange</p>
                         <div class="text-2xl font-mono text-white mb-8">£7,250.00</div>
-                        <button onclick="openModal('ZERO-G')" class="w-full py-4 bg-white text-black font-black uppercase text-[10px] tracking-widest hover:bg-cyan-400 transition">Pre-Order</button>
+                        <button onclick="openModal('ZERO-G')" class="w-full py-4 bg-cyan-600 text-black font-black uppercase text-[10px] tracking-widest hover:bg-cyan-400">Back-Order</button>
                     </div>
-                    <div class="bg-zinc-900/40 p-10 border border-white/5 rounded-2xl">
-                        <h3 class="font-cyber text-xl mb-4 neon-blue-text">ITX_SPECTRE</h3>
-                        <p class="text-[10px] text-zinc-500 mb-6 font-mono uppercase leading-relaxed">10L SFF Chassis / 14900KS / Low-Profile Infiltration Rig</p>
+                    <div class="bg-zinc-900/30 p-10 border border-white/5 rounded-2xl text-center">
+                        <h3 class="font-cyber text-xl mb-4 text-white">SPECTRE</h3>
+                        <p class="text-[10px] text-zinc-500 mb-6 font-mono uppercase">10L SFF / 14900KS Ultra-Compact</p>
                         <div class="text-2xl font-mono text-white mb-8">£4,890.00</div>
-                        <button onclick="openModal('ITX_SPECTRE')" class="w-full py-4 bg-white text-black font-black uppercase text-[10px] tracking-widest hover:bg-cyan-400 transition">Pre-Order</button>
+                        <button onclick="openModal('ITX_SPECTRE')" class="w-full py-4 bg-white text-black font-black uppercase text-[10px] tracking-widest hover:bg-cyan-400">Back-Order</button>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="tab-ops" class="tab-section hidden">
-            <div class="max-w-7xl mx-auto px-6 py-24">
-                <div class="text-center mb-20">
-                    <h2 class="font-cyber text-3xl md:text-5xl text-red-500 mb-4 uppercase tracking-[0.3em]">INCIDENT_RESPONSE</h2>
-                    <p class="text-zinc-400 font-mono text-xs md:text-sm max-w-2xl mx-auto">Hardware failure is unacceptable. Data loss is a myth.</p>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
-                    <div class="bg-black border border-zinc-800 p-8 hover:border-red-500 transition-colors group relative overflow-hidden">
-                        <h3 class="text-xl font-bold uppercase mb-4 text-white group-hover:text-red-500 transition-colors">Forensic Extraction</h3>
-                        <p class="font-mono text-zinc-400 text-xs mb-4">ISO-certified cleanroom recovery for dead silicon.</p>
-                    </div>
-                    <div class="bg-black border border-zinc-800 p-8 hover:border-cyan-400 transition-colors group">
-                        <h3 class="text-xl font-bold uppercase mb-4 text-white group-hover:text-cyan-400 transition-colors">Silicon Repair</h3>
-                        <p class="font-mono text-zinc-400 text-xs mb-4">Precision micro-soldering and trace reconstruction.</p>
-                    </div>
-                </div>
-                <div class="text-center">
-                    <button onclick="openModal('INCIDENT_RESPONSE')" class="bg-red-500 text-black font-black uppercase text-sm px-12 py-3 hover:bg-red-400 transition-colors tracking-widest">Open Ticket</button>
-                </div>
-            </div>
-        </section>
-        
-        <section id="tab-merch" class="tab-section hidden">
-            <div class="max-w-7xl mx-auto px-6 py-24 text-center font-cyber">
-                 <h2 class="text-2xl mb-12">GEAR_DROP</h2>
-                 <p class="text-zinc-500 font-mono text-xs">Catalog loading... Contact dispatch for availability.</p>
-            </div>
-        </section>
-
-        <section id="tab-debriefs" class="tab-section hidden">
-            <div class="max-w-7xl mx-auto px-6 py-24 text-center font-cyber">
-                 <h2 class="text-2xl mb-12">DECLASSIFIED_LOGS</h2>
-                 <p class="text-zinc-500 font-mono text-xs">Success rate: 100% // Node: UK_SOUTH</p>
-            </div>
-        </section>
-
-        <section id="tab-pro" class="tab-section hidden">
-            <div class="max-w-xl mx-auto px-6 py-24 text-center">
-                <h2 class="font-cyber text-2xl mb-8 neon-blue-text uppercase tracking-widest">Asset_Login</h2>
-                <div class="bg-zinc-900 p-12 border border-white/5">
-                    <input type="password" placeholder="ENTER_PRIVATE_KEY" class="w-full bg-black border border-zinc-800 p-4 font-mono text-xs text-center mb-6 outline-none focus:border-cyan-500 text-white">
-                    <button class="w-full py-4 bg-white text-black font-black uppercase text-xs tracking-widest hover:bg-cyan-400">Authenticate</button>
-                </div>
-            </div>
-        </section>
-
+        <section id="tab-ops" class="tab-section"><div class="text-center py-20 font-cyber">INCIDENT_RESPONSE_SHELL</div></section>
+        <section id="tab-merch" class="tab-section"><div class="text-center py-20 font-cyber">GEAR_DROP_SHELL</div></section>
+        <section id="tab-debriefs" class="tab-section"><div class="text-center py-20 font-cyber">LOGS_SHELL</div></section>
+        <section id="tab-pro" class="tab-section"><div class="text-center py-20 font-cyber">PRO_PORTAL_LOCKED</div></section>
     </main>
 
-    <footer class="bg-black border-t border-white/5 pt-16 pb-8 px-6 mt-20">
-        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
-            <div>
-                <h4 class="font-cyber text-[10px] text-white mb-6 uppercase tracking-[0.3em]">External_Links</h4>
-                <div class="flex flex-col space-y-4 font-mono text-[10px] text-zinc-500 uppercase">
-                    <a href="#" class="hover:text-cyan-400 transition">> X_PLATFORM</a>
-                    <a href="#" class="hover:text-cyan-400 transition">> DISCORD_NODE</a>
-                </div>
-            </div>
-            <div class="text-center font-mono text-[9px] text-zinc-700 uppercase tracking-widest flex flex-col justify-center">
-                <p>© 2026 h7k3r Systems</p>
-            </div>
-            <div class="md:text-right font-mono text-[10px] text-zinc-500 space-y-2">
-                <p>LOCATION: <span id="user-city" class="text-cyan-500">DETECTING...</span></p>
-                <p>IP_TRACE: <span id="user-ip" class="text-cyan-500">SCANNING...</span></p>
+    <footer class="border-t border-white/5 py-12 px-6">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center text-zinc-600 font-mono text-[9px]">
+            <p>© 2026 h7k3r Systems // info@h7k3r.com</p>
+            <div class="mt-4 md:mt-0 uppercase tracking-widest">
+                Lat: <span id="user-city">DETECTING...</span> // Node: UK_SOUTH
             </div>
         </div>
     </footer>
 
     <script>
         function showTab(id) {
-            // REMOVED THE MOBILE BLOCKER LINE
             document.querySelectorAll('.tab-section').forEach(s => s.classList.remove('active-tab'));
             document.querySelectorAll('nav button').forEach(b => b.classList.remove('active-link'));
-            
             const target = document.getElementById('tab-' + id);
             const btn = document.getElementById('nav-' + id);
-            
             if (target) target.classList.add('active-tab');
             if (btn) btn.classList.add('active-link');
             window.scrollTo(0,0);
         }
-
         function openModal(rigName) {
             document.getElementById('modal-select').value = rigName;
             document.getElementById('preorder-modal').classList.add('modal-active');
@@ -238,26 +159,11 @@
             document.getElementById('preorder-modal').classList.remove('modal-active');
         }
 
-        let currentSlide = 0;
-        const slides = document.querySelectorAll('.hero-slide');
-        setInterval(() => {
-            if (document.getElementById('tab-home').classList.contains('active-tab')) {
-                slides[currentSlide].classList.remove('active');
-                currentSlide = (currentSlide + 1) % slides.length;
-                slides[currentSlide].classList.add('active');
-            }
-        }, 3000);
-
+        // Fetch user location for footer
         fetch('https://ipapi.co/json/')
             .then(res => res.json())
-            .then(data => {
-                document.getElementById('user-ip').innerText = data.ip;
-                document.getElementById('user-city').innerText = `${data.city.toUpperCase()}, ${data.country_code}`;
-            })
-            .catch(() => {
-                document.getElementById('user-ip').innerText = '127.0.0.1';
-                document.getElementById('user-city').innerText = 'SECURE_NODE';
-            });
+            .then(data => { document.getElementById('user-city').innerText = data.city.toUpperCase(); })
+            .catch(() => { document.getElementById('user-city').innerText = 'SECURE_NODE'; });
     </script>
 </body>
 </html>
