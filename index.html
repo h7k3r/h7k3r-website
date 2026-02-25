@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>h7k3r | FINAL_PROTOCOL_V10</title>
+    <title>h7k3r | FINAL_PROTOCOL_v11</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Fira+Code:wght@300;500&family=Inter:wght@300;400;700&display=swap');
@@ -12,6 +12,7 @@
         .font-cyber { font-family: 'Orbitron', sans-serif; letter-spacing: 0.15em; }
         .font-mono { font-family: 'Fira Code', monospace; }
         
+        /* TAB MANAGEMENT */
         .tab-section { display: none !important; opacity: 0; }
         .tab-section.active-tab { display: block !important; opacity: 1 !important; animation: fadeIn 0.4s forwards; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -19,13 +20,13 @@
         .nav-btn.active-link { color: var(--cyan) !important; border-bottom: 2px solid var(--cyan); }
         .scanline { background: linear-gradient(to bottom, transparent 50%, rgba(0, 243, 255, 0.02) 50%); background-size: 100% 4px; pointer-events: none; position: fixed; inset: 0; z-index: 100; }
         
-        /* BIG CLICKABLE SLIDER (v4.5 Style) */
-        .marquee-container { width: 100%; overflow: hidden; background: rgba(0, 243, 255, 0.05); border-y: 1px solid rgba(0, 243, 255, 0.2); cursor: pointer; transition: 0.3s; }
-        .marquee-container:hover { background: rgba(0, 243, 255, 0.1); border-color: var(--cyan); }
-        .marquee-content { display: flex; animation: marquee 20s linear infinite; white-space: nowrap; }
+        /* v4.5 BIG SLIDING MARQUEE (CLICKABLE) */
+        .marquee-container { width: 100%; overflow: hidden; background: rgba(0, 243, 255, 0.05); border-y: 1px solid rgba(0, 243, 255, 0.2); cursor: pointer; transition: 0.3s; position: relative; }
+        .marquee-container:hover { background: rgba(0, 243, 255, 0.15); border-color: var(--cyan); }
+        .marquee-content { display: flex; animation: marquee 25s linear infinite; white-space: nowrap; }
         @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-        /* Game Box */
+        /* GAME UI */
         .game-module { display: none; }
         .game-module.active-game { display: block; }
         canvas { border: 1px solid #222; max-width: 100%; image-rendering: pixelated; }
@@ -40,8 +41,8 @@
 
     <div id="modal" class="fixed inset-0 z-[200] bg-black/95 items-center justify-center p-6 backdrop-blur-md">
         <div class="bg-zinc-900 border border-cyan-500/30 p-8 max-w-lg w-full relative">
-            <button onclick="closeModal()" class="absolute top-4 right-4 text-zinc-500 font-mono text-[10px] hover:text-white">CLOSE_X</button>
-            <h2 data-en="OPERATIONAL_BRIEFING" data-jp="作戦指示書" class="font-cyber text-xl mb-6 text-cyan-400 uppercase lang-node">OPERATIONAL_BRIEFING</h2>
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-zinc-500 font-mono text-[10px] hover:text-white uppercase">Close_X</button>
+            <h2 data-en="OPERATIONAL_BRIEFING" data-jp="作戦要領" class="font-cyber text-xl mb-6 text-cyan-400 uppercase lang-node">OPERATIONAL_BRIEFING</h2>
             <form action="https://formspree.io/f/mnjblgln" method="POST" class="space-y-4">
                 <input type="text" name="name" placeholder="OPERATOR NAME" required class="w-full bg-black border border-zinc-800 p-4 text-xs font-mono text-white outline-none focus:border-cyan-500">
                 <input type="email" name="email" placeholder="SECURE_EMAIL" required class="w-full bg-black border border-zinc-800 p-4 text-xs font-mono text-white outline-none focus:border-cyan-500">
@@ -52,7 +53,6 @@
                     <option value="REPAIR">REPAIR OPS</option>
                 </select>
                 <textarea name="msg" placeholder="MISSION PARAMS" class="w-full bg-black border border-zinc-800 p-4 text-xs font-mono h-24 text-white outline-none focus:border-cyan-500"></textarea>
-                <input type="hidden" name="_next" value="https://h7k3r.com/success.html">
                 <button type="submit" class="w-full py-4 bg-cyan-600 text-black font-black uppercase text-xs tracking-widest hover:bg-cyan-400">Transmit_Data</button>
             </form>
         </div>
@@ -61,8 +61,8 @@
     <nav class="fixed top-0 w-full z-[150] bg-black/90 backdrop-blur-md border-b border-white/5">
         <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
             <div class="font-cyber font-black text-xl text-white cursor-pointer" onclick="location.reload()">h7k3r<span class="text-cyan-400">_</span>SYS</div>
-            <div class="flex items-center space-x-6">
-                <div class="hidden md:flex space-x-6 text-[10px] uppercase font-bold tracking-widest text-zinc-500">
+            <div class="flex items-center space-x-4 md:space-x-8">
+                <div class="hidden lg:flex space-x-6 text-[10px] uppercase font-bold tracking-widest text-zinc-500">
                     <button onclick="showTab('home')" id="nav-home" class="nav-btn active-link">HQ</button>
                     <button onclick="showTab('projectp')" id="nav-projectp" class="nav-btn text-yellow-500">PROJECT_P</button>
                     <button onclick="showTab('apex')" id="nav-apex" class="nav-btn">Apex</button>
@@ -71,7 +71,7 @@
                     <button onclick="showTab('debriefs')" id="nav-debriefs" class="nav-btn">Logs</button>
                     <button onclick="showTab('pro')" id="nav-pro" class="nav-btn border border-white/10 px-2">PORTAL</button>
                 </div>
-                <button onclick="toggleLang()" class="text-[9px] font-mono border border-cyan-500/50 px-2 py-1 text-cyan-400 hover:bg-cyan-400 hover:text-black">TRANSLATE_AUTO</button>
+                <button onclick="toggleLang()" class="text-[9px] font-mono border border-cyan-500/50 px-2 py-1 text-cyan-400 hover:bg-cyan-400 hover:text-black transition">LANG_SWAP</button>
             </div>
         </div>
     </nav>
@@ -79,49 +79,52 @@
     <main class="flex-grow pt-20 pb-12">
         
         <section id="tab-home" class="tab-section active-tab text-center">
-            <div class="marquee-container py-6 mb-12" onclick="showTab('projectp')">
-                <div class="marquee-content font-cyber text-5xl md:text-8xl font-black text-white">
-                    SYSTEMS LIVE // VENO_SCORP KILLER READY // UNLEASH SILICON // &nbsp;
-                    SYSTEMS LIVE // VENO_SCORP KILLER READY // UNLEASH SILICON // &nbsp;
+            <div class="marquee-container py-12 mb-8" onclick="showTab('projectp')">
+                <div class="marquee-content font-cyber text-6xl md:text-9xl font-black text-white">
+                    SYSTEMS LIVE // VENO_SCORP KILLER READY // UNLEASH SILICON // 01_NODE ACTIVE // &nbsp;
+                    SYSTEMS LIVE // VENO_SCORP KILLER READY // UNLEASH SILICON // 01_NODE ACTIVE // &nbsp;
                 </div>
             </div>
 
-            <p id="ip-node" class="text-cyan-400 font-mono text-[10px] mb-12 tracking-[0.5em] uppercase">DETECTING_LOCAL_NODE...</p>
+            <div class="mb-12">
+                <p id="ip-display" class="text-cyan-400 font-mono text-[11px] tracking-[0.6em] uppercase">INITIALIZING_IP_TRACE...</p>
+                <p id="city-display" class="text-zinc-600 font-mono text-[9px] mt-2 uppercase tracking-widest">LOCATING_NODE_ORIGIN...</p>
+            </div>
             
-            <div class="max-w-xs mx-auto border border-zinc-900 bg-zinc-950 p-4 rounded-sm shadow-2xl">
+            <div class="max-w-xs mx-auto bg-zinc-950 border border-zinc-900 p-3 shadow-2xl">
                 <div class="flex justify-between mb-4 border-b border-zinc-800 pb-2">
-                    <button onclick="setGame('f')" class="text-[8px] font-cyber hover:text-cyan-400">01_FIREWALL</button>
-                    <button onclick="setGame('m')" class="text-[8px] font-cyber hover:text-green-400">02_MEMORY</button>
-                    <button onclick="setGame('s')" class="text-[8px] font-cyber hover:text-yellow-400">03_BIT_SNAKE</button>
+                    <button onclick="setGame('f')" class="text-[8px] font-cyber text-zinc-500 hover:text-cyan-400">BYPASS</button>
+                    <button onclick="setGame('m')" class="text-[8px] font-cyber text-zinc-500 hover:text-green-400">DECRYPT</button>
+                    <button onclick="setGame('s')" class="text-[8px] font-cyber text-zinc-500 hover:text-yellow-400">COLLECT</button>
                 </div>
-                <div id="game-box" class="aspect-square relative flex items-center justify-center bg-black overflow-hidden">
+                <div id="game-box" class="aspect-square relative flex items-center justify-center bg-black">
                     <div id="g-f" class="game-module active-game w-full">
                         <canvas id="c-f" width="280" height="280"></canvas>
-                        <button onclick="startF()" id="btn-f" class="absolute inset-0 m-auto h-8 w-24 bg-cyan-600 text-black font-cyber text-[8px]">INIT</button>
+                        <button onclick="startF()" id="btn-f" class="absolute inset-0 m-auto h-10 w-28 bg-cyan-600 text-black font-cyber text-[9px] shadow-lg">RUN_FIREWALL</button>
                     </div>
                     <div id="g-m" class="game-module w-full">
                         <div id="grid-m" class="grid grid-cols-3 gap-1 p-4"></div>
-                        <button onclick="startM()" class="font-cyber text-[8px] text-green-500">INIT_DECRYPT</button>
+                        <button onclick="startM()" class="font-cyber text-[9px] text-green-500 tracking-tighter">BOOT_SEQUENCE</button>
                     </div>
                     <div id="g-s" class="game-module w-full">
                         <canvas id="c-s" width="280" height="280"></canvas>
-                        <button onclick="startS()" id="btn-s" class="absolute inset-0 m-auto h-8 w-24 bg-yellow-600 text-black font-cyber text-[8px]">INIT_SNAKE</button>
+                        <button onclick="startS()" id="btn-s" class="absolute inset-0 m-auto h-10 w-28 bg-yellow-600 text-black font-cyber text-[9px] shadow-lg">RUN_BIT_SNAKE</button>
                     </div>
                 </div>
             </div>
         </section>
 
         <section id="tab-projectp" class="tab-section px-6 max-w-6xl mx-auto">
-            <div class="bg-zinc-950 border border-yellow-500/30 p-12 relative overflow-hidden">
+            <div class="bg-zinc-950 border border-yellow-500/20 p-12 md:p-20 relative text-center md:text-left">
                 <div class="grid md:grid-cols-2 gap-12 items-center">
                     <div>
-                        <h2 class="font-cyber text-5xl md:text-8xl text-yellow-500 leading-none mb-4">PROJECT_P</h2>
-                        <h4 data-en="VENO_SCORP KILLER UNIT" data-jp="ヴェノ・スコーピオン・キラー" class="text-zinc-500 font-cyber text-sm mb-6 lang-node">VENO_SCORP KILLER UNIT</h4>
-                        <div class="text-4xl font-mono text-white mb-8">£750.00</div>
-                        <button onclick="openModal('PROJECT_P')" class="px-12 py-5 bg-yellow-500 text-black font-black font-cyber text-xs hover:bg-white transition">ACQUIRE_UNIT</button>
+                        <h2 data-en="PROJECT_P" data-jp="プロジェクトP" class="font-cyber text-6xl md:text-8xl text-yellow-500 leading-none mb-4 lang-node">PROJECT_P</h2>
+                        <h4 data-en="THE VENO_SCORP KILLER" data-jp="ヴェノ・スコーピオンの刺客" class="text-zinc-500 font-cyber text-sm mb-8 lang-node">THE VENO_SCORP KILLER</h4>
+                        <div class="text-5xl font-mono text-white mb-10">£750.00</div>
+                        <button onclick="openModal('PROJECT_P')" data-en="ACQUIRE_ASSET" data-jp="資産を取得する" class="px-12 py-5 bg-yellow-500 text-black font-black font-cyber text-xs hover:bg-white transition lang-node">ACQUIRE_ASSET</button>
                     </div>
-                    <div class="bg-zinc-900 aspect-video flex items-center justify-center border border-yellow-500/10">
-                        <span class="font-cyber text-yellow-500 text-9xl opacity-10">P</span>
+                    <div class="bg-zinc-900 aspect-square border border-yellow-500/5 flex items-center justify-center">
+                        <span class="font-cyber text-yellow-500 text-[12rem] opacity-5">P</span>
                     </div>
                 </div>
             </div>
@@ -129,20 +132,21 @@
 
         <section id="tab-apex" class="tab-section px-6 max-w-7xl mx-auto">
             <div class="grid md:grid-cols-3 gap-10">
-                <div class="bg-zinc-950 p-12 border border-white/5 text-center transition hover:border-white/40">
-                    <h3 class="font-cyber text-3xl mb-4">TRIDENT</h3>
-                    <p class="font-mono text-xs text-zinc-500 mb-12">£8,610 // DUAL 5090</p>
-                    <button onclick="openModal('TRIDENT')" class="w-full py-5 border border-white font-cyber text-xs hover:bg-white hover:text-black transition">RESERVE</button>
+                <div class="bg-zinc-950 p-12 border border-white/5 transition hover:border-cyan-500/30 group">
+                    <h3 class="font-cyber text-4xl mb-4">TRIDENT</h3>
+                    <p class="font-mono text-xs text-zinc-500 mb-12">£8,610 // THE PINNACLE</p>
+                    <button onclick="openModal('TRIDENT')" class="w-full py-5 border border-white font-cyber text-xs hover:bg-white hover:text-black">RESERVE_UNIT</button>
                 </div>
-                <div class="bg-zinc-950 p-12 border border-cyan-500/50 scale-110 shadow-2xl text-center">
-                    <h3 class="font-cyber text-3xl mb-4 text-cyan-400">ZERO-G</h3>
-                    <p class="font-mono text-xs text-zinc-500 mb-12">£7,250 // XPROTO_L</p>
-                    <button onclick="openModal('ZERO-G')" class="w-full py-5 bg-cyan-600 text-black font-cyber text-xs hover:bg-cyan-400 transition">RESERVE</button>
+                <div class="bg-zinc-950 p-12 border border-cyan-500/50 scale-105 shadow-2xl relative">
+                    <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-cyan-600 text-black font-black text-[9px] px-6 py-1 font-cyber">FLAGSHIP_NODE</div>
+                    <h3 class="font-cyber text-4xl mb-4 text-cyan-400">ZERO-G</h3>
+                    <p class="font-mono text-xs text-zinc-500 mb-12">£7,250 // XPROTO_L OPEN</p>
+                    <button onclick="openModal('ZERO-G')" class="w-full py-5 bg-cyan-600 text-black font-cyber text-xs hover:bg-cyan-400">RESERVE_UNIT</button>
                 </div>
-                <div class="bg-zinc-950 p-12 border border-white/5 text-center transition hover:border-white/40">
-                    <h3 class="font-cyber text-3xl mb-4">SPECTRE</h3>
-                    <p class="font-mono text-xs text-zinc-500 mb-12">£4,890 // TITANIUM TRAVEL</p>
-                    <button onclick="openModal('SPECTRE')" class="w-full py-5 border border-white font-cyber text-xs hover:bg-white hover:text-black transition">RESERVE</button>
+                <div class="bg-zinc-950 p-12 border border-white/5 transition hover:border-cyan-500/30 group">
+                    <h3 class="font-cyber text-4xl mb-4">SPECTRE</h3>
+                    <p class="font-mono text-xs text-zinc-500 mb-12">£4,890 // TRAVEL_SFF</p>
+                    <button onclick="openModal('SPECTRE')" class="w-full py-5 border border-white font-cyber text-xs hover:bg-white hover:text-black">RESERVE_UNIT</button>
                 </div>
             </div>
         </section>
@@ -153,103 +157,113 @@
 
         <section id="tab-debriefs" class="tab-section px-6 max-w-7xl mx-auto">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                <img src="build1.jpg" class="w-full aspect-square object-cover grayscale opacity-40 hover:opacity-100 hover:grayscale-0 transition duration-1000 border border-white/10">
-                <img src="build2.jpg" class="w-full aspect-square object-cover grayscale opacity-40 hover:opacity-100 hover:grayscale-0 transition duration-1000 border border-white/10">
-                <img src="build3.jpg" class="w-full aspect-square object-cover grayscale opacity-40 hover:opacity-100 hover:grayscale-0 transition duration-1000 border border-white/10">
-                <img src="build4.jpg" class="w-full aspect-square object-cover grayscale opacity-40 hover:opacity-100 hover:grayscale-0 transition duration-1000 border border-white/10">
-                <img src="build5.jpg" class="w-full aspect-square object-cover grayscale opacity-40 hover:opacity-100 hover:grayscale-0 transition duration-1000 border border-white/10">
+                <img src="https://images.unsplash.com/photo-1587202377405-836165b1040a?w=600" class="w-full aspect-square object-cover grayscale opacity-40 hover:opacity-100 hover:grayscale-0 transition duration-700 border border-white/5">
+                <img src="https://images.unsplash.com/photo-1547082299-de196ea013d6?w=600" class="w-full aspect-square object-cover grayscale opacity-40 hover:opacity-100 hover:grayscale-0 transition duration-700 border border-white/5">
+                <img src="https://images.unsplash.com/photo-1603481546238-487240415921?w=600" class="w-full aspect-square object-cover grayscale opacity-40 hover:opacity-100 hover:grayscale-0 transition duration-700 border border-white/5">
+                <img src="https://images.unsplash.com/photo-1591488320449-011701bb6704?w=600" class="w-full aspect-square object-cover grayscale opacity-40 hover:opacity-100 hover:grayscale-0 transition duration-700 border border-white/5">
+                <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=600" class="w-full aspect-square object-cover grayscale opacity-40 hover:opacity-100 hover:grayscale-0 transition duration-700 border border-white/5">
             </div>
         </section>
 
         <section id="tab-ops" class="tab-section px-6 text-center">
-            <h2 class="font-cyber text-4xl text-red-600 mb-12 uppercase">Incident_Response</h2>
-            <div class="max-w-2xl mx-auto grid md:grid-cols-2 gap-4 mb-12">
-                <div class="p-6 bg-zinc-950 border border-red-900/40 text-left">
-                    <h4 class="font-cyber text-xs text-white mb-2">MICRO_SURGERY</h4>
-                    <p class="font-mono text-[9px] text-zinc-600">SMD REPAIR & TRACE RECON</p>
+            <h2 data-en="INCIDENT_RESPONSE" data-jp="インシデント対応" class="font-cyber text-5xl text-red-600 mb-12 lang-node">INCIDENT_RESPONSE</h2>
+            <div class="max-w-xl mx-auto space-y-4 mb-12">
+                <div class="p-8 bg-zinc-950 border border-red-900/30 text-left relative overflow-hidden">
+                    <div class="font-cyber text-xs text-white mb-2 uppercase">Silicon_Micro_Surgery</div>
+                    <p class="font-mono text-[9px] text-zinc-600 uppercase">Hardware trace reconstruction and component-level repair.</p>
                 </div>
-                <div class="p-6 bg-zinc-950 border border-red-900/40 text-left">
-                    <h4 class="font-cyber text-xs text-white mb-2">DATA_FORENSICS</h4>
-                    <p class="font-mono text-[9px] text-zinc-600">FAILED NAND RECOVERY</p>
+                <div class="p-8 bg-zinc-950 border border-red-900/30 text-left relative overflow-hidden">
+                    <div class="font-cyber text-xs text-white mb-2 uppercase">Deep_Data_Recovery</div>
+                    <p class="font-mono text-[9px] text-zinc-600 uppercase">Flash storage forensics and physical platter swapping.</p>
                 </div>
             </div>
-            <button onclick="openModal('REPAIR')" class="px-12 py-5 bg-red-700 text-white font-cyber text-xs tracking-widest">OPEN_TICKET</button>
+            <button onclick="openModal('REPAIR')" class="px-16 py-6 bg-red-700 text-white font-cyber text-xs tracking-widest hover:bg-red-500 shadow-2xl">INITIATE_TICKET</button>
         </section>
 
         <section id="tab-pro" class="tab-section px-6 text-center">
-            <div id="pro-gate" class="max-w-md mx-auto p-12 bg-zinc-950 border border-white/10">
-                <h2 class="font-cyber text-xl mb-8">SECURE_AUTH</h2>
+            <div id="pro-gate" class="max-w-md mx-auto p-12 bg-zinc-950 border border-white/10 mt-12">
+                <h2 class="font-cyber text-xl mb-8">SECURE_AUTH_GATE</h2>
                 <input type="password" id="pro-pass" placeholder="PASSWORD" class="w-full bg-black border border-zinc-800 p-4 font-mono text-center text-white mb-6 outline-none focus:border-cyan-500">
-                <button onclick="checkPro()" class="w-full py-4 bg-zinc-800 text-zinc-500 font-cyber text-[10px] hover:bg-white hover:text-black">VALIDATE</button>
+                <button onclick="checkPro()" class="w-full py-4 bg-zinc-800 text-zinc-500 font-cyber text-[10px] hover:bg-white hover:text-black transition">VALIDATE</button>
             </div>
-            <div id="pro-content" class="hidden font-cyber text-cyan-400 text-4xl">ACCESS_GRANTED</div>
+            <div id="pro-content" class="hidden">
+                <h2 class="font-cyber text-cyan-400 text-4xl mb-4">RESTRICTED_ACCESS</h2>
+                <p class="font-mono text-xs text-zinc-500 uppercase tracking-widest">Welcome, Operator. Level 4 Assets Unlocked.</p>
+            </div>
         </section>
     </main>
 
-    <footer class="p-8 border-t border-white/5 text-center font-mono text-[9px] text-zinc-700 uppercase tracking-[0.5em]">
-        © 2026 h7k3r_systems // <span id="loc">LOCATING_OPERATOR...</span> // SECURE_LINE: ACTIVE
+    <footer class="p-8 border-t border-white/5 text-center font-mono text-[9px] text-zinc-800 uppercase tracking-[1em]">
+        © 2026 h7k3r_systems // <span id="loc-footer">NODE_LOCATING...</span> // LINE_SECURE
     </footer>
 
     <script>
-        // TAB LOGIC
+        // TAB MANAGEMENT
         function showTab(id) {
             document.querySelectorAll('.tab-section').forEach(t => t.classList.remove('active-tab'));
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active-link'));
             document.getElementById('tab-'+id).classList.add('active-tab');
-            document.getElementById('nav-'+id).classList.add('active-link');
+            const btn = document.getElementById('nav-'+id);
+            if(btn) btn.classList.add('active-link');
+            window.scrollTo(0,0);
         }
+
         function openModal(v) { document.getElementById('modal-select').value = v; document.getElementById('modal').classList.add('modal-active'); }
         function closeModal() { document.getElementById('modal').classList.remove('modal-active'); }
 
-        // TRANSLATION LOGIC
-        let curLang = 'en';
+        // TRANSLATION ENGINE
+        let currentLang = 'en';
         function toggleLang() {
-            curLang = curLang === 'en' ? 'jp' : 'en';
-            document.querySelectorAll('.lang-node').forEach(n => {
-                n.innerText = n.getAttribute('data-'+curLang);
+            currentLang = currentLang === 'en' ? 'jp' : 'en';
+            document.querySelectorAll('.lang-node').forEach(el => {
+                el.innerText = el.getAttribute(`data-${currentLang}`);
             });
         }
 
-        // PRO PORTAL
+        // IP GEOLOCATION
+        fetch('https://ipapi.co/json/').then(r => r.json()).then(data => {
+            const city = data.city ? data.city.toUpperCase() : "SECURE_LOC";
+            const ip = data.ip || "0.0.0.0";
+            document.getElementById('ip-display').innerText = `TRACE_COMPLETE // IP: ${ip} // STATUS: ACTIVE`;
+            document.getElementById('city-display').innerText = `NODE_ORIGIN: ${city} // SECTOR_UK_S`;
+            document.getElementById('loc-footer').innerText = `NODE: ${city}`;
+        });
+
+        // PRO PORTAL PASSWORD
         function checkPro() {
             if(document.getElementById('pro-pass').value === 'h7k3r_2026') {
-                document.getElementById('pro-gate').style.display='none';
+                document.getElementById('pro-gate').style.display = 'none';
                 document.getElementById('pro-content').classList.remove('hidden');
-            } else { alert('DENIED'); }
+            } else { alert('ACCESS_DENIED'); }
         }
 
-        // GEAR POPULATION (9 ITEMS)
-        const gear = [
+        // GEAR (9 ITEMS)
+        const gearItems = [
             { n: "Faraday_Hoodie", p: "145", i: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=400" },
             { n: "Data_Block_USB", p: "22", i: "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=400" },
             { n: "RF_Shield_Bag", p: "35", i: "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=400" },
-            { n: "Cyber_Deck_Case", p: "320", i: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=400" },
-            { n: "Privacy_Film", p: "45", i: "https://images.unsplash.com/photo-1547082299-de196ea013d6?w=400" },
-            { n: "AES_Key_Drive", p: "195", i: "https://images.unsplash.com/photo-1597852074816-d933c4d2b988?w=400" },
-            { n: "Braid_Link_Set", p: "50", i: "https://images.unsplash.com/photo-1589121017942-00508930438a?w=400" },
-            { n: "Precision_Bits", p: "85", i: "https://images.unsplash.com/photo-1530124560676-4cb38259b5c2?w=400" },
-            { n: "Logo_Tee_V1", p: "40", i: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=400" }
+            { n: "Pelican_Deck_Case", p: "320", i: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=400" },
+            { n: "Privacy_Screen_V2", p: "45", i: "https://images.unsplash.com/photo-1547082299-de196ea013d6?w=400" },
+            { n: "AES_Secure_Drive", p: "195", i: "https://images.unsplash.com/photo-1597852074816-d933c4d2b988?w=400" },
+            { n: "Braided_Tactical_Cable", p: "50", i: "https://images.unsplash.com/photo-1589121017942-00508930438a?w=400" },
+            { n: "Precision_Bit_Set", p: "85", i: "https://images.unsplash.com/photo-1530124560676-4cb38259b5c2?w=400" },
+            { n: "h7k3r_Heavy_Tee", p: "40", i: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=400" }
         ];
-        const gGrid = document.getElementById('gearGrid');
-        gear.forEach(i => {
-            gGrid.innerHTML += `
-            <div class="bg-zinc-950 border border-white/5 p-6 hover:border-cyan-500 transition">
-                <img src="${i.i}" class="w-full aspect-square object-cover grayscale opacity-30 hover:opacity-100 transition mb-4">
-                <h4 class="font-cyber text-[10px] text-white mb-1 uppercase">${i.n}</h4>
-                <div class="flex justify-between items-center"><span class="font-mono text-cyan-500 text-xs">£${i.p}.00</span>
-                <button onclick="openModal('GEAR')" class="border border-white/10 px-4 py-1 text-[8px] font-cyber">ACQUIRE</button></div>
+        const grid = document.getElementById('gearGrid');
+        gearItems.forEach(item => {
+            grid.innerHTML += `
+            <div class="bg-zinc-950 border border-white/5 p-6 hover:border-cyan-500 transition group">
+                <img src="${item.i}" class="w-full aspect-square object-cover grayscale opacity-30 group-hover:opacity-100 transition mb-4">
+                <h4 class="font-cyber text-[10px] text-white mb-1 uppercase">${item.n}</h4>
+                <div class="flex justify-between items-center"><span class="font-mono text-cyan-500 text-xs">£${item.p}.00</span>
+                <button onclick="openModal('GEAR')" class="border border-white/10 px-4 py-1 text-[8px] font-cyber hover:bg-white hover:text-black">ACQUIRE</button></div>
             </div>`;
-        });
-
-        // IP LOCATION
-        fetch('https://ipapi.co/json/').then(r=>r.json()).then(d=>{
-            document.getElementById('loc').innerText = `NODE: ${d.city.toUpperCase()}`;
-            document.getElementById('ip-node').innerText = `NODE_${d.city.toUpperCase()} // IP_${d.ip} // STATUS_ACTIVE`;
         });
 
         // GAMES LOGIC
         function setGame(t) { document.querySelectorAll('.game-module').forEach(m => m.classList.remove('active-game')); document.getElementById('g-'+t).classList.add('active-game'); }
         
+        // 1. Firewall (Flappy style)
         let cvF = document.getElementById('c-f'), ctxF = cvF.getContext('2d'), gF=false, bF, pF;
         function startF(){ document.getElementById('btn-f').style.display='none'; gF=true; bF={x:50,y:100,v:0,g:0.2}; pF=[]; loopF(); }
         function loopF(){ if(!gF)return; ctxF.fillStyle="#000"; ctxF.fillRect(0,0,280,280); bF.v+=bF.g; bF.y+=bF.v; ctxF.fillStyle="#0ff"; ctxF.fillRect(bF.x,bF.y,6,6);
@@ -259,12 +273,14 @@
             if(bF.y>280||bF.y<0) gF=false; if(!gF) document.getElementById('btn-f').style.display='block'; else requestAnimationFrame(loopF); }
         cvF.onmousedown=()=>{if(gF)bF.v=-3.5;};
 
+        // 2. Memory
         let sM=[], uM=[];
         function startM(){ const g=document.getElementById('grid-m'); g.innerHTML=''; for(let i=0;i<9;i++) g.innerHTML+=`<div id="m-${i}" class="aspect-square bg-zinc-900 border border-zinc-800"></div>`; sM=[]; nextM(); }
         function nextM(){ uM=[]; sM.push(Math.floor(Math.random()*9)); sM.forEach((c,i)=>setTimeout(()=>{ document.getElementById(`m-${c}`).style.background="#39ff14"; setTimeout(()=>document.getElementById(`m-${c}`).style.background="",300); },i*500));
             setTimeout(()=>document.querySelectorAll('#grid-m div').forEach((d,i)=>{ d.onclick=()=>{ d.style.background="#0ff"; setTimeout(()=>d.style.background="",200); uM.push(i);
             if(uM[uM.length-1]!==sM[uM.length-1]){alert("FAIL"); startM();} else if(uM.length===sM.length)setTimeout(nextM,500); }; }),sM.length*500); }
 
+        // 3. Snake
         let cvS=document.getElementById('c-s'), ctxS=cvS.getContext('2d'), gS=false, sS, fS, dS;
         function startS(){ gS=true; sS=[{x:10,y:10}]; fS={x:5,y:5}; dS="R"; document.getElementById('btn-s').style.display='none'; loopS(); }
         function loopS(){ if(!gS)return; let h={...sS[0]}; if(dS=="R")h.x++; if(dS=="L")h.x--; if(dS=="U")h.y--; if(dS=="D")h.y++;
