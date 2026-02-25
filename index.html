@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>h7k3r | UNLEASH_SILICON_V4</title>
+    <title>h7k3r | UNLEASH_SILICON_V5</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://www.paypal.com/sdk/js?client-id=sb&currency=GBP"></script>
     
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Fira+Code:wght@300;500&family=Inter:wght@300;400;700&display=swap');
@@ -17,13 +16,14 @@
         .font-cyber { font-family: 'Orbitron', sans-serif; letter-spacing: 0.1em; }
         .font-mono { font-family: 'Fira Code', monospace; letter-spacing: 0.04em; }
 
+        /* TAB SYSTEM */
         .tab-section { display: none !important; opacity: 0; }
         .tab-section.active-tab { display: block !important; opacity: 1 !important; animation: fadeIn 0.6s forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
+        /* UI DECORATION */
         .nav-btn.active-link { color: var(--neon-blue) !important; border-bottom: 2px solid var(--neon-blue); }
         .neon-blue-text { color: var(--neon-blue); text-shadow: 0 0 15px rgba(0, 243, 255, 0.5); }
-        
         .scanline { background: linear-gradient(to bottom, transparent 50%, rgba(0, 243, 255, 0.02) 50%); background-size: 100% 4px; pointer-events: none; position: fixed; inset: 0; z-index: 50; }
         
         #preorder-modal { display: none; }
@@ -43,7 +43,7 @@
     <div class="scanline"></div>
 
     <div id="preorder-modal" class="fixed inset-0 z-[200] bg-black/95 flex items-center justify-center p-6 backdrop-blur-md">
-        <div class="bg-zinc-900 border border-cyan-500/30 p-8 max-w-lg w-full relative">
+        <div class="bg-zinc-900 border border-cyan-500/30 p-8 max-w-lg w-full relative shadow-[0_0_50px_rgba(0,243,255,0.1)]">
             <button onclick="closeModal()" class="absolute top-4 right-4 text-zinc-500 hover:text-white font-mono uppercase text-[10px]">Close_X</button>
             <h2 class="font-cyber text-xl mb-6 neon-blue-text uppercase">Operational Briefing</h2>
             
@@ -59,10 +59,10 @@
                 </select>
                 <textarea name="Mission_Parameters" placeholder="MISSION_REQUIREMENTS / SYMPTOMS" class="w-full bg-black border border-zinc-800 p-4 text-xs font-mono h-24 outline-none focus:border-cyan-500 text-white"></textarea>
                 
-                <input type="hidden" name="_next" value="https://h7k3r.com">
+                <input type="hidden" name="_next" value="https://h7k3r.com/success.html">
                 <input type="hidden" name="_subject" value="New h7k3r Operational Request">
 
-                <button type="submit" class="w-full py-4 bg-cyan-600 text-black font-black uppercase text-xs tracking-widest hover:bg-cyan-400">Transmit Data</button>
+                <button type="submit" class="w-full py-4 bg-cyan-600 text-black font-black uppercase text-xs tracking-widest hover:bg-cyan-400 transition">Transmit Data</button>
             </form>
         </div>
     </div>
@@ -89,12 +89,25 @@
     </nav>
 
     <main class="flex-grow pt-20">
+        
         <section id="tab-home" class="tab-section active-tab">
-            <div class="relative h-[70vh] flex flex-col items-center justify-center text-center px-6">
+            <div class="relative min-h-[80vh] flex flex-col items-center justify-center text-center px-6 py-12">
                 <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,243,255,0.05)_0%,transparent_70%)]"></div>
+                
                 <h1 class="font-cyber text-5xl md:text-8xl font-black mb-4">SYSTEMS <span class="neon-blue-text">LIVE.</span></h1>
                 <p class="text-zinc-500 uppercase tracking-[0.5em] text-[10px] mb-8 max-w-md">Precision Hardware Intervention & High-Performance Deployment Node</p>
-                <button onclick="showTab('apex')" class="border border-cyan-500/50 px-10 py-4 text-[10px] font-cyber uppercase hover:bg-cyan-500/10 transition tracking-widest">Enter_Arsenal</button>
+                <button onclick="showTab('apex')" class="border border-cyan-500/50 px-10 py-4 text-[10px] font-cyber uppercase hover:bg-cyan-500/10 transition tracking-widest mb-16">Enter_Arsenal</button>
+
+                <div class="relative border border-zinc-800 bg-black/50 p-2 rounded-sm shadow-2xl">
+                    <div class="absolute -top-6 left-0 font-mono text-[9px] text-zinc-500 uppercase">Minigame: Firewall_Evader.exe</div>
+                    <canvas id="gameCanvas" width="320" height="380" class="bg-black cursor-pointer border border-zinc-900"></canvas>
+                    <div id="gameOverlay" class="absolute inset-0 flex flex-col items-center justify-center bg-black/80 text-white transition-opacity">
+                        <p class="font-cyber text-cyan-400 text-[10px] mb-4 tracking-[0.2em]">BYPASS THE FIREWALL</p>
+                        <button onclick="startGame()" class="px-6 py-2 border border-cyan-500 text-[10px] font-cyber hover:bg-cyan-500 hover:text-black transition">INITIALIZE</button>
+                        <p class="mt-4 font-mono text-[8px] text-zinc-500 uppercase">[ SPACE or CLICK to JUMP ]</p>
+                    </div>
+                    <div id="scoreDisplay" class="absolute top-4 right-6 font-mono text-cyan-400 text-xl hidden">0</div>
+                </div>
             </div>
         </section>
 
@@ -146,18 +159,18 @@
         <section id="tab-ops" class="tab-section">
             <div class="max-w-4xl mx-auto px-6 py-24 text-center">
                 <h2 class="font-cyber text-3xl text-red-500 mb-6 uppercase tracking-[0.3em]">Incident_Response</h2>
-                <p class="font-mono text-xs text-zinc-400 mb-12">Hardware failure is not the end. Board-level repair and forensic data extraction active.</p>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-left mb-12">
+                <p class="font-mono text-xs text-zinc-400 mb-12 uppercase">Board-level surgical intervention and forensic data reconstruction.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-left mb-12 font-mono">
                     <div class="p-6 border border-zinc-800 bg-zinc-900/20">
-                        <h4 class="text-white font-cyber text-xs mb-2">SILICON_SURGERY</h4>
-                        <p class="text-zinc-500 text-[10px] font-mono">Micro-soldering, trace repair, and component-level diagnostics.</p>
+                        <h4 class="text-white text-xs mb-2 uppercase tracking-tighter">SILICON_SURGERY</h4>
+                        <p class="text-zinc-500 text-[9px]">Micro-soldering, trace repair, and component-level replacement.</p>
                     </div>
                     <div class="p-6 border border-zinc-800 bg-zinc-900/20">
-                        <h4 class="text-white font-cyber text-xs mb-2">DATA_RECON</h4>
-                        <p class="text-zinc-500 text-[10px] font-mono">Forensic recovery from failed NVMe, SSD, and corrupted RAID arrays.</p>
+                        <h4 class="text-white text-xs mb-2 uppercase tracking-tighter">DATA_RECON</h4>
+                        <p class="text-zinc-500 text-[9px]">Forensic recovery from failed NVMe, SSD, and logic-board failures.</p>
                     </div>
                 </div>
-                <button onclick="openModal('INCIDENT_RESPONSE')" class="px-12 py-4 bg-red-600 text-white font-black uppercase text-[10px] tracking-widest hover:bg-red-500 transition">Open Operational Ticket</button>
+                <button onclick="openModal('INCIDENT_RESPONSE')" class="px-12 py-4 bg-red-600 text-white font-black uppercase text-[10px] tracking-widest hover:bg-red-500 transition">Open Ticket</button>
             </div>
         </section>
 
@@ -165,37 +178,37 @@
             <div class="max-w-7xl mx-auto px-6 py-24">
                 <div class="text-center mb-16">
                     <h2 class="font-cyber text-2xl md:text-4xl neon-blue-text mb-4 uppercase tracking-[0.3em]">Declassified_Logs</h2>
-                    <p class="text-zinc-500 font-mono text-[10px] uppercase">Visual evidence of successful builds // Node: UK_SOUTH</p>
+                    <p class="text-zinc-500 font-mono text-[10px] uppercase">Visual evidence of hardware intervention // Node: UK_SOUTH</p>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     <div class="group relative overflow-hidden bg-zinc-900 border border-white/5 aspect-square">
-                        <img src="build1.jpg" alt="Build Log 01" class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition duration-700 grayscale group-hover:grayscale-0">
+                        <img src="build1.jpg" class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition duration-700 grayscale group-hover:grayscale-0">
                         <div class="absolute bottom-0 left-0 w-full p-4 bg-black/80 backdrop-blur-sm transform translate-y-full group-hover:translate-y-0 transition-transform">
-                            <p class="font-mono text-[9px] text-cyan-400 tracking-widest">LOG_ID: #001_DEPLOYMENT</p>
+                            <p class="font-mono text-[9px] text-cyan-400">LOG_ID: #001_DEPLOYMENT</p>
                         </div>
                     </div>
                     <div class="group relative overflow-hidden bg-zinc-900 border border-white/5 aspect-square">
-                        <img src="build2.jpg" alt="Build Log 02" class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition duration-700 grayscale group-hover:grayscale-0">
+                        <img src="build2.jpg" class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition duration-700 grayscale group-hover:grayscale-0">
                         <div class="absolute bottom-0 left-0 w-full p-4 bg-black/80 backdrop-blur-sm transform translate-y-full group-hover:translate-y-0 transition-transform">
-                            <p class="font-mono text-[9px] text-cyan-400 tracking-widest">LOG_ID: #002_DEPLOYMENT</p>
+                            <p class="font-mono text-[9px] text-cyan-400">LOG_ID: #002_DEPLOYMENT</p>
                         </div>
                     </div>
                     <div class="group relative overflow-hidden bg-zinc-900 border border-white/5 aspect-square">
-                        <img src="build3.jpg" alt="Build Log 03" class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition duration-700 grayscale group-hover:grayscale-0">
+                        <img src="build3.jpg" class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition duration-700 grayscale group-hover:grayscale-0">
                         <div class="absolute bottom-0 left-0 w-full p-4 bg-black/80 backdrop-blur-sm transform translate-y-full group-hover:translate-y-0 transition-transform">
-                            <p class="font-mono text-[9px] text-cyan-400 tracking-widest">LOG_ID: #003_DEPLOYMENT</p>
+                            <p class="font-mono text-[9px] text-cyan-400">LOG_ID: #003_TOXIC_LOOP</p>
                         </div>
                     </div>
                     <div class="group relative overflow-hidden bg-zinc-900 border border-white/5 aspect-square">
-                        <img src="build4.jpg" alt="Build Log 04" class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition duration-700 grayscale group-hover:grayscale-0">
+                        <img src="build4.jpg" class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition duration-700 grayscale group-hover:grayscale-0">
                         <div class="absolute bottom-0 left-0 w-full p-4 bg-black/80 backdrop-blur-sm transform translate-y-full group-hover:translate-y-0 transition-transform">
-                            <p class="font-mono text-[9px] text-cyan-400 tracking-widest">LOG_ID: #004_DEPLOYMENT</p>
+                            <p class="font-mono text-[9px] text-cyan-400">LOG_ID: #004_PHOTON_INTERCEPT</p>
                         </div>
                     </div>
                     <div class="group relative overflow-hidden bg-zinc-900 border border-white/5 aspect-square">
-                        <img src="build5.jpg" alt="Build Log 05" class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition duration-700 grayscale group-hover:grayscale-0">
+                        <img src="build5.jpg" class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition duration-700 grayscale group-hover:grayscale-0">
                         <div class="absolute bottom-0 left-0 w-full p-4 bg-black/80 backdrop-blur-sm transform translate-y-full group-hover:translate-y-0 transition-transform">
-                            <p class="font-mono text-[9px] text-cyan-400 tracking-widest">LOG_ID: #005_DEPLOYMENT</p>
+                            <p class="font-mono text-[9px] text-cyan-400">LOG_ID: #005_DEPLOYMENT</p>
                         </div>
                     </div>
                 </div>
@@ -206,7 +219,7 @@
             <div class="max-w-xl mx-auto px-6 py-24 text-center">
                 <h2 class="font-cyber text-2xl mb-8 neon-blue-text uppercase">Asset_Login</h2>
                 <div class="bg-zinc-900/50 p-12 border border-white/5">
-                    <p class="font-mono text-[10px] text-zinc-600 mb-8">Access restricted to Tier-1 Clients. Verification of Cryptographic Key required.</p>
+                    <p class="font-mono text-[10px] text-zinc-600 mb-8 uppercase">Tier-1 Cryptographic Verification Required</p>
                     <input type="password" placeholder="ENTER_PRIVATE_KEY" class="w-full bg-black border border-zinc-800 p-4 font-mono text-xs text-center mb-6 outline-none focus:border-cyan-500 text-white">
                     <button class="w-full py-4 bg-white text-black font-black uppercase text-xs tracking-widest hover:bg-cyan-400 transition">Authenticate</button>
                 </div>
@@ -214,7 +227,7 @@
         </section>
     </main>
 
-    <footer class="border-t border-white/5 py-12 px-6 bg-black">
+    <footer class="border-t border-white/5 py-12 px-6">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center text-zinc-600 font-mono text-[9px]">
             <p>© 2026 h7k3r Systems // info@h7k3r.com</p>
             <div class="mt-4 md:mt-0 uppercase tracking-widest">
@@ -224,6 +237,7 @@
     </footer>
 
     <script>
+        // TAB LOGIC
         function showTab(id) {
             document.querySelectorAll('.tab-section').forEach(s => s.classList.remove('active-tab'));
             document.querySelectorAll('nav button').forEach(b => b.classList.remove('active-link'));
@@ -233,6 +247,8 @@
             if (btn) btn.classList.add('active-link');
             window.scrollTo(0,0);
         }
+
+        // MODAL LOGIC
         function openModal(rigName) {
             document.getElementById('modal-select').value = rigName;
             document.getElementById('preorder-modal').classList.add('modal-active');
@@ -241,10 +257,77 @@
             document.getElementById('preorder-modal').classList.remove('modal-active');
         }
 
+        // FOOTER LOCATION
         fetch('https://ipapi.co/json/')
             .then(res => res.json())
             .then(data => { document.getElementById('user-city').innerText = data.city.toUpperCase(); })
             .catch(() => { document.getElementById('user-city').innerText = 'SECURE_NODE'; });
+
+        // GAME ENGINE
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const overlay = document.getElementById('gameOverlay');
+        const scoreDisplay = document.getElementById('scoreDisplay');
+        let bird, pipes, score, gameRunning = false;
+
+        function startGame() {
+            bird = { x: 50, y: 150, w: 12, h: 12, velocity: 0, gravity: 0.2, jump: -4 };
+            pipes = [];
+            score = 0;
+            gameRunning = true;
+            overlay.style.opacity = '0';
+            overlay.style.pointerEvents = 'none';
+            scoreDisplay.classList.remove('hidden');
+            scoreDisplay.innerText = score;
+            update();
+        }
+
+        function createPipe() {
+            const gap = 100;
+            const height = Math.floor(Math.random() * (canvas.height - gap - 60)) + 30;
+            pipes.push({ x: canvas.width, y: height, w: 40, gap: gap });
+        }
+
+        function update() {
+            if (!gameRunning) return;
+            bird.velocity += bird.gravity;
+            bird.y += bird.velocity;
+
+            if (pipes.length === 0 || pipes[pipes.length - 1].x < canvas.width - 160) createPipe();
+
+            pipes.forEach((p, i) => {
+                p.x -= 2;
+                if (bird.x < p.x + p.w && bird.x + bird.w > p.x && (bird.y < p.y || bird.y + bird.h > p.y + p.gap)) gameOver();
+                if (p.x === 50) { score++; scoreDisplay.innerText = score; }
+                if (p.x + p.w < 0) pipes.splice(i, 1);
+            });
+
+            if (bird.y > canvas.height || bird.y < 0) gameOver();
+            draw();
+            requestAnimationFrame(update);
+        }
+
+        function draw() {
+            ctx.fillStyle = '#000';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#00f3ff'; // Bird (Cyan)
+            ctx.fillRect(bird.x, bird.y, bird.w, bird.h);
+            ctx.fillStyle = '#ff003c'; // Pipes (Neon Red)
+            pipes.forEach(p => {
+                ctx.fillRect(p.x, 0, p.w, p.y);
+                ctx.fillRect(p.x, p.y + p.gap, p.w, canvas.height);
+            });
+        }
+
+        function gameOver() {
+            gameRunning = false;
+            overlay.style.opacity = '1';
+            overlay.style.pointerEvents = 'auto';
+            overlay.innerHTML = `<p class="font-cyber text-red-500 text-[10px] mb-2 uppercase">TERMINATED</p><p class="font-mono text-white text-[10px] mb-4 uppercase">SCORE: ${score}</p><button onclick="startGame()" class="px-6 py-2 border border-red-500 text-[9px] font-cyber hover:bg-red-500 hover:text-black transition">RETRY</button>`;
+        }
+
+        window.addEventListener('keydown', (e) => { if (e.code === 'Space') bird.velocity = bird.jump; });
+        canvas.addEventListener('mousedown', () => { if (gameRunning) bird.velocity = bird.jump; });
     </script>
 </body>
 </html>
