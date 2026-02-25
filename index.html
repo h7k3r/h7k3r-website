@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>h7k3r | STEALTH_NODE_v13</title>
+    <title>h7k3r | STEALTH_NODE_v14</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Fira+Code:wght@300;500&family=Inter:wght@200;400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Fira+Code:wght@400;500&family=Inter:wght@300;400;700&display=swap');
         
         :root { --cyan: #00f3ff; --red: #ff003c; --yellow: #ffb700; --bg: #030303; }
-        body { background: var(--bg); color: #afafaf; font-family: 'Inter', sans-serif; overflow-x:hidden; letter-spacing: 0.05em; }
+        body { background: var(--bg); color: #d1d5db; font-family: 'Inter', sans-serif; overflow-x:hidden; letter-spacing: 0.05em; }
         
         .font-cyber { font-family: 'Orbitron', sans-serif; letter-spacing: 0.15em; }
         .font-mono { font-family: 'Fira Code', monospace; }
@@ -21,268 +21,276 @@
 
         /* UI ELEMENTS */
         .nav-btn { position: relative; transition: 0.3s; padding-bottom: 4px; }
-        .nav-btn.active-link { color: white; border-bottom: 1px solid var(--cyan); }
-        .glass-panel { background: rgba(255, 255, 255, 0.01); border: 1px solid rgba(255, 255, 255, 0.05); }
-        .glass-panel:hover { border-color: rgba(255, 255, 255, 0.15); }
+        .nav-btn.active-link { color: white; border-bottom: 2px solid var(--cyan); }
+        .glass-panel { background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .glass-panel:hover { border-color: rgba(255, 255, 255, 0.3); }
         
-        /* MINI GAMES */
-        canvas { max-width: 100%; image-rendering: pixelated; }
-        .game-btn { background: rgba(0,243,255,0.1); border: 1px solid var(--cyan); color: var(--cyan); transition: 0.2s; }
-        .game-btn:hover { background: var(--cyan); color: black; }
-
         /* THREAT MAP */
-        #threat-map-container { background-image: radial-gradient(circle at 50% 50%, #111 0%, #000 100%); background-size: cover; position: relative; overflow: hidden; }
-        .grid-lines { position: absolute; inset: 0; background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px); background-size: 20px 20px; }
-        
+        .grid-lines { position: absolute; inset: 0; background-image: linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px); background-size: 30px 30px; }
+        .map-bg { background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/World_map_blank_without_borders.svg/1000px-World_map_blank_without_borders.svg.png'); background-size: cover; background-position: center; filter: invert(1) opacity(0.15); }
+
         #modal { display: none; }
         .modal-active { display: flex !important; }
-        ::-webkit-scrollbar { width: 4px; } ::-webkit-scrollbar-track { background: #000; } ::-webkit-scrollbar-thumb { background: #333; }
+        ::-webkit-scrollbar { width: 6px; } ::-webkit-scrollbar-track { background: #000; } ::-webkit-scrollbar-thumb { background: #444; }
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
 
-    <div id="modal" class="fixed inset-0 z-[200] bg-black/98 items-center justify-center p-6 backdrop-blur-xl">
+    <div id="modal" class="fixed inset-0 z-[200] bg-black/95 items-center justify-center p-6 backdrop-blur-xl">
         <div class="glass-panel p-10 max-w-lg w-full relative border-t-2 border-t-cyan-500">
-            <button onclick="closeModal()" class="absolute top-6 right-6 text-zinc-600 hover:text-white font-mono text-[10px] uppercase">Close_X</button>
-            <h2 data-en="MODAL_INIT" data-fr="INIT_MODALE" data-jp="システム要求" class="font-cyber text-lg mb-8 text-white lang-node">MODAL_INIT</h2>
+            <button onclick="closeModal()" class="absolute top-6 right-6 text-zinc-400 hover:text-white font-mono text-sm uppercase">Close_X</button>
+            <h2 data-en="MODAL_INIT" data-fr="INIT_MODALE" data-jp="システム要求" class="font-cyber text-xl mb-8 text-white lang-node">MODAL_INIT</h2>
             <form action="https://formspree.io/f/mnjblgln" method="POST" class="space-y-6">
-                <input type="text" name="name" placeholder="OPERATOR_ID" required class="w-full bg-transparent border-b border-zinc-800 py-3 text-xs font-mono text-white outline-none focus:border-cyan-500">
-                <input type="email" name="email" placeholder="ENCRYPTED_EMAIL" required class="w-full bg-transparent border-b border-zinc-800 py-3 text-xs font-mono text-white outline-none focus:border-cyan-500">
-                <select id="modal-select" name="interest" class="w-full bg-transparent border-b border-zinc-800 py-3 text-xs font-mono text-white outline-none">
+                <input type="text" name="name" placeholder="OPERATOR_ID" required class="w-full bg-transparent border-b border-zinc-700 py-3 text-sm font-mono text-white outline-none focus:border-cyan-500">
+                <input type="email" name="email" placeholder="ENCRYPTED_EMAIL" required class="w-full bg-transparent border-b border-zinc-700 py-3 text-sm font-mono text-white outline-none focus:border-cyan-500">
+                <select id="modal-select" name="interest" class="w-full bg-transparent border-b border-zinc-700 py-3 text-sm font-mono text-white outline-none">
                     <option value="PROJECT_P" class="bg-black">PROJECT_P (£750)</option>
                     <option value="TRIDENT" class="bg-black">APEX TRIDENT</option>
                     <option value="REPAIR" class="bg-black">INCIDENT RESPONSE</option>
                     <option value="GEAR" class="bg-black">TACTICAL GEAR</option>
                 </select>
-                <button type="submit" class="w-full py-4 mt-4 bg-white text-black font-bold uppercase text-[10px] tracking-[0.3em] hover:bg-cyan-400">Transmit_Signal</button>
+                <button type="submit" class="w-full py-4 mt-4 bg-white text-black font-bold uppercase text-sm tracking-[0.2em] hover:bg-cyan-400">Transmit_Signal</button>
             </form>
         </div>
     </div>
 
-    <nav class="fixed top-0 w-full z-[150] border-b border-white/5 bg-black/80 backdrop-blur-md">
+    <nav class="fixed top-0 w-full z-[150] border-b border-white/10 bg-black/90 backdrop-blur-md">
         <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-            <div class="font-cyber text-sm font-bold text-white cursor-pointer" onclick="showTab('home')">H7K3R<span class="text-cyan-500">.SYS</span></div>
+            <div class="font-cyber text-lg font-bold text-white cursor-pointer" onclick="showTab('home')">H7K3R<span class="text-cyan-500">.SYS</span></div>
             
-            <div class="hidden lg:flex space-x-8 text-[9px] uppercase font-bold tracking-[0.15em] text-zinc-500">
+            <div class="hidden lg:flex space-x-8 text-xs uppercase font-bold tracking-[0.1em] text-zinc-400">
                 <button onclick="showTab('home')" id="nav-home" class="nav-btn active-link">HQ</button>
                 <button onclick="showTab('projectp')" id="nav-projectp" class="nav-btn">Project_P</button>
                 <button onclick="showTab('apex')" id="nav-apex" class="nav-btn">Hardware</button>
                 <button onclick="showTab('merch')" id="nav-merch" class="nav-btn">Gear</button>
-                <button onclick="showTab('ops')" id="nav-ops" class="nav-btn text-red-700 hover:text-red-500">Operations</button>
+                <button onclick="showTab('ops')" id="nav-ops" class="nav-btn text-red-500 hover:text-red-400">Operations</button>
                 <button onclick="showTab('logs')" id="nav-logs" class="nav-btn">Logs</button>
             </div>
 
-            <div class="flex items-center space-x-4">
-                <button onclick="toggleLang()" class="text-[9px] font-mono border border-zinc-800 px-2 py-1 hover:border-white text-zinc-400 hover:text-white" id="lang-btn">LANG: EN</button>
-                <button onclick="showTab('pro')" id="nav-pro" class="text-[9px] bg-white text-black px-4 py-1.5 font-bold uppercase tracking-widest hover:bg-cyan-400">Portal</button>
+            <div class="flex items-center space-x-6">
+                <button onclick="toggleLang()" class="text-xs font-mono border border-zinc-700 px-3 py-1.5 hover:border-white text-zinc-300 hover:text-white transition-colors" id="lang-btn">LANG: EN</button>
+                <button onclick="showTab('pro')" id="nav-pro" class="text-xs bg-white text-black px-5 py-2 font-bold uppercase tracking-wider hover:bg-cyan-400 transition-colors">Portal</button>
             </div>
         </div>
     </nav>
 
-    <main class="flex-grow pt-24 pb-20">
+    <main class="flex-grow pt-28 pb-20">
         
-        <section id="tab-home" class="tab-section active-tab px-6 max-w-6xl mx-auto">
+        <section id="tab-home" class="tab-section active-tab px-6 max-w-7xl mx-auto">
             
             <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 gap-6">
                 <div>
-                    <h1 class="font-cyber text-4xl md:text-6xl text-white font-bold leading-none mb-4">UNLEASH SILICON.</h1>
-                    <p class="font-mono text-[10px] text-zinc-500 uppercase tracking-widest">Offensive Hardware & Data Forensics</p>
+                    <h1 class="font-cyber text-5xl md:text-7xl text-white font-bold leading-tight mb-4">UNLEASH<br>SILICON.</h1>
+                    <p class="font-mono text-sm text-zinc-400 uppercase tracking-widest">Offensive Hardware & Data Forensics</p>
                 </div>
-                <div class="glass-panel p-4 w-full md:w-64 border-l-2 border-l-cyan-500 text-right">
-                    <div class="text-[8px] font-mono text-zinc-600 mb-1">LOCAL_NODE_TRACE</div>
-                    <div id="city-node" class="text-white font-cyber text-xs mb-1">DETECTING...</div>
-                    <div id="ip-node" class="text-cyan-500 font-mono text-[9px]">AWAITING IP</div>
+                <div class="glass-panel p-6 w-full md:w-80 border-l-4 border-l-cyan-500 text-right">
+                    <div class="text-xs font-mono text-zinc-400 mb-2">LOCAL_NODE_TRACE</div>
+                    <div id="city-node" class="text-white font-cyber text-lg mb-2">DETECTING...</div>
+                    <div id="ip-node" class="text-cyan-400 font-mono text-sm">AWAITING IP</div>
                 </div>
             </div>
 
-            <div class="w-full h-48 md:h-64 border border-zinc-800 mb-6 relative" id="threat-map-container">
-                <div class="grid-lines"></div>
-                <div class="absolute top-4 left-4 font-cyber text-[10px] text-red-500 z-10 animate-pulse">LIVE_THREAT_MONITOR</div>
-                <canvas id="attackMap" class="absolute inset-0 w-full h-full z-0"></canvas>
+            <div class="w-full h-64 md:h-80 border border-zinc-700 mb-8 relative bg-zinc-950 overflow-hidden" id="threat-map-container">
+                <div class="absolute inset-0 map-bg z-0"></div>
+                <div class="grid-lines z-10"></div>
+                <div class="absolute top-4 left-4 font-cyber text-sm text-red-500 z-20 animate-pulse bg-black/50 px-3 py-1 border border-red-500/30">LIVE_THREAT_MONITOR</div>
+                <canvas id="attackMap" class="absolute inset-0 w-full h-full z-20"></canvas>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="glass-panel p-4 relative flex flex-col">
-                    <div class="flex justify-between items-center mb-3">
-                        <h4 class="font-cyber text-[9px] text-zinc-400">01_FIREWALL</h4>
-                        <button onclick="startF()" id="btn-f" class="text-[8px] font-mono game-btn px-2 py-1 uppercase">Execute</button>
+                <div class="glass-panel p-5 relative flex flex-col">
+                    <div class="flex justify-between items-center mb-4">
+                        <h4 class="font-cyber text-sm text-zinc-300">01_FIREWALL</h4>
+                        <button onclick="startF()" id="btn-f" class="text-xs font-mono border border-cyan-500 text-cyan-500 hover:bg-cyan-500 hover:text-black px-3 py-1 uppercase transition-colors">Execute</button>
                     </div>
-                    <div class="aspect-video bg-black border border-zinc-900 flex-grow relative overflow-hidden">
-                        <canvas id="c-f" width="280" height="150" class="w-full h-full"></canvas>
+                    <div class="aspect-video bg-black border border-zinc-800 flex-grow relative overflow-hidden">
+                        <canvas id="c-f" width="350" height="180" class="w-full h-full"></canvas>
                     </div>
                 </div>
                 
-                <div class="glass-panel p-4 relative flex flex-col">
-                    <div class="flex justify-between items-center mb-3">
-                        <h4 class="font-cyber text-[9px] text-zinc-400">02_DECRYPT</h4>
-                        <button onclick="startM()" id="btn-m" class="text-[8px] font-mono border border-green-500/50 text-green-500 hover:bg-green-500 hover:text-black px-2 py-1 transition-colors uppercase">Sequence</button>
+                <div class="glass-panel p-5 relative flex flex-col">
+                    <div class="flex justify-between items-center mb-4">
+                        <h4 class="font-cyber text-sm text-zinc-300">02_DECRYPT</h4>
+                        <button onclick="startM()" id="btn-m" class="text-xs font-mono border border-green-500 text-green-500 hover:bg-green-500 hover:text-black px-3 py-1 transition-colors uppercase">Sequence</button>
                     </div>
-                    <div class="aspect-video bg-black border border-zinc-900 flex-grow p-2">
+                    <div class="aspect-video bg-black border border-zinc-800 flex-grow p-2">
                         <div id="grid-m" class="w-full h-full grid grid-cols-3 gap-1">
-                            <div class="flex items-center justify-center font-mono text-[8px] text-zinc-700 col-span-3 h-full">STANDBY</div>
+                            <div class="flex items-center justify-center font-mono text-sm text-zinc-600 col-span-3 h-full">STANDBY</div>
                         </div>
                     </div>
                 </div>
 
-                <div class="glass-panel p-4 relative flex flex-col">
-                    <div class="flex justify-between items-center mb-3">
-                        <h4 class="font-cyber text-[9px] text-zinc-400">03_BIT_SNAKE</h4>
-                        <button onclick="startS()" id="btn-s" class="text-[8px] font-mono border border-yellow-500/50 text-yellow-500 hover:bg-yellow-500 hover:text-black px-2 py-1 transition-colors uppercase">Inject</button>
+                <div class="glass-panel p-5 relative flex flex-col">
+                    <div class="flex justify-between items-center mb-4">
+                        <h4 class="font-cyber text-sm text-zinc-300">03_BIT_SNAKE</h4>
+                        <button onclick="startS()" id="btn-s" class="text-xs font-mono border border-yellow-500 text-yellow-500 hover:bg-yellow-500 hover:text-black px-3 py-1 transition-colors uppercase">Inject</button>
                     </div>
-                    <div class="aspect-video bg-black border border-zinc-900 flex-grow relative">
-                        <canvas id="c-s" width="280" height="150" class="w-full h-full"></canvas>
+                    <div class="aspect-video bg-black border border-zinc-800 flex-grow relative">
+                        <canvas id="c-s" width="350" height="180" class="w-full h-full"></canvas>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="tab-projectp" class="tab-section px-6 max-w-6xl mx-auto">
-            <div class="glass-panel p-10 md:p-16 flex flex-col md:flex-row gap-12 items-center relative overflow-hidden">
-                <div class="absolute -right-20 -bottom-20 font-cyber text-[20rem] text-yellow-500/5 select-none leading-none">P</div>
-                <div class="flex-1 z-10">
-                    <h2 data-en="PROJECT_P" data-fr="PROJET_P" data-jp="プロジェクトP" class="font-cyber text-5xl md:text-7xl text-white mb-2 lang-node">PROJECT_P</h2>
-                    <h3 data-en="VENO_SCORP KILLER" data-fr="TUEUR DE VENO_SCORP" data-jp="ヴェノ・スコーピオン・キラー" class="font-mono text-[10px] text-yellow-500 tracking-[0.3em] mb-8 lang-node uppercase">VENO_SCORP KILLER</h3>
+        <section id="tab-projectp" class="tab-section px-6 max-w-7xl mx-auto">
+            <div class="glass-panel p-10 md:p-20 flex flex-col md:flex-row gap-16 items-center relative overflow-hidden">
+                <div class="absolute -right-10 -bottom-10 font-cyber text-[25rem] text-yellow-500/5 select-none leading-none z-0">P</div>
+                <div class="flex-1 z-10 relative">
+                    <h2 data-en="PROJECT_P" data-fr="PROJET_P" data-jp="プロジェクトP" class="font-cyber text-6xl md:text-8xl text-white mb-4 lang-node">PROJECT_P</h2>
+                    <h3 data-en="VENO_SCORP KILLER" data-fr="TUEUR DE VENO_SCORP" data-jp="ヴェノ・スコーピオン・キラー" class="font-mono text-sm text-yellow-500 tracking-[0.2em] mb-10 lang-node uppercase">VENO_SCORP KILLER</h3>
                     <p data-en="A proprietary response to consumer-grade limitations. Engineered for maximum throughput with zero thermal compromise. This isn't a build; it's a statement." 
                        data-fr="Une réponse propriétaire aux limitations grand public. Conçu pour un débit maximal sans compromis thermique. Ce n'est pas un PC, c'est une déclaration." 
                        data-jp="コンシューマーグレードの限界に対する独自の回答。熱の妥協なしに最大スループットを実現。これは単なるビルドではなく、声明です。"
-                       class="text-zinc-400 text-xs font-mono leading-relaxed mb-8 max-w-md lang-node">
+                       class="text-zinc-300 text-base font-mono leading-relaxed mb-10 max-w-2xl lang-node">
                         A proprietary response to consumer-grade limitations. Engineered for maximum throughput with zero thermal compromise. This isn't a build; it's a statement.
                     </p>
-                    <div class="text-3xl font-mono text-white mb-8">£750.00</div>
-                    <button onclick="openModal('PROJECT_P')" class="px-10 py-4 bg-yellow-500 text-black font-cyber text-[10px] hover:bg-white transition-colors uppercase tracking-widest">Acquire_Asset</button>
+                    <div class="text-5xl font-mono text-white mb-10">£750.00</div>
+                    <button onclick="openModal('PROJECT_P')" class="px-12 py-5 bg-yellow-500 text-black font-cyber text-sm hover:bg-white transition-colors uppercase tracking-widest">Acquire_Asset</button>
                 </div>
             </div>
         </section>
 
-        <section id="tab-apex" class="tab-section px-6 max-w-6xl mx-auto">
-            <div class="grid md:grid-cols-3 gap-6">
-                <div class="glass-panel p-8 group">
-                    <span class="text-[9px] font-mono text-zinc-600 mb-6 block">NODE: 01</span>
-                    <h3 class="font-cyber text-2xl text-white mb-2">TRIDENT</h3>
-                    <div class="text-cyan-500 font-mono text-xs mb-6">£8,610.00</div>
-                    <p class="text-[10px] text-zinc-500 mb-8 font-mono h-16">Triple Reservoir Loop<br>Dual RTX 5090 Array<br>Unrestricted Decryption</p>
-                    <button onclick="openModal('TRIDENT')" class="w-full py-3 border border-white/20 text-[9px] font-cyber group-hover:bg-white group-hover:text-black transition-all">RESERVE</button>
+        <section id="tab-apex" class="tab-section px-6 max-w-7xl mx-auto">
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="glass-panel p-10 group">
+                    <span class="text-sm font-mono text-zinc-500 mb-6 block">NODE: 01</span>
+                    <h3 class="font-cyber text-4xl text-white mb-3">TRIDENT</h3>
+                    <div class="text-cyan-400 font-mono text-lg mb-8">£8,610.00</div>
+                    <ul class="text-sm text-zinc-400 mb-10 font-mono space-y-3">
+                        <li>> Triple Reservoir Loop</li>
+                        <li>> Dual RTX 5090 Array</li>
+                        <li>> Unrestricted Decryption</li>
+                    </ul>
+                    <button onclick="openModal('TRIDENT')" class="w-full py-4 border border-zinc-600 text-sm font-cyber group-hover:bg-white group-hover:text-black group-hover:border-white transition-all">RESERVE_UNIT</button>
                 </div>
-                <div class="glass-panel p-8 border-cyan-500/30 relative overflow-hidden">
-                    <div class="absolute top-0 right-0 bg-cyan-600 text-black font-cyber text-[8px] px-3 py-1">FLAGSHIP</div>
-                    <span class="text-[9px] font-mono text-cyan-500 mb-6 block">NODE: 02</span>
-                    <h3 class="font-cyber text-2xl text-white mb-2">ZERO-G</h3>
-                    <div class="text-cyan-500 font-mono text-xs mb-6">£7,250.00</div>
-                    <p class="text-[10px] text-zinc-500 mb-8 font-mono h-16">Xproto-L Open Chassis<br>Total Atmosphere Exchange<br>Neural Node Training</p>
-                    <button onclick="openModal('ZERO-G')" class="w-full py-3 bg-cyan-600 text-black text-[9px] font-cyber hover:bg-cyan-400 transition-all">RESERVE</button>
+                <div class="glass-panel p-10 border-cyan-500/40 relative overflow-hidden shadow-[0_0_30px_rgba(0,243,255,0.05)]">
+                    <div class="absolute top-0 right-0 bg-cyan-600 text-black font-cyber text-xs px-4 py-2">FLAGSHIP</div>
+                    <span class="text-sm font-mono text-cyan-400 mb-6 block">NODE: 02</span>
+                    <h3 class="font-cyber text-4xl text-white mb-3">ZERO-G</h3>
+                    <div class="text-cyan-400 font-mono text-lg mb-8">£7,250.00</div>
+                    <ul class="text-sm text-zinc-300 mb-10 font-mono space-y-3">
+                        <li>> Xproto-L Open Chassis</li>
+                        <li>> Total Atmosphere Exchange</li>
+                        <li>> Neural Node Training</li>
+                    </ul>
+                    <button onclick="openModal('ZERO-G')" class="w-full py-4 bg-cyan-600 text-black text-sm font-cyber hover:bg-cyan-400 transition-all">RESERVE_UNIT</button>
                 </div>
-                <div class="glass-panel p-8 group">
-                    <span class="text-[9px] font-mono text-zinc-600 mb-6 block">NODE: 03</span>
-                    <h3 class="font-cyber text-2xl text-white mb-2">SPECTRE</h3>
-                    <div class="text-cyan-500 font-mono text-xs mb-6">£4,890.00</div>
-                    <p class="text-[10px] text-zinc-500 mb-8 font-mono h-16">10L SFF Enclosure<br>Intel 14900KS Spec<br>Portable Dominance</p>
-                    <button onclick="openModal('SPECTRE')" class="w-full py-3 border border-white/20 text-[9px] font-cyber group-hover:bg-white group-hover:text-black transition-all">RESERVE</button>
+                <div class="glass-panel p-10 group">
+                    <span class="text-sm font-mono text-zinc-500 mb-6 block">NODE: 03</span>
+                    <h3 class="font-cyber text-4xl text-white mb-3">SPECTRE</h3>
+                    <div class="text-cyan-400 font-mono text-lg mb-8">£4,890.00</div>
+                    <ul class="text-sm text-zinc-400 mb-10 font-mono space-y-3">
+                        <li>> 10L SFF Enclosure</li>
+                        <li>> Intel 14900KS Spec</li>
+                        <li>> Portable Dominance</li>
+                    </ul>
+                    <button onclick="openModal('SPECTRE')" class="w-full py-4 border border-zinc-600 text-sm font-cyber group-hover:bg-white group-hover:text-black group-hover:border-white transition-all">RESERVE_UNIT</button>
                 </div>
             </div>
         </section>
 
-        <section id="tab-merch" class="tab-section px-6 max-w-5xl mx-auto">
-            <h2 class="font-cyber text-2xl text-white mb-8 text-center uppercase tracking-[0.2em]">Tactical_Assets</h2>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4" id="gearGrid">
+        <section id="tab-merch" class="tab-section px-6 max-w-7xl mx-auto">
+            <h2 class="font-cyber text-3xl text-white mb-10 text-center uppercase tracking-[0.2em]">Tactical_Assets</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6" id="gearGrid">
                 </div>
         </section>
 
-        <section id="tab-ops" class="tab-section px-6 max-w-6xl mx-auto">
-            <div class="text-center mb-12">
-                <h2 data-en="INCIDENT_RESPONSE" data-fr="RÉPONSE_INCIDENT" data-jp="インシデント対応" class="font-cyber text-4xl text-white mb-4 lang-node uppercase">INCIDENT_RESPONSE</h2>
-                <p class="font-mono text-xs text-red-500 tracking-widest">LABORATORY LEVEL INTERVENTION</p>
+        <section id="tab-ops" class="tab-section px-6 max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 data-en="INCIDENT_RESPONSE" data-fr="RÉPONSE_INCIDENT" data-jp="インシデント対応" class="font-cyber text-5xl text-white mb-4 lang-node uppercase">INCIDENT_RESPONSE</h2>
+                <p class="font-mono text-sm text-red-500 tracking-widest">LABORATORY LEVEL INTERVENTION</p>
             </div>
             
-            <div class="grid md:grid-cols-2 gap-8 mb-12">
-                <div class="glass-panel p-8 border-l-2 border-l-red-600">
-                    <h3 class="font-cyber text-lg text-white mb-4 uppercase">Silicon Microsurgery</h3>
-                    <p class="font-mono text-[10px] text-zinc-400 mb-6 leading-relaxed">We bypass manufacturer limits. Motherboard trace reconstruction, blown IC replacement, and liquid damage remediation performed under high-power stereomicroscopes.</p>
-                    <div class="space-y-3">
+            <div class="grid md:grid-cols-2 gap-10 mb-16">
+                <div class="glass-panel p-10 border-l-4 border-l-red-600">
+                    <h3 class="font-cyber text-2xl text-white mb-6 uppercase">Silicon Microsurgery</h3>
+                    <p class="font-mono text-sm text-zinc-300 mb-8 leading-relaxed">We bypass manufacturer limits. Motherboard trace reconstruction, blown IC replacement, and liquid damage remediation performed under high-power stereomicroscopes.</p>
+                    <div class="space-y-6">
                         <div>
-                            <div class="flex justify-between text-[9px] font-mono text-zinc-500 mb-1"><span>Trace Repair Success</span><span class="text-red-500">98.2%</span></div>
-                            <div class="w-full bg-black h-1"><div class="bg-red-600 h-1 w-[98%]"></div></div>
+                            <div class="flex justify-between text-xs font-mono text-zinc-400 mb-2"><span>Trace Repair Success</span><span class="text-red-500">98.2%</span></div>
+                            <div class="w-full bg-zinc-900 h-2"><div class="bg-red-600 h-2 w-[98%]"></div></div>
                         </div>
                         <div>
-                            <div class="flex justify-between text-[9px] font-mono text-zinc-500 mb-1"><span>Component Sourcing</span><span class="text-red-500">Tier-1</span></div>
-                            <div class="w-full bg-black h-1"><div class="bg-red-600 h-1 w-full"></div></div>
+                            <div class="flex justify-between text-xs font-mono text-zinc-400 mb-2"><span>Component Sourcing</span><span class="text-red-500">Tier-1</span></div>
+                            <div class="w-full bg-zinc-900 h-2"><div class="bg-red-600 h-2 w-full"></div></div>
                         </div>
                     </div>
                 </div>
 
-                <div class="glass-panel p-8 border-l-2 border-l-red-600">
-                    <h3 class="font-cyber text-lg text-white mb-4 uppercase">Deep Data Forensics</h3>
-                    <p class="font-mono text-[10px] text-zinc-400 mb-6 leading-relaxed">When drives click and SSDs vanish, software is useless. We execute physical platter swaps, head replacements, and NAND chip-off data extraction in ISO-certified clean zones.</p>
-                    <ul class="font-mono text-[9px] text-zinc-500 space-y-2">
-                        <li>> PC-3000 Firmware Unlocking</li>
-                        <li>> Encrypted Volume Rebuilding</li>
-                        <li>> Catastrophic RAID Array Rescue</li>
+                <div class="glass-panel p-10 border-l-4 border-l-red-600">
+                    <h3 class="font-cyber text-2xl text-white mb-6 uppercase">Deep Data Forensics</h3>
+                    <p class="font-mono text-sm text-zinc-300 mb-8 leading-relaxed">When drives click and SSDs vanish, software is useless. We execute physical platter swaps, head replacements, and NAND chip-off data extraction in ISO-certified clean zones.</p>
+                    <ul class="font-mono text-sm text-zinc-400 space-y-4">
+                        <li class="flex items-center"><span class="text-red-500 mr-3">></span> PC-3000 Firmware Unlocking</li>
+                        <li class="flex items-center"><span class="text-red-500 mr-3">></span> Encrypted Volume Rebuilding</li>
+                        <li class="flex items-center"><span class="text-red-500 mr-3">></span> Catastrophic RAID Array Rescue</li>
                     </ul>
                 </div>
             </div>
             
             <div class="text-center">
-                <button onclick="openModal('REPAIR')" class="px-12 py-5 bg-red-700 text-white font-cyber text-[10px] hover:bg-red-500 transition-colors uppercase tracking-[0.2em] shadow-[0_0_15px_rgba(255,0,60,0.3)]">Initiate_Diagnostic_Ticket</button>
+                <button onclick="openModal('REPAIR')" class="px-14 py-6 bg-red-700 text-white font-cyber text-sm hover:bg-red-600 transition-colors uppercase tracking-[0.2em] shadow-[0_0_20px_rgba(255,0,60,0.3)]">Initiate_Diagnostic_Ticket</button>
             </div>
         </section>
 
-        <section id="tab-logs" class="tab-section px-6 max-w-5xl mx-auto">
-            <h2 class="font-cyber text-2xl text-white mb-8 text-center uppercase tracking-[0.2em]">Declassified_Logs</h2>
-            <div class="grid md:grid-cols-2 gap-6">
-                <div class="glass-panel p-6 relative">
-                    <div class="absolute top-0 right-0 bg-cyan-900/30 text-cyan-400 text-[8px] font-mono px-2 py-1">CASE_#4491</div>
-                    <div class="text-cyan-500 text-xs mb-3">★★★★★</div>
-                    <p class="font-mono text-[10px] text-zinc-400 leading-relaxed mb-4">"They pulled 4TB of critical architectural CAD files off a drive that two other 'experts' declared totally dead. Absolute ghosts in the machine."</p>
-                    <p class="font-cyber text-[9px] text-zinc-600">- Director, Aether Design Group</p>
+        <section id="tab-logs" class="tab-section px-6 max-w-7xl mx-auto">
+            <h2 class="font-cyber text-3xl text-white mb-10 text-center uppercase tracking-[0.2em]">Declassified_Logs</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="glass-panel p-8 relative">
+                    <div class="absolute top-0 right-0 bg-cyan-900/40 text-cyan-400 text-xs font-mono px-3 py-1">CASE_#4491</div>
+                    <div class="text-cyan-400 text-sm mb-4 tracking-widest">★★★★★</div>
+                    <p class="font-mono text-sm text-zinc-300 leading-relaxed mb-6">"They pulled 4TB of critical architectural CAD files off a drive that two other 'experts' declared totally dead. Absolute ghosts in the machine."</p>
+                    <p class="font-cyber text-xs text-zinc-500 uppercase">- Director, Aether Design Group</p>
                 </div>
-                <div class="glass-panel p-6 relative">
-                    <div class="absolute top-0 right-0 bg-yellow-900/30 text-yellow-500 text-[8px] font-mono px-2 py-1">CASE_#8820</div>
-                    <div class="text-yellow-500 text-xs mb-3">★★★★★</div>
-                    <p class="font-mono text-[10px] text-zinc-400 leading-relaxed mb-4">"The Project P rig handles local AI models faster than workstations twice its price. The thermals are genuinely frightening. Cold as ice."</p>
-                    <p class="font-cyber text-[9px] text-zinc-600">- Independent AI Researcher</p>
+                <div class="glass-panel p-8 relative">
+                    <div class="absolute top-0 right-0 bg-yellow-900/40 text-yellow-500 text-xs font-mono px-3 py-1">CASE_#8820</div>
+                    <div class="text-yellow-500 text-sm mb-4 tracking-widest">★★★★★</div>
+                    <p class="font-mono text-sm text-zinc-300 leading-relaxed mb-6">"The Project P rig handles local AI models faster than workstations twice its price. The thermals are genuinely frightening. Cold as ice."</p>
+                    <p class="font-cyber text-xs text-zinc-500 uppercase">- Independent AI Researcher</p>
                 </div>
-                <div class="glass-panel p-6 relative">
-                    <div class="absolute top-0 right-0 bg-red-900/30 text-red-500 text-[8px] font-mono px-2 py-1">CASE_#1105</div>
-                    <div class="text-red-500 text-xs mb-3">★★★★★</div>
-                    <p class="font-mono text-[10px] text-zinc-400 leading-relaxed mb-4">"Spilled espresso on my primary logic board. Apple quoted $1200. h7k3r micro-soldered the ICs for a fraction. Operational the next day."</p>
-                    <p class="font-cyber text-[9px] text-zinc-600">- Sr. Software Engineer</p>
+                <div class="glass-panel p-8 relative">
+                    <div class="absolute top-0 right-0 bg-red-900/40 text-red-500 text-xs font-mono px-3 py-1">CASE_#1105</div>
+                    <div class="text-red-500 text-sm mb-4 tracking-widest">★★★★★</div>
+                    <p class="font-mono text-sm text-zinc-300 leading-relaxed mb-6">"Spilled espresso on my primary logic board. Apple quoted $1200. h7k3r micro-soldered the ICs for a fraction. Operational the next day."</p>
+                    <p class="font-cyber text-xs text-zinc-500 uppercase">- Sr. Software Engineer</p>
                 </div>
-                <div class="glass-panel p-6 relative">
-                    <div class="absolute top-0 right-0 bg-cyan-900/30 text-cyan-400 text-[8px] font-mono px-2 py-1">CASE_#9932</div>
-                    <div class="text-cyan-500 text-xs mb-3">★★★★★</div>
-                    <p class="font-mono text-[10px] text-zinc-400 leading-relaxed mb-4">"Zero-G build quality is psychotic. The cable routing is flawless. It’s an art piece that happens to calculate physics simulations."</p>
-                    <p class="font-cyber text-[9px] text-zinc-600">- VFX Lead, London</p>
+                <div class="glass-panel p-8 relative">
+                    <div class="absolute top-0 right-0 bg-cyan-900/40 text-cyan-400 text-xs font-mono px-3 py-1">CASE_#9932</div>
+                    <div class="text-cyan-400 text-sm mb-4 tracking-widest">★★★★★</div>
+                    <p class="font-mono text-sm text-zinc-300 leading-relaxed mb-6">"Zero-G build quality is psychotic. The cable routing is flawless. It’s an art piece that happens to calculate physics simulations."</p>
+                    <p class="font-cyber text-xs text-zinc-500 uppercase">- VFX Lead, London</p>
                 </div>
             </div>
         </section>
 
-        <section id="tab-pro" class="tab-section px-6 text-center max-w-4xl mx-auto">
-            <h2 class="font-cyber text-3xl text-cyan-400 mb-2 uppercase">Level_4_Assets</h2>
-            <p class="font-mono text-[10px] text-zinc-500 tracking-widest mb-12">OPERATOR PORTAL // NO AUTH REQUIRED</p>
+        <section id="tab-pro" class="tab-section px-6 text-center max-w-6xl mx-auto">
+            <h2 class="font-cyber text-4xl text-cyan-400 mb-4 uppercase">Level_4_Assets</h2>
+            <p class="font-mono text-sm text-zinc-400 tracking-widest mb-16">OPERATOR PORTAL // NO AUTH REQUIRED</p>
             
-            <div class="grid md:grid-cols-3 gap-6 text-left">
-                <div class="glass-panel p-6 border-cyan-500/30 hover:bg-cyan-900/10 cursor-pointer transition-colors">
-                    <h4 class="font-cyber text-[10px] text-white mb-2">Firmware_Repo.zip</h4>
-                    <p class="font-mono text-[9px] text-zinc-500 mb-4">BIOS flashes and unlocked microcode for Apex hardware.</p>
-                    <div class="text-[8px] font-mono text-cyan-400">[ DOWNLOAD ]</div>
+            <div class="grid md:grid-cols-3 gap-8 text-left">
+                <div class="glass-panel p-8 border-t-2 border-t-cyan-500/50 hover:bg-cyan-900/20 cursor-pointer transition-colors">
+                    <h4 class="font-cyber text-lg text-white mb-3">Firmware_Repo.zip</h4>
+                    <p class="font-mono text-sm text-zinc-400 mb-6 leading-relaxed">BIOS flashes and unlocked microcode for Apex hardware.</p>
+                    <div class="text-xs font-mono text-cyan-400 tracking-widest hover:text-white transition-colors">[ DOWNLOAD_FILE ]</div>
                 </div>
-                <div class="glass-panel p-6 border-cyan-500/30 hover:bg-cyan-900/10 cursor-pointer transition-colors">
-                    <h4 class="font-cyber text-[10px] text-white mb-2">Thermals_Override.exe</h4>
-                    <p class="font-mono text-[9px] text-zinc-500 mb-4">Proprietary fan curve and pump control daemon.</p>
-                    <div class="text-[8px] font-mono text-cyan-400">[ DOWNLOAD ]</div>
+                <div class="glass-panel p-8 border-t-2 border-t-cyan-500/50 hover:bg-cyan-900/20 cursor-pointer transition-colors">
+                    <h4 class="font-cyber text-lg text-white mb-3">Thermals_Override.exe</h4>
+                    <p class="font-mono text-sm text-zinc-400 mb-6 leading-relaxed">Proprietary fan curve and liquid pump control daemon.</p>
+                    <div class="text-xs font-mono text-cyan-400 tracking-widest hover:text-white transition-colors">[ DOWNLOAD_FILE ]</div>
                 </div>
-                <div class="glass-panel p-6 border-cyan-500/30 hover:bg-cyan-900/10 cursor-pointer transition-colors">
-                    <h4 class="font-cyber text-[10px] text-white mb-2">Sys_Diagnostics.sh</h4>
-                    <p class="font-mono text-[9px] text-zinc-500 mb-4">Deep silicon stress tester utilized by HQ.</p>
-                    <div class="text-[8px] font-mono text-cyan-400">[ DOWNLOAD ]</div>
+                <div class="glass-panel p-8 border-t-2 border-t-cyan-500/50 hover:bg-cyan-900/20 cursor-pointer transition-colors">
+                    <h4 class="font-cyber text-lg text-white mb-3">Sys_Diagnostics.sh</h4>
+                    <p class="font-mono text-sm text-zinc-400 mb-6 leading-relaxed">Deep silicon stress tester utilized by headquarters.</p>
+                    <div class="text-xs font-mono text-cyan-400 tracking-widest hover:text-white transition-colors">[ DOWNLOAD_FILE ]</div>
                 </div>
             </div>
         </section>
 
     </main>
 
-    <footer class="p-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
-        <div class="font-mono text-[8px] text-zinc-700 uppercase tracking-[0.5em]">© 2026 H7K3R_SYS // INFILTRATE_AND_REPAIR</div>
-        <div class="font-mono text-[8px] text-zinc-700 uppercase tracking-[0.5em]" id="loc-footer">NODE: OFFLINE</div>
+    <footer class="p-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-6 bg-black">
+        <div class="font-mono text-xs text-zinc-600 uppercase tracking-widest">© 2026 H7K3R_SYS // INFILTRATE_AND_REPAIR</div>
+        <div class="font-mono text-xs text-zinc-600 uppercase tracking-widest" id="loc-footer">NODE: OFFLINE</div>
     </footer>
 
     <script>
@@ -300,7 +308,7 @@
         function openModal(v) { document.getElementById('modal-select').value = v; document.getElementById('modal').classList.add('modal-active'); }
         function closeModal() { document.getElementById('modal').classList.remove('modal-active'); }
 
-        // LANGUAGE TOGGLE (EN -> FR -> JP)
+        // LANGUAGE TOGGLE
         const langs = ['en', 'fr', 'jp'];
         let langIdx = 0;
         function toggleLang() {
@@ -313,7 +321,7 @@
             });
         }
 
-        // RELIABLE IP TRACKER (GeoJS)
+        // RELIABLE IP TRACKER
         fetch('https://get.geojs.io/v1/ip/geo.json')
             .then(res => res.json())
             .then(data => {
@@ -326,7 +334,7 @@
                 document.getElementById('city-node').innerText = `NODE HIDDEN`;
             });
 
-        // LIVE THREAT MAP (Canvas Animation)
+        // LIVE THREAT MAP (Expanded canvas lines over World Map)
         const mapCv = document.getElementById('attackMap');
         const mapCtx = mapCv.getContext('2d');
         let lines = [];
@@ -337,71 +345,75 @@
 
         function drawMap() {
             mapCtx.clearRect(0, 0, mapCv.width, mapCv.height);
-            // Randomly generate attacks
-            if(Math.random() < 0.05) {
+            // Spawn new threat vectors
+            if(Math.random() < 0.04) {
                 lines.push({
                     x1: Math.random() * mapCv.width, y1: Math.random() * mapCv.height,
                     x2: Math.random() * mapCv.width, y2: Math.random() * mapCv.height,
-                    life: 1.0
+                    life: 1.0, speed: Math.random() * 0.01 + 0.01
                 });
             }
-            // Draw attacks
+            // Draw threats
             for(let i = lines.length - 1; i >= 0; i--) {
                 let l = lines[i];
                 mapCtx.beginPath();
                 mapCtx.moveTo(l.x1, l.y1);
-                // Curve control points
-                mapCtx.quadraticCurveTo((l.x1+l.x2)/2, Math.min(l.y1, l.y2)-50, l.x2, l.y2);
+                // Draw arc between points
+                mapCtx.quadraticCurveTo((l.x1+l.x2)/2, Math.min(l.y1, l.y2) - 80, l.x2, l.y2);
                 mapCtx.strokeStyle = `rgba(255, 0, 60, ${l.life})`;
-                mapCtx.lineWidth = 1.5;
+                mapCtx.lineWidth = 2;
                 mapCtx.stroke();
                 
-                // End dots
+                // Impact points
                 mapCtx.fillStyle = `rgba(0, 243, 255, ${l.life})`;
-                mapCtx.beginPath(); mapCtx.arc(l.x1, l.y1, 2, 0, Math.PI*2); mapCtx.fill();
+                mapCtx.beginPath(); mapCtx.arc(l.x1, l.y1, 3, 0, Math.PI*2); mapCtx.fill();
                 mapCtx.fillStyle = `rgba(255, 0, 60, ${l.life})`;
-                mapCtx.beginPath(); mapCtx.arc(l.x2, l.y2, 3, 0, Math.PI*2); mapCtx.fill();
+                mapCtx.beginPath(); mapCtx.arc(l.x2, l.y2, 4, 0, Math.PI*2); mapCtx.fill();
 
-                l.life -= 0.02;
+                l.life -= l.speed;
                 if(l.life <= 0) lines.splice(i, 1);
             }
             requestAnimationFrame(drawMap);
         }
         drawMap();
 
-        // GEAR GRID (Sober, SVG abstract icons instead of big photos)
+        // FULL 8-ITEM GEAR GRID
         const gear = [
-            { n: "STEALTH_HOODIE", p: "145", svg: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"></path><line x1="16" y1="8" x2="2" y2="22"></line><line x1="17.5" y1="15" x2="9" y2="15"></line></svg>` },
-            { n: "FARADAY_BAG", p: "35", svg: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>` },
-            { n: "AES_USB_DRIVE", p: "195", svg: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>` },
-            { n: "PRECISION_BITS", p: "85", svg: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>` }
+            { n: "STEALTH_HOODIE", p: "145", svg: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"></path><line x1="16" y1="8" x2="2" y2="22"></line><line x1="17.5" y1="15" x2="9" y2="15"></line></svg>` },
+            { n: "FARADAY_BAG", p: "35", svg: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>` },
+            { n: "AES_USB_DRIVE", p: "195", svg: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>` },
+            { n: "PRECISION_BITS", p: "85", svg: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>` },
+            { n: "TACTICAL_PACK", p: "210", svg: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="6" width="16" height="16" rx="2" ry="2"></rect><path d="M9 6V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"></path><line x1="8" y1="11" x2="16" y2="11"></line></svg>` },
+            { n: "SIGNAL_JAMMER", p: "450", svg: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="8" width="14" height="14" rx="2" ry="2"></rect><line x1="12" y1="8" x2="12" y2="2"></line><line x1="9" y1="5" x2="15" y2="5"></line><line x1="4" y1="20" x2="20" y2="4"></line></svg>` },
+            { n: "OSINT_MANUAL", p: "45", svg: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>` },
+            { n: "HARDWARE_KEY", p: "60", svg: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path></svg>` }
         ];
         const grid = document.getElementById('gearGrid');
         gear.forEach(item => {
             grid.innerHTML += `
-            <div class="glass-panel p-4 group cursor-pointer hover:border-cyan-500/50 transition-colors flex flex-col items-center text-center">
-                <div class="text-zinc-600 group-hover:text-cyan-400 mb-4 mt-2 transition-colors">${item.svg}</div>
-                <h4 class="font-cyber text-[9px] text-white mb-1 uppercase">${item.n}</h4>
-                <span class="font-mono text-cyan-500 text-[10px] mb-3">£${item.p}.00</span>
-                <button onclick="openModal('GEAR')" class="text-[8px] font-cyber border border-zinc-700 w-full py-1 hover:bg-white hover:text-black hover:border-white transition-all">ACQUIRE</button>
+            <div class="glass-panel p-6 group cursor-pointer hover:border-cyan-500/50 hover:bg-cyan-900/10 transition-colors flex flex-col items-center text-center">
+                <div class="text-zinc-500 group-hover:text-cyan-400 mb-6 mt-4 transition-colors">${item.svg}</div>
+                <h4 class="font-cyber text-xs text-white mb-2 uppercase">${item.n}</h4>
+                <span class="font-mono text-cyan-400 text-sm mb-6">£${item.p}.00</span>
+                <button onclick="openModal('GEAR')" class="text-xs font-cyber border border-zinc-600 w-full py-2 hover:bg-white hover:text-black hover:border-white transition-all">ACQUIRE</button>
             </div>`;
         });
 
-        // GAMES LOGIC
+        // GAMES LOGIC (Adjusted sizes for new layout)
         // 1. Firewall
         let cvF = document.getElementById('c-f'), ctxF = cvF.getContext('2d'), gF=false, bF, pF;
-        function startF(){ document.getElementById('btn-f').style.display='none'; gF=true; bF={x:30,y:75,v:0,g:0.2}; pF=[]; loopF(); }
-        function loopF(){ if(!gF)return; ctxF.fillStyle="#000"; ctxF.fillRect(0,0,280,150); bF.v+=bF.g; bF.y+=bF.v; ctxF.fillStyle="#0ff"; ctxF.fillRect(bF.x,bF.y,4,4);
-            if(pF.length===0 || pF[pF.length-1].x<200) pF.push({x:280,y:Math.random()*80+20});
-            pF.forEach((p,i)=>{p.x-=2; ctxF.fillStyle="#f03"; ctxF.fillRect(p.x,0,10,p.y); ctxF.fillRect(p.x,p.y+40,10,150);
-            if(bF.x<p.x+10&&bF.x+4>p.x&&(bF.y<p.y||bF.y+4>p.y+40)) gF=false; });
-            if(bF.y>150||bF.y<0) gF=false; if(!gF){ document.getElementById('btn-f').style.display='inline-block'; document.getElementById('btn-f').innerText='RETRY'; } else requestAnimationFrame(loopF); }
-        cvF.onmousedown=()=>{if(gF)bF.v=-3.5;};
+        function startF(){ document.getElementById('btn-f').style.display='none'; gF=true; bF={x:40,y:90,v:0,g:0.3}; pF=[]; loopF(); }
+        function loopF(){ if(!gF)return; ctxF.fillStyle="#000"; ctxF.fillRect(0,0,350,180); bF.v+=bF.g; bF.y+=bF.v; ctxF.fillStyle="#0ff"; ctxF.fillRect(bF.x,bF.y,6,6);
+            if(pF.length===0 || pF[pF.length-1].x<250) pF.push({x:350,y:Math.random()*100+30});
+            pF.forEach((p,i)=>{p.x-=2.5; ctxF.fillStyle="#f03"; ctxF.fillRect(p.x,0,15,p.y); ctxF.fillRect(p.x,p.y+50,15,180);
+            if(bF.x<p.x+15&&bF.x+6>p.x&&(bF.y<p.y||bF.y+6>p.y+50)) gF=false; });
+            if(bF.y>180||bF.y<0) gF=false; if(!gF){ document.getElementById('btn-f').style.display='inline-block'; document.getElementById('btn-f').innerText='RETRY'; } else requestAnimationFrame(loopF); }
+        cvF.onmousedown=()=>{if(gF)bF.v=-4.5;};
 
         // 2. Memory
         let sM=[], uM=[];
         function startM(){ document.getElementById('btn-m').style.display='none'; const g=document.getElementById('grid-m'); g.innerHTML=''; 
-            for(let i=0;i<9;i++) g.innerHTML+=`<div id="m-${i}" class="bg-zinc-900 border border-zinc-800 cursor-pointer w-full h-full flex items-center justify-center font-mono text-[8px] text-zinc-700"></div>`; 
+            for(let i=0;i<9;i++) g.innerHTML+=`<div id="m-${i}" class="bg-zinc-900 border border-zinc-800 cursor-pointer w-full h-full flex items-center justify-center font-mono text-xs text-zinc-600 hover:bg-zinc-800 transition-colors"></div>`; 
             sM=[]; nextM(); }
         function nextM(){ uM=[]; sM.push(Math.floor(Math.random()*9)); 
             sM.forEach((c,i)=>setTimeout(()=>{ 
@@ -411,22 +423,22 @@
             setTimeout(()=>document.querySelectorAll('#grid-m div').forEach((d,i)=>{ 
                 d.onclick=()=>{ 
                     d.style.background="#0ff"; setTimeout(()=>d.style.background="",200); uM.push(i);
-                    if(uM[uM.length-1]!==sM[uM.length-1]){ g.innerHTML=`<div class="col-span-3 h-full flex items-center justify-center text-red-500 font-mono text-[10px]">FAIL</div>`; document.getElementById('btn-m').style.display='inline-block'; document.getElementById('btn-m').innerText='RETRY'; } 
+                    if(uM[uM.length-1]!==sM[uM.length-1]){ g.innerHTML=`<div class="col-span-3 h-full flex items-center justify-center text-red-500 font-mono text-sm tracking-widest">FAIL</div>`; document.getElementById('btn-m').style.display='inline-block'; document.getElementById('btn-m').innerText='RETRY'; } 
                     else if(uM.length===sM.length)setTimeout(nextM,500); 
                 }; 
             }),sM.length*500); }
 
         // 3. Snake
         let cvS=document.getElementById('c-s'), ctxS=cvS.getContext('2d'), gS=false, sS, fS, dS;
-        function startS(){ document.getElementById('btn-s').style.display='none'; gS=true; sS=[{x:5,y:5}]; fS={x:15,y:8}; dS="R"; loopS(); }
+        function startS(){ document.getElementById('btn-s').style.display='none'; gS=true; sS=[{x:5,y:5}]; fS={x:20,y:10}; dS="R"; loopS(); }
         function loopS(){ if(!gS)return; let h={...sS[0]}; if(dS=="R")h.x++; if(dS=="L")h.x--; if(dS=="U")h.y--; if(dS=="D")h.y++;
-            if(h.x==fS.x&&h.y==fS.y) fS={x:Math.floor(Math.random()*27),y:Math.floor(Math.random()*14)}; else sS.pop();
-            if(h.x<0||h.x>=28||h.y<0||h.y>=15) gS=false; sS.unshift(h); 
-            ctxS.fillStyle="#000"; ctxS.fillRect(0,0,280,150); 
+            if(h.x==fS.x&&h.y==fS.y) fS={x:Math.floor(Math.random()*34),y:Math.floor(Math.random()*17)}; else sS.pop();
+            if(h.x<0||h.x>=35||h.y<0||h.y>=18) gS=false; sS.unshift(h); 
+            ctxS.fillStyle="#000"; ctxS.fillRect(0,0,350,180); 
             ctxS.fillStyle="#ffb700"; sS.forEach(p=>ctxS.fillRect(p.x*10,p.y*10,9,9));
             ctxS.fillStyle="#fff"; ctxS.fillRect(fS.x*10,fS.y*10,9,9); 
-            if(!gS){ document.getElementById('btn-s').style.display='inline-block'; document.getElementById('btn-s').innerText='RETRY'; } else setTimeout(loopS,100); }
-        window.onkeydown=(e)=>{if(e.key.includes("Arrow")) { e.preventDefault(); dS=e.key[5]; if(dS=="i")dS="R"; if(dS=="e")dS="L"; if(dS=="p")dS="U"; if(dS=="n")dS="D"; }};
+            if(!gS){ document.getElementById('btn-s').style.display='inline-block'; document.getElementById('btn-s').innerText='RETRY'; } else setTimeout(loopS,90); }
+        window.onkeydown=(e)=>{if(e.key.includes("Arrow")) { e.preventDefault(); let k=e.key[5]; if((k=="i"&&dS!="L")||(k=="R"&&dS!="L"))dS="R"; else if((k=="e"&&dS!="R")||(k=="L"&&dS!="R"))dS="L"; else if((k=="p"&&dS!="D")||(k=="U"&&dS!="D"))dS="U"; else if((k=="n"&&dS!="U")||(k=="D"&&dS!="U"))dS="D"; }};
     </script>
 </body>
 </html>
