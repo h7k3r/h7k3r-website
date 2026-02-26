@@ -133,4 +133,459 @@
             </div>
         </section>
 
-        <section id="tab-rigs" class="tab-content px-4
+        <section id="tab-rigs" class="tab-content px-4 max-w-7xl mx-auto">
+            <div class="mb-12 text-center">
+                <h2 class="heading text-3xl text-white mb-3">Deployment Architecture</h2>
+                <p class="font-mono text-xs text-slate-400">Classified configurations for extreme workloads.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6 mb-6">
+                <div class="card card-accent p-8 md:p-10 relative overflow-hidden group">
+                    <div class="absolute -right-10 -bottom-10 text-[12rem] font-bold text-white/5 select-none leading-none group-hover:text-cyan-500/5 transition-colors">P</div>
+                    <h3 class="heading text-3xl text-white mb-2">Project_P</h3>
+                    <p class="font-mono text-[10px] text-cyan-400 mb-6 uppercase tracking-widest">Veno_Scorp Killer</p>
+                    <p class="text-sm text-slate-400 mb-8 max-w-sm">Engineered for zero thermal latency and maximum frame-pacing. The definitive entry-level executioner.</p>
+                    <div class="font-mono text-2xl text-white mb-6">£750.00</div>
+                    <button onclick="openModal('Project_P')" class="btn-modern px-8 py-3">Acquire</button>
+                </div>
+                <div class="card p-8 md:p-10 relative overflow-hidden group hover:border-slate-500">
+                    <div class="absolute -right-10 -bottom-10 text-[12rem] font-bold text-white/5 select-none leading-none group-hover:text-slate-500/10 transition-colors">S</div>
+                    <h3 class="heading text-3xl text-white mb-2">Series_P</h3>
+                    <p class="font-mono text-[10px] text-slate-500 mb-6 uppercase tracking-widest">Prosumer Excellence</p>
+                    <p class="text-sm text-slate-400 mb-8 max-w-sm">Balanced performance geometry. Optimized for sustained heavy-load research tasks and daily operations.</p>
+                    <div class="font-mono text-2xl text-white mb-6">£749.00</div>
+                    <button onclick="openModal('Series_P')" class="btn-outline px-8 py-3">Pre-Order</button>
+                </div>
+            </div>
+
+            <div class="card p-8 md:p-10 mb-6 border-l-4 border-l-red-600 flex flex-col md:flex-row items-center justify-between gap-8">
+                <div>
+                    <h3 class="heading text-2xl text-white mb-2">Black_Box V1</h3>
+                    <p class="font-mono text-[10px] text-red-400 mb-4 uppercase tracking-widest">Signal Intelligence Asset</p>
+                    <p class="text-sm text-slate-400 max-w-lg">Portable field asset designed for wireless interception. AMD R9 9900X + RTX 4070 Ti SUPER with dual Alfa WiFi-6E radios.</p>
+                </div>
+                <div class="text-center md:text-right w-full md:w-auto">
+                    <div class="font-mono text-2xl text-white mb-4">£4,200.00</div>
+                    <button onclick="openModal('Black_Box')" class="btn-outline w-full md:w-auto px-8 py-3 hover:!border-red-500 hover:!text-red-500">Deploy Unit</button>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="card p-8 text-center flex flex-col items-center hover:border-white/30">
+                    <h3 class="heading text-xl text-white mb-2">ITX Spectre</h3>
+                    <p class="font-mono text-[10px] text-slate-500 mb-6">£4,890.00 // 10L Chassis</p>
+                    <button onclick="openModal('Apex_Rig')" class="btn-outline w-full py-3 mt-auto">Reserve</button>
+                </div>
+                <div class="card p-8 text-center flex flex-col items-center border-cyan-500/30 bg-cyan-900/5">
+                    <h3 class="heading text-xl text-cyan-400 mb-2">Zero-G</h3>
+                    <p class="font-mono text-[10px] text-slate-400 mb-6">£7,250.00 // Xproto-L Open</p>
+                    <button onclick="openModal('Apex_Rig')" class="btn-modern w-full py-3 mt-auto">Reserve</button>
+                </div>
+                <div class="card p-8 text-center flex flex-col items-center hover:border-white/30">
+                    <h3 class="heading text-xl text-white mb-2">Trident</h3>
+                    <p class="font-mono text-[10px] text-slate-500 mb-6">£8,610.00 // Dual 5090 Array</p>
+                    <button onclick="openModal('Apex_Rig')" class="btn-outline w-full py-3 mt-auto">Reserve</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="tab-gear" class="tab-content px-4 max-w-7xl mx-auto">
+            <div class="mb-12 text-center">
+                <h2 class="heading text-3xl text-white mb-3">Tactical Armory</h2>
+                <p class="font-mono text-xs text-slate-400">Field-tested operational gear.</p>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6" id="gear-grid">
+                </div>
+        </section>
+
+        <section id="tab-ops" class="tab-content px-4 max-w-5xl mx-auto">
+            <div class="card p-8 md:p-12">
+                <div class="text-center mb-12">
+                    <h2 class="heading text-3xl text-white mb-4">Incident_Response</h2>
+                    <p class="font-mono text-xs text-red-500 uppercase tracking-widest">Laboratory Level Intervention</p>
+                </div>
+                
+                <div class="grid md:grid-cols-2 gap-8 mb-12">
+                    <div class="border-l-2 border-slate-700 pl-6">
+                        <h4 class="font-bold text-white mb-3">Silicon Microsurgery</h4>
+                        <p class="text-sm text-slate-400 leading-relaxed">BGA reballing, trace reconstruction, and blown IC replacement executed under high-power stereomicroscopes. We bypass standard manufacturer limitations.</p>
+                    </div>
+                    <div class="border-l-2 border-slate-700 pl-6">
+                        <h4 class="font-bold text-white mb-3">Data Forensics</h4>
+                        <p class="text-sm text-slate-400 leading-relaxed">Physical platter swaps, read-head replacements, and NAND chip-off data extraction inside ISO-certified clean environments. We recover what software cannot.</p>
+                    </div>
+                </div>
+                
+                <div class="text-center border-t border-white/5 pt-8">
+                    <button onclick="openModal('Incident_Response')" class="btn-modern !bg-red-600 !text-white hover:!bg-transparent hover:!text-red-500 hover:!border-red-500 px-10 py-4">Open Diagnostic Ticket</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="tab-arcade" class="tab-content px-4 max-w-6xl mx-auto">
+            <div class="mb-10 text-center">
+                <h2 class="heading text-3xl text-white mb-3">Training Simulations</h2>
+                <p class="font-mono text-xs text-slate-400 uppercase">Maintain operator reflexes.</p>
+            </div>
+            
+            <div class="grid lg:grid-cols-3 gap-6">
+                <div class="card p-5 flex flex-col">
+                    <div class="flex justify-between items-center mb-4">
+                        <h4 class="font-mono text-xs font-bold text-slate-300">01_Firewall</h4>
+                        <span id="score-fw" class="font-mono text-cyan-400 text-[10px]">Score: 0</span>
+                    </div>
+                    <div class="game-canvas-container relative flex-grow bg-black border border-slate-800 rounded overflow-hidden aspect-video flex items-center justify-center" id="game-fw">
+                        <canvas id="canvas-fw" width="300" height="150" class="w-full h-full object-contain"></canvas>
+                        <div id="ui-fw" class="absolute inset-0 flex items-center justify-center bg-black/80 backdrop-blur-sm">
+                            <button onclick="startFW()" class="btn-outline !border-cyan-500 !text-cyan-500 hover:!bg-cyan-500 hover:!text-black px-4 py-2">Execute</button>
+                        </div>
+                    </div>
+                    <p class="text-center font-mono text-[9px] text-slate-500 mt-3">TAP/CLICK TO BYPASS</p>
+                </div>
+
+                <div class="card p-5 flex flex-col">
+                    <div class="flex justify-between items-center mb-4">
+                        <h4 class="font-mono text-xs font-bold text-slate-300">02_Decrypt</h4>
+                        <span id="score-dc" class="font-mono text-green-400 text-[10px]">Lvl: 1</span>
+                    </div>
+                    <div class="game-canvas-container flex-grow bg-black border border-slate-800 rounded p-4 flex items-center justify-center relative">
+                        <div class="decrypt-wrapper">
+                            <div id="grid-dc" class="decrypt-grid">
+                                <div class="col-span-3 row-span-3 text-slate-600 font-mono text-xs">STANDBY</div>
+                            </div>
+                        </div>
+                        <div id="ui-dc" class="absolute inset-0 flex items-center justify-center bg-black/80 backdrop-blur-sm">
+                            <button onclick="startDC()" id="btn-dc" class="btn-outline !border-green-500 !text-green-500 hover:!bg-green-500 hover:!text-black px-4 py-2">Sequence</button>
+                        </div>
+                    </div>
+                    <p class="text-center font-mono text-[9px] text-slate-500 mt-3">REPEAT THE PATTERN</p>
+                </div>
+
+                <div class="card p-5 flex flex-col">
+                    <div class="flex justify-between items-center mb-4">
+                        <h4 class="font-mono text-xs font-bold text-slate-300">03_Snake</h4>
+                        <span id="score-sn" class="font-mono text-yellow-400 text-[10px]">Bits: 0</span>
+                    </div>
+                    <div class="game-canvas-container relative flex-grow bg-black border border-slate-800 rounded overflow-hidden aspect-video flex items-center justify-center" id="game-sn">
+                        <canvas id="canvas-sn" width="300" height="150" class="w-full h-full object-contain"></canvas>
+                        <div id="ui-sn" class="absolute inset-0 flex items-center justify-center bg-black/80 backdrop-blur-sm">
+                            <button onclick="startSN()" class="btn-outline !border-yellow-500 !text-yellow-500 hover:!bg-yellow-500 hover:!text-black px-4 py-2">Inject</button>
+                        </div>
+                    </div>
+                    <p class="text-center font-mono text-[9px] text-slate-500 mt-3">SWIPE TO DIRECT</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="tab-logs" class="tab-content px-4 max-w-7xl mx-auto">
+            <h2 class="heading text-2xl text-white mb-8 text-center uppercase">Declassified Logs</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="card p-6 border-t-2 border-t-cyan-500">
+                    <div class="font-mono text-[10px] text-slate-500 mb-3">CASE_#00842 // DATA_RECON</div>
+                    <p class="text-sm text-slate-300 italic mb-4">"Retrieved 4TB of architectural CAD files from a drive declared physically dead by two local IT shops. Exceptional throughput."</p>
+                    <div class="text-xs font-bold text-cyan-500">★★★★★</div>
+                </div>
+                <div class="card p-6 border-t-2 border-t-yellow-500">
+                    <div class="font-mono text-[10px] text-slate-500 mb-3">CASE_#00912 // SERIES_P</div>
+                    <p class="text-sm text-slate-300 italic mb-4">"The Project P rig handles local LLM training without breaking a sweat. The thermals are genuinely cold. Perfect build."</p>
+                    <div class="text-xs font-bold text-yellow-500">★★★★★</div>
+                </div>
+                <div class="card aspect-square overflow-hidden bg-slate-900 border-none"><img src="build1.jpg" alt="Log 1" onerror="this.src='https://images.unsplash.com/photo-1587202377405-836165b1040a?w=500'" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-500"></div>
+                <div class="card aspect-square overflow-hidden bg-slate-900 border-none"><img src="build2.jpg" alt="Log 2" onerror="this.src='https://images.unsplash.com/photo-1547082299-de196ea013d6?w=500'" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-500"></div>
+                <div class="card aspect-square overflow-hidden bg-slate-900 border-none"><img src="build3.jpg" alt="Log 3" onerror="this.src='https://images.unsplash.com/photo-1591488320449-011701bb6704?w=500'" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-500"></div>
+                <div class="card aspect-square overflow-hidden bg-slate-900 border-none"><img src="build4.jpg" alt="Log 4" onerror="this.src='https://images.unsplash.com/photo-1518770660439-4636190af475?w=500'" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-500"></div>
+            </div>
+        </section>
+
+        <section id="tab-pro" class="tab-content px-4 max-w-5xl mx-auto">
+            <div class="card p-8 md:p-12">
+                <h2 class="heading text-2xl text-cyan-400 mb-2">Level_4_Portal</h2>
+                <p class="font-mono text-xs text-slate-500 mb-10 border-b border-white/5 pb-6">Direct access to operator files and firmware repositories.</p>
+                
+                <div class="space-y-4">
+                    <div class="flex justify-between items-center p-4 hover:bg-white/5 border border-transparent hover:border-white/10 transition rounded cursor-pointer group">
+                        <div>
+                            <h4 class="font-bold text-white text-sm">Bios_Overrides.zip</h4>
+                            <p class="text-xs text-slate-500">Unlocked microcode for Apex hardware</p>
+                        </div>
+                        <span class="font-mono text-xs text-cyan-500 group-hover:text-white">[ DL ]</span>
+                    </div>
+                    <div class="flex justify-between items-center p-4 hover:bg-white/5 border border-transparent hover:border-white/10 transition rounded cursor-pointer group">
+                        <div>
+                            <h4 class="font-bold text-white text-sm">Forensic_Toolkit_V3.iso</h4>
+                            <p class="text-xs text-slate-500">Linux-based NAND extractor image</p>
+                        </div>
+                        <span class="font-mono text-xs text-cyan-500 group-hover:text-white">[ DL ]</span>
+                    </div>
+                    <div class="flex justify-between items-center p-4 hover:bg-white/5 border border-transparent hover:border-white/10 transition rounded cursor-pointer group">
+                        <div>
+                            <h4 class="font-bold text-white text-sm">Thermals_Daemon.sh</h4>
+                            <p class="text-xs text-slate-500">Proprietary liquid pump control script</p>
+                        </div>
+                        <span class="font-mono text-xs text-cyan-500 group-hover:text-white">[ DL ]</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="p-6 md:p-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left bg-black">
+        <div class="font-mono text-[10px] text-slate-500">© 2026 H7K3R_SYSTEMS // OPERATIONAL</div>
+        <div class="font-mono text-[10px] text-cyan-600" id="loc-footer">NODE: OFFLINE</div>
+    </footer>
+
+    <script>
+        // TAB CONTROLLER
+        function showTab(id) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.nav-link').forEach(b => b.classList.remove('active'));
+            document.getElementById('tab-' + id).classList.add('active');
+            const btn = document.getElementById('btn-' + id);
+            if(btn) btn.classList.add('active');
+            window.scrollTo(0,0);
+        }
+
+        // MODAL LOGIC
+        function openModal(val) { document.getElementById('modal-select').value = val; document.getElementById('modal').classList.add('modal-active'); }
+        function closeModal() { document.getElementById('modal').classList.remove('modal-active'); }
+
+        // IP TRACING
+        fetch('https://get.geojs.io/v1/ip/geo.json')
+            .then(res => res.json())
+            .then(data => {
+                const city = (data.city || data.region || "Secure Location").toUpperCase();
+                document.getElementById('city-node').innerText = city;
+                document.getElementById('ip-node').innerText = `IP: ${data.ip}`;
+                document.getElementById('loc-footer').innerText = `NODE: ${city} / ${data.country}`;
+            }).catch(() => {
+                document.getElementById('city-node').innerText = `NODE HIDDEN`;
+            });
+
+        // ARMORY DATA (Expanded 12 items)
+        const gear = [
+            { n: "Stealth Hoodie", p: "145", d: "EMI Shielding Outerwear" },
+            { n: "Cable Sleeves", p: "45", d: "Pro Link Kit" },
+            { n: "EDC Pouch", p: "25", d: "Tactical Organizer" },
+            { n: "ID Patch", p: "12", d: "PVC Velcro Asset" },
+            { n: "Silicon Mat", p: "35", d: "Anti-Static Desk Grid" },
+            { n: "Faraday Bag", p: "30", d: "RF Signal Blocker" },
+            { n: "SSD Field Drive", p: "85", d: "Encrypted Storage" },
+            { n: "Operator Cap", p: "28", d: "Low-Profile Headwear" },
+            { n: "AES USB Killer", p: "45", d: "Capacitor Discharge" },
+            { n: "Signal Jammer", p: "320", d: "Tri-Band RF Suppression" },
+            { n: "Tactical Deck", p: "450", d: "Rugged SFF Shell" },
+            { n: "Precision Bits", p: "85", d: "Micro Solder Tool Kit" }
+        ];
+        const gGrid = document.getElementById('gear-grid');
+        gear.forEach(i => {
+            gGrid.innerHTML += `
+            <div class="card p-5 text-center flex flex-col items-center justify-between">
+                <div>
+                    <h4 class="font-bold text-sm text-white mb-1 uppercase">${i.n}</h4>
+                    <p class="font-mono text-[9px] text-slate-500 mb-4">${i.d}</p>
+                </div>
+                <div class="w-full">
+                    <span class="font-mono text-cyan-400 text-xs mb-4 block">£${i.p}.00</span>
+                    <button onclick="openModal('Tactical_Gear')" class="btn-outline w-full py-2 text-[10px]">Acquire</button>
+                </div>
+            </div>`;
+        });
+
+        // LIVE THREAT MAP (Canvas on SVG)
+        const attackCvs = document.getElementById('attackCanvas');
+        const attackCtx = attackCvs.getContext('2d');
+        let attacks = [];
+        
+        function resizeAttacks() { 
+            const container = document.getElementById('map-container');
+            attackCvs.width = container.offsetWidth; 
+            attackCvs.height = container.offsetHeight; 
+        }
+        window.addEventListener('resize', resizeAttacks); 
+        resizeAttacks();
+
+        function drawAttacks() {
+            attackCtx.clearRect(0,0,attackCvs.width, attackCvs.height);
+            if(Math.random() < 0.05) {
+                attacks.push({ 
+                    x1: Math.random()*attackCvs.width, y1: Math.random()*attackCvs.height, 
+                    x2: Math.random()*attackCvs.width, y2: Math.random()*attackCvs.height, 
+                    l: 1.0 
+                });
+            }
+            attacks.forEach((a, i) => {
+                attackCtx.beginPath(); attackCtx.moveTo(a.x1, a.y1);
+                attackCtx.quadraticCurveTo((a.x1+a.x2)/2, Math.min(a.y1, a.y2)-50, a.x2, a.y2);
+                attackCtx.strokeStyle = `rgba(255, 0, 60, ${a.l})`; attackCtx.lineWidth = 1.5; attackCtx.stroke();
+                
+                attackCtx.fillStyle = `rgba(0, 243, 255, ${a.l})`; attackCtx.beginPath(); attackCtx.arc(a.x1, a.y1, 2, 0, 7); attackCtx.fill();
+                attackCtx.fillStyle = `rgba(255, 0, 60, ${a.l})`; attackCtx.beginPath(); attackCtx.arc(a.x2, a.y2, 3, 0, 7); attackCtx.fill();
+                
+                a.l -= 0.015; if(a.l <= 0) attacks.splice(i, 1);
+            });
+            requestAnimationFrame(drawAttacks);
+        }
+        drawAttacks();
+
+        // ---- ARCADE GAMES LOGIC ----
+
+        // PREVENT SCROLLING ON MOBILE CANVAS
+        function preventScroll(e) { e.preventDefault(); }
+        document.querySelectorAll('.game-canvas-container').forEach(el => {
+            el.addEventListener('touchmove', preventScroll, { passive: false });
+        });
+
+        // 1. FIREWALL
+        let fwG = false, fwB, fwP = [], fwS = 0;
+        const cvFW = document.getElementById('canvas-fw'), ctxFW = cvFW.getContext('2d');
+        function startFW() { 
+            document.getElementById('ui-fw').style.display='none'; 
+            fwG=true; fwB={x:30,y:75,v:0}; fwP=[]; fwS=0; 
+            document.getElementById('score-fw').innerText = "Score: 0";
+            loopFW(); 
+        }
+        function loopFW(){ 
+            if(!fwG)return; 
+            ctxFW.fillStyle="#000"; ctxFW.fillRect(0,0,300,150); 
+            fwB.v+=0.25; fwB.y+=fwB.v;
+            ctxFW.fillStyle="#00f3ff"; ctxFW.fillRect(30, fwB.y, 8, 8);
+            
+            if(fwP.length===0 || fwP[fwP.length-1].x < 180) fwP.push({x:300, h:Math.random()*70+20});
+            
+            fwP.forEach((p, i)=>{ 
+                p.x-=2.5; 
+                ctxFW.fillStyle="#ff003c"; 
+                ctxFW.fillRect(p.x, 0, 12, p.h); 
+                ctxFW.fillRect(p.x, p.h+45, 12, 150);
+                
+                if(30<p.x+12 && 38>p.x && (fwB.y<p.h || fwB.y+8>p.h+45)) fwG=false; // Collision
+                if(p.x === 30) { fwS++; document.getElementById('score-fw').innerText = "Score: " + fwS; }
+            });
+            
+            if(fwB.y > 150 || fwB.y < 0) fwG=false; 
+            if(!fwG) { 
+                document.getElementById('ui-fw').style.display='flex'; 
+                document.querySelector('#ui-fw button').innerText = 'RETRY';
+            } else {
+                requestAnimationFrame(loopFW);
+            }
+        }
+        cvFW.addEventListener('mousedown', () => { if(fwG) fwB.v = -4; });
+        cvFW.addEventListener('touchstart', (e) => { e.preventDefault(); if(fwG) fwB.v = -4; }, {passive: false});
+
+        // 2. DECRYPT (Memory Grid)
+        let dcS = [], dcU = [], dcL = 1;
+        function startDC() { 
+            dcL=1; document.getElementById('ui-dc').style.display='none'; 
+            document.getElementById('score-dc').innerText = "Lvl: 1";
+            setupDCGrid(); 
+            setTimeout(nextDC, 500);
+        }
+        function setupDCGrid() {
+            const g = document.getElementById('grid-dc'); g.innerHTML = '';
+            for(let i=0;i<9;i++) g.innerHTML += `<div id="d-${i}" onclick="clickDC(${i})"></div>`;
+        }
+        function nextDC() { 
+            dcU = []; dcS.push(Math.floor(Math.random()*9));
+            document.getElementById('score-dc').innerText = "Lvl: " + dcL;
+            document.getElementById('grid-dc').style.pointerEvents = 'none'; // lock clicks
+            
+            dcS.forEach((val, i) => { 
+                setTimeout(() => { 
+                    const el = document.getElementById(`d-${val}`); 
+                    if(el) {
+                        el.style.background = "#39ff14"; 
+                        setTimeout(() => el.style.background="", 300);
+                    }
+                }, (i+1) * 500); 
+            });
+            setTimeout(() => { document.getElementById('grid-dc').style.pointerEvents = 'auto'; }, dcS.length * 500 + 400);
+        }
+        function clickDC(i) { 
+            dcU.push(i); 
+            const el = document.getElementById(`d-${i}`);
+            el.style.background = "#00f3ff"; setTimeout(() => el.style.background="", 200);
+            
+            if(dcU[dcU.length-1] !== dcS[dcU.length-1]) { 
+                document.getElementById('grid-dc').innerHTML = `<div class="col-span-3 row-span-3 font-mono text-red-500 text-sm flex items-center justify-center">FAILED</div>`;
+                document.getElementById('ui-dc').style.display='flex'; 
+                document.querySelector('#ui-dc button').innerText = 'RETRY';
+                dcS=[]; 
+            } else if(dcU.length === dcS.length) { 
+                dcL++; setTimeout(nextDC, 800); 
+            } 
+        }
+
+        // 3. BIT SNAKE (Swipe controls)
+        let snG = false, snS, snF, snD, snID, snSc = 0;
+        const cvSN = document.getElementById('canvas-sn'), ctxSN = cvSN.getContext('2d');
+        let touchX = null, touchY = null;
+        
+        function startSN() { 
+            document.getElementById('ui-sn').style.display='none'; 
+            snG=true; snS=[{x:15,y:7}]; snD='R'; snSc=0; 
+            document.getElementById('score-sn').innerText = "Bits: 0";
+            spawnF(); 
+            if(snID) clearInterval(snID);
+            snID = setInterval(loopSN, 100); 
+        }
+        function spawnF() { snF = {x:Math.floor(Math.random()*29), y:Math.floor(Math.random()*14)}; }
+        
+        function loopSN() { 
+            if(!snG) return;
+            let head = {...snS[0]}; 
+            if(snD==='R') head.x++; else if(snD==='L') head.x--; else if(snD==='U') head.y--; else if(snD==='D') head.y++;
+            
+            if(head.x<0||head.x>=30||head.y<0||head.y>=15 || snS.some(s=>s.x===head.x&&s.y===head.y)) { 
+                snG=false; clearInterval(snID);
+                document.getElementById('ui-sn').style.display='flex'; 
+                document.querySelector('#ui-sn button').innerText = 'RETRY';
+                return; 
+            }
+            
+            snS.unshift(head); 
+            if(head.x===snF.x && head.y===snF.y) { 
+                snSc++; document.getElementById('score-sn').innerText = "Bits: "+snSc; spawnF(); 
+            } else {
+                snS.pop();
+            }
+            
+            ctxSN.fillStyle="#000"; ctxSN.fillRect(0,0,300,150); 
+            ctxSN.fillStyle="#ffb700"; ctxSN.fillRect(snF.x*10, snF.y*10, 9, 9);
+            ctxSN.fillStyle="#00f3ff"; snS.forEach(s=>ctxSN.fillRect(s.x*10, s.y*10, 9, 9));
+        }
+
+        // Keyboard support
+        window.addEventListener('keydown', (e) => { 
+            if(!snG) return;
+            if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.key)) e.preventDefault();
+            if(e.key==='ArrowRight' && snD!=='L') snD='R'; 
+            if(e.key==='ArrowLeft' && snD!=='R') snD='L'; 
+            if(e.key==='ArrowUp' && snD!=='D') snD='U'; 
+            if(e.key==='ArrowDown' && snD!=='U') snD='D'; 
+        });
+
+        // Swipe support
+        cvSN.addEventListener('touchstart', e => { 
+            e.preventDefault(); 
+            touchX = e.touches[0].clientX; touchY = e.touches[0].clientY; 
+        }, {passive: false});
+        
+        cvSN.addEventListener('touchmove', e => { e.preventDefault(); }, {passive: false});
+        
+        cvSN.addEventListener('touchend', e => {
+            if(!touchX || !touchY || !snG) return;
+            let dX = e.changedTouches[0].clientX - touchX;
+            let dY = e.changedTouches[0].clientY - touchY;
+            if(Math.abs(dX) > Math.abs(dY)) { // horizontal swipe
+                if(dX > 0 && snD !== 'L') snD = 'R'; else if (dX < 0 && snD !== 'R') snD = 'L';
+            } else { // vertical swipe
+                if(dY > 0 && snD !== 'U') snD = 'D'; else if (dY < 0 && snD !== 'D') snD = 'U';
+            }
+            touchX = null; touchY = null;
+        });
+
+    </script>
+</body>
+</html>
