@@ -3,383 +3,134 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>h7k3r | Hardware Intelligence & Forensic Deployment</title>
+    <title>h7k3r | Hardware Intelligence & Forensics</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=JetBrains+Mono:wght@400;700&display=swap');
         
-        :root { --accent: #00f3ff; --danger: #ff003c; --bg: #050505; --panel: #0d0d0d; }
+        :root { --accent: #00f3ff; --danger: #ff003c; --bg: #030303; --panel: #0a0a0a; }
         
-        body { background-color: var(--bg); color: #e2e8f0; font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+        body { background-color: var(--bg); color: #cbd5e1; font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
         .font-mono { font-family: 'JetBrains Mono', monospace; }
-        .heading { font-weight: 800; letter-spacing: -0.02em; text-transform: uppercase; }
+        
+        /* Modern, Serious Headings */
+        .heading { font-weight: 700; letter-spacing: -0.02em; color: #f8fafc; }
 
         /* Navigation Layout */
-        .nav-link { position: relative; padding: 0.5rem 1rem; color: #64748b; transition: 0.2s; font-size: 0.75rem; font-weight: 700; }
+        .nav-link { position: relative; padding: 0.5rem 0.75rem; color: #64748b; transition: 0.2s; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap; }
+        .nav-link:hover { color: #e2e8f0; }
         .nav-link.active { color: var(--accent); }
-        .nav-link.active::after { content: ''; position: absolute; bottom: 0; left: 1rem; right: 1rem; height: 1px; background: var(--accent); }
+        .nav-link.active::after { content: ''; position: absolute; bottom: 0; left: 0.75rem; right: 0.75rem; height: 1px; background: var(--accent); }
 
         /* Content Sections */
         .tab-content { display: none; opacity: 0; }
-        .tab-content.active { display: block; opacity: 1; animation: fadeIn 0.4s ease-out forwards; }
-        @keyframes fadeIn { from { transform: translateY(10px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .tab-content.active { display: block; opacity: 1; animation: fadeIn 0.3s ease-out forwards; }
+        @keyframes fadeIn { from { transform: translateY(5px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
-        /* Industrial Glass Panels */
-        .card { background: var(--panel); border: 1px solid rgba(255,255,255,0.05); transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-        .card:hover { border-color: rgba(0, 243, 255, 0.3); background: #0f0f0f; }
+        /* Clean Flat Panels */
+        .card { background: var(--panel); border: 1px solid #1e293b; transition: 0.2s; }
+        .card:hover { border-color: #334155; }
+        .card-accent:hover { border-color: rgba(0, 243, 255, 0.4); background: #0f172a; }
 
-        /* Threat Monitor Map */
-        #map-container { background: #000; position: relative; overflow: hidden; border: 1px solid #1a1a1a; }
-        .map-svg { width: 100%; height: 100%; opacity: 0.4; filter: saturate(0); }
+        /* Buttons */
+        .btn-modern { background: #f8fafc; color: #0f172a; font-weight: 700; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; transition: 0.2s; border: 1px solid transparent; }
+        .btn-modern:hover { background: transparent; color: #f8fafc; border-color: #f8fafc; }
+        .btn-outline { background: transparent; border: 1px solid #334155; color: #e2e8f0; font-weight: 600; font-size: 0.75rem; text-transform: uppercase; transition: 0.2s; }
+        .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+        /* High-Contrast Threat Map */
+        #map-container { background: #050505; position: relative; overflow: hidden; border: 1px solid #1e293b; border-radius: 4px; }
+        .map-bg { 
+            position: absolute; inset: 0; 
+            background-image: url('https://upload.wikimedia.org/wikipedia/commons/e/ec/World_map_blank_without_borders.svg'); 
+            background-size: cover; background-position: center; 
+            filter: invert(1) brightness(1.5) opacity(0.3); 
+        }
 
         /* Game Elements */
-        canvas { image-rendering: pixelated; background: #000; }
-        .decrypt-grid div { aspect-ratio: 1/1; display: flex; align-items: center; justify-content: center; background: #111; border: 1px solid #222; cursor: pointer; transition: 0.1s; }
+        .game-canvas-container { touch-action: none; } /* Prevents pull-to-refresh on mobile swipe */
+        canvas { image-rendering: pixelated; background: #000; border-radius: 2px; }
+        
+        /* Perfectly Aligned Memory Grid */
+        .decrypt-wrapper { width: 100%; max-width: 220px; margin: 0 auto; aspect-ratio: 1 / 1; }
+        .decrypt-grid { display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr); gap: 4px; width: 100%; height: 100%; }
+        .decrypt-grid div { background: #111; border: 1px solid #222; cursor: pointer; transition: 0.1s; border-radius: 2px; }
 
         #modal { display: none; }
         .modal-active { display: flex !important; }
 
-        /* Hide scrollbars but allow scrolling */
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
 
-    <div id="modal" class="fixed inset-0 z-[1000] bg-black/90 items-center justify-center p-4 backdrop-blur-md">
-        <div class="card p-8 max-w-md w-full relative">
-            <button onclick="closeModal()" class="absolute top-4 right-4 font-mono text-xs text-slate-500 hover:text-white">[ ESC ]</button>
-            <h2 class="heading text-xl mb-6">Inquiry_Protocol</h2>
+    <div id="modal" class="fixed inset-0 z-[1000] bg-black/95 items-center justify-center p-4 backdrop-blur-sm">
+        <div class="card p-6 md:p-8 max-w-md w-full relative shadow-2xl">
+            <button onclick="closeModal()" class="absolute top-4 right-4 font-mono text-xs text-slate-500 hover:text-white">CLOSE</button>
+            <h2 class="heading text-xl mb-6 text-white">Initialize_Request</h2>
             <form action="https://formspree.io/f/mnjblgln" method="POST" class="space-y-4">
-                <input type="text" name="name" placeholder="Full Name / Alias" required class="w-full bg-black border border-white/10 p-3 text-sm font-mono focus:border-cyan-500 outline-none">
-                <input type="email" name="email" placeholder="Secure Email" required class="w-full bg-black border border-white/10 p-3 text-sm font-mono focus:border-cyan-500 outline-none">
-                <select name="unit" class="w-full bg-black border border-white/10 p-3 text-sm font-mono focus:border-cyan-500 outline-none">
+                <input type="text" name="name" placeholder="Name / Callsign" required class="w-full bg-[#0a0a0a] border border-slate-800 p-3 text-sm font-mono focus:border-cyan-500 outline-none text-white transition-colors">
+                <input type="email" name="email" placeholder="Secure Email" required class="w-full bg-[#0a0a0a] border border-slate-800 p-3 text-sm font-mono focus:border-cyan-500 outline-none text-white transition-colors">
+                <select id="modal-select" name="unit" class="w-full bg-[#0a0a0a] border border-slate-800 p-3 text-sm font-mono focus:border-cyan-500 outline-none text-white">
                     <option value="Project_P">Project P (£750)</option>
+                    <option value="Series_P">Series P (£749)</option>
+                    <option value="Black_Box">Black Box V1 (£4,200)</option>
                     <option value="Apex_Rig">Apex Series Hardware</option>
-                    <option value="Tactical_Gear">Tactical Gear / Accessories</option>
-                    <option value="Incident_Response">Incident Response (Repair)</option>
+                    <option value="Tactical_Gear">Tactical Gear</option>
+                    <option value="Incident_Response">Incident Response</option>
                 </select>
-                <textarea name="mission" placeholder="Mission Parameters / Technical Issue" class="w-full bg-black border border-white/10 p-3 text-sm font-mono h-24 focus:border-cyan-500 outline-none"></textarea>
+                <textarea name="mission" placeholder="Mission Parameters / Technical Details" class="w-full bg-[#0a0a0a] border border-slate-800 p-3 text-sm font-mono h-24 focus:border-cyan-500 outline-none text-white transition-colors"></textarea>
                 <input type="hidden" name="_next" value="https://h7k3r.com/success.html">
-                <button type="submit" class="w-full py-4 bg-white text-black font-bold uppercase text-xs tracking-widest hover:bg-cyan-500 transition">Transmit Data</button>
+                <button type="submit" class="w-full py-4 btn-modern">Transmit Signal</button>
             </form>
         </div>
     </div>
 
-    <nav class="fixed top-0 w-full z-[100] border-b border-white/5 bg-black/80 backdrop-blur-md">
-        <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
-            <div class="flex items-center gap-3 cursor-pointer" onclick="showTab('home')">
-                <div class="w-6 h-6 bg-cyan-500 flex items-center justify-center font-black text-black text-[10px]">H7</div>
-                <span class="heading text-sm tracking-widest">h7k3r<span class="text-cyan-500">.SYS</span></span>
+    <nav class="fixed top-0 w-full z-[100] border-b border-white/5 bg-black/90 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex flex-col md:flex-row justify-between items-center gap-2 md:gap-4">
+            <div class="flex w-full md:w-auto justify-between items-center">
+                <div class="flex items-center gap-2 cursor-pointer" onclick="showTab('home')">
+                    <div class="w-5 h-5 bg-white flex items-center justify-center font-bold text-black text-[10px] rounded-sm">H7</div>
+                    <span class="heading text-sm tracking-widest text-white">h7k3r<span class="text-cyan-500">.sys</span></span>
+                </div>
             </div>
             
-            <div class="flex overflow-x-auto no-scrollbar w-full md:w-auto space-x-2 md:space-x-4">
+            <div class="flex overflow-x-auto no-scrollbar w-full md:w-auto space-x-1 py-1">
                 <button onclick="showTab('home')" id="btn-home" class="nav-link active">HQ</button>
-                <button onclick="showTab('projectp')" id="btn-projectp" class="nav-link">PROJECT_P</button>
-                <button onclick="showTab('apex')" id="btn-apex" class="nav-link">APEX</button>
-                <button onclick="showTab('gear')" id="btn-gear" class="nav-link">ARMORY</button>
-                <button onclick="showTab('arcade')" id="btn-arcade" class="nav-link text-yellow-600">SIMULATION</button>
-                <button onclick="showTab('ops')" id="btn-ops" class="nav-link text-red-600">INCIDENT</button>
-                <button onclick="showTab('logs')" id="btn-logs" class="nav-link">LOGS</button>
-                <button onclick="showTab('pro')" id="btn-pro" class="nav-link border border-white/10 rounded px-3">PORTAL</button>
+                <button onclick="showTab('rigs')" id="btn-rigs" class="nav-link">Hardware</button>
+                <button onclick="showTab('gear')" id="btn-gear" class="nav-link">Armory</button>
+                <button onclick="showTab('ops')" id="btn-ops" class="nav-link">Operations</button>
+                <button onclick="showTab('arcade')" id="btn-arcade" class="nav-link">Simulations</button>
+                <button onclick="showTab('logs')" id="btn-logs" class="nav-link">Logs</button>
+                <button onclick="showTab('pro')" id="btn-pro" class="nav-link text-cyan-500">Portal</button>
             </div>
         </div>
     </nav>
 
-    <main class="flex-grow pt-32 pb-12">
+    <main class="flex-grow pt-24 pb-12">
         
         <section id="tab-home" class="tab-content active px-4 max-w-7xl mx-auto">
-            <div class="grid lg:grid-cols-3 gap-8 mb-12">
-                <div class="lg:col-span-2 space-y-4">
-                    <h1 class="heading text-5xl md:text-7xl text-white">Unleash<br><span class="text-cyan-500">Silicon.</span></h1>
-                    <p class="font-mono text-xs md:text-sm text-slate-500 max-w-lg leading-relaxed uppercase">High-performance deployment node. specializing in hardware intervention and forensic data reconstruction.</p>
+            <div class="grid lg:grid-cols-3 gap-6 mb-8">
+                <div class="lg:col-span-2 flex flex-col justify-center">
+                    <h1 class="heading text-4xl md:text-6xl text-white mb-4 leading-tight">Hardware intelligence.<br>Forensic deployment.</h1>
+                    <p class="font-mono text-sm text-slate-400 max-w-xl leading-relaxed">Global intervention node. We engineer solutions where consumer-level IT architectures fail.</p>
                 </div>
-                <div class="card p-6 border-l-4 border-l-cyan-500">
-                    <div class="text-[10px] font-mono text-slate-500 mb-2 uppercase">Local_Node_Trace</div>
-                    <div id="city-node" class="heading text-lg mb-1">Detecting...</div>
-                    <div id="ip-node" class="font-mono text-xs text-cyan-500">Scanning Matrix</div>
+                <div class="card p-6 border-l-2 border-l-cyan-500 flex flex-col justify-center">
+                    <div class="text-[10px] font-mono text-slate-500 mb-2 uppercase">Active_Connection_Trace</div>
+                    <div id="city-node" class="heading text-xl text-white mb-1">Detecting Node...</div>
+                    <div id="ip-node" class="font-mono text-xs text-cyan-400">IP: Scanning</div>
                 </div>
             </div>
 
-            <div id="map-container" class="w-full h-80 md:h-[400px] mb-8 rounded-sm">
-                <div class="absolute inset-0 z-0 opacity-20">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/e/ec/World_map_blank_without_borders.svg" class="w-full h-full object-cover filter invert">
+            <div id="map-container" class="w-full h-64 md:h-[450px] mb-8">
+                <div class="map-bg"></div>
+                <div class="absolute top-4 left-4 z-10 flex items-center gap-2 bg-black/50 px-3 py-1 border border-red-500/20 rounded-sm backdrop-blur-sm">
+                    <span class="w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>
+                    <span class="font-mono text-[10px] text-red-400 uppercase tracking-wider">Live_Threat_Feed</span>
                 </div>
-                <div class="absolute top-4 left-4 z-10 flex items-center gap-2">
-                    <span class="w-2 h-2 bg-red-600 rounded-full animate-pulse"></span>
-                    <span class="font-mono text-[10px] text-red-500 uppercase tracking-widest font-bold">Threat_Monitor_Live</span>
-                </div>
-                <canvas id="attackCanvas" class="absolute inset-0 z-20"></canvas>
+                <canvas id="attackCanvas" class="absolute inset-0 z-20 w-full h-full"></canvas>
             </div>
         </section>
 
-        <section id="tab-projectp" class="tab-content px-4 max-w-7xl mx-auto">
-            <div class="grid md:grid-cols-2 gap-px bg-white/5 border border-white/5">
-                <div class="bg-black p-12 flex flex-col justify-center">
-                    <h2 class="heading text-4xl md:text-6xl text-yellow-500 mb-4">Project_P</h2>
-                    <p class="font-mono text-xs text-slate-400 mb-8 uppercase tracking-widest">Code: Veno_Scorp Killer // Status: Ready</p>
-                    <p class="text-sm text-slate-300 mb-10 leading-relaxed max-w-md">Proprietary logic-board tuning. Engineered for zero thermal latency and maximum frame-pacing efficiency. The definitive answer to mass-market assembly flaws.</p>
-                    <div class="text-4xl font-mono mb-10">£750.00</div>
-                    <button onclick="openModal('Project_P')" class="w-fit px-12 py-4 bg-yellow-600 text-black font-black uppercase text-xs tracking-[0.2em] hover:bg-white transition">Acquire Asset</button>
-                </div>
-                <div class="bg-zinc-900/20 flex items-center justify-center p-20">
-                    <span class="heading text-[20rem] text-white/5 select-none">P</span>
-                </div>
-            </div>
-        </section>
-
-        <section id="tab-apex" class="tab-content px-4 max-w-7xl mx-auto text-center">
-            <h2 class="heading text-3xl mb-12">The Apex Trilogy</h2>
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="card p-10 flex flex-col items-center">
-                    <div class="w-12 h-px bg-cyan-500 mb-8"></div>
-                    <h3 class="heading text-2xl mb-2">TRIDENT</h3>
-                    <p class="font-mono text-[10px] text-slate-500 mb-8">£8,610.00 // Dual 5090 Array</p>
-                    <button onclick="openModal('TRIDENT')" class="w-full py-4 border border-white/10 text-xs font-bold uppercase hover:bg-white hover:text-black transition">Reserve</button>
-                </div>
-                <div class="card p-10 flex flex-col items-center border-cyan-500/50 shadow-2xl bg-cyan-500/5">
-                    <div class="w-12 h-px bg-cyan-500 mb-8"></div>
-                    <h3 class="heading text-2xl text-cyan-400 mb-2">ZERO-G</h3>
-                    <p class="font-mono text-[10px] text-slate-400 mb-8">£7,250.00 // Open Air Chassis</p>
-                    <button onclick="openModal('ZERO_G')" class="w-full py-4 bg-cyan-600 text-black font-bold uppercase text-xs hover:bg-cyan-400 transition">Reserve</button>
-                </div>
-                <div class="card p-10 flex flex-col items-center">
-                    <div class="w-12 h-px bg-cyan-500 mb-8"></div>
-                    <h3 class="heading text-2xl mb-2">SPECTRE</h3>
-                    <p class="font-mono text-[10px] text-slate-500 mb-8">£4,890.00 // ITX SFF</p>
-                    <button onclick="openModal('SPECTRE')" class="w-full py-4 border border-white/10 text-xs font-bold uppercase hover:bg-white hover:text-black transition">Reserve</button>
-                </div>
-            </div>
-        </section>
-
-        <section id="tab-arcade" class="tab-content px-4 max-w-7xl mx-auto">
-            <div class="grid lg:grid-cols-3 gap-6">
-                <div class="card p-6">
-                    <div class="flex justify-between items-center mb-6">
-                        <h4 class="font-mono text-xs text-slate-500 uppercase">Simulation_01: Firewall</h4>
-                        <span id="score-fw" class="font-mono text-cyan-500 text-xs">Score: 0</span>
-                    </div>
-                    <div class="relative overflow-hidden aspect-video bg-black border border-white/5" id="game-fw">
-                        <canvas id="canvas-fw" class="w-full h-full"></canvas>
-                        <div id="ui-fw" class="absolute inset-0 flex items-center justify-center bg-black/80">
-                            <button onclick="startFW()" class="font-mono text-xs border border-cyan-500 px-4 py-2 text-cyan-400 uppercase">Execute_Code</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="card p-6 flex flex-col">
-                    <div class="flex justify-between items-center mb-6">
-                        <h4 class="font-mono text-xs text-slate-500 uppercase">Simulation_02: Decrypt</h4>
-                        <span id="score-dc" class="font-mono text-green-500 text-xs">Level: 1</span>
-                    </div>
-                    <div class="flex-grow flex items-center justify-center bg-black border border-white/5 p-4">
-                        <div id="grid-dc" class="decrypt-grid grid grid-cols-3 gap-2 w-full max-w-[200px]">
-                            </div>
-                    </div>
-                    <button id="btn-dc" onclick="startDC()" class="mt-4 font-mono text-xs border border-green-500 py-2 text-green-400 uppercase">Sync_Neural</button>
-                </div>
-                <div class="card p-6">
-                    <div class="flex justify-between items-center mb-6">
-                        <h4 class="font-mono text-xs text-slate-500 uppercase">Simulation_03: Snake</h4>
-                        <span id="score-sn" class="font-mono text-yellow-500 text-xs">Bits: 0</span>
-                    </div>
-                    <div class="relative aspect-video bg-black border border-white/5" id="game-sn">
-                        <canvas id="canvas-sn" class="w-full h-full"></canvas>
-                        <div id="ui-sn" class="absolute inset-0 flex items-center justify-center bg-black/80">
-                            <button onclick="startSN()" class="font-mono text-xs border border-yellow-500 px-4 py-2 text-yellow-400 uppercase">Inject_Worm</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="tab-gear" class="tab-content px-4 max-w-7xl mx-auto">
-            <h2 class="heading text-3xl mb-12 text-center uppercase tracking-widest text-white">Tactical Armory</h2>
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" id="gear-grid">
-                </div>
-        </section>
-
-        <section id="tab-ops" class="tab-content px-4 max-w-4xl mx-auto text-center">
-            <h2 class="heading text-4xl text-red-600 mb-6 uppercase tracking-widest">Incident_Response</h2>
-            <p class="font-mono text-xs text-slate-500 mb-12 uppercase leading-relaxed max-w-xl mx-auto">Surgical hardware intervention. Trace reconstruction and forensic data extraction where consumer IT nodes fail.</p>
-            <div class="grid md:grid-cols-2 gap-px bg-red-600/10 border border-red-600/20 mb-12">
-                <div class="bg-black p-10 text-left">
-                    <h4 class="font-cyber text-xs text-red-500 mb-4 uppercase">/ Micro_Surgery</h4>
-                    <p class="text-xs text-slate-400 font-mono">BGA reballing and logic-board trace repair under 40x magnification.</p>
-                </div>
-                <div class="bg-black p-10 text-left">
-                    <h4 class="font-cyber text-xs text-red-500 mb-4 uppercase">/ Data_Forensics</h4>
-                    <p class="text-xs text-slate-400 font-mono">NAND chip-off and physical platter reconstruction from dead heads.</p>
-                </div>
-            </div>
-            <button onclick="openModal('INCIDENT_RESPONSE')" class="px-16 py-6 bg-red-700 text-white font-black uppercase text-sm hover:bg-red-600 tracking-widest shadow-2xl">Open_Emergency_Ticket</button>
-        </section>
-
-        <section id="tab-logs" class="tab-content px-4 max-w-7xl mx-auto">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="card p-8 border-t-2 border-t-cyan-500">
-                    <div class="font-mono text-[10px] text-slate-600 mb-4 uppercase">Case_#00842 // ARCH_DEPT</div>
-                    <p class="text-sm text-slate-300 leading-relaxed mb-8 italic">"Retrieved 4TB of architectural blueprints from a drive declared 'physically obliterated' by two other nodes. Exceptional throughput."</p>
-                    <div class="flex justify-between items-center text-xs font-mono text-slate-500 uppercase"><span>Status: Secured</span><span>★★★★★</span></div>
-                </div>
-                <div class="card aspect-square overflow-hidden group">
-                    <img src="build1.jpg" class="w-full h-full object-cover grayscale opacity-40 group-hover:opacity-100 group-hover:grayscale-0 transition duration-700">
-                </div>
-                <div class="card aspect-square overflow-hidden group">
-                    <img src="build2.jpg" class="w-full h-full object-cover grayscale opacity-40 group-hover:opacity-100 group-hover:grayscale-0 transition duration-700">
-                </div>
-                <div class="card aspect-square overflow-hidden group">
-                    <img src="build3.jpg" class="w-full h-full object-cover grayscale opacity-40 group-hover:opacity-100 group-hover:grayscale-0 transition duration-700">
-                </div>
-                <div class="card aspect-square overflow-hidden group">
-                    <img src="build4.jpg" class="w-full h-full object-cover grayscale opacity-40 group-hover:opacity-100 group-hover:grayscale-0 transition duration-700">
-                </div>
-                <div class="card aspect-square overflow-hidden group">
-                    <img src="build5.jpg" class="w-full h-full object-cover grayscale opacity-40 group-hover:opacity-100 group-hover:grayscale-0 transition duration-700">
-                </div>
-            </div>
-        </section>
-
-        <section id="tab-pro" class="tab-content px-4 text-center max-w-6xl mx-auto">
-            <h2 class="heading text-3xl text-cyan-400 mb-4 uppercase tracking-widest">Level_4_Portal</h2>
-            <p class="font-mono text-xs text-slate-600 mb-12 uppercase tracking-widest">Restricted Assets // Commercial Tier Only</p>
-            <div class="grid md:grid-cols-3 gap-8 text-left">
-                <div class="card p-8 group cursor-pointer hover:bg-cyan-500/5">
-                    <h4 class="font-mono text-sm text-white mb-4 uppercase">Bios_Overrides.zip</h4>
-                    <p class="text-xs text-slate-500 mb-6 uppercase">Proprietary microcode for Trident series optimization.</p>
-                    <div class="text-[10px] font-bold text-cyan-500 uppercase tracking-widest">[ Access_File ]</div>
-                </div>
-                <div class="card p-8 group cursor-pointer hover:bg-cyan-500/5">
-                    <h4 class="font-mono text-sm text-white mb-4 uppercase">Forensic_Toolkit_V3</h4>
-                    <p class="text-xs text-slate-500 mb-6 uppercase">Linux-based NAND extractor image for field work.</p>
-                    <div class="text-[10px] font-bold text-cyan-500 uppercase tracking-widest">[ Access_File ]</div>
-                </div>
-                <div class="card p-8 group cursor-pointer hover:bg-cyan-500/5">
-                    <h4 class="font-mono text-sm text-white mb-4 uppercase">Asset_Ledger</h4>
-                    <p class="text-xs text-slate-500 mb-6 uppercase">Private inventory availability for logistics nodes.</p>
-                    <div class="text-[10px] font-bold text-cyan-500 uppercase tracking-widest">[ Access_File ]</div>
-                </div>
-            </div>
-        </section>
-
-    </main>
-
-    <footer class="p-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8 text-slate-600">
-        <div class="font-mono text-[10px] uppercase tracking-widest">© 2026 h7k3r_Systems // Nodes: Global</div>
-        <div class="font-mono text-[10px] uppercase tracking-widest" id="loc-footer">Origin: Offline</div>
-    </footer>
-
-    <script>
-        // TAB CONTROLLER
-        function showTab(id) {
-            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.nav-link').forEach(b => b.classList.remove('active'));
-            document.getElementById('tab-' + id).classList.add('active');
-            document.getElementById('btn-' + id).classList.add('active');
-            window.scrollTo(0,0);
-        }
-
-        // MODAL
-        function openModal(val) { document.getElementById('modal-select').value = val; document.getElementById('modal').classList.add('modal-active'); }
-        function closeModal() { document.getElementById('modal').classList.remove('modal-active'); }
-
-        // IP TRACING
-        fetch('https://get.geojs.io/v1/ip/geo.json')
-            .then(res => res.json())
-            .then(data => {
-                const city = (data.city || data.region || "Secure Node").toUpperCase();
-                document.getElementById('city-node').innerText = city;
-                document.getElementById('ip-node').innerText = `IP: ${data.ip} // SEC_STATUS: ACTIVE`;
-                document.getElementById('loc-footer').innerText = `Node_Origin: ${city} // ${data.country}`;
-            });
-
-        // ARMORY DATA
-        const gear = [
-            { n: "Faraday_Parka_V1", p: "185", d: "EMI Shielding Outerwear" },
-            { n: "AES_USB_Killer", p: "45", d: "Instant Capacitor Discharge" },
-            { n: "Signal_Jammer_X", p: "320", d: "Tri-Band RF Suppression" },
-            { n: "Locked_SSD_2TB", p: "210", d: "Physical Key Encrypted" },
-            { n: "Tactical_Deck_V4", p: "450", d: "Rugged SFF Shell" },
-            { n: "Micro_Solder_Pro", p: "85", d: "Precision Repair Kit" },
-            { n: "OSINT_Companion", p: "12", d: "Redacted Field Notebook" },
-            { n: "h7k3r_Infiltrator_Tee", p: "45", d: "Heavyweight 300GSM Cotton" }
-        ];
-        const gGrid = document.getElementById('gear-grid');
-        gear.forEach(i => {
-            gGrid.innerHTML += `<div class="card p-6 text-center"><h4 class="font-cyber text-xs mb-1 uppercase tracking-tighter">${i.n}</h4><p class="font-mono text-[8px] text-slate-500 mb-4 uppercase">${i.d}</p><span class="font-mono text-cyan-400 text-sm mb-4 block">£${i.p}.00</span><button onclick="openModal('Gear')" class="w-full py-2 border border-white/5 text-[9px] font-bold uppercase hover:bg-white hover:text-black">Acquire</button></div>`;
-        });
-
-        // LIVE THREAT MONITOR (World Map Attacks)
-        const attackCvs = document.getElementById('attackCanvas');
-        const attackCtx = attackCvs.getContext('2d');
-        let attacks = [];
-        function resizeAttacks() { attackCvs.width = attackCvs.parentElement.offsetWidth; attackCvs.height = attackCvs.parentElement.offsetHeight; }
-        window.onresize = resizeAttacks; resizeAttacks();
-
-        function drawAttacks() {
-            attackCtx.clearRect(0,0,attackCvs.width, attackCvs.height);
-            if(Math.random() < 0.03) {
-                attacks.push({ x1: Math.random()*attackCvs.width, y1: Math.random()*attackCvs.height, x2: Math.random()*attackCvs.width, y2: Math.random()*attackCvs.height, l: 1.0 });
-            }
-            attacks.forEach((a, i) => {
-                attackCtx.beginPath(); attackCtx.moveTo(a.x1, a.y1);
-                attackCtx.quadraticCurveTo((a.x1+a.x2)/2, a.y1-100, a.x2, a.y2);
-                attackCtx.strokeStyle = `rgba(255, 0, 60, ${a.l})`; attackCtx.lineWidth = 1; attackCtx.stroke();
-                attackCtx.fillStyle = `rgba(0, 243, 255, ${a.l})`; attackCtx.beginPath(); attackCtx.arc(a.x1, a.y1, 2, 0, 7); attackCtx.fill();
-                a.l -= 0.01; if(a.l <= 0) attacks.splice(i, 1);
-            });
-            requestAnimationFrame(drawAttacks);
-        }
-        drawAttacks();
-
-        // SIMULATION 01: FIREWALL (Flappy style)
-        let fwG = false, fwB, fwP = [], fwS = 0;
-        const cvFW = document.getElementById('canvas-fw'), ctxFW = cvFW.getContext('2d');
-        function startFW() { document.getElementById('ui-fw').style.display='none'; fwG=true; fwB={x:30,y:75,v:0}; fwP=[]; fwS=0; loopFW(); }
-        function loopFW(){ if(!fwG)return; ctxFW.fillStyle="#000"; ctxFW.fillRect(0,0,300,150); fwB.v+=0.2; fwB.y+=fwB.v;
-            ctxFW.fillStyle="#0ff"; ctxFW.fillRect(30, fwB.y, 10, 10);
-            if(fwP.length===0 || fwP[fwP.length-1].x < 150) fwP.push({x:300, h:Math.random()*80+20});
-            fwP.forEach((p, i)=>{ p.x-=2; ctxFW.fillStyle="#ff003c"; ctxFW.fillRect(p.x, 0, 10, p.h); ctxFW.fillRect(p.x, p.h+40, 10, 150);
-                if(30<p.x+10 && 40>p.x && (fwB.y<p.h || fwB.y+10>p.h+40)) fwG=false;
-                if(p.x === 30) { fwS++; document.getElementById('score-fw').innerText = "Score: " + fwS; }
-            });
-            if(fwB.y > 150 || fwB.y < 0) fwG=false; if(!fwG) { document.getElementById('ui-fw').style.display='flex'; } else requestAnimationFrame(loopFW);
-        }
-        cvFW.onmousedown = () => { if(fwG) fwB.v = -3.5; };
-
-        // SIMULATION 02: DECRYPT (Aligned flex grid)
-        let dcS = [], dcU = [], dcL = 1;
-        function startDC() { dcL=1; document.getElementById('btn-dc').style.display='none'; nextDC(); }
-        function nextDC() { 
-            const g = document.getElementById('grid-dc'); g.innerHTML = ''; dcU = []; dcS.push(Math.floor(Math.random()*9));
-            for(let i=0;i<9;i++) g.innerHTML += `<div id="d-${i}" onclick="clickDC(${i})"></div>`;
-            document.getElementById('score-dc').innerText = "Level: " + dcL;
-            dcS.forEach((val, i) => { setTimeout(() => { 
-                const el = document.getElementById(`d-${val}`); el.style.background = "#39ff14"; setTimeout(() => el.style.background="", 300);
-            }, i * 600); });
-        }
-        function clickDC(i) { dcU.push(i); if(dcU[dcU.length-1] !== dcS[dcU.length-1]) { alert("HACK_FAILED"); dcS=[]; document.getElementById('btn-dc').style.display='block'; } else if(dcU.length === dcS.length) { dcL++; setTimeout(nextDC, 800); } }
-
-        // SIMULATION 03: BIT SNAKE (Mobile Optimized)
-        let snG = false, snS, snF, snD, snID, snSc = 0;
-        const cvSN = document.getElementById('canvas-sn'), ctxSN = cvSN.getContext('2d');
-        function startSN() { document.getElementById('ui-sn').style.display='none'; snG=true; snS=[{x:10,y:10}]; snD='R'; snSc=0; spawnF(); loopSN(); }
-        function spawnF() { snF = {x:Math.floor(Math.random()*29), y:Math.floor(Math.random()*14)}; }
-        function loopSN() { if(!snG)return;
-            let head = {...snS[0]}; if(snD==='R')head.x++; if(snD==='L')head.x--; if(snD==='U')head.y--; if(snD==='D')head.y++;
-            if(head.x<0||head.x>=30||head.y<0||head.y>=15 || snS.some(s=>s.x===head.x&&s.y===head.y)) { snG=false; document.getElementById('ui-sn').style.display='flex'; return; }
-            snS.unshift(head); if(head.x===snF.x && head.y===snF.y) { snSc++; document.getElementById('score-sn').innerText = "Bits: "+snSc; spawnF(); } else snS.pop();
-            ctxSN.fillStyle="#000"; ctxSN.fillRect(0,0,300,150); ctxSN.fillStyle="#ffb700"; ctxSN.fillRect(snF.x*10, snF.y*10, 9, 9);
-            ctxSN.fillStyle="#00f3ff"; snS.forEach(s=>ctxSN.fillRect(s.x*10, s.y*10, 9, 9));
-            setTimeout(loopSN, 100);
-        }
-        // Swipe Detection
-        let tX, tY;
-        document.getElementById('game-sn').ontouchstart = (e) => { tX = e.touches[0].clientX; tY = e.touches[0].clientY; };
-        document.getElementById('game-sn').ontouchend = (e) => {
-            let dX = e.changedTouches[0].clientX - tX, dY = e.changedTouches[0].clientY - tY;
-            if(Math.abs(dX) > Math.abs(dY)) snD = dX > 0 ? 'R' : 'L'; else snD = dY > 0 ? 'D' : 'U';
-        };
-        window.onkeydown = (e) => { if(e.key==='ArrowRight') snD='R'; if(e.key==='ArrowLeft') snD='L'; if(e.key==='ArrowUp') snD='U'; if(e.key==='ArrowDown') snD='D'; };
-    </script>
-</body>
-</html>
+        <section id="tab-rigs" class="tab-content px-4
