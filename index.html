@@ -4,305 +4,669 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>h7k3r | Hardware Intelligence & Forensics</title>
-    
-    <meta name="description" content="h7k3r Systems: Global deployment nodes specializing in offensive hardware research and forensic data reconstruction.">
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23030303'/><text x='50' y='68' font-family='sans-serif' font-weight='900' font-size='48' fill='%2300f3ff' text-anchor='middle'>H7</text></svg>">
-
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;700&family=JetBrains+Mono:wght@400;700&display=swap');
-        :root { --cyan: #00f3ff; --red: #ff003c; --bg: #020202; --panel: #0a0a0a; }
-        body { background-color: var(--bg); color: #d1d5db; font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
+        
+        :root { --cyan: #00f3ff; --red: #ff003c; --bg: #030303; --panel: #0a0a0a; }
+        
+        body { background-color: var(--bg); color: #cbd5e1; font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
         .font-cyber { font-family: 'Orbitron', sans-serif; }
         .font-mono { font-family: 'JetBrains Mono', monospace; }
         
-        .heading { font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: #ffffff; }
+        /* Modern Typography */
+        .heading { font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: #f8fafc; }
+
+        /* Metallic Blue Text Effect */
         .text-metallic-blue {
-            background: linear-gradient(to bottom, #ffffff 0%, #00f3ff 50%, #0077aa 100%);
+            background: linear-gradient(to bottom, #ffffff 0%, #00f3ff 50%, #005577 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0px 2px 8px rgba(0, 243, 255, 0.4));
+            text-shadow: 0px 2px 15px rgba(0, 243, 255, 0.2);
         }
 
-        .nav-link { color: #94a3b8; transition: 0.3s; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; white-space: nowrap; border: 1px solid transparent; }
-        .nav-link.active { color: var(--cyan); background: rgba(0, 243, 255, 0.05); border-color: rgba(0, 243, 255, 0.2); }
+        /* Navigation Layout */
+        .nav-link { position: relative; padding: 0.5rem 0.75rem; color: #64748b; transition: 0.2s; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; white-space: nowrap; }
+        .nav-link:hover { color: #e2e8f0; }
+        .nav-link.active { color: var(--cyan); }
+        .nav-link.active::after { content: ''; position: absolute; bottom: 0; left: 0.75rem; right: 0.75rem; height: 1px; background: var(--cyan); }
 
-        .tab-content { display: none; }
-        .tab-content.active { display: block; animation: fadeIn 0.4s ease-out forwards; }
-        @keyframes fadeIn { from { transform: translateY(10px); opacity: 0; } to { opacity: 1; } }
+        /* Content Sections & Hero Slider */
+        .tab-content { display: none; opacity: 0; }
+        .tab-content.active { display: block; opacity: 1; animation: fadeIn 0.3s ease-out forwards; }
+        @keyframes fadeIn { from { transform: translateY(5px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
-        .hero-slide { display: none; opacity: 0; transition: opacity 1s ease-in-out; }
+        .hero-slide { display: none; opacity: 0; transition: opacity 0.8s ease-in-out; cursor: pointer; }
         .hero-slide.active { display: flex; opacity: 1; }
 
+        /* Clean Flat Panels */
         .card { background: var(--panel); border: 1px solid #1e293b; transition: 0.2s; }
-        .card:hover { border-color: var(--cyan); }
+        .card:hover { border-color: rgba(0, 243, 255, 0.3); }
 
-        /* WHITE WORLD MAP */
-        #map-container { background: #000; position: relative; overflow: hidden; border: 1px solid #1e293b; height: 400px; width: 100%; border-radius: 4px; }
-        .world-map-img { position: absolute; inset: 0; width: 100%; height: 100%; filter: invert(1) brightness(2.5) opacity(0.2); pointer-events: none; object-fit: cover; }
-        
-        .game-canvas-container { touch-action: none; background: #000; border: 1px solid #222; }
-        .no-scrollbar::-webkit-scrollbar { display: none; }
+        /* Buttons */
+        .btn-outline { background: transparent; border: 1px solid #334155; color: #e2e8f0; font-weight: 700; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; transition: 0.2s; padding: 0.75rem 1.5rem; }
+        .btn-outline:hover { border-color: var(--cyan); color: var(--cyan); }
 
-        /* MODAL */
+        /* High-Contrast White Threat Map */
+        #map-container { background: #000; position: relative; overflow: hidden; border: 1px solid #1e293b; border-radius: 2px; }
+        .map-bg { 
+            position: absolute; inset: 0; 
+            background-image: url('https://upload.wikimedia.org/wikipedia/commons/8/80/World_map_-_low_resolution.svg'); 
+            background-size: cover; background-position: center; 
+            filter: invert(1) brightness(10) contrast(1.5) opacity(0.2); /* Invert to white, increase brightness */
+        }
+
+        /* Arcade Games Formatting */
+        .game-canvas-container { touch-action: none; } /* Critical for mobile swipe games */
+        canvas { image-rendering: pixelated; background: transparent; border-radius: 2px; }
+        .decrypt-wrapper { width: 100%; max-width: 200px; margin: 0 auto; aspect-ratio: 1 / 1; }
+        .decrypt-grid { display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr); gap: 4px; width: 100%; height: 100%; }
+        .decrypt-grid div { background: #111; border: 1px solid #222; cursor: pointer; transition: 0.1s; border-radius: 2px; }
+
         #modal { display: none; }
         .modal-active { display: flex !important; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
 
     <div id="modal" class="fixed inset-0 z-[1000] bg-black/95 flex items-center justify-center p-4 backdrop-blur-md">
-        <div class="card p-8 max-w-md w-full relative border-t-2 border-cyan-500">
-            <button onclick="closeModal()" class="absolute top-4 right-4 font-mono text-xs text-slate-500 hover:text-white uppercase">[ Close ]</button>
-            <h2 class="font-cyber text-xl mb-6 text-cyan-400 uppercase">Operational Briefing</h2>
-            <form action="https://formspree.io/f/mnjblgln" method="POST" class="space-y-4">
-                <input type="text" name="name" placeholder="OPERATOR NAME" required class="w-full bg-black border border-zinc-800 p-3 text-sm font-mono text-white outline-none focus:border-cyan-500">
-                <input type="email" name="email" placeholder="SECURE EMAIL" required class="w-full bg-black border border-zinc-800 p-3 text-sm font-mono text-white outline-none focus:border-cyan-500">
-                <select id="modal-select" name="interest" class="w-full bg-black border border-zinc-800 p-3 text-sm font-mono text-white outline-none">
-                    <option value="PROJECT_P">PROJECT_P (£750)</option>
-                    <option value="BLACK_BOX">BLACK_BOX V1</option>
-                    <option value="TRIDENT">TRIDENT APEX</option>
-                    <option value="GEAR">TACTICAL GEAR</option>
+        <div class="card p-8 max-w-md w-full relative shadow-2xl border-t-2 border-cyan-500">
+            <button onclick="closeModal()" class="absolute top-4 right-4 font-mono text-xs text-slate-500 hover:text-white uppercase tracking-widest">[ Close ]</button>
+            <h2 class="font-cyber text-xl mb-6 text-cyan-400 uppercase tracking-widest">Operational Briefing</h2>
+            <form action="https://formspree.io/f/mnjblgln" method="POST" class="space-y-5">
+                <input type="text" name="name" placeholder="OPERATOR NAME" required class="w-full bg-[#050505] border border-slate-800 p-3 text-sm font-mono focus:border-cyan-500 outline-none text-white transition-colors">
+                <input type="email" name="email" placeholder="SECURE EMAIL" required class="w-full bg-[#050505] border border-slate-800 p-3 text-sm font-mono focus:border-cyan-500 outline-none text-white transition-colors">
+                <select id="modal-select" name="unit" class="w-full bg-[#050505] border border-slate-800 p-3 text-sm font-mono focus:border-cyan-500 outline-none text-white">
+                    <option value="Black_Box_V1">Black Box V1 (£4,200)</option>
+                    <option value="Project_P">Project P (£750)</option>
+                    <option value="Series_P">Series P (£749)</option>
+                    <option value="Apex_Rig">Apex Hardware</option>
+                    <option value="Tactical_Gear">Tactical Gear</option>
+                    <option value="Incident_Response">Incident Response (Repair)</option>
                 </select>
-                <textarea name="msg" placeholder="MISSION PARAMS" class="w-full bg-black border border-zinc-800 p-3 text-sm font-mono h-24 text-white outline-none focus:border-cyan-500"></textarea>
-                <button type="submit" class="w-full py-4 bg-cyan-600 text-black font-bold uppercase text-xs tracking-widest hover:bg-cyan-400">Transmit Data</button>
+                <textarea name="mission" placeholder="MISSION REQUIREMENTS / SYMPTOMS" class="w-full bg-[#050505] border border-slate-800 p-3 text-sm font-mono h-28 focus:border-cyan-500 outline-none text-white transition-colors"></textarea>
+                <input type="hidden" name="_next" value="https://h7k3r.com/success.html">
+                <button type="submit" class="w-full py-4 bg-cyan-600 text-black font-bold uppercase text-sm tracking-widest hover:bg-cyan-400 transition-colors">Transmit Data</button>
             </form>
         </div>
     </div>
 
-    <nav class="fixed top-0 w-full z-[150] border-b border-white/5 bg-black/95 backdrop-blur-md">
-        <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center">
-            <div class="font-cyber font-black text-xl text-white tracking-widest mb-4 md:mb-0 cursor-pointer" onclick="location.reload()">H7K3R<span class="text-cyan-500">_</span>SYS</div>
-            <div class="flex overflow-x-auto no-scrollbar w-full md:w-auto space-x-1">
-                <button onclick="showTab('home')" id="nav-home" class="nav-link active">Mission</button>
-                <button onclick="showTab('hardware')" id="nav-hardware" class="nav-link">Hardware</button>
-                <button onclick="showTab('gear')" id="nav-gear" class="nav-link">Armory</button>
-                <button onclick="showTab('arcade')" id="nav-arcade" class="nav-link text-yellow-500">Arcade</button>
-                <button onclick="showTab('ops')" id="nav-ops" class="nav-link text-red-500">Ops</button>
-                <button onclick="showTab('logs')" id="nav-logs" class="nav-link">Logs</button>
-                <button onclick="showTab('pro')" id="nav-pro" class="nav-link border border-white/10 rounded-sm">Portal</button>
+    <nav class="fixed top-0 w-full z-[100] border-b border-white/5 bg-black/95 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex flex-col md:flex-row justify-between items-center gap-3">
+            <div class="font-cyber font-black text-xl cursor-pointer text-white tracking-widest w-full md:w-auto flex justify-between" onclick="showTab('home')">
+                <span>h7k3r<span class="text-cyan-500">_</span>SYS</span>
+            </div>
+            
+            <div class="flex overflow-x-auto no-scrollbar w-full md:w-auto space-x-2 py-1">
+                <button onclick="showTab('home')" id="btn-home" class="nav-link active">Mission</button>
+                <button onclick="showTab('hardware')" id="btn-hardware" class="nav-link">Hardware</button>
+                <button onclick="showTab('gear')" id="btn-gear" class="nav-link">Armory</button>
+                <button onclick="showTab('arcade')" id="btn-arcade" class="nav-link text-yellow-500 hover:text-yellow-400">Arcade</button>
+                <button onclick="showTab('ops')" id="btn-ops" class="nav-link text-red-500 hover:text-red-400">Ops</button>
+                <button onclick="showTab('logs')" id="btn-logs" class="nav-link">Logs</button>
+                <button onclick="showTab('pro')" id="btn-pro" class="nav-link">Portal</button>
             </div>
         </div>
     </nav>
 
-    <main class="flex-grow pb-12">
+    <main class="flex-grow pt-24 pb-12">
         
         <section id="tab-home" class="tab-content active">
-            <div class="relative h-[55vh] flex items-center justify-center overflow-hidden bg-[#010101] border-b border-white/5">
+            <div class="relative h-[55vh] flex items-center justify-center overflow-hidden border-b border-white/5 bg-[#020202]">
                 <div onclick="showTab('hardware')" class="hero-slide active flex-col items-center text-center px-4 w-full cursor-pointer">
-                    <h1 class="font-cyber text-5xl md:text-8xl font-black mb-4 uppercase text-white">SYSTEMS <span class="text-metallic-blue">LIVE.</span></h1>
-                    <p class="font-mono text-[10px] text-slate-500 uppercase tracking-[0.5em]">Precision Deployment Node // UK_SOUTH</p>
+                    <h1 class="font-cyber text-4xl md:text-6xl font-black mb-4 uppercase tracking-tighter">OPSEC <span class="text-metallic-blue">LABS.</span></h1>
+                    <p class="font-mono text-[10px] md:text-sm text-slate-400 uppercase tracking-widest">Signal Intelligence & Field Recovery Hardware</p>
                 </div>
                 <div onclick="showTab('hardware')" class="hero-slide flex-col items-center text-center px-4 w-full cursor-pointer">
-                    <h1 class="font-cyber text-5xl md:text-8xl font-black mb-4 uppercase text-white">UNLEASH <span class="text-metallic-blue">SILICON.</span></h1>
-                    <p class="font-mono text-[10px] text-slate-500 uppercase tracking-[0.5em]">No Bottlenecks // No Compromise</p>
+                    <h1 class="font-cyber text-4xl md:text-6xl font-black mb-4 uppercase tracking-tighter">SERIES <span class="text-metallic-blue">P.</span></h1>
+                    <p class="font-mono text-[10px] md:text-sm text-slate-400 uppercase tracking-widest">Balanced Performance. Unmatched Reliability.</p>
+                </div>
+                <div onclick="showTab('hardware')" class="hero-slide flex-col items-center text-center px-4 w-full cursor-pointer">
+                    <h1 class="font-cyber text-4xl md:text-6xl font-black mb-4 uppercase tracking-tighter">APEX <span class="text-metallic-blue">CUSTOMS.</span></h1>
+                    <p class="font-mono text-[10px] md:text-sm text-slate-400 uppercase tracking-widest">The Trident & Zero-G Masterpieces</p>
                 </div>
             </div>
 
             <div class="bg-black py-8 border-b border-white/5 mb-12">
                 <div class="max-w-7xl mx-auto px-6 grid grid-cols-2 lg:grid-cols-4 gap-6 text-center">
-                    <div><p class="font-cyber text-2xl text-cyan-400">#01</p><p class="font-mono text-[9px] text-slate-600 uppercase">Global_Rank</p></div>
-                    <div><p class="font-cyber text-2xl text-white">100%</p><p class="font-mono text-[9px] text-slate-600 uppercase">Verifiable</p></div>
-                    <div><p class="font-cyber text-2xl text-white">8.6k</p><p class="font-mono text-[9px] text-slate-600 uppercase">Hashrate</p></div>
-                    <div><p class="font-cyber text-2xl text-white" id="stat-node">UK_S</p><p class="font-mono text-[9px] text-slate-600 uppercase">Active_Node</p></div>
+                    <div><p class="font-cyber text-2xl text-cyan-400 mb-1">#01</p><p class="font-mono text-[10px] text-slate-500 uppercase tracking-widest">Global_Rank</p></div>
+                    <div><p class="font-cyber text-2xl text-white mb-1">100%</p><p class="font-mono text-[10px] text-slate-500 uppercase tracking-widest">Verifiable</p></div>
+                    <div><p class="font-cyber text-2xl text-white mb-1">8.6k</p><p class="font-mono text-[10px] text-slate-500 uppercase tracking-widest">Max_Hashrate</p></div>
+                    <div><p class="font-cyber text-2xl text-white mb-1" id="ui-node-status">UK_01</p><p class="font-mono text-[10px] text-slate-500 uppercase tracking-widest">Node_Status</p></div>
                 </div>
             </div>
 
             <div class="max-w-7xl mx-auto px-6 mb-16">
                 <div class="flex justify-between items-end mb-4">
-                    <h2 class="font-cyber text-sm text-white uppercase tracking-widest">Global_Threat_Activity</h2>
-                    <div class="font-mono text-[10px] text-red-500 uppercase animate-pulse">Monitoring Live Vectors</div>
+                    <h2 class="font-cyber text-lg text-white uppercase tracking-widest text-center md:text-left">Live_Threat_Monitor</h2>
+                    <div class="font-mono text-[10px] text-red-500 uppercase tracking-widest hidden md:block animate-pulse">Monitoring Global Vectors</div>
                 </div>
-                <div id="map-container">
-                    <img class="world-map-img" src="https://upload.wikimedia.org/wikipedia/commons/8/80/World_map_-_low_resolution.svg">
-                    <canvas id="attackCanvas" class="absolute inset-0 z-20"></canvas>
+                <div id="map-container" class="w-full h-64 md:h-96">
+                    <div class="map-bg"></div>
+                    <canvas id="attackCanvas" class="absolute inset-0 z-20 w-full h-full"></canvas>
                 </div>
             </div>
 
             <div class="max-w-7xl mx-auto px-6 pb-20">
-                <h2 class="font-cyber text-center text-xl mb-10 uppercase tracking-widest text-slate-500">Declassified_Builds</h2>
+                <h2 class="font-cyber text-center text-xl mb-10 uppercase tracking-widest text-slate-400">Masterpiece_Archives</h2>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="card aspect-square relative group overflow-hidden cursor-pointer" onclick="showTab('logs')">
-                        <img src="https://images.unsplash.com/photo-1587202377405-836165b1040a?w=600" class="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:opacity-100 transition duration-500">
-                        <div class="absolute bottom-4 left-4 font-mono text-[10px] text-white">BUILD_01_VOID</div>
+                    <div class="aspect-square bg-zinc-900 card flex items-end p-6 group cursor-pointer grayscale hover:grayscale-0 transition duration-700 relative overflow-hidden border border-white/5">
+                        <img src="build1.jpg" onerror="this.src='https://images.unsplash.com/photo-1587202377405-836165b1040a?w=600'" class="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:opacity-100 transition duration-700">
+                        <span class="font-mono text-[10px] text-white bg-black/80 px-3 py-2 z-10 border border-white/10 group-hover:border-cyan-500 group-hover:text-cyan-400 transition">BUILD_101: VOID_RUNNER</span>
                     </div>
-                    <div class="card aspect-square relative group overflow-hidden cursor-pointer" onclick="showTab('logs')">
-                        <img src="https://images.unsplash.com/photo-1547082299-de196ea013d6?w=600" class="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:opacity-100 transition duration-500">
-                        <div class="absolute bottom-4 left-4 font-mono text-[10px] text-white">BUILD_04_GHOST</div>
+                    <div class="aspect-square bg-zinc-900 card flex items-end p-6 group cursor-pointer grayscale hover:grayscale-0 transition duration-700 relative overflow-hidden border border-white/5">
+                        <img src="build2.jpg" onerror="this.src='https://images.unsplash.com/photo-1547082299-de196ea013d6?w=600'" class="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:opacity-100 transition duration-700">
+                        <span class="font-mono text-[10px] text-white bg-black/80 px-3 py-2 z-10 border border-white/10 group-hover:border-cyan-500 group-hover:text-cyan-400 transition">BUILD_104: GHOST_SHELL</span>
                     </div>
-                    <div class="card aspect-square relative group overflow-hidden cursor-pointer" onclick="showTab('logs')">
-                        <img src="https://images.unsplash.com/photo-1591488320449-011701bb6704?w=600" class="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:opacity-100 transition duration-500">
-                        <div class="absolute bottom-4 left-4 font-mono text-[10px] text-white">BUILD_12_LACE</div>
+                    <div class="aspect-square bg-zinc-900 card flex items-end p-6 group cursor-pointer grayscale hover:grayscale-0 transition duration-700 relative overflow-hidden border border-white/5">
+                        <img src="build3.jpg" onerror="this.src='https://images.unsplash.com/photo-1591488320449-011701bb6704?w=600'" class="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:opacity-100 transition duration-700">
+                        <span class="font-mono text-[10px] text-white bg-black/80 px-3 py-2 z-10 border border-white/10 group-hover:border-cyan-500 group-hover:text-cyan-400 transition">BUILD_112: NEURAL_LACE</span>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="tab-hardware" class="tab-content px-6 max-w-7xl mx-auto pt-10">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="card p-8 border-t-2 border-yellow-500">
-                    <h3 class="font-cyber text-2xl text-white mb-2 uppercase">PROJECT_P</h3>
-                    <p class="font-mono text-[10px] text-yellow-500 mb-6 uppercase">"The Veno_Scorp Killer"</p>
-                    <p class="text-xs text-slate-500 font-mono mb-6 uppercase leading-relaxed">Modern AM4 Platform // Ryzen CPU // RX 580 8GB // 16GB DDR4 // 256GB NVMe. No e-waste. Pure performance.</p>
-                    <div class="text-3xl font-mono text-white mb-6">£750.00</div>
-                    <button onclick="openModal('PROJECT_P')" class="w-full py-3 bg-yellow-500 text-black font-black text-[10px] uppercase">Acquire Asset</button>
-                </div>
-                <div class="card p-8 border-t-2 border-red-500">
-                    <h3 class="font-cyber text-2xl text-white mb-2 uppercase">BLACK_BOX V1</h3>
-                    <p class="font-mono text-[10px] text-red-500 mb-6 uppercase">SIG-INT Field Asset</p>
-                    <p class="text-xs text-slate-500 font-mono mb-6 uppercase leading-relaxed">Integrated SDR // Alfa WiFi-6E // Ryzen 9 9900X // 32GB DDR5. Forensic Grade Interception.</p>
-                    <div class="text-3xl font-mono text-white mb-6">£4,200.00</div>
-                    <button onclick="openModal('BLACK_BOX')" class="w-full py-3 bg-red-600 text-white font-black text-[10px] uppercase">Deploy Unit</button>
-                </div>
-                <div class="card p-8 border-t-2 border-cyan-500">
-                    <h3 class="font-cyber text-2xl text-white mb-2 uppercase">TRIDENT</h3>
-                    <p class="font-mono text-[10px] text-cyan-400 mb-6 uppercase">The Apex Pinnacle</p>
-                    <p class="text-xs text-slate-500 font-mono mb-6 uppercase leading-relaxed">Dual RTX 5090 // 128GB DDR5 // 4TB NVMe. The ultimate weapon for 4K dominance.</p>
-                    <div class="text-3xl font-mono text-white mb-6">£8,610.00</div>
-                    <button onclick="openModal('TRIDENT')" class="w-full py-3 bg-cyan-600 text-black font-black text-[10px] uppercase">Reserve Unit</button>
+        <section id="tab-hardware" class="tab-content px-6 max-w-7xl mx-auto">
+            
+            <div class="mb-20">
+                <h2 class="heading text-2xl mb-8 border-b border-white/10 pb-4 text-slate-300">OPSEC_LABS</h2>
+                <div class="card p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-10 border-l-4 border-l-red-600">
+                    <div class="flex-1">
+                        <h3 class="font-cyber text-3xl mb-2 text-white uppercase tracking-widest">Black_Box V1</h3>
+                        <p class="font-mono text-[10px] text-red-400 mb-6 uppercase tracking-widest">Signal Intelligence Asset</p>
+                        <p class="text-slate-400 text-sm mb-6 leading-relaxed max-w-xl">Portable Field Asset designed for mass-scale decryption and wireless interception. Features integrated SDR and hardware kill-switches.</p>
+                        <ul class="font-mono text-xs text-slate-500 space-y-3 mb-8">
+                            <li>[+] Dual Alfa WiFi-6E Radios</li>
+                            <li>[+] RTL-SDR V4 Internal Module</li>
+                            <li>[+] AMD R9 9900X + RTX 4070 Ti SUPER</li>
+                        </ul>
+                        <div class="text-3xl font-mono text-white mb-6">£4,200.00</div>
+                        <button onclick="openModal('Black_Box_V1')" class="btn-outline !border-red-600 !text-red-500 hover:bg-red-600 hover:!text-white w-full md:w-auto">Deploy Unit</button>
+                    </div>
+                    <div class="w-full md:w-72 aspect-square bg-black border border-slate-800 flex items-center justify-center p-6 text-center">
+                        <span class="font-mono text-xs text-slate-600">[ ASSET_SCHEMATIC_LOCKED ]</span>
+                    </div>
                 </div>
             </div>
-        </section>
 
-        <section id="tab-gear" class="tab-content px-6 max-w-7xl mx-auto pt-10">
-            <div class="grid grid-cols-2 lg:grid-cols-4 gap-4" id="gearGrid"></div>
-        </section>
-
-        <section id="tab-arcade" class="tab-content px-6 max-w-7xl mx-auto pt-10">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="card p-6">
-                    <h4 class="font-mono text-xs text-cyan-500 mb-4 uppercase">// FW_BYPASS.exe</h4>
-                    <div class="game-canvas-container aspect-video mb-4">
-                        <canvas id="canvas-fw" width="300" height="150"></canvas>
-                        <div id="ui-fw" class="absolute inset-0 flex items-center justify-center bg-black/80">
-                            <button onclick="startFW()" class="font-cyber text-[10px] bg-cyan-600 text-black px-4 py-2">INITIALIZE</button>
+            <div class="mb-20">
+                <h2 class="heading text-2xl mb-8 border-b border-white/10 pb-4 text-slate-300">SERIES_P</h2>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="card p-10 text-center border-t-2 border-cyan-500 flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-cyber text-3xl text-white mb-2 uppercase tracking-widest">Project_P</h3>
+                            <p class="font-mono text-[10px] text-cyan-400 mb-6 uppercase tracking-widest">Veno_Scorp Killer</p>
+                            <p class="text-sm text-slate-400 mb-8 leading-relaxed">Engineered for zero thermal latency and maximum frame-pacing. The pure executioner.</p>
+                        </div>
+                        <div>
+                            <div class="text-3xl font-mono text-white mb-8">£750.00</div>
+                            <button onclick="openModal('Project_P')" class="btn-outline w-full hover:bg-cyan-600 hover:text-black">Acquire Asset</button>
+                        </div>
+                    </div>
+                    <div class="card p-10 text-center flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-cyber text-3xl text-white mb-2 uppercase tracking-widest">Series_P</h3>
+                            <p class="font-mono text-[10px] text-slate-500 mb-6 uppercase tracking-widest">Prosumer Excellence</p>
+                            <p class="text-sm text-slate-400 mb-8 leading-relaxed">Balanced performance geometry. Optimized for sustained heavy-load research tasks.</p>
+                        </div>
+                        <div>
+                            <div class="text-3xl font-mono text-white mb-8">£749.00</div>
+                            <button onclick="openModal('Series_P')" class="btn-outline w-full">Pre-Order</button>
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <div class="mb-12">
+                <h2 class="heading text-2xl mb-8 border-b border-white/10 pb-4 text-slate-300">APEX_CUSTOMS</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="card p-8 text-center flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-cyber text-xl mb-4 text-white uppercase tracking-widest">TRIDENT</h3>
+                            <p class="text-xs text-slate-400 mb-6 font-mono leading-relaxed">Triple Reservoir<br>Dual RTX 5090 Array<br>24-Hour Duty Cycle</p>
+                            <div class="text-2xl font-mono text-cyan-400 mb-8">£8,610.00</div>
+                        </div>
+                        <button onclick="openModal('Apex_Rig')" class="btn-outline w-full">Reserve</button>
+                    </div>
+                    <div class="card p-8 text-center flex flex-col justify-between border-cyan-500/40 relative shadow-2xl bg-[#080d12]">
+                        <div class="absolute top-0 right-0 bg-cyan-600 text-black font-cyber text-[9px] px-3 py-1 tracking-widest">FLAGSHIP</div>
+                        <div>
+                            <h3 class="font-cyber text-xl mb-4 text-cyan-400 uppercase tracking-widest">ZERO-G</h3>
+                            <p class="text-xs text-slate-400 mb-6 font-mono leading-relaxed">Open-Frame Airflow<br>Liquid-Plate Design<br>AI Training Node</p>
+                            <div class="text-2xl font-mono text-white mb-8">£7,250.00</div>
+                        </div>
+                        <button onclick="openModal('Apex_Rig')" class="btn-outline !border-cyan-500 !text-cyan-500 hover:bg-cyan-500 hover:!text-black w-full">Reserve</button>
+                    </div>
+                    <div class="card p-8 text-center flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-cyber text-xl mb-4 text-white uppercase tracking-widest">ITX_SPECTRE</h3>
+                            <p class="text-xs text-slate-400 mb-6 font-mono leading-relaxed">10L SFF Chassis<br>Intel 14900KS<br>Low-Profile Infiltration</p>
+                            <div class="text-2xl font-mono text-cyan-400 mb-8">£4,890.00</div>
+                        </div>
+                        <button onclick="openModal('Apex_Rig')" class="btn-outline w-full">Reserve</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="tab-gear" class="tab-content px-6 max-w-7xl mx-auto">
+            <h2 class="font-cyber text-2xl text-center mb-12 uppercase tracking-widest text-white">Tactical_Armory</h2>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6" id="gearGrid">
+                </div>
+        </section>
+
+        <section id="tab-arcade" class="tab-content px-6 max-w-6xl mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="font-cyber text-3xl text-yellow-500 mb-3 uppercase tracking-widest">Training_Simulations</h2>
+                <p class="font-mono text-xs text-slate-400 uppercase tracking-widest">Maintain Operator Reflexes</p>
+            </div>
+            
+            <div class="grid lg:grid-cols-3 gap-8">
+                <div class="card p-6 flex flex-col">
+                    <div class="flex justify-between items-center mb-6">
+                        <h4 class="font-mono text-xs font-bold text-slate-300">01_FIREWALL</h4>
+                        <span id="score-fw" class="font-mono text-cyan-400 text-xs">SCORE: 0</span>
+                    </div>
+                    <div class="game-canvas-container aspect-video mb-6 relative overflow-hidden" id="game-fw">
+                        <canvas id="canvas-fw" class="w-full h-full object-contain absolute inset-0"></canvas>
+                        <div id="ui-fw" class="absolute inset-0 flex items-center justify-center bg-black/80 backdrop-blur-sm">
+                            <button onclick="startFW()" class="btn-outline !border-cyan-500 !text-cyan-500 hover:!bg-cyan-500 hover:!text-black text-[10px] px-6 py-2">EXECUTE</button>
+                        </div>
+                    </div>
+                    <p class="text-center font-mono text-[10px] text-slate-600 uppercase tracking-tighter">Tap/Click to jump // Bypass filters</p>
+                </div>
+
                 <div class="card p-6 flex flex-col items-center">
-                    <h4 class="font-mono text-xs text-green-500 mb-4 uppercase w-full text-left">// MEM_HACK.exe</h4>
-                    <div class="decrypt-wrapper mb-4">
-                        <div id="grid-dc" class="decrypt-grid"></div>
+                    <div class="w-full flex justify-between items-center mb-6">
+                        <h4 class="font-mono text-xs font-bold text-slate-300">02_DECRYPT</h4>
+                        <span id="score-dc" class="font-mono text-green-500 text-xs">LVL: 1</span>
                     </div>
-                    <button id="btn-dc" onclick="startDC()" class="w-full py-2 border border-green-500 text-green-500 font-cyber text-[10px]">SYNC_NEURAL</button>
-                </div>
-                <div class="card p-6">
-                    <h4 class="font-mono text-xs text-yellow-500 mb-4 uppercase">// BIT_SNAKE.exe</h4>
-                    <div class="game-canvas-container aspect-video mb-4" id="touch-sn">
-                        <canvas id="canvas-sn" width="300" height="150"></canvas>
-                        <div id="ui-sn" class="absolute inset-0 flex items-center justify-center bg-black/80">
-                            <button onclick="startSN()" class="font-cyber text-[10px] bg-yellow-600 text-black px-4 py-2">INITIALIZE</button>
+                    <div class="bg-black border border-slate-800 p-4 mb-6 rounded-sm w-full flex items-center justify-center relative aspect-square max-w-[250px]">
+                        <div class="decrypt-wrapper">
+                            <div id="grid-dc" class="decrypt-grid">
+                                <div class="col-span-3 row-span-3 text-slate-700 font-mono text-[10px] flex items-center justify-center">STANDBY</div>
+                            </div>
+                        </div>
+                        <div id="ui-dc" class="absolute inset-0 flex items-center justify-center bg-black/80 backdrop-blur-sm">
+                            <button onclick="startDC()" id="btn-dc" class="btn-outline !border-green-500 !text-green-500 hover:!bg-green-600 hover:!text-black text-[10px] px-6 py-2">SYNC_NEURAL</button>
                         </div>
                     </div>
+                    <p class="text-center font-mono text-[10px] text-slate-600 uppercase tracking-tighter">Repeat pattern // Neural memory</p>
+                </div>
+
+                <div class="card p-6 flex flex-col">
+                    <div class="flex justify-between items-center mb-6">
+                        <h4 class="font-mono text-xs font-bold text-slate-300">03_BIT_SNAKE</h4>
+                        <span id="score-sn" class="font-mono text-yellow-500 text-xs">BITS: 0</span>
+                    </div>
+                    <div class="game-canvas-container aspect-video mb-6 relative" id="game-sn">
+                        <canvas id="canvas-sn" class="w-full h-full object-contain absolute inset-0"></canvas>
+                        <div id="ui-sn" class="absolute inset-0 flex items-center justify-center bg-black/80 backdrop-blur-sm">
+                            <button onclick="startSN()" class="btn-outline !border-yellow-500 !text-yellow-500 hover:!bg-yellow-500 hover:!text-black text-[10px] px-6 py-2">INJECT</button>
+                        </div>
+                    </div>
+                    <p class="text-center font-mono text-[10px] text-slate-600 uppercase tracking-tighter">Swipe to direct // Collect bits</p>
                 </div>
             </div>
         </section>
 
-        <section id="tab-ops" class="tab-content px-6 max-w-4xl mx-auto text-center pt-10">
-            <h2 class="font-cyber text-5xl text-red-600 mb-6 uppercase tracking-widest">INCIDENT_RESPONSE</h2>
-            <div class="card p-10 border-t-4 border-red-600 bg-red-950/5 mb-8 text-left">
-                <p class="font-mono text-xs text-slate-400 leading-relaxed mb-6 uppercase">Trace reconstruction, BGA reballing, and physical platter data recovery. Submit your hardware telemetry for immediate analysis.</p>
-                <button onclick="openModal('REPAIR')" class="w-full py-5 bg-red-700 text-white font-black text-xs uppercase tracking-widest">Open Incident Ticket</button>
+        <section id="tab-ops" class="tab-content px-6 max-w-5xl mx-auto">
+            <div class="card p-10 border-l-4 border-l-red-600">
+                <div class="text-center mb-12">
+                    <h2 class="font-cyber text-3xl md:text-4xl text-white mb-2 uppercase tracking-widest">Incident_Response</h2>
+                    <p class="font-mono text-[10px] md:text-xs text-red-500 tracking-[0.4em] uppercase">Laboratory Level Intervention</p>
+                </div>
+                <div class="grid md:grid-cols-2 gap-12 mb-12">
+                    <div class="space-y-4">
+                        <h4 class="font-bold text-white uppercase text-sm border-b border-white/5 pb-2">Silicon Microsurgery</h4>
+                        <p class="text-sm text-slate-400 leading-relaxed font-mono uppercase">Trace reconstruction and blown IC replacement executed under high-power stereomicroscopes. Failure is a software error; we fix the hardware.</p>
+                    </div>
+                    <div class="space-y-4">
+                        <h4 class="font-bold text-white uppercase text-sm border-b border-white/5 pb-2">Deep Data Forensics</h4>
+                        <p class="text-sm text-slate-400 leading-relaxed font-mono uppercase">Physical platter swaps, read-head replacements, and NAND chip-off data extraction inside ISO-certified clean environments.</p>
+                    </div>
+                </div>
+                <div class="text-center border-t border-white/5 pt-8">
+                    <button onclick="openModal('Incident_Response')" class="btn-outline !border-red-600 !text-red-500 hover:bg-red-600 hover:!text-white px-12 py-4">Initiate Diagnostic Ticket</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="tab-logs" class="tab-content px-6 max-w-7xl mx-auto">
+            <h2 class="font-cyber text-2xl text-center mb-12 text-white uppercase tracking-widest">Declassified_Logs</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="card p-8 relative border-t-2 border-t-cyan-500">
+                    <div class="absolute top-0 right-0 bg-cyan-900/30 text-cyan-400 text-[10px] font-mono px-2 py-1">CASE_#8842</div>
+                    <div class="text-cyan-500 text-xs mb-4 mt-2">★★★★★</div>
+                    <p class="font-mono text-sm text-slate-300 leading-relaxed mb-6">"Retrieved 4TB of architectural CAD files from a drive declared physically dead by Apple. Exceptional throughput."</p>
+                    <div class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">- Corporate Director</div>
+                </div>
+                <div class="card p-8 relative border-t-2 border-t-yellow-500">
+                    <div class="absolute top-0 right-0 bg-yellow-900/30 text-yellow-500 text-[10px] font-mono px-2 py-1">CASE_#9104</div>
+                    <div class="text-yellow-500 text-xs mb-4 mt-2">★★★★★</div>
+                    <p class="font-mono text-sm text-slate-300 leading-relaxed mb-6">"The Project P rig handles local LLM training without breaking a sweat. The thermals are genuinely cold. Perfect build."</p>
+                    <div class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">- Independent Developer</div>
+                </div>
+                <div class="card p-8 relative border-t-2 border-t-red-500">
+                    <div class="absolute top-0 right-0 bg-red-900/30 text-red-500 text-[10px] font-mono px-2 py-1">CASE_#7719</div>
+                    <div class="text-red-500 text-xs mb-4 mt-2">★★★★★</div>
+                    <p class="font-mono text-sm text-slate-300 leading-relaxed mb-6">"Contracted them for the Zero-G build. Cable management is psychotic. It is the most violent piece of hardware I've ever seen."</p>
+                    <div class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">- AI Researcher</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="tab-pro" class="tab-content px-6 text-center max-w-5xl mx-auto">
+            <div class="card p-10 md:p-12">
+                <h2 class="font-cyber text-2xl text-cyan-400 mb-2 uppercase tracking-widest">Asset_Portal</h2>
+                <p class="font-mono text-xs text-slate-500 mb-10 border-b border-white/5 pb-6 uppercase tracking-widest">Public Access Granted</p>
+                <div class="grid md:grid-cols-3 gap-6 text-left">
+                    <div class="card p-6 hover:bg-white/5 cursor-pointer transition">
+                        <h4 class="font-mono font-bold text-white text-sm mb-2 uppercase">Firmware.zip</h4>
+                        <p class="text-[10px] text-slate-500 mb-6 uppercase">Unlocked microcode for Apex hardware</p>
+                        <div class="text-[10px] font-mono text-cyan-500">[ Download ]</div>
+                    </div>
+                    <div class="card p-6 hover:bg-white/5 cursor-pointer transition">
+                        <h4 class="font-mono font-bold text-white text-sm mb-2 uppercase">Thermals.sh</h4>
+                        <p class="text-[10px] text-slate-500 mb-6 uppercase">Proprietary liquid pump daemon</p>
+                        <div class="text-[10px] font-mono text-cyan-500">[ Download ]</div>
+                    </div>
+                    <div class="card p-6 hover:bg-white/5 cursor-pointer transition">
+                        <h4 class="font-mono font-bold text-white text-sm mb-2 uppercase">Diagnostics.exe</h4>
+                        <p class="text-[10px] text-slate-500 mb-6 uppercase">Deep silicon stress tester</p>
+                        <div class="text-[10px] font-mono text-cyan-500">[ Download ]</div>
+                    </div>
+                </div>
             </div>
         </section>
 
     </main>
 
+    <footer class="bg-black border-t border-white/5 pt-12 pb-8 px-6 mt-12">
+        <div class="max-w-7xl mx-auto grid md:grid-cols-3 gap-8 mb-12">
+            <div>
+                <h4 class="font-cyber text-[10px] text-white mb-6 uppercase tracking-widest">External_Links</h4>
+                <div class="flex flex-col space-y-3 font-mono text-[10px] text-slate-500 uppercase tracking-widest">
+                    <a href="#" class="hover:text-cyan-400 transition">> X_PLATFORM</a>
+                    <a href="#" class="hover:text-cyan-400 transition">> DISCORD_NODE</a>
+                    <a href="#" class="hover:text-cyan-400 transition">> INSTAGRAM_FEED</a>
+                </div>
+            </div>
+            <div class="text-center font-mono text-[10px] text-slate-600 uppercase tracking-widest flex flex-col justify-center">
+                <p>© 2026 h7k3r Systems // Offensive Hardware Research</p>
+            </div>
+            <div class="text-left md:text-right font-mono text-[10px] text-slate-500 space-y-2 uppercase tracking-widest">
+                <p>LOCATION: <span id="user-city" class="text-cyan-500">DETECTING...</span></p>
+                <p>IP_TRACE: <span id="user-ip" class="text-cyan-500">SCANNING...</span></p>
+                <p>ENCRYPTION: <span class="text-green-500">ACTIVE_SSL</span></p>
+            </div>
+        </div>
+        <div class="text-center font-mono text-[9px] text-slate-800 uppercase tracking-[1.5em] opacity-30 select-none">
+            UNLEASH_THE_SILICON
+        </div>
+    </footer>
+
     <script>
+        // TAB CONTROLLER
         function showTab(id) {
             document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.nav-link').forEach(b => b.classList.remove('active'));
-            const t = document.getElementById('tab-' + id);
-            const b = document.getElementById('btn-' + id);
-            if(t) t.classList.add('active');
-            if(b) b.classList.add('active');
+            const target = document.getElementById('tab-' + id);
+            const btn = document.getElementById('btn-' + id);
+            if(target) target.classList.add('active');
+            if(btn) btn.classList.add('active');
             window.scrollTo(0,0);
         }
 
+        // HERO SLIDER (V4 Logic)
+        let currentSlide = 0;
         const slides = document.querySelectorAll('.hero-slide');
-        let curS = 0;
         setInterval(() => {
-            if(document.getElementById('tab-home').classList.contains('active')) {
-                slides[curS].classList.remove('active');
-                curS = (curS + 1) % slides.length;
-                slides[curS].classList.add('active');
+            if (document.getElementById('tab-home').classList.contains('active')) {
+                slides[currentSlide].classList.remove('active');
+                currentSlide = (currentSlide + 1) % slides.length;
+                slides[currentSlide].classList.add('active');
             }
-        }, 3000);
+        }, 2500);
 
+        // MODAL
         function openModal(val) { document.getElementById('modal-select').value = val; document.getElementById('modal').classList.add('modal-active'); }
         function closeModal() { document.getElementById('modal').classList.remove('modal-active'); }
 
-        fetch('https://get.geojs.io/v1/ip/geo.json').then(r=>r.json()).then(d=>{
-            document.getElementById('city-node').innerText = d.city.toUpperCase();
-            document.getElementById('ip-node').innerText = `IP: ${d.ip}`;
-            document.getElementById('loc-footer').innerText = `NODE: ${d.city.toUpperCase()} // ${d.ip}`;
-        });
+        // IP TRACING
+        fetch('https://get.geojs.io/v1/ip/geo.json')
+            .then(res => res.json())
+            .then(data => {
+                const city = (data.city || data.region || "Secure Node").toUpperCase();
+                document.getElementById('city-node').innerText = city;
+                document.getElementById('ip-node').innerText = `IP: ${data.ip}`;
+                document.getElementById('user-city').innerText = city;
+                document.getElementById('user-ip').innerText = data.ip;
+                document.getElementById('ui-node-code').innerText = data.country_code || 'UK_01';
+            }).catch(() => {
+                document.getElementById('city-node').innerText = `NODE HIDDEN`;
+            });
 
-        // GEAR DATA
+        // ARMORY DATA (12 Items)
         const gear = [
-            { n: "Faraday_Parka", p: "185" }, { n: "USB_Killer", p: "45" },
-            { n: "Jammer_X", p: "320" }, { n: "Precision_Bits", p: "85" },
-            { n: "Tactical_Deck", p: "450" }, { n: "Locked_SSD", p: "210" }
+            { n: "Stealth Hoodie", p: "145", d: "EMI Shielding Outerwear" }, { n: "Cable Sleeves", p: "45", d: "Pro Link Kit" },
+            { n: "EDC Pouch", p: "25", d: "Tactical Organizer" }, { n: "ID Patch", p: "12", d: "PVC Asset" },
+            { n: "Silicon Mat", p: "35", d: "Anti-Static Desk Grid" }, { n: "Faraday Bag", p: "30", d: "RF Signal Blocker" },
+            { n: "SSD Field Drive", p: "85", d: "Encrypted Storage" }, { n: "Operator Cap", p: "28", d: "Low-Profile" },
+            { n: "AES USB Killer", p: "45", d: "Hardware Cut" }, { n: "Signal Jammer", p: "320", d: "RF Suppression" },
+            { n: "Tactical Deck", p: "450", d: "Rugged SFF Shell" }, { n: "Precision Bits", p: "85", d: "Solder Tool Kit" }
         ];
         const gGrid = document.getElementById('gearGrid');
         gear.forEach(i => {
-            gGrid.innerHTML += `<div class="card p-6 text-center"><h4 class="font-bold text-xs text-white mb-2 uppercase">${i.n}</h4><span class="font-mono text-cyan-400 text-xs mb-4 block">£${i.p}.00</span><button onclick="openModal('GEAR')" class="w-full py-2 border border-white/5 text-[9px] font-bold uppercase hover:bg-white hover:text-black">Acquire</button></div>`;
+            gGrid.innerHTML += `
+            <div class="card p-6 text-center flex flex-col justify-between items-center hover:border-white/20">
+                <div>
+                    <h4 class="font-bold text-[10px] text-white mb-2 uppercase tracking-wide">${i.n}</h4>
+                    <p class="font-mono text-[8px] text-slate-600 mb-6 uppercase">${i.d}</p>
+                </div>
+                <div class="w-full">
+                    <span class="font-mono text-cyan-400 text-xs mb-4 block">£${i.p}.00</span>
+                    <button onclick="openModal('Tactical_Gear')" class="btn-outline w-full py-2 text-[9px]">Acquire</button>
+                </div>
+            </div>`;
         });
 
-        // THREAT MAP
+        // WORLD MAP THREAT MONITOR
         const attackCvs = document.getElementById('attackCanvas');
         const attackCtx = attackCvs.getContext('2d');
         let attacks = [];
-        const regions = [{x: 0.2, y: 0.3}, {x: 0.5, y: 0.25}, {x: 0.8, y: 0.4}, {x: 0.4, y: 0.7}, {x: 0.75, y: 0.7}];
-        function resize() { attackCvs.width = attackCvs.offsetWidth; attackCvs.height = attackCvs.offsetHeight; }
-        window.onresize = resize; resize();
+        
+        function resizeAttacks() { 
+            const container = document.getElementById('map-container');
+            // Fixed pixel internal resolution for smooth lines, CSS handles visual scaling
+            attackCvs.width = container.offsetWidth; 
+            attackCvs.height = container.offsetHeight; 
+        }
+        window.addEventListener('resize', resizeAttacks); 
+        resizeAttacks();
+
         function drawAttacks() {
             attackCtx.clearRect(0,0,attackCvs.width, attackCvs.height);
-            if(Math.random() < 0.04) {
-                let s = regions[Math.floor(Math.random()*regions.length)];
-                let e = regions[Math.floor(Math.random()*regions.length)];
-                attacks.push({ x1: s.x*attackCvs.width, y1: s.y*attackCvs.height, x2: e.x*attackCvs.width, y2: e.y*attackCvs.height, l: 1.0 });
+            if(Math.random() < 0.05) {
+                attacks.push({ 
+                    x1: Math.random()*attackCvs.width, y1: Math.random()*attackCvs.height, 
+                    x2: Math.random()*attackCvs.width, y2: Math.random()*attackCvs.height, 
+                    l: 1.0 
+                });
             }
             attacks.forEach((a, i) => {
                 attackCtx.beginPath(); attackCtx.moveTo(a.x1, a.y1);
-                attackCtx.quadraticCurveTo((a.x1+a.x2)/2, Math.min(a.y1,a.y2)-50, a.x2, a.y2);
+                attackCtx.quadraticCurveTo((a.x1+a.x2)/2, Math.min(a.y1, a.y2)-60, a.x2, a.y2);
                 attackCtx.strokeStyle = `rgba(255, 0, 60, ${a.l})`; attackCtx.lineWidth = 1.5; attackCtx.stroke();
-                a.l -= 0.015; if(a.l <= 0) attacks.splice(i, 1);
+                attackCtx.fillStyle = `rgba(0, 243, 255, ${a.l})`; attackCtx.beginPath(); attackCtx.arc(a.x1, a.y1, 2, 0, 7); attackCtx.fill();
+                a.l -= 0.012; if(a.l <= 0) attacks.splice(i, 1);
             });
             requestAnimationFrame(drawAttacks);
         }
         drawAttacks();
 
-        // GAMES
-        let fwG=false, fwB, fwP=[], fwS=0; const ctxFW = document.getElementById('canvas-fw').getContext('2d');
-        function startFW(){ document.getElementById('ui-fw').style.display='none'; fwG=true; fwB={y:75,v:0}; fwP=[]; fwS=0; loopFW(); }
-        function loopFW(){ if(!fwG)return; ctxFW.fillStyle="#000"; ctxFW.fillRect(0,0,300,150); fwB.v+=0.12; fwB.y+=fwB.v; ctxFW.fillStyle="#0ff"; ctxFW.fillRect(40,fwB.y,8,8);
-            if(fwP.length===0 || fwP[fwP.length-1].x<180) fwP.push({x:300, h:Math.random()*60+20});
-            fwP.forEach((p, i)=>{ p.x-=1.2; ctxFW.fillStyle="#f03"; ctxFW.fillRect(p.x,0,12,p.h); ctxFW.fillRect(p.x,p.h+65,12,150);
-            if(40<p.x+12 && 48>p.x && (fwB.y<p.h || fwB.y+8>p.h+65)) fwG=false; if(p.x===40) fwS++; });
-            document.getElementById('score-fw').innerText = "Score: "+fwS; if(fwB.y>150||fwB.y<0) fwG=false;
-            if(!fwG) document.getElementById('ui-fw').style.display='flex'; else requestAnimationFrame(loopFW); }
-        document.getElementById('canvas-fw').onmousedown = () => { if(fwG) fwB.v = -2.5; };
+        // ---- ARCADE GAMES LOGIC ----
+        
+        // Prevent scrolling on mobile canvas
+        const preventScroll = (e) => { e.preventDefault(); };
+        const gameContainers = ['game-fw', 'grid-dc', 'game-sn'];
+        gameContainers.forEach(id => {
+            const el = document.getElementById(id);
+            if(el) {
+                el.addEventListener('touchmove', preventScroll, { passive: false });
+            }
+        });
 
-        let dcS=[], dcU=[], dcL=1;
-        function startDC(){ dcL=1; document.getElementById('ui-dc').style.display='none'; setupDCGrid(); nextDC(); }
-        function setupDCGrid(){ const g=document.getElementById('grid-dc'); g.innerHTML=''; for(let i=0;i<9;i++) g.innerHTML+=`<div id="d-${i}" onclick="clickDC(${i})"></div>`; }
-        function nextDC(){ dcU=[]; dcS.push(Math.floor(Math.random()*9)); document.getElementById('score-dc').innerText="Lvl: "+dcL; document.getElementById('grid-dc').style.pointerEvents='none';
-            dcS.forEach((v,i)=>setTimeout(()=>{ const el=document.getElementById(`d-${v}`); if(el){el.style.background="#39ff14"; setTimeout(()=>el.style.background="",300);} },(i+1)*500));
-            setTimeout(()=>document.getElementById('grid-dc').style.pointerEvents='auto', dcS.length*500+400); }
-        function clickDC(i){ dcU.push(i); if(dcU[dcU.length-1]!==dcS[dcU.length-1]){ document.getElementById('ui-dc').style.display='flex'; dcS=[]; } else if(dcU.length===dcS.length){ dcL++; setTimeout(nextDC,800); } }
+        // 1. FIREWALL (Playable speed & gravity)
+        let fwG = false, fwB, fwP = [], fwS = 0, fwReq;
+        const cvFW = document.getElementById('canvas-fw'), ctxFW = cvFW.getContext('2d');
+        
+        // Set internal resolution for crispness
+        cvFW.width = 300; cvFW.height = 150;
 
-        let snG=false, snS, snF, snD, snID, snSc=0; const ctxSN = document.getElementById('canvas-sn').getContext('2d');
-        function startSN(){ document.getElementById('ui-sn').style.display='none'; snG=true; snS=[{x:15,y:7}]; snD='R'; snSc=0; spawnF(); if(snID) clearInterval(snID); snID=setInterval(loopSN,100); }
-        function spawnF(){ snF={x:Math.floor(Math.random()*29), y:Math.floor(Math.random()*14)}; }
-        function loopSN(){ if(!snG)return; let h={...snS[0]}; if(snD=='R')h.x++; if(snD=='L')h.x--; if(snD=='U')h.y--; if(snD=='D')h.y++;
-            if(h.x<0||h.x>=30||h.y<0||h.y>=15||snS.some(s=>s.x==h.x&&s.y==h.y)){ snG=false; clearInterval(snID); document.getElementById('ui-sn').style.display='flex'; return; }
-            snS.unshift(h); if(h.x==snF.x&&h.y==snF.y){ snSc++; document.getElementById('score-sn').innerText="Bits: "+snSc; spawnF(); } else snS.pop();
-            ctxSN.fillStyle="#000"; ctxSN.fillRect(0,0,300,150); ctxSN.fillStyle="#ffb700"; ctxSN.fillRect(snF.x*10, snF.y*10, 9, 9);
-            ctxSN.fillStyle="#0ff"; snS.forEach(p=>ctxSN.fillRect(p.x*10,p.y*10,9,9)); }
-        let tX, tY; document.getElementById('game-sn').ontouchstart=(e)=>{tX=e.touches[0].clientX;tY=e.touches[0].clientY;};
-        document.getElementById('game-sn').ontouchend=(e)=>{ let dX=e.changedTouches[0].clientX-tX, dY=e.changedTouches[0].clientY-tY;
-            if(Math.abs(dX)>Math.abs(dY)) snD=dX>0?(snD!='L'?'R':snD):(snD!='R'?'L':snD); else snD=dY>0?(snD!='U'?'D':snD):(snD!='D'?'U':snD); };
+        function startFW() { 
+            document.getElementById('ui-fw').style.display='none'; 
+            fwG=true; fwB={x:40, y:75, v:0}; fwP=[]; fwS=0; 
+            document.getElementById('score-fw').innerText = "SCORE: 0";
+            if(fwReq) cancelAnimationFrame(fwReq);
+            loopFW(); 
+        }
+        
+        function loopFW(){ 
+            if(!fwG) return; 
+            ctxFW.fillStyle="#000"; ctxFW.fillRect(0,0,300,150); 
+            fwB.v += 0.12; // Lighter gravity
+            fwB.y += fwB.v;
+            ctxFW.fillStyle="#00f3ff"; ctxFW.fillRect(40, fwB.y, 8, 8);
+            
+            if(fwP.length===0 || fwP[fwP.length-1].x < 170) fwP.push({x:300, h:Math.random()*50+20});
+            
+            fwP.forEach((p, i)=>{ 
+                p.x -= 1.2; // Slower speed
+                let gap = 65; // Playable gap size
+                ctxFW.fillStyle="#ff003c"; 
+                ctxFW.fillRect(p.x, 0, 15, p.h); 
+                ctxFW.fillRect(p.x, p.h+gap, 15, 150);
+                
+                // Collision
+                if(40<p.x+15 && 48>p.x && (fwB.y<p.h || fwB.y+8>p.h+gap)) fwG=false;
+                if(p.x > 38.8 && p.x < 40) { fwS++; document.getElementById('score-fw').innerText = "SCORE: " + fwS; }
+            });
+            
+            if(fwB.y > 150 || fwB.y < 0) fwG=false; 
+            
+            if(!fwG) { 
+                document.getElementById('ui-fw').style.display='flex'; 
+                document.querySelector('#ui-fw button').innerText = 'REBOOT';
+            } else {
+                fwReq = requestAnimationFrame(loopFW);
+            }
+        }
+        const jumpFW = (e) => { if(e) e.preventDefault(); if(fwG) fwB.v = -2.5; };
+        cvFW.addEventListener('mousedown', jumpFW);
+        cvFW.addEventListener('touchstart', jumpFW, {passive: false});
+
+        // 2. DECRYPT (Perfect Square Grid)
+        let dcS = [], dcU = [], dcL = 1;
+        function startDC() { 
+            dcL=1; document.getElementById('ui-dc').style.display='none'; 
+            document.getElementById('score-dc').innerText = "LVL: 1";
+            setupDCGrid(); setTimeout(nextDC, 500);
+        }
+        function setupDCGrid() {
+            const g = document.getElementById('grid-dc'); g.innerHTML = '';
+            for(let i=0;i<9;i++) g.innerHTML += `<div id="d-${i}" onclick="clickDC(${i})"></div>`;
+        }
+        function nextDC() { 
+            dcU = []; dcS.push(Math.floor(Math.random()*9));
+            document.getElementById('score-dc').innerText = "LVL: " + dcL;
+            document.getElementById('grid-dc').style.pointerEvents = 'none';
+            dcS.forEach((val, i) => { 
+                setTimeout(() => { 
+                    const el = document.getElementById(`d-${val}`); 
+                    if(el) { el.style.background = "#39ff14"; setTimeout(() => el.style.background="#111", 300); }
+                }, (i+1) * 500); 
+            });
+            setTimeout(() => { document.getElementById('grid-dc').style.pointerEvents = 'auto'; }, dcS.length * 500 + 400);
+        }
+        function clickDC(i) { 
+            dcU.push(i); 
+            const el = document.getElementById(`d-${i}`);
+            el.style.background = "#00f3ff"; setTimeout(() => el.style.background="#111", 200);
+            if(dcU[dcU.length-1] !== dcS[dcU.length-1]) { 
+                document.getElementById('grid-dc').innerHTML = `<div class="col-span-3 row-span-3 font-mono text-red-500 text-[10px] flex items-center justify-center">FAILED</div>`;
+                document.getElementById('ui-dc').style.display='flex'; 
+                document.querySelector('#ui-dc button').innerText = 'REBOOT';
+                dcS=[]; 
+            } else if(dcU.length === dcS.length) { dcL++; setTimeout(nextDC, 800); } 
+        }
+
+        // 3. BIT SNAKE (Mobile Swipe Fixed)
+        let snG = false, snS, snF, snD, snID, snSc = 0, touchX = null, touchY = null;
+        const cvSN = document.getElementById('canvas-sn'), ctxSN = cvSN.getContext('2d');
+        cvSN.width = 300; cvSN.height = 150; // Set internal resolution
+
+        function startSN() { 
+            document.getElementById('ui-sn').style.display='none'; 
+            snG=true; snS=[{x:15,y:7}]; snD='R'; snSc=0; 
+            document.getElementById('score-sn').innerText = "BITS: 0";
+            spawnF(); 
+            if(snID) clearInterval(snID); 
+            snID = setInterval(loopSN, 100); 
+        }
+        function spawnF() { snF = {x:Math.floor(Math.random()*29), y:Math.floor(Math.random()*14)}; }
+        
+        function loopSN() { 
+            if(!snG) return;
+            let head = {...snS[0]}; 
+            if(snD==='R') head.x++; else if(snD==='L') head.x--; else if(snD==='U') head.y--; else if(snD==='D') head.y++;
+            
+            if(head.x<0||head.x>=30||head.y<0||head.y>=15 || snS.some(s=>s.x===head.x&&s.y===head.y)) { 
+                snG=false; clearInterval(snID);
+                document.getElementById('ui-sn').style.display='flex'; 
+                document.querySelector('#ui-sn button').innerText = 'REBOOT';
+                return; 
+            }
+            
+            snS.unshift(head); 
+            if(head.x===snF.x && head.y===snF.y) { 
+                snSc++; document.getElementById('score-sn').innerText = "BITS: "+snSc; spawnF(); 
+            } else {
+                snS.pop();
+            }
+            
+            ctxSN.fillStyle="#000"; ctxSN.fillRect(0,0,300,150); 
+            ctxSN.fillStyle="#ffb700"; ctxSN.fillRect(snF.x*10, snF.y*10, 9, 9);
+            ctxSN.fillStyle="#00f3ff"; snS.forEach(s=>ctxSN.fillRect(s.x*10, s.y*10, 9, 9));
+        }
+
+        window.addEventListener('keydown', (e) => { 
+            if(!snG) return;
+            if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.key)) e.preventDefault();
+            if(e.key==='ArrowRight' && snD!=='L') snD='R'; 
+            if(e.key==='ArrowLeft' && snD!=='R') snD='L'; 
+            if(e.key==='ArrowUp' && snD!=='D') snD='U'; 
+            if(e.key==='ArrowDown' && snD!=='U') snD='D'; 
+        });
+
+        // Swipe Detection - Locked to Canvas
+        cvSN.addEventListener('touchstart', e => { 
+            e.preventDefault(); 
+            touchX = e.touches[0].clientX; touchY = e.touches[0].clientY; 
+        }, {passive: false});
+        
+        cvSN.addEventListener('touchend', e => { 
+            if(!touchX || !touchY || !snG) return; 
+            let dX = e.changedTouches[0].clientX - touchX, dY = e.changedTouches[0].clientY - touchY; 
+            if(Math.abs(dX) > Math.abs(dY)) { 
+                snD = dX > 0 ? (snD !== 'L' ? 'R' : snD) : (snD !== 'R' ? 'L' : snD); 
+            } else { 
+                snD = dY > 0 ? (snD !== 'U' ? 'D' : snD) : (snD !== 'D' ? 'U' : snD); 
+            } 
+            touchX = null; touchY = null; 
+        }, {passive: false});
     </script>
 </body>
 </html>
