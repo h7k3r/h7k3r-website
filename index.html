@@ -3,7 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
     <title>h7k3r | Hardware Intelligence & Forensics</title>
+    <meta name="description" content="h7k3r Systems: Global deployment nodes specializing in offensive hardware research, zero-latency gaming rigs, and forensic data reconstruction.">
+    <meta name="keywords" content="custom PC, forensic data recovery, hardware, gaming PC, silicon repair, h7k3r">
+    <meta property="og:title" content="h7k3r Systems">
+    <meta property="og:description" content="High-performance deployment nodes and hardware intervention.">
+    <meta property="og:type" content="website">
+    
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23030303'/><text x='50' y='68' font-family='sans-serif' font-weight='900' font-size='48' fill='%2300f3ff' text-anchor='middle'>H7</text></svg>">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
@@ -33,7 +42,7 @@
 
         /* Content Sections & Hero Slider */
         .tab-content { display: none; opacity: 0; }
-        .tab-content.active { display: block; opacity: 1; animation: fadeIn 0.3s ease-out forwards; }
+        .tab-content.active { display: block; opacity: 1; animation: fadeIn 0.4s ease-out forwards; }
         @keyframes fadeIn { from { transform: translateY(5px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
         .hero-slide { display: none; opacity: 0; transition: opacity 0.8s ease-in-out; cursor: pointer; }
@@ -47,18 +56,18 @@
         .btn-outline { background: transparent; border: 1px solid #334155; color: #e2e8f0; font-weight: 700; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; transition: 0.2s; padding: 0.75rem 1.5rem; }
         .btn-outline:hover { border-color: var(--cyan); color: var(--cyan); }
 
-        /* High-Contrast White Threat Map */
+        /* High-Contrast Threat Map */
         #map-container { background: #000; position: relative; overflow: hidden; border: 1px solid #1e293b; border-radius: 2px; }
         .map-bg { 
             position: absolute; inset: 0; 
             background-image: url('https://upload.wikimedia.org/wikipedia/commons/8/80/World_map_-_low_resolution.svg'); 
             background-size: cover; background-position: center; 
-            filter: invert(1) brightness(10) contrast(1.5) opacity(0.2); /* Invert to white, increase brightness */
+            filter: invert(1) brightness(3) contrast(1.5) opacity(0.3); 
         }
 
         /* Arcade Games Formatting */
-        .game-canvas-container { touch-action: none; } /* Critical for mobile swipe games */
-        canvas { image-rendering: pixelated; background: transparent; border-radius: 2px; }
+        .game-canvas-container { touch-action: none; } /* Critical for mobile games */
+        canvas { image-rendering: pixelated; background: #000; border-radius: 2px; }
         .decrypt-wrapper { width: 100%; max-width: 200px; margin: 0 auto; aspect-ratio: 1 / 1; }
         .decrypt-grid { display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr); gap: 4px; width: 100%; height: 100%; }
         .decrypt-grid div { background: #111; border: 1px solid #222; cursor: pointer; transition: 0.1s; border-radius: 2px; }
@@ -139,10 +148,7 @@
             </div>
 
             <div class="max-w-7xl mx-auto px-6 mb-16">
-                <div class="flex justify-between items-end mb-4">
-                    <h2 class="font-cyber text-lg text-white uppercase tracking-widest text-center md:text-left">Live_Threat_Monitor</h2>
-                    <div class="font-mono text-[10px] text-red-500 uppercase tracking-widest hidden md:block animate-pulse">Monitoring Global Vectors</div>
-                </div>
+                <h2 class="font-cyber text-xl text-white mb-4 uppercase tracking-widest text-center md:text-left">Live_Threat_Monitor</h2>
                 <div id="map-container" class="w-full h-64 md:h-96">
                     <div class="map-bg"></div>
                     <canvas id="attackCanvas" class="absolute inset-0 z-20 w-full h-full"></canvas>
@@ -150,18 +156,18 @@
             </div>
 
             <div class="max-w-7xl mx-auto px-6 pb-20">
-                <h2 class="font-cyber text-center text-xl mb-10 uppercase tracking-widest text-slate-400">Masterpiece_Archives</h2>
+                <h2 class="font-cyber text-center text-xl mb-10 uppercase tracking-widest text-slate-300">Masterpiece_Archives</h2>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div class="aspect-square bg-zinc-900 card flex items-end p-6 group cursor-pointer grayscale hover:grayscale-0 transition duration-700 relative overflow-hidden border border-white/5">
-                        <img src="build1.jpg" onerror="this.src='https://images.unsplash.com/photo-1587202377405-836165b1040a?w=600'" class="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:opacity-100 transition duration-700">
+                        <img src="build1.jpg" alt="Build 101" onerror="this.src='https://images.unsplash.com/photo-1587202377405-836165b1040a?w=600'" class="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:opacity-100 transition duration-700">
                         <span class="font-mono text-[10px] text-white bg-black/80 px-3 py-2 z-10 border border-white/10 group-hover:border-cyan-500 group-hover:text-cyan-400 transition">BUILD_101: VOID_RUNNER</span>
                     </div>
                     <div class="aspect-square bg-zinc-900 card flex items-end p-6 group cursor-pointer grayscale hover:grayscale-0 transition duration-700 relative overflow-hidden border border-white/5">
-                        <img src="build2.jpg" onerror="this.src='https://images.unsplash.com/photo-1547082299-de196ea013d6?w=600'" class="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:opacity-100 transition duration-700">
+                        <img src="build2.jpg" alt="Build 104" onerror="this.src='https://images.unsplash.com/photo-1547082299-de196ea013d6?w=600'" class="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:opacity-100 transition duration-700">
                         <span class="font-mono text-[10px] text-white bg-black/80 px-3 py-2 z-10 border border-white/10 group-hover:border-cyan-500 group-hover:text-cyan-400 transition">BUILD_104: GHOST_SHELL</span>
                     </div>
                     <div class="aspect-square bg-zinc-900 card flex items-end p-6 group cursor-pointer grayscale hover:grayscale-0 transition duration-700 relative overflow-hidden border border-white/5">
-                        <img src="build3.jpg" onerror="this.src='https://images.unsplash.com/photo-1591488320449-011701bb6704?w=600'" class="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:opacity-100 transition duration-700">
+                        <img src="build3.jpg" alt="Build 112" onerror="this.src='https://images.unsplash.com/photo-1591488320449-011701bb6704?w=600'" class="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:opacity-100 transition duration-700">
                         <span class="font-mono text-[10px] text-white bg-black/80 px-3 py-2 z-10 border border-white/10 group-hover:border-cyan-500 group-hover:text-cyan-400 transition">BUILD_112: NEURAL_LACE</span>
                     </div>
                 </div>
@@ -201,8 +207,8 @@
                             <p class="text-sm text-slate-400 mb-8 leading-relaxed">Engineered for zero thermal latency and maximum frame-pacing. The pure executioner.</p>
                         </div>
                         <div>
-                            <div class="text-3xl font-mono text-white mb-8">£750.00</div>
-                            <button onclick="openModal('Project_P')" class="btn-outline w-full hover:bg-cyan-600 hover:text-black">Acquire Asset</button>
+                            <div class="text-3xl font-mono text-white mb-6">£750.00</div>
+                            <button onclick="openModal('Project_P')" class="btn-outline w-full hover:bg-cyan-600 hover:text-black hover:border-cyan-600">Acquire Asset</button>
                         </div>
                     </div>
                     <div class="card p-10 text-center flex flex-col justify-between">
@@ -212,8 +218,8 @@
                             <p class="text-sm text-slate-400 mb-8 leading-relaxed">Balanced performance geometry. Optimized for sustained heavy-load research tasks.</p>
                         </div>
                         <div>
-                            <div class="text-3xl font-mono text-white mb-8">£749.00</div>
-                            <button onclick="openModal('Series_P')" class="btn-outline w-full">Pre-Order</button>
+                            <div class="text-3xl font-mono text-white mb-6">£749.00</div>
+                            <button onclick="openModal('Series_P')" class="btn-outline w-full hover:border-white hover:text-white">Pre-Order</button>
                         </div>
                     </div>
                 </div>
@@ -228,7 +234,7 @@
                             <p class="text-xs text-slate-400 mb-6 font-mono leading-relaxed">Triple Reservoir<br>Dual RTX 5090 Array<br>24-Hour Duty Cycle</p>
                             <div class="text-2xl font-mono text-cyan-400 mb-8">£8,610.00</div>
                         </div>
-                        <button onclick="openModal('Apex_Rig')" class="btn-outline w-full">Reserve</button>
+                        <button onclick="openModal('TRIDENT')" class="btn-outline w-full">Reserve</button>
                     </div>
                     <div class="card p-8 text-center flex flex-col justify-between border-cyan-500/40 relative shadow-2xl bg-[#080d12]">
                         <div class="absolute top-0 right-0 bg-cyan-600 text-black font-cyber text-[9px] px-3 py-1 tracking-widest">FLAGSHIP</div>
@@ -237,7 +243,7 @@
                             <p class="text-xs text-slate-400 mb-6 font-mono leading-relaxed">Open-Frame Airflow<br>Liquid-Plate Design<br>AI Training Node</p>
                             <div class="text-2xl font-mono text-white mb-8">£7,250.00</div>
                         </div>
-                        <button onclick="openModal('Apex_Rig')" class="btn-outline !border-cyan-500 !text-cyan-500 hover:bg-cyan-500 hover:!text-black w-full">Reserve</button>
+                        <button onclick="openModal('ZERO-G')" class="btn-outline !border-cyan-500 !text-cyan-500 hover:bg-cyan-500 hover:!text-black w-full">Reserve</button>
                     </div>
                     <div class="card p-8 text-center flex flex-col justify-between">
                         <div>
@@ -245,21 +251,21 @@
                             <p class="text-xs text-slate-400 mb-6 font-mono leading-relaxed">10L SFF Chassis<br>Intel 14900KS<br>Low-Profile Infiltration</p>
                             <div class="text-2xl font-mono text-cyan-400 mb-8">£4,890.00</div>
                         </div>
-                        <button onclick="openModal('Apex_Rig')" class="btn-outline w-full">Reserve</button>
+                        <button onclick="openModal('SPECTRE')" class="btn-outline w-full">Reserve</button>
                     </div>
                 </div>
             </div>
         </section>
 
         <section id="tab-gear" class="tab-content px-6 max-w-7xl mx-auto">
-            <h2 class="font-cyber text-2xl text-center mb-12 uppercase tracking-widest text-white">Tactical_Armory</h2>
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6" id="gearGrid">
+            <h2 class="heading text-3xl text-center mb-12 text-white">Tactical_Armory</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6" id="gearGrid">
                 </div>
         </section>
 
         <section id="tab-arcade" class="tab-content px-6 max-w-6xl mx-auto">
             <div class="text-center mb-12">
-                <h2 class="font-cyber text-3xl text-yellow-500 mb-3 uppercase tracking-widest">Training_Simulations</h2>
+                <h2 class="font-cyber text-3xl text-yellow-500 mb-3 uppercase tracking-widest">Training Simulations</h2>
                 <p class="font-mono text-xs text-slate-400 uppercase tracking-widest">Maintain Operator Reflexes</p>
             </div>
             
@@ -289,7 +295,7 @@
                                 <div class="col-span-3 row-span-3 text-slate-700 font-mono text-[10px] flex items-center justify-center">STANDBY</div>
                             </div>
                         </div>
-                        <div id="ui-dc" class="absolute inset-0 flex items-center justify-center bg-black/80 backdrop-blur-sm">
+                        <div id="ui-dc" class="absolute inset-0 flex items-center justify-center bg-black/80 backdrop-blur-sm z-10">
                             <button onclick="startDC()" id="btn-dc" class="btn-outline !border-green-500 !text-green-500 hover:!bg-green-600 hover:!text-black text-[10px] px-6 py-2">SYNC_NEURAL</button>
                         </div>
                     </div>
@@ -363,17 +369,17 @@
                 <h2 class="font-cyber text-2xl text-cyan-400 mb-2 uppercase tracking-widest">Asset_Portal</h2>
                 <p class="font-mono text-xs text-slate-500 mb-10 border-b border-white/5 pb-6 uppercase tracking-widest">Public Access Granted</p>
                 <div class="grid md:grid-cols-3 gap-6 text-left">
-                    <div class="card p-6 hover:bg-white/5 cursor-pointer transition">
+                    <div class="card p-6 hover:bg-white/5 cursor-pointer transition border border-white/5">
                         <h4 class="font-mono font-bold text-white text-sm mb-2 uppercase">Firmware.zip</h4>
                         <p class="text-[10px] text-slate-500 mb-6 uppercase">Unlocked microcode for Apex hardware</p>
                         <div class="text-[10px] font-mono text-cyan-500">[ Download ]</div>
                     </div>
-                    <div class="card p-6 hover:bg-white/5 cursor-pointer transition">
+                    <div class="card p-6 hover:bg-white/5 cursor-pointer transition border border-white/5">
                         <h4 class="font-mono font-bold text-white text-sm mb-2 uppercase">Thermals.sh</h4>
                         <p class="text-[10px] text-slate-500 mb-6 uppercase">Proprietary liquid pump daemon</p>
                         <div class="text-[10px] font-mono text-cyan-500">[ Download ]</div>
                     </div>
-                    <div class="card p-6 hover:bg-white/5 cursor-pointer transition">
+                    <div class="card p-6 hover:bg-white/5 cursor-pointer transition border border-white/5">
                         <h4 class="font-mono font-bold text-white text-sm mb-2 uppercase">Diagnostics.exe</h4>
                         <p class="text-[10px] text-slate-500 mb-6 uppercase">Deep silicon stress tester</p>
                         <div class="text-[10px] font-mono text-cyan-500">[ Download ]</div>
@@ -409,7 +415,7 @@
     </footer>
 
     <script>
-        // TAB CONTROLLER
+        // NAVIGATION
         function showTab(id) {
             document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.nav-link').forEach(b => b.classList.remove('active'));
@@ -436,7 +442,7 @@
         function closeModal() { document.getElementById('modal').classList.remove('modal-active'); }
 
         // IP TRACING
-        fetch('https://get.geojs.io/v1/ip/geo.json')
+        fetch('https://ipapi.co/json/')
             .then(res => res.json())
             .then(data => {
                 const city = (data.city || data.region || "Secure Node").toUpperCase();
@@ -473,14 +479,24 @@
             </div>`;
         });
 
-        // WORLD MAP THREAT MONITOR
+        // THREAT MAP ANIMATION (Landmass Origin Fixed)
         const attackCvs = document.getElementById('attackCanvas');
         const attackCtx = attackCvs.getContext('2d');
         let attacks = [];
         
+        // Approximate Landmass Coordinates on SVG Map (X%, Y%)
+        const regions = [
+            {x: 0.20, y: 0.35}, // USA
+            {x: 0.30, y: 0.65}, // Brazil
+            {x: 0.48, y: 0.30}, // UK/EU
+            {x: 0.52, y: 0.65}, // South Africa
+            {x: 0.70, y: 0.25}, // Russia
+            {x: 0.75, y: 0.45}, // China/India
+            {x: 0.85, y: 0.75}  // Australia
+        ];
+
         function resizeAttacks() { 
             const container = document.getElementById('map-container');
-            // Fixed pixel internal resolution for smooth lines, CSS handles visual scaling
             attackCvs.width = container.offsetWidth; 
             attackCvs.height = container.offsetHeight; 
         }
@@ -490,9 +506,16 @@
         function drawAttacks() {
             attackCtx.clearRect(0,0,attackCvs.width, attackCvs.height);
             if(Math.random() < 0.05) {
+                // Pick random start and end regions
+                let start = regions[Math.floor(Math.random() * regions.length)];
+                let end = regions[Math.floor(Math.random() * regions.length)];
+                // Add jitter so it's not exact same spot
+                let jX1 = (Math.random() - 0.5) * 0.05; let jY1 = (Math.random() - 0.5) * 0.05;
+                let jX2 = (Math.random() - 0.5) * 0.05; let jY2 = (Math.random() - 0.5) * 0.05;
+                
                 attacks.push({ 
-                    x1: Math.random()*attackCvs.width, y1: Math.random()*attackCvs.height, 
-                    x2: Math.random()*attackCvs.width, y2: Math.random()*attackCvs.height, 
+                    x1: (start.x + jX1) * attackCvs.width, y1: (start.y + jY1) * attackCvs.height, 
+                    x2: (end.x + jX2) * attackCvs.width, y2: (end.y + jY2) * attackCvs.height, 
                     l: 1.0 
                 });
             }
@@ -501,7 +524,7 @@
                 attackCtx.quadraticCurveTo((a.x1+a.x2)/2, Math.min(a.y1, a.y2)-60, a.x2, a.y2);
                 attackCtx.strokeStyle = `rgba(255, 0, 60, ${a.l})`; attackCtx.lineWidth = 1.5; attackCtx.stroke();
                 attackCtx.fillStyle = `rgba(0, 243, 255, ${a.l})`; attackCtx.beginPath(); attackCtx.arc(a.x1, a.y1, 2, 0, 7); attackCtx.fill();
-                a.l -= 0.012; if(a.l <= 0) attacks.splice(i, 1);
+                a.l -= 0.015; if(a.l <= 0) attacks.splice(i, 1);
             });
             requestAnimationFrame(drawAttacks);
         }
@@ -514,16 +537,12 @@
         const gameContainers = ['game-fw', 'grid-dc', 'game-sn'];
         gameContainers.forEach(id => {
             const el = document.getElementById(id);
-            if(el) {
-                el.addEventListener('touchmove', preventScroll, { passive: false });
-            }
+            if(el) { el.addEventListener('touchmove', preventScroll, { passive: false }); }
         });
 
         // 1. FIREWALL (Playable speed & gravity)
         let fwG = false, fwB, fwP = [], fwS = 0, fwReq;
         const cvFW = document.getElementById('canvas-fw'), ctxFW = cvFW.getContext('2d');
-        
-        // Set internal resolution for crispness
         cvFW.width = 300; cvFW.height = 150;
 
         function startFW() { 
@@ -560,9 +579,7 @@
             if(!fwG) { 
                 document.getElementById('ui-fw').style.display='flex'; 
                 document.querySelector('#ui-fw button').innerText = 'REBOOT';
-            } else {
-                fwReq = requestAnimationFrame(loopFW);
-            }
+            } else { fwReq = requestAnimationFrame(loopFW); }
         }
         const jumpFW = (e) => { if(e) e.preventDefault(); if(fwG) fwB.v = -2.5; };
         cvFW.addEventListener('mousedown', jumpFW);
@@ -606,7 +623,7 @@
         // 3. BIT SNAKE (Mobile Swipe Fixed)
         let snG = false, snS, snF, snD, snID, snSc = 0, touchX = null, touchY = null;
         const cvSN = document.getElementById('canvas-sn'), ctxSN = cvSN.getContext('2d');
-        cvSN.width = 300; cvSN.height = 150; // Set internal resolution
+        cvSN.width = 300; cvSN.height = 150;
 
         function startSN() { 
             document.getElementById('ui-sn').style.display='none'; 
@@ -651,7 +668,6 @@
             if(e.key==='ArrowDown' && snD!=='U') snD='D'; 
         });
 
-        // Swipe Detection - Locked to Canvas
         cvSN.addEventListener('touchstart', e => { 
             e.preventDefault(); 
             touchX = e.touches[0].clientX; touchY = e.touches[0].clientY; 
