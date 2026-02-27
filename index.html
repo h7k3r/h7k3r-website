@@ -10,7 +10,7 @@
 
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;700&family=JetBrains+Mono:wght@400;700&display=swap');
         :root { --cyan: #00f3ff; --red: #ff003c; --bg: #020202; --panel: #0a0a0a; }
         body { background-color: var(--bg); color: #d1d5db; font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
         .font-cyber { font-family: 'Orbitron', sans-serif; }
@@ -24,29 +24,29 @@
             filter: drop-shadow(0px 2px 8px rgba(0, 243, 255, 0.4));
         }
 
-        .nav-link { color: #94a3b8; transition: 0.3s; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; white-space: nowrap; border: 1px solid transparent; }
+        .nav-link { color: #94a3b8; transition: 0.3s; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; white-space: nowrap; border: 1px solid transparent; }
         .nav-link.active { color: var(--cyan); background: rgba(0, 243, 255, 0.05); border-color: rgba(0, 243, 255, 0.2); }
 
         .tab-content { display: none; }
         .tab-content.active { display: block; animation: fadeIn 0.4s ease-out forwards; }
         @keyframes fadeIn { from { transform: translateY(10px); opacity: 0; } to { opacity: 1; } }
 
-        .hero-slide { display: none; opacity: 0; transition: opacity 1s ease-in-out; cursor: pointer; }
+        .hero-slide { display: none; opacity: 0; transition: opacity 1s ease-in-out; }
         .hero-slide.active { display: flex; opacity: 1; }
 
         .card { background: var(--panel); border: 1px solid #1e293b; transition: 0.2s; }
         .card:hover { border-color: var(--cyan); }
 
-        /* PRODUCT VIEW OVERLAY */
-        #product-view { display: none; position: fixed; inset: 0; z-index: 500; background: #000; overflow-y: auto; padding: 2rem; }
-        .product-active #product-view { display: block; animation: fadeIn 0.3s forwards; }
-
         /* WHITE WORLD MAP */
-        #map-container { background: #000; position: relative; overflow: hidden; border: 1px solid #1e293b; height: 350px; width: 100%; border-radius: 4px; }
-        .world-map-svg { position: absolute; inset: 0; width: 100%; height: 100%; filter: invert(1) brightness(2) opacity(0.2); pointer-events: none; }
+        #map-container { background: #000; position: relative; overflow: hidden; border: 1px solid #1e293b; height: 400px; width: 100%; border-radius: 4px; }
+        .world-map-img { position: absolute; inset: 0; width: 100%; height: 100%; filter: invert(1) brightness(2.5) opacity(0.2); pointer-events: none; object-fit: cover; }
         
         .game-canvas-container { touch-action: none; background: #000; border: 1px solid #222; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
+
+        /* MODAL */
+        #modal { display: none; }
+        .modal-active { display: flex !important; }
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
@@ -59,22 +59,15 @@
                 <input type="text" name="name" placeholder="OPERATOR NAME" required class="w-full bg-black border border-zinc-800 p-3 text-sm font-mono text-white outline-none focus:border-cyan-500">
                 <input type="email" name="email" placeholder="SECURE EMAIL" required class="w-full bg-black border border-zinc-800 p-3 text-sm font-mono text-white outline-none focus:border-cyan-500">
                 <select id="modal-select" name="interest" class="w-full bg-black border border-zinc-800 p-3 text-sm font-mono text-white outline-none">
-                    <option value="PROJECT_P">PROJECT_P (£449)</option>
+                    <option value="PROJECT_P">PROJECT_P (£750)</option>
+                    <option value="BLACK_BOX">BLACK_BOX V1</option>
                     <option value="TRIDENT">TRIDENT APEX</option>
-                    <option value="SERIES_P">SERIES P</option>
                     <option value="GEAR">TACTICAL GEAR</option>
-                    <option value="REPAIR">REPAIR TICKET</option>
                 </select>
                 <textarea name="msg" placeholder="MISSION PARAMS" class="w-full bg-black border border-zinc-800 p-3 text-sm font-mono h-24 text-white outline-none focus:border-cyan-500"></textarea>
                 <button type="submit" class="w-full py-4 bg-cyan-600 text-black font-bold uppercase text-xs tracking-widest hover:bg-cyan-400">Transmit Data</button>
             </form>
         </div>
-    </div>
-
-    <div id="product-view">
-        <button onclick="closeProduct()" class="mb-10 font-mono text-xs text-cyan-500 hover:text-white uppercase tracking-widest underline decoration-cyan-500/30">← Back to HQ</button>
-        <div id="product-content" class="max-w-4xl mx-auto">
-            </div>
     </div>
 
     <nav class="fixed top-0 w-full z-[150] border-b border-white/5 bg-black/95 backdrop-blur-md">
@@ -96,11 +89,11 @@
         
         <section id="tab-home" class="tab-content active">
             <div class="relative h-[55vh] flex items-center justify-center overflow-hidden bg-[#010101] border-b border-white/5">
-                <div onclick="showTab('hardware')" class="hero-slide active flex-col items-center text-center px-4 w-full">
+                <div onclick="showTab('hardware')" class="hero-slide active flex-col items-center text-center px-4 w-full cursor-pointer">
                     <h1 class="font-cyber text-5xl md:text-8xl font-black mb-4 uppercase text-white">SYSTEMS <span class="text-metallic-blue">LIVE.</span></h1>
                     <p class="font-mono text-[10px] text-slate-500 uppercase tracking-[0.5em]">Precision Deployment Node // UK_SOUTH</p>
                 </div>
-                <div onclick="showTab('hardware')" class="hero-slide flex-col items-center text-center px-4 w-full">
+                <div onclick="showTab('hardware')" class="hero-slide flex-col items-center text-center px-4 w-full cursor-pointer">
                     <h1 class="font-cyber text-5xl md:text-8xl font-black mb-4 uppercase text-white">UNLEASH <span class="text-metallic-blue">SILICON.</span></h1>
                     <p class="font-mono text-[10px] text-slate-500 uppercase tracking-[0.5em]">No Bottlenecks // No Compromise</p>
                 </div>
@@ -121,7 +114,7 @@
                     <div class="font-mono text-[10px] text-red-500 uppercase animate-pulse">Monitoring Live Vectors</div>
                 </div>
                 <div id="map-container">
-                    <img class="map-bg" src="https://upload.wikimedia.org/wikipedia/commons/8/80/World_map_-_low_resolution.svg">
+                    <img class="world-map-img" src="https://upload.wikimedia.org/wikipedia/commons/8/80/World_map_-_low_resolution.svg">
                     <canvas id="attackCanvas" class="absolute inset-0 z-20"></canvas>
                 </div>
             </div>
@@ -147,30 +140,32 @@
 
         <section id="tab-hardware" class="tab-content px-6 max-w-7xl mx-auto pt-10">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div onclick="openProduct('projectp')" class="card p-8 border-t-2 border-yellow-500 cursor-pointer hover:bg-yellow-500/5 transition">
+                <div class="card p-8 border-t-2 border-yellow-500">
                     <h3 class="font-cyber text-2xl text-white mb-2 uppercase">PROJECT_P</h3>
                     <p class="font-mono text-[10px] text-yellow-500 mb-6 uppercase">"The Veno_Scorp Killer"</p>
-                    <div class="text-3xl font-mono text-white mb-6">£449.00</div>
-                    <button class="w-full py-3 bg-yellow-500 text-black font-black text-[10px] uppercase">Analyze Specs</button>
+                    <p class="text-xs text-slate-500 font-mono mb-6 uppercase leading-relaxed">Modern AM4 Platform // Ryzen CPU // RX 580 8GB // 16GB DDR4 // 256GB NVMe. No e-waste. Pure performance.</p>
+                    <div class="text-3xl font-mono text-white mb-6">£750.00</div>
+                    <button onclick="openModal('PROJECT_P')" class="w-full py-3 bg-yellow-500 text-black font-black text-[10px] uppercase">Acquire Asset</button>
                 </div>
-                <div onclick="openProduct('seriesp')" class="card p-8 cursor-pointer hover:bg-white/5 transition">
-                    <h3 class="font-cyber text-2xl text-white mb-2 uppercase">SERIES_P</h3>
-                    <p class="font-mono text-[10px] text-slate-500 mb-6 uppercase">Prosumer Excellence</p>
-                    <div class="text-3xl font-mono text-white mb-6">£749.00</div>
-                    <button class="w-full py-3 border border-white/10 text-[10px] font-bold uppercase">Analyze Specs</button>
+                <div class="card p-8 border-t-2 border-red-500">
+                    <h3 class="font-cyber text-2xl text-white mb-2 uppercase">BLACK_BOX V1</h3>
+                    <p class="font-mono text-[10px] text-red-500 mb-6 uppercase">SIG-INT Field Asset</p>
+                    <p class="text-xs text-slate-500 font-mono mb-6 uppercase leading-relaxed">Integrated SDR // Alfa WiFi-6E // Ryzen 9 9900X // 32GB DDR5. Forensic Grade Interception.</p>
+                    <div class="text-3xl font-mono text-white mb-6">£4,200.00</div>
+                    <button onclick="openModal('BLACK_BOX')" class="w-full py-3 bg-red-600 text-white font-black text-[10px] uppercase">Deploy Unit</button>
                 </div>
-                <div onclick="openProduct('trident')" class="card p-8 border-t-2 border-cyan-500 cursor-pointer hover:bg-cyan-500/5 transition">
+                <div class="card p-8 border-t-2 border-cyan-500">
                     <h3 class="font-cyber text-2xl text-white mb-2 uppercase">TRIDENT</h3>
                     <p class="font-mono text-[10px] text-cyan-400 mb-6 uppercase">The Apex Pinnacle</p>
+                    <p class="text-xs text-slate-500 font-mono mb-6 uppercase leading-relaxed">Dual RTX 5090 // 128GB DDR5 // 4TB NVMe. The ultimate weapon for 4K dominance.</p>
                     <div class="text-3xl font-mono text-white mb-6">£8,610.00</div>
-                    <button class="w-full py-3 bg-cyan-600 text-black font-black text-[10px] uppercase">Analyze Specs</button>
+                    <button onclick="openModal('TRIDENT')" class="w-full py-3 bg-cyan-600 text-black font-black text-[10px] uppercase">Reserve Unit</button>
                 </div>
             </div>
         </section>
 
         <section id="tab-gear" class="tab-content px-6 max-w-7xl mx-auto pt-10">
-            <div class="grid grid-cols-2 lg:grid-cols-4 gap-4" id="gearGrid">
-                </div>
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-4" id="gearGrid"></div>
         </section>
 
         <section id="tab-arcade" class="tab-content px-6 max-w-7xl mx-auto pt-10">
@@ -205,7 +200,6 @@
 
         <section id="tab-ops" class="tab-content px-6 max-w-4xl mx-auto text-center pt-10">
             <h2 class="font-cyber text-5xl text-red-600 mb-6 uppercase tracking-widest">INCIDENT_RESPONSE</h2>
-            <p class="font-mono text-sm text-slate-500 mb-10 uppercase">Critical Repair & Forensic Data Recovery</p>
             <div class="card p-10 border-t-4 border-red-600 bg-red-950/5 mb-8 text-left">
                 <p class="font-mono text-xs text-slate-400 leading-relaxed mb-6 uppercase">Trace reconstruction, BGA reballing, and physical platter data recovery. Submit your hardware telemetry for immediate analysis.</p>
                 <button onclick="openModal('REPAIR')" class="w-full py-5 bg-red-700 text-white font-black text-xs uppercase tracking-widest">Open Incident Ticket</button>
@@ -215,9 +209,7 @@
     </main>
 
     <script>
-        // CORE NAVIGATION
         function showTab(id) {
-            document.body.classList.remove('product-active');
             document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.nav-link').forEach(b => b.classList.remove('active'));
             const t = document.getElementById('tab-' + id);
@@ -227,79 +219,61 @@
             window.scrollTo(0,0);
         }
 
+        const slides = document.querySelectorAll('.hero-slide');
+        let curS = 0;
+        setInterval(() => {
+            if(document.getElementById('tab-home').classList.contains('active')) {
+                slides[curS].classList.remove('active');
+                curS = (curS + 1) % slides.length;
+                slides[curS].classList.add('active');
+            }
+        }, 3000);
+
         function openModal(val) { document.getElementById('modal-select').value = val; document.getElementById('modal').classList.add('modal-active'); }
         function closeModal() { document.getElementById('modal').classList.remove('modal-active'); }
 
-        // PRODUCT VIEW SYSTEM
-        const PRODUCTS = {
-            projectp: {
-                title: "PROJECT_P // THE VENO_KILLER",
-                price: "£449.00",
-                desc: "Engineered to dismantle the entry-level e-waste market. Unlike competitors using decade-old refurbished CPUs, Project P utilizes a modern AM4 platform.",
-                specs: ["CPU: AMD Ryzen Quad-Core (Modern Arch)", "GPU: Radeon RX 580 8GB GDDR5", "RAM: 16GB DDR4 3200MHz", "SSD: 256GB NVMe M.2", "PSU: 500W 80+ Bronze"],
-                perf: "Valorant: 144+ FPS | Fortnite: 120+ FPS | GTA V: 60+ FPS",
-                img: "https://images.unsplash.com/photo-1587202377405-836165b1040a?w=800"
-            },
-            seriesp: {
-                title: "SERIES_P // PROSUMER NODE",
-                price: "£749.00",
-                desc: "High-stability workstation designed for developers, researchers, and creators. Focused on multi-core sustained efficiency.",
-                specs: ["CPU: AMD Ryzen 7 5700X", "GPU: NVIDIA RTX 4060 8GB", "RAM: 32GB DDR4 3600MHz", "SSD: 1TB Gen4 NVMe"],
-                perf: "Cinema4D: Stable | 4K Edit: Native | Dev-Compile: Ultra-Fast",
-                img: "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=800"
-            },
-            trident: {
-                title: "TRIDENT // APEX PINNACLE",
-                price: "£8,610.00",
-                desc: "No limits. Hand-built with the rarest components on earth. The ultimate weapon for 4K ray-traced dominance.",
-                specs: ["CPU: AMD Ryzen 9 7950X3D", "GPU: DUAL NVIDIA RTX 5090 (NVLink)", "RAM: 128GB DDR5 6000MHz", "SSD: 4TB Gen5 RAID-0"],
-                perf: "Cyberpunk 4K: 160+ FPS | Maya: Realtime | AI Train: Desktop Beast",
-                img: "https://images.unsplash.com/photo-1547082299-de196ea013d6?w=800"
-            }
-        };
+        fetch('https://get.geojs.io/v1/ip/geo.json').then(r=>r.json()).then(d=>{
+            document.getElementById('city-node').innerText = d.city.toUpperCase();
+            document.getElementById('ip-node').innerText = `IP: ${d.ip}`;
+            document.getElementById('loc-footer').innerText = `NODE: ${d.city.toUpperCase()} // ${d.ip}`;
+        });
 
-        function openProduct(key) {
-            const p = PRODUCTS[key];
-            const html = `
-                <div class="grid lg:grid-cols-2 gap-16 items-start">
-                    <img src="${p.img}" class="w-full border border-white/5 shadow-2xl grayscale hover:grayscale-0 transition duration-700">
-                    <div>
-                        <h1 class="font-cyber text-4xl text-white mb-2">${p.title}</h1>
-                        <p class="font-mono text-cyan-400 text-xl mb-8">${p.price}</p>
-                        <p class="text-slate-400 mb-10 font-mono text-sm leading-relaxed">${p.desc}</p>
-                        <div class="space-y-4 mb-10">
-                            <h4 class="text-white font-bold text-xs uppercase tracking-widest border-b border-white/10 pb-2">Technical Registry</h4>
-                            ${p.specs.map(s => `<div class="text-xs font-mono text-slate-500 uppercase">${s}</div>`).join('')}
-                        </div>
-                        <div class="p-6 bg-cyan-500/5 border border-cyan-500/20 mb-10">
-                            <h4 class="text-cyan-400 font-bold text-xs uppercase mb-2">Verified Telemetry</h4>
-                            <p class="font-mono text-xs text-white">${p.perf}</p>
-                        </div>
-                        <button onclick="openModal('${key.toUpperCase()}')" class="btn-action px-16 py-5">Initiate Acquisition</button>
-                    </div>
-                </div>
-            `;
-            document.getElementById('product-content').innerHTML = html;
-            document.body.classList.add('product-active');
-        }
-
-        function closeProduct() { document.body.classList.remove('product-active'); }
-
-        // GEAR POPULATION
+        // GEAR DATA
         const gear = [
-            { n: "Faraday_Parka", p: "185", svg: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"></path></svg>` },
-            { n: "USB_Killer", p: "45", svg: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>` },
-            { n: "Jammer_X", p: "320", svg: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="8" width="14" height="14" rx="2"></rect><line x1="12" y1="8" x2="12" y2="2"></line></svg>` },
-            { n: "Precision_Bits", p: "85", svg: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6"></path></svg>` },
-            { n: "Tactical_Deck", p: "450", svg: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="6" width="16" height="16" rx="2"></rect></svg>` },
-            { n: "Locked_SSD", p: "210", svg: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2"></rect></svg>` }
+            { n: "Faraday_Parka", p: "185" }, { n: "USB_Killer", p: "45" },
+            { n: "Jammer_X", p: "320" }, { n: "Precision_Bits", p: "85" },
+            { n: "Tactical_Deck", p: "450" }, { n: "Locked_SSD", p: "210" }
         ];
         const gGrid = document.getElementById('gearGrid');
         gear.forEach(i => {
-            gGrid.innerHTML += `<div class="card p-6 text-center flex flex-col items-center"><div class="text-zinc-500 mb-6">${i.svg}</div><h4 class="font-bold text-xs text-white mb-2 uppercase">${i.n}</h4><span class="font-mono text-cyan-400 text-xs mb-4">£${i.p}.00</span><button onclick="openModal('GEAR')" class="btn-outline w-full !py-2 !text-[9px]">Acquire</button></div>`;
+            gGrid.innerHTML += `<div class="card p-6 text-center"><h4 class="font-bold text-xs text-white mb-2 uppercase">${i.n}</h4><span class="font-mono text-cyan-400 text-xs mb-4 block">£${i.p}.00</span><button onclick="openModal('GEAR')" class="w-full py-2 border border-white/5 text-[9px] font-bold uppercase hover:bg-white hover:text-black">Acquire</button></div>`;
         });
 
-        // GAMES ENGINES
+        // THREAT MAP
+        const attackCvs = document.getElementById('attackCanvas');
+        const attackCtx = attackCvs.getContext('2d');
+        let attacks = [];
+        const regions = [{x: 0.2, y: 0.3}, {x: 0.5, y: 0.25}, {x: 0.8, y: 0.4}, {x: 0.4, y: 0.7}, {x: 0.75, y: 0.7}];
+        function resize() { attackCvs.width = attackCvs.offsetWidth; attackCvs.height = attackCvs.offsetHeight; }
+        window.onresize = resize; resize();
+        function drawAttacks() {
+            attackCtx.clearRect(0,0,attackCvs.width, attackCvs.height);
+            if(Math.random() < 0.04) {
+                let s = regions[Math.floor(Math.random()*regions.length)];
+                let e = regions[Math.floor(Math.random()*regions.length)];
+                attacks.push({ x1: s.x*attackCvs.width, y1: s.y*attackCvs.height, x2: e.x*attackCvs.width, y2: e.y*attackCvs.height, l: 1.0 });
+            }
+            attacks.forEach((a, i) => {
+                attackCtx.beginPath(); attackCtx.moveTo(a.x1, a.y1);
+                attackCtx.quadraticCurveTo((a.x1+a.x2)/2, Math.min(a.y1,a.y2)-50, a.x2, a.y2);
+                attackCtx.strokeStyle = `rgba(255, 0, 60, ${a.l})`; attackCtx.lineWidth = 1.5; attackCtx.stroke();
+                a.l -= 0.015; if(a.l <= 0) attacks.splice(i, 1);
+            });
+            requestAnimationFrame(drawAttacks);
+        }
+        drawAttacks();
+
+        // GAMES
         let fwG=false, fwB, fwP=[], fwS=0; const ctxFW = document.getElementById('canvas-fw').getContext('2d');
         function startFW(){ document.getElementById('ui-fw').style.display='none'; fwG=true; fwB={y:75,v:0}; fwP=[]; fwS=0; loopFW(); }
         function loopFW(){ if(!fwG)return; ctxFW.fillStyle="#000"; ctxFW.fillRect(0,0,300,150); fwB.v+=0.12; fwB.y+=fwB.v; ctxFW.fillStyle="#0ff"; ctxFW.fillRect(40,fwB.y,8,8);
@@ -308,6 +282,7 @@
             if(40<p.x+12 && 48>p.x && (fwB.y<p.h || fwB.y+8>p.h+65)) fwG=false; if(p.x===40) fwS++; });
             document.getElementById('score-fw').innerText = "Score: "+fwS; if(fwB.y>150||fwB.y<0) fwG=false;
             if(!fwG) document.getElementById('ui-fw').style.display='flex'; else requestAnimationFrame(loopFW); }
+        document.getElementById('canvas-fw').onmousedown = () => { if(fwG) fwB.v = -2.5; };
 
         let dcS=[], dcU=[], dcL=1;
         function startDC(){ dcL=1; document.getElementById('ui-dc').style.display='none'; setupDCGrid(); nextDC(); }
@@ -325,14 +300,9 @@
             snS.unshift(h); if(h.x==snF.x&&h.y==snF.y){ snSc++; document.getElementById('score-sn').innerText="Bits: "+snSc; spawnF(); } else snS.pop();
             ctxSN.fillStyle="#000"; ctxSN.fillRect(0,0,300,150); ctxSN.fillStyle="#ffb700"; ctxSN.fillRect(snF.x*10, snF.y*10, 9, 9);
             ctxSN.fillStyle="#0ff"; snS.forEach(p=>ctxSN.fillRect(p.x*10,p.y*10,9,9)); }
-        
-        let tX, tY;
-        document.getElementById('game-sn').ontouchstart = (e) => { tX = e.touches[0].clientX; tY = e.touches[0].clientY; };
-        document.getElementById('game-sn').ontouchend = (e) => {
-            let dX = e.changedTouches[0].clientX - tX, dY = e.changedTouches[0].clientY - tY;
-            if(Math.abs(dX) > Math.abs(dY)) snD = dX > 0 ? (snD!='L'?'R':snD) : (snD!='R'?'L':snD);
-            else snD = dY > 0 ? (snD!='U'?'D':snD) : (snD!='D'?'U':snD);
-        };
+        let tX, tY; document.getElementById('game-sn').ontouchstart=(e)=>{tX=e.touches[0].clientX;tY=e.touches[0].clientY;};
+        document.getElementById('game-sn').ontouchend=(e)=>{ let dX=e.changedTouches[0].clientX-tX, dY=e.changedTouches[0].clientY-tY;
+            if(Math.abs(dX)>Math.abs(dY)) snD=dX>0?(snD!='L'?'R':snD):(snD!='R'?'L':snD); else snD=dY>0?(snD!='U'?'D':snD):(snD!='D'?'U':snD); };
     </script>
 </body>
 </html>
