@@ -40,9 +40,9 @@
         /* HOVER SPECS FOR GALLERY */
         .rig-card { position: relative; width: 100%; aspect-ratio: 16/9; background-color: #111; background-size: cover; background-position: center; border: 1px solid #222; overflow: hidden; }
         .rig-specs { 
-            position: absolute; inset: 0; background: rgba(0,0,0,0.9); 
+            position: absolute; inset: 0; background: rgba(0,0,0,0.85); 
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            opacity: 0; transition: 0.3s; padding: 20px;
+            opacity: 0; transition: 0.3s; padding: 20px; text-align: center;
         }
         .rig-card:hover .rig-specs { opacity: 1; }
 
@@ -63,44 +63,52 @@
 <body class="min-h-screen flex flex-col">
 
     <div id="modal" class="fixed inset-0 z-[1000] bg-black/90 hidden items-center justify-center p-4 backdrop-blur-md">
-        <div class="cyber-modal max-w-lg w-full relative flex flex-col">
+        <div class="cyber-modal max-w-lg w-full relative flex flex-col max-h-[90vh] overflow-y-auto no-scrollbar">
             <div class="modal-header">
-                <span>root@h7k3r-sys:~# ./transmit_req.sh</span>
+                <span>root@h7k3r-sys:~# ./contact_support.sh</span>
                 <button onclick="closeModal()" class="hover:text-white">[X]</button>
             </div>
             <div class="p-8">
-                <h2 class="font-cyber text-2xl mb-2 text-white uppercase tracking-widest">Establish Link</h2>
-                <p class="font-mono text-[10px] text-cyan-500 mb-8 uppercase">Encrypted Point-to-Point Communication</p>
+                <h2 class="font-cyber text-2xl mb-1 text-white uppercase tracking-widest">Establish Link</h2>
+                <p class="font-mono text-[10px] text-cyan-500 mb-2 uppercase">Secure Communication Channel</p>
+                <p class="font-sans text-xs text-slate-400 mb-6 italic border-l-2 border-slate-600 pl-3">
+                    Not a tech expert? Don't worry. Just tell us what's broken, what you need, or if you feel your security has been compromised. We are here to help.
+                </p>
+
                 <form action="https://formspree.io/f/mnjblgln" method="POST" class="space-y-5">
                     <div class="flex flex-col gap-1">
-                        <label class="font-mono text-[9px] text-slate-500 uppercase">Operator ID (Name)</label>
+                        <label class="font-mono text-[9px] text-slate-500 uppercase">Your Name</label>
                         <input type="text" name="name" required class="w-full bg-black border border-zinc-700 p-3 text-sm font-mono text-cyan-400 outline-none focus:border-cyan-500 transition">
                     </div>
                     <div class="flex flex-col gap-1">
-                        <label class="font-mono text-[9px] text-slate-500 uppercase">Secure Return Node (Email)</label>
+                        <label class="font-mono text-[9px] text-slate-500 uppercase">Your Email Address</label>
                         <input type="email" name="email" required class="w-full bg-black border border-zinc-700 p-3 text-sm font-mono text-cyan-400 outline-none focus:border-cyan-500 transition">
                     </div>
                     <div class="flex flex-col gap-1">
-                        <label class="font-mono text-[9px] text-slate-500 uppercase">Target Asset / Operation</label>
+                        <label class="font-mono text-[9px] text-slate-500 uppercase">How can we help you?</label>
                         <select id="modal-select" name="interest" class="w-full bg-black border border-zinc-700 p-3 text-sm font-mono text-cyan-400 outline-none focus:border-cyan-500">
-                            <option value="REPAIR_PC">PC REPAIR / FORENSICS</option>
-                            <option value="REPAIR_MOBILE">MOBILE DEVICE FORENSICS</option>
-                            <option value="VENO">PROJECT VENO_KILLER (£449)</option>
-                            <option value="PROJECT_P">PROJECT P (£850)</option>
-                            <option value="XPROTO">XPROTO STEALTH (£1,850)</option>
-                            <option value="APEX">APEX NODE (£2,100)</option>
-                            <option value="TRIDENT">TRIDENT APEX (£8,610)</option>
-                            <option value="CUSTOM_RIG">CUSTOM RIG COMMISSION</option>
-                            <option value="ACCESS_TOOL">OFFENSIVE ACCESS HARDWARE</option>
-                            <option value="GEAR">TACTICAL GEAR</option>
-                            <option value="CONSULTING">IT SECURITY AUDIT</option>
+                            <option value="HELP_HACKED">Help! I think I've been hacked/stalked</option>
+                            <option value="REPAIR_EVERYDAY">Everyday Mobile/Laptop Repair</option>
+                            <option value="PRIVACY_GEAR">Buy Privacy Gear (Faraday Bags, etc)</option>
+                            <option value="CONSULTING_ASSEMBLY">Consulting: Hardware Assembly & Sourcing</option>
+                            <option value="CONSULTING_DEPLOY">Consulting: Node Deployment & Setup</option>
+                            <option value="CONSULTING_NETWORK">Consulting: Network Infrastructure</option>
+                            <option value="CONSULTING_AUDIT">Consulting: IT Security Audit</option>
+                            <option value="DATA_RECOVERY">Advanced Data Recovery (Dead Drive)</option>
+                            <option value="VENO">Buy PC: VENO_KILLER (£449)</option>
+                            <option value="PROJECT_P">Buy PC: PROJECT P (£850)</option>
+                            <option value="XPROTO">Buy PC: XPROTO STEALTH (£1,850)</option>
+                            <option value="APEX">Buy PC: APEX NODE (£2,100)</option>
+                            <option value="TRIDENT">Buy PC: TRIDENT APEX (£8,610)</option>
+                            <option value="CUSTOM_RIG">Custom PC Build Enquiry</option>
+                            <option value="ACCESS_TOOL">Offensive Access Tools</option>
                         </select>
                     </div>
                     <div class="flex flex-col gap-1">
-                        <label class="font-mono text-[9px] text-slate-500 uppercase">Mission Parameters / Specs</label>
-                        <textarea name="msg" class="w-full bg-black border border-zinc-700 p-3 text-sm font-mono h-24 text-cyan-400 outline-none focus:border-cyan-500 transition"></textarea>
+                        <label class="font-mono text-[9px] text-slate-500 uppercase">Message / Details</label>
+                        <textarea name="msg" placeholder="Tell us what's going on..." class="w-full bg-black border border-zinc-700 p-3 text-sm font-mono h-24 text-cyan-400 outline-none focus:border-cyan-500 transition"></textarea>
                     </div>
-                    <button type="submit" class="w-full mt-4 py-4 border border-cyan-500 text-cyan-500 font-bold uppercase text-xs tracking-widest hover:bg-cyan-500 hover:text-black transition">Execute Transmission</button>
+                    <button type="submit" class="w-full mt-4 py-4 border border-cyan-500 text-cyan-500 font-bold uppercase text-xs tracking-widest hover:bg-cyan-500 hover:text-black transition">Send Secure Message</button>
                 </form>
             </div>
         </div>
@@ -109,7 +117,7 @@
     <nav class="fixed top-0 w-full z-[150] border-b border-white/5 bg-black/95 backdrop-blur-md">
         <div class="max-w-7xl mx-auto px-4 py-6 flex flex-col lg:flex-row justify-between items-center gap-6">
             <div class="font-cyber font-black text-2xl text-white tracking-widest cursor-pointer" onclick="location.reload()">H7K3R<span class="text-cyan-500">_</span>SYS</div>
-            <div class="flex overflow-x-auto no-scrollbar gap-5 pb-2 w-full lg:w-auto">
+            <div class="flex overflow-x-auto no-scrollbar gap-2 pb-2 w-full lg:w-auto">
                 <button onclick="showTab('home')" class="nav-btn active" id="btn-home">Mission</button>
                 <button onclick="showTab('hardware')" class="nav-btn" id="btn-hardware">Hardware</button>
                 <button onclick="showTab('gear')" class="nav-btn" id="btn-gear">Gear</button>
@@ -117,7 +125,7 @@
                 <button onclick="showTab('gallery')" class="nav-btn" id="btn-gallery">Gallery</button>
                 <button onclick="showTab('consulting')" class="nav-btn" id="btn-consulting">Consulting</button>
                 <button onclick="showTab('files')" class="nav-btn" id="btn-files">Files</button>
-                <button onclick="showTab('games')" class="nav-btn" style="color: #eab308;" id="btn-games">Games</button>
+                <button onclick="showTab('games')" class="nav-btn" style="color: #eab308; text-shadow: none;" id="btn-games">Games</button>
             </div>
         </div>
     </nav>
@@ -130,7 +138,7 @@
                     <h1 class="font-cyber text-5xl lg:text-8xl font-black mb-4 text-white">H7K3R<span class="text-cyan-500">_SYS</span></h1>
                     <p class="font-mono text-[10px] text-slate-500 uppercase tracking-[0.5em]">UK_SOUTH DEPLOYMENT NODE</p>
                 </div>
-                <div class="hero-slide flex-col items-center text-center px-4 w-full cursor-pointer" onclick="showTab('hardware')">
+                <div class="hero-slide flex-col items-center text-center px-4 w-full cursor-pointer" onclick="showTab('repair')">
                     <h1 class="font-cyber text-5xl lg:text-8xl font-black mb-4 text-white">UNLEASH <span class="text-cyan-500">SILICON.</span></h1>
                     <p class="font-mono text-[10px] text-slate-500 uppercase tracking-[0.5em]">Forensic Hardware Intervention</p>
                 </div>
@@ -148,7 +156,7 @@
                 <div class="card p-8 border-l-2 border-red-500 bg-black/40">
                     <h3 class="font-cyber text-[10px] text-red-500 mb-2 uppercase tracking-widest">// REAL-TIME THREAT TELEMETRY</h3>
                     <p class="font-mono text-xs text-slate-300 leading-relaxed uppercase">
-                        Visualizing live hardware vulnerability vectors and active digital strikes globally. Red trajectories denote high-priority offensive protocols and detected node breaches. H7K3R systems monitor these flows to preemptively harden operator architecture and secure compromised data.
+                        Visualizing live hardware vulnerability vectors and active digital strikes globally. Red trajectories denote high-priority offensive protocols and detected node breaches. H7K3R systems monitor these flows to preemptively harden operator architecture and secure compromised personal data.
                     </p>
                 </div>
             </div>
@@ -157,20 +165,20 @@
                 <div class="marquee-content font-mono text-[10px] text-slate-400 uppercase tracking-widest flex gap-20">
                     <span>CASE_#8842: Data extraction 100% success</span>
                     <span>OP_VENO: System latency reduced by 14ms</span>
-                    <span>TRIDENT: Thermal delta stabilized at 62C</span>
+                    <span>CYBER_SEC: Spyware swept from civilian iPhone</span>
                     <span>BLACK_BOX: SDR signal integrity verified</span>
-                    <span>XPROTO: Custom water-loop deployed successfully</span>
+                    <span>MOBILE_REPAIR: S23 Ultra screen replaced in 45m</span>
                     <span>CASE_#1109: NAND-swap completed on dead MacBook</span>
-                    <span>OP_APEX: Benchmarks verified @ 4K Ultra 144FPS</span>
+                    <span>PRIVACY: Stalking vectors neutralized</span>
                     <span>SILICON_SURGERY: Short-to-ground localized and repaired</span>
                     <span>MOBILE_FORENSICS: Android lock-screen bypassed via ISP</span>
                     <span>CASE_#8842: Data extraction 100% success</span>
                     <span>OP_VENO: System latency reduced by 14ms</span>
-                    <span>TRIDENT: Thermal delta stabilized at 62C</span>
+                    <span>CYBER_SEC: Spyware swept from civilian iPhone</span>
                     <span>BLACK_BOX: SDR signal integrity verified</span>
-                    <span>XPROTO: Custom water-loop deployed successfully</span>
+                    <span>MOBILE_REPAIR: S23 Ultra screen replaced in 45m</span>
                     <span>CASE_#1109: NAND-swap completed on dead MacBook</span>
-                    <span>OP_APEX: Benchmarks verified @ 4K Ultra 144FPS</span>
+                    <span>PRIVACY: Stalking vectors neutralized</span>
                     <span>SILICON_SURGERY: Short-to-ground localized and repaired</span>
                     <span>MOBILE_FORENSICS: Android lock-screen bypassed via ISP</span>
                 </div>
@@ -255,51 +263,122 @@
         </section>
 
         <section id="tab-gear" class="tab-content px-6 max-w-7xl mx-auto">
-            <h2 class="font-cyber text-2xl text-white mb-10 tracking-widest uppercase text-center">Armory_Inventory</h2>
-            <div class="grid lg:grid-cols-3 md:grid-cols-2 gap-6">
-                <div class="card p-6 flex flex-col items-center text-center">
+            <h2 class="font-cyber text-2xl text-white mb-2 tracking-widest uppercase text-center">Armory & Privacy Gear</h2>
+            <p class="text-center text-slate-400 font-mono text-xs mb-10 uppercase">Protect your digital footprint in the physical world.</p>
+            
+            <div class="grid lg:grid-cols-4 md:grid-cols-2 gap-6">
+                <div class="card p-6 flex flex-col items-center text-center border-t-2 border-slate-600">
+                    <div class="w-16 h-16 bg-zinc-900 mb-4 flex items-center justify-center font-mono text-white border border-zinc-700">BOX</div>
+                    <h4 class="font-cyber text-sm text-white mb-2">Faraday Pouch</h4>
+                    <p class="font-mono text-[9px] text-slate-400 mb-2 uppercase">Stop phone tracking.</p>
+                    <span class="font-mono text-white text-xs mb-4 mt-auto">£25.00</span>
+                    <button onclick="openModal('PRIVACY_GEAR')" class="w-full py-2 border border-white/20 text-[10px] font-black uppercase hover:bg-white hover:text-black transition">Buy Now</button>
+                </div>
+                <div class="card p-6 flex flex-col items-center text-center border-t-2 border-slate-600">
+                    <div class="w-16 h-16 bg-zinc-900 mb-4 flex items-center justify-center font-mono text-white border border-zinc-700">USB</div>
+                    <h4 class="font-cyber text-sm text-white mb-2">USB Data Blocker</h4>
+                    <p class="font-mono text-[9px] text-slate-400 mb-2 uppercase">Safe public charging.</p>
+                    <span class="font-mono text-white text-xs mb-4 mt-auto">£15.00</span>
+                    <button onclick="openModal('PRIVACY_GEAR')" class="w-full py-2 border border-white/20 text-[10px] font-black uppercase hover:bg-white hover:text-black transition">Buy Now</button>
+                </div>
+                <div class="card p-6 flex flex-col items-center text-center border-t-2 border-slate-600">
+                    <div class="w-16 h-16 bg-zinc-900 mb-4 flex items-center justify-center font-mono text-white border border-zinc-700">SLV</div>
+                    <h4 class="font-cyber text-sm text-white mb-2">Faraday Sleeve</h4>
+                    <p class="font-mono text-[9px] text-slate-400 mb-2 uppercase">Laptop isolation.</p>
+                    <span class="font-mono text-white text-xs mb-4 mt-auto">£45.00</span>
+                    <button onclick="openModal('PRIVACY_GEAR')" class="w-full py-2 border border-white/20 text-[10px] font-black uppercase hover:bg-white hover:text-black transition">Buy Now</button>
+                </div>
+                <div class="card p-6 flex flex-col items-center text-center border-t-2 border-slate-600">
+                    <div class="w-16 h-16 bg-zinc-900 mb-4 flex items-center justify-center font-mono text-white border border-zinc-700">HAT</div>
+                    <h4 class="font-cyber text-sm text-white mb-2">Signal-Proof Hat</h4>
+                    <p class="font-mono text-[9px] text-slate-400 mb-2 uppercase">Silver-lined EMF protection.</p>
+                    <span class="font-mono text-white text-xs mb-4 mt-auto">£35.00</span>
+                    <button onclick="openModal('PRIVACY_GEAR')" class="w-full py-2 border border-white/20 text-[10px] font-black uppercase hover:bg-white hover:text-black transition">Buy Now</button>
+                </div>
+                <div class="card p-6 flex flex-col items-center text-center border-t-2 border-slate-600">
+                    <div class="w-16 h-16 bg-zinc-900 mb-4 flex items-center justify-center font-mono text-white border border-zinc-700">PACK</div>
+                    <h4 class="font-cyber text-sm text-white mb-2">Stealth Backpack</h4>
+                    <p class="font-mono text-[9px] text-slate-400 mb-2 uppercase">Built-in Faraday compartments.</p>
+                    <span class="font-mono text-white text-xs mb-4 mt-auto">£120.00</span>
+                    <button onclick="openModal('PRIVACY_GEAR')" class="w-full py-2 border border-white/20 text-[10px] font-black uppercase hover:bg-white hover:text-black transition">Buy Now</button>
+                </div>
+                <div class="card p-6 flex flex-col items-center text-center border-t-2 border-cyan-500">
                     <div class="w-16 h-16 bg-zinc-900 mb-4 flex items-center justify-center font-mono text-cyan-500 border border-zinc-700">FP</div>
                     <h4 class="font-cyber text-sm text-white mb-2">Faraday_Parka</h4>
-                    <p class="font-mono text-[9px] text-slate-500 mb-2 uppercase">EMF Radiation Shielding</p>
-                    <span class="font-mono text-cyan-400 text-xs mb-6">£185.00</span>
-                    <button onclick="openModal('GEAR')" class="w-full py-2 border border-white/20 text-[10px] font-black uppercase hover:bg-white hover:text-black transition">Email Enquiry</button>
+                    <p class="font-mono text-[9px] text-slate-500 mb-2 uppercase">Full-Body Shielding</p>
+                    <span class="font-mono text-cyan-400 text-xs mb-4 mt-auto">£185.00</span>
+                    <button onclick="openModal('GEAR')" class="w-full py-2 border border-white/20 text-[10px] font-black uppercase hover:bg-white hover:text-black transition">Buy Now</button>
                 </div>
-                <div class="card p-6 flex flex-col items-center text-center">
+                <div class="card p-6 flex flex-col items-center text-center border-t-2 border-white">
                     <div class="w-16 h-16 bg-zinc-900 mb-4 flex items-center justify-center font-mono text-white border border-zinc-700">H7</div>
                     <h4 class="font-cyber text-sm text-white mb-2">Operator_Hoodie</h4>
-                    <p class="font-mono text-[9px] text-slate-500 mb-2 uppercase">Heavyweight Tactical Cotton</p>
-                    <span class="font-mono text-white text-xs mb-6">£65.00</span>
-                    <button onclick="openModal('GEAR')" class="w-full py-2 border border-white/20 text-[10px] font-black uppercase hover:bg-white hover:text-black transition">Email Enquiry</button>
+                    <p class="font-mono text-[9px] text-slate-500 mb-2 uppercase">Tactical Cotton</p>
+                    <span class="font-mono text-white text-xs mb-4 mt-auto">£65.00</span>
+                    <button onclick="openModal('GEAR')" class="w-full py-2 border border-white/20 text-[10px] font-black uppercase hover:bg-white hover:text-black transition">Buy Now</button>
                 </div>
-                <div class="card p-6 flex flex-col items-center text-center">
+                <div class="card p-6 flex flex-col items-center text-center border-t-2 border-yellow-500">
                     <div class="w-16 h-16 bg-zinc-900 mb-4 flex items-center justify-center font-mono text-yellow-500 border border-zinc-700">PB</div>
                     <h4 class="font-cyber text-sm text-white mb-2">Precision_Bits</h4>
-                    <p class="font-mono text-[9px] text-slate-500 mb-2 uppercase">S2 Steel Teardown Kit</p>
-                    <span class="font-mono text-yellow-500 text-xs mb-6">£45.00</span>
-                    <button onclick="openModal('GEAR')" class="w-full py-2 border border-white/20 text-[10px] font-black uppercase hover:bg-white hover:text-black transition">Email Enquiry</button>
+                    <p class="font-mono text-[9px] text-slate-500 mb-2 uppercase">S2 Steel Teardown</p>
+                    <span class="font-mono text-yellow-500 text-xs mb-4 mt-auto">£45.00</span>
+                    <button onclick="openModal('GEAR')" class="w-full py-2 border border-white/20 text-[10px] font-black uppercase hover:bg-white hover:text-black transition">Buy Now</button>
                 </div>
             </div>
         </section>
 
         <section id="tab-repair" class="tab-content px-6 max-w-7xl mx-auto">
-            <div class="card p-10 border-l-4 border-l-red-600">
-                <h2 class="font-cyber text-3xl md:text-5xl text-white mb-2 uppercase tracking-widest">Incident_Response</h2>
-                <p class="font-mono text-xs text-red-500 mb-10 tracking-[0.3em] uppercase">Laboratory Level Intervention</p>
-                <div class="grid lg:grid-cols-3 md:grid-cols-2 gap-8 mb-10">
-                    <div>
-                        <h4 class="font-bold text-white uppercase text-sm border-b border-white/5 pb-2 mb-4">Silicon Microsurgery</h4>
-                        <p class="text-xs text-slate-400 leading-relaxed font-mono uppercase">Trace reconstruction and blown IC replacement executed under high-power stereomicroscopes. Failure is a hardware error; we fix the silicon.</p>
+            <h2 class="font-cyber text-3xl md:text-5xl text-white mb-2 uppercase tracking-widest text-center">Diagnostics & Repair</h2>
+            <p class="font-mono text-xs text-slate-400 mb-12 tracking-widest uppercase text-center">From cracked screens to advanced forensic data recovery.</p>
+
+            <div class="grid lg:grid-cols-2 gap-8 mb-10">
+                <div class="card p-8 border-t-4 border-green-500 bg-black/50">
+                    <h3 class="font-cyber text-xl text-green-400 mb-4 uppercase tracking-widest">Everyday Consumer Repair</h3>
+                    <div class="space-y-6">
+                        <div>
+                            <h4 class="font-bold text-white uppercase text-sm border-b border-white/5 pb-2 mb-2">Mobile Phone Repair</h4>
+                            <p class="text-xs text-slate-300 leading-relaxed font-sans">Cracked screens, dying batteries, charging ports, and water damage recovery for all iPhone and Android devices. Fast turnaround.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-white uppercase text-sm border-b border-white/5 pb-2 mb-2">PC & Laptop Fixes</h4>
+                            <p class="text-xs text-slate-300 leading-relaxed font-sans">Virus removal, Windows reinstallations, hard drive upgrades, and physical hinge/screen repair for personal laptops.</p>
+                        </div>
                     </div>
-                    <div>
-                        <h4 class="font-bold text-white uppercase text-sm border-b border-white/5 pb-2 mb-4">Deep Data Forensics</h4>
-                        <p class="text-xs text-slate-400 leading-relaxed font-mono uppercase">Physical platter swaps, read-head replacements, and NAND chip-off data extraction inside ISO-certified clean environments.</p>
-                    </div>
-                    <div>
-                        <h4 class="font-bold text-white uppercase text-sm border-b border-white/5 pb-2 mb-4">Mobile Device Forensics</h4>
-                        <p class="text-xs text-slate-400 leading-relaxed font-mono uppercase">ISP protocol interfacing and NAND-off extraction for critically damaged iOS and Android logic boards. Bypassing logical locks via hardware intervention.</p>
-                    </div>
+                    <button onclick="openModal('REPAIR_EVERYDAY')" class="mt-8 px-8 py-3 bg-green-700 text-white font-black text-xs uppercase hover:bg-green-600 transition">Get a Free Quote</button>
                 </div>
-                <button onclick="openModal('REPAIR')" class="px-10 py-4 bg-red-700 text-white font-black text-xs uppercase tracking-widest hover:bg-red-600 transition">Initiate Diagnostic Ticket</button>
+
+                <div class="card p-8 border-t-4 border-blue-500 bg-black/50">
+                    <h3 class="font-cyber text-xl text-blue-400 mb-4 uppercase tracking-widest">Personal Cyber Security</h3>
+                    <div class="space-y-6">
+                        <div>
+                            <h4 class="font-bold text-white uppercase text-sm border-b border-white/5 pb-2 mb-2">Hacking & Stalking Support</h4>
+                            <p class="text-xs text-slate-300 leading-relaxed font-sans">Feel like someone is watching your device? We sweep phones and laptops for spyware, keyloggers, and hidden trackers to secure your privacy.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-white uppercase text-sm border-b border-white/5 pb-2 mb-2">Account Securing</h4>
+                            <p class="text-xs text-slate-300 leading-relaxed font-sans">Helping you regain control of compromised social media, email, and banking accounts, and locking them down permanently.</p>
+                        </div>
+                    </div>
+                    <button onclick="openModal('HELP_HACKED')" class="mt-8 px-8 py-3 bg-blue-700 text-white font-black text-xs uppercase hover:bg-blue-600 transition">Request Urgent Help</button>
+                </div>
+
+                <div class="card p-8 border-t-4 border-red-600 lg:col-span-2">
+                    <h3 class="font-cyber text-xl text-red-500 mb-4 uppercase tracking-widest">Advanced Laboratory Forensics</h3>
+                    <div class="grid md:grid-cols-3 gap-6">
+                        <div>
+                            <h4 class="font-bold text-white uppercase text-sm border-b border-white/5 pb-2 mb-2">Silicon Microsurgery</h4>
+                            <p class="text-xs text-slate-400 leading-relaxed font-mono uppercase">Trace reconstruction and blown IC replacement under high-power stereomicroscopes. We fix the physical board.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-white uppercase text-sm border-b border-white/5 pb-2 mb-2">Deep Data Forensics</h4>
+                            <p class="text-xs text-slate-400 leading-relaxed font-mono uppercase">Physical platter swaps, read-head replacements, and NAND chip-off data extraction inside clean environments.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-white uppercase text-sm border-b border-white/5 pb-2 mb-2">Mobile Device Forensics</h4>
+                            <p class="text-xs text-slate-400 leading-relaxed font-mono uppercase">ISP protocol interfacing and NAND-off extraction for critically damaged iOS/Android logic boards.</p>
+                        </div>
+                    </div>
+                    <button onclick="openModal('DATA_RECOVERY')" class="mt-8 px-10 py-4 bg-red-700 text-white font-black text-xs uppercase tracking-widest hover:bg-red-600 transition">Initiate Lab Ticket</button>
+                </div>
             </div>
         </section>
 
@@ -309,83 +388,134 @@
                 <button onclick="showGal('work')" class="font-cyber text-[10px] border border-white/50 px-4 py-2 text-white uppercase hover:border-cyan-500 hover:text-cyan-500 transition">02_Past_Rigs</button>
             </div>
 
-            <div id="gal-walls" class="grid grid-cols-2 gap-6">
+            <div id="gal-walls" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 <div class="card aspect-video bg-zinc-900" style="background-image: url('wall_1.jpg'); background-size: cover;"></div>
                 <div class="card aspect-video bg-zinc-900" style="background-image: url('wall_2.jpg'); background-size: cover;"></div>
+                <div class="card aspect-video bg-zinc-900" style="background-image: url('wall_3.jpg'); background-size: cover;"></div>
+                <div class="card aspect-video bg-zinc-900" style="background-image: url('wall_4.jpg'); background-size: cover;"></div>
+                <div class="card aspect-video bg-zinc-900" style="background-image: url('wall_5.jpg'); background-size: cover;"></div>
+                <div class="card aspect-video bg-zinc-900" style="background-image: url('wall_6.jpg'); background-size: cover;"></div>
+                <div class="card aspect-video bg-zinc-900" style="background-image: url('wall_7.jpg'); background-size: cover;"></div>
+                <div class="card aspect-video bg-zinc-900" style="background-image: url('wall_8.jpg'); background-size: cover;"></div>
+                <div class="card aspect-video bg-zinc-900" style="background-image: url('wall_9.jpg'); background-size: cover;"></div>
+                <div class="card aspect-video bg-zinc-900" style="background-image: url('wall_10.jpg'); background-size: cover;"></div>
+                <div class="card aspect-video bg-zinc-900" style="background-image: url('wall_11.jpg'); background-size: cover;"></div>
+                <div class="card aspect-video bg-zinc-900" style="background-image: url('wall_12.jpg'); background-size: cover;"></div>
+                <div class="card aspect-video bg-zinc-900" style="background-image: url('wall_13.jpg'); background-size: cover;"></div>
+                <div class="card aspect-video bg-zinc-900" style="background-image: url('wall_14.jpg'); background-size: cover;"></div>
+                <div class="card aspect-video bg-zinc-900" style="background-image: url('wall_15.jpg'); background-size: cover;"></div>
+                <div class="card aspect-video bg-zinc-900" style="background-image: url('wall_16.jpg'); background-size: cover;"></div>
+                <div class="card aspect-video bg-zinc-900" style="background-image: url('wall_17.jpg'); background-size: cover;"></div>
+                <div class="card aspect-video bg-zinc-900" style="background-image: url('wall_18.jpg'); background-size: cover;"></div>
+                <div class="card aspect-video bg-zinc-900" style="background-image: url('wall_19.jpg'); background-size: cover;"></div>
+                <div class="card aspect-video bg-zinc-900" style="background-image: url('wall_20.jpg'); background-size: cover;"></div>
             </div>
 
             <div id="gal-work" class="hidden grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="rig-card" style="background-image: url('rig_1.jpg');">
-                    <div class="rig-specs">
-                        <h4 class="font-cyber text-cyan-400 mb-2 uppercase">RIG_01 // VENO_KILLER</h4>
-                        <ul class="font-mono text-[10px] text-white space-y-2 uppercase text-center mb-4"><li>CPU: Ryzen 5 5600</li><li>GPU: RX 580 8GB</li><li>RAM: 16GB DDR4</li><li>CASE: Fractal Meshify</li></ul>
-                        <button onclick="openModal('CUSTOM_RIG')" class="px-4 py-2 border border-cyan-500 text-cyan-500 text-[9px] uppercase hover:bg-cyan-500 hover:text-black">Request Build</button>
-                    </div>
-                </div>
-                <div class="rig-card" style="background-image: url('rig_2.jpg');">
-                    <div class="rig-specs">
-                        <h4 class="font-cyber text-cyan-400 mb-2 uppercase">RIG_02 // APEX_NODE</h4>
-                        <ul class="font-mono text-[10px] text-white space-y-2 uppercase text-center mb-4"><li>CPU: Ryzen 7 7800X3D</li><li>GPU: RTX 4080 Super</li><li>RAM: 32GB DDR5</li><li>COOLING: AIO 360mm</li></ul>
-                        <button onclick="openModal('CUSTOM_RIG')" class="px-4 py-2 border border-cyan-500 text-cyan-500 text-[9px] uppercase hover:bg-cyan-500 hover:text-black">Request Build</button>
-                    </div>
-                </div>
-                <div class="rig-card" style="background-image: url('rig_3.jpg');">
-                    <div class="rig-specs">
-                        <h4 class="font-cyber text-cyan-400 mb-2 uppercase">RIG_03 // TRIDENT</h4>
-                        <ul class="font-mono text-[10px] text-white space-y-2 uppercase text-center mb-4"><li>CPU: Ryzen 9 9950X</li><li>GPU: Dual RTX 5090</li><li>RAM: 128GB DDR5</li><li>CASE: Lian Li O11</li></ul>
-                        <button onclick="openModal('CUSTOM_RIG')" class="px-4 py-2 border border-cyan-500 text-cyan-500 text-[9px] uppercase hover:bg-cyan-500 hover:text-black">Request Build</button>
-                    </div>
-                </div>
-                <div class="rig-card" style="background-image: url('rig_4.jpg');">
-                    <div class="rig-specs">
-                        <h4 class="font-cyber text-cyan-400 mb-2 uppercase">RIG_04 // XPROTO_STEALTH</h4>
-                        <ul class="font-mono text-[10px] text-white space-y-2 uppercase text-center mb-4"><li>CPU: i7-14700K</li><li>GPU: RTX 4070 Ti S</li><li>RAM: 32GB DDR5</li><li>FORM: Open Frame ITX</li></ul>
-                        <button onclick="openModal('CUSTOM_RIG')" class="px-4 py-2 border border-cyan-500 text-cyan-500 text-[9px] uppercase hover:bg-cyan-500 hover:text-black">Request Build</button>
-                    </div>
-                </div>
-                <div class="rig-card" style="background-image: url('rig_5.jpg');">
-                    <div class="rig-specs">
-                        <h4 class="font-cyber text-cyan-400 mb-2 uppercase">RIG_05 // DATA_NODE</h4>
-                        <ul class="font-mono text-[10px] text-white space-y-2 uppercase text-center mb-4"><li>CPU: Threadripper PRO</li><li>STORAGE: 64TB NVMe</li><li>RAM: 256GB ECC</li><li>USE: Server Forensics</li></ul>
-                        <button onclick="openModal('CUSTOM_RIG')" class="px-4 py-2 border border-cyan-500 text-cyan-500 text-[9px] uppercase hover:bg-cyan-500 hover:text-black">Request Build</button>
-                    </div>
-                </div>
+                <div class="rig-card" style="background-image: url('rig_1.jpg');"><div class="rig-specs"><h4 class="font-cyber text-cyan-400 mb-4 uppercase">RIG_01 // ARCHIVE</h4><button onclick="openModal('CUSTOM_RIG')" class="px-6 py-2 border border-cyan-500 text-cyan-500 text-xs hover:bg-cyan-500 hover:text-black">Request Build</button></div></div>
+                <div class="rig-card" style="background-image: url('rig_2.jpg');"><div class="rig-specs"><h4 class="font-cyber text-cyan-400 mb-4 uppercase">RIG_02 // ARCHIVE</h4><button onclick="openModal('CUSTOM_RIG')" class="px-6 py-2 border border-cyan-500 text-cyan-500 text-xs hover:bg-cyan-500 hover:text-black">Request Build</button></div></div>
+                <div class="rig-card" style="background-image: url('rig_3.jpg');"><div class="rig-specs"><h4 class="font-cyber text-cyan-400 mb-4 uppercase">RIG_03 // ARCHIVE</h4><button onclick="openModal('CUSTOM_RIG')" class="px-6 py-2 border border-cyan-500 text-cyan-500 text-xs hover:bg-cyan-500 hover:text-black">Request Build</button></div></div>
+                <div class="rig-card" style="background-image: url('rig_4.jpg');"><div class="rig-specs"><h4 class="font-cyber text-cyan-400 mb-4 uppercase">RIG_04 // ARCHIVE</h4><button onclick="openModal('CUSTOM_RIG')" class="px-6 py-2 border border-cyan-500 text-cyan-500 text-xs hover:bg-cyan-500 hover:text-black">Request Build</button></div></div>
+                <div class="rig-card" style="background-image: url('rig_5.jpg');"><div class="rig-specs"><h4 class="font-cyber text-cyan-400 mb-4 uppercase">RIG_05 // ARCHIVE</h4><button onclick="openModal('CUSTOM_RIG')" class="px-6 py-2 border border-cyan-500 text-cyan-500 text-xs hover:bg-cyan-500 hover:text-black">Request Build</button></div></div>
+                <div class="rig-card" style="background-image: url('rig_6.jpg');"><div class="rig-specs"><h4 class="font-cyber text-cyan-400 mb-4 uppercase">RIG_06 // ARCHIVE</h4><button onclick="openModal('CUSTOM_RIG')" class="px-6 py-2 border border-cyan-500 text-cyan-500 text-xs hover:bg-cyan-500 hover:text-black">Request Build</button></div></div>
+                <div class="rig-card" style="background-image: url('rig_7.jpg');"><div class="rig-specs"><h4 class="font-cyber text-cyan-400 mb-4 uppercase">RIG_07 // ARCHIVE</h4><button onclick="openModal('CUSTOM_RIG')" class="px-6 py-2 border border-cyan-500 text-cyan-500 text-xs hover:bg-cyan-500 hover:text-black">Request Build</button></div></div>
+                <div class="rig-card" style="background-image: url('rig_8.jpg');"><div class="rig-specs"><h4 class="font-cyber text-cyan-400 mb-4 uppercase">RIG_08 // ARCHIVE</h4><button onclick="openModal('CUSTOM_RIG')" class="px-6 py-2 border border-cyan-500 text-cyan-500 text-xs hover:bg-cyan-500 hover:text-black">Request Build</button></div></div>
+                <div class="rig-card" style="background-image: url('rig_9.jpg');"><div class="rig-specs"><h4 class="font-cyber text-cyan-400 mb-4 uppercase">RIG_09 // ARCHIVE</h4><button onclick="openModal('CUSTOM_RIG')" class="px-6 py-2 border border-cyan-500 text-cyan-500 text-xs hover:bg-cyan-500 hover:text-black">Request Build</button></div></div>
+                <div class="rig-card" style="background-image: url('rig_10.jpg');"><div class="rig-specs"><h4 class="font-cyber text-cyan-400 mb-4 uppercase">RIG_10 // ARCHIVE</h4><button onclick="openModal('CUSTOM_RIG')" class="px-6 py-2 border border-cyan-500 text-cyan-500 text-xs hover:bg-cyan-500 hover:text-black">Request Build</button></div></div>
+                <div class="rig-card" style="background-image: url('rig_11.jpg');"><div class="rig-specs"><h4 class="font-cyber text-cyan-400 mb-4 uppercase">RIG_11 // ARCHIVE</h4><button onclick="openModal('CUSTOM_RIG')" class="px-6 py-2 border border-cyan-500 text-cyan-500 text-xs hover:bg-cyan-500 hover:text-black">Request Build</button></div></div>
+                <div class="rig-card" style="background-image: url('rig_12.jpg');"><div class="rig-specs"><h4 class="font-cyber text-cyan-400 mb-4 uppercase">RIG_12 // ARCHIVE</h4><button onclick="openModal('CUSTOM_RIG')" class="px-6 py-2 border border-cyan-500 text-cyan-500 text-xs hover:bg-cyan-500 hover:text-black">Request Build</button></div></div>
+                <div class="rig-card" style="background-image: url('rig_13.jpg');"><div class="rig-specs"><h4 class="font-cyber text-cyan-400 mb-4 uppercase">RIG_13 // ARCHIVE</h4><button onclick="openModal('CUSTOM_RIG')" class="px-6 py-2 border border-cyan-500 text-cyan-500 text-xs hover:bg-cyan-500 hover:text-black">Request Build</button></div></div>
+                <div class="rig-card" style="background-image: url('rig_14.jpg');"><div class="rig-specs"><h4 class="font-cyber text-cyan-400 mb-4 uppercase">RIG_14 // ARCHIVE</h4><button onclick="openModal('CUSTOM_RIG')" class="px-6 py-2 border border-cyan-500 text-cyan-500 text-xs hover:bg-cyan-500 hover:text-black">Request Build</button></div></div>
+                <div class="rig-card" style="background-image: url('rig_15.jpg');"><div class="rig-specs"><h4 class="font-cyber text-cyan-400 mb-4 uppercase">RIG_15 // ARCHIVE</h4><button onclick="openModal('CUSTOM_RIG')" class="px-6 py-2 border border-cyan-500 text-cyan-500 text-xs hover:bg-cyan-500 hover:text-black">Request Build</button></div></div>
+                <div class="rig-card" style="background-image: url('rig_16.jpg');"><div class="rig-specs"><h4 class="font-cyber text-cyan-400 mb-4 uppercase">RIG_16 // ARCHIVE</h4><button onclick="openModal('CUSTOM_RIG')" class="px-6 py-2 border border-cyan-500 text-cyan-500 text-xs hover:bg-cyan-500 hover:text-black">Request Build</button></div></div>
+                <div class="rig-card" style="background-image: url('rig_17.jpg');"><div class="rig-specs"><h4 class="font-cyber text-cyan-400 mb-4 uppercase">RIG_17 // ARCHIVE</h4><button onclick="openModal('CUSTOM_RIG')" class="px-6 py-2 border border-cyan-500 text-cyan-500 text-xs hover:bg-cyan-500 hover:text-black">Request Build</button></div></div>
+                <div class="rig-card" style="background-image: url('rig_18.jpg');"><div class="rig-specs"><h4 class="font-cyber text-cyan-400 mb-4 uppercase">RIG_18 // ARCHIVE</h4><button onclick="openModal('CUSTOM_RIG')" class="px-6 py-2 border border-cyan-500 text-cyan-500 text-xs hover:bg-cyan-500 hover:text-black">Request Build</button></div></div>
+                <div class="rig-card" style="background-image: url('rig_19.jpg');"><div class="rig-specs"><h4 class="font-cyber text-cyan-400 mb-4 uppercase">RIG_19 // ARCHIVE</h4><button onclick="openModal('CUSTOM_RIG')" class="px-6 py-2 border border-cyan-500 text-cyan-500 text-xs hover:bg-cyan-500 hover:text-black">Request Build</button></div></div>
+                <div class="rig-card" style="background-image: url('rig_20.jpg');"><div class="rig-specs"><h4 class="font-cyber text-cyan-400 mb-4 uppercase">RIG_20 // ARCHIVE</h4><button onclick="openModal('CUSTOM_RIG')" class="px-6 py-2 border border-cyan-500 text-cyan-500 text-xs hover:bg-cyan-500 hover:text-black">Request Build</button></div></div>
             </div>
         </section>
 
-        <section id="tab-consulting" class="tab-content px-6 max-w-4xl mx-auto text-center">
-            <h2 class="font-cyber text-4xl text-white mb-6 uppercase tracking-widest">IT_Consulting</h2>
-            <p class="font-mono text-sm text-slate-400 mb-10 leading-relaxed uppercase">
-                Professional infrastructure auditing, network hardening, and offensive security research. We locate the vulnerabilities in your hardware deployment before they become data extraction missions.
+        <section id="tab-consulting" class="tab-content px-6 max-w-7xl mx-auto">
+            <h2 class="font-cyber text-4xl text-white mb-4 uppercase tracking-widest text-center">IT_Consulting & Architecture</h2>
+            <p class="font-mono text-sm text-slate-400 mb-12 leading-relaxed uppercase text-center max-w-3xl mx-auto">
+                Bespoke technology solutions. From corporate infrastructure auditing to specialized hardware deployment and network hardening.
             </p>
-            <button onclick="openModal('CONSULTING')" class="px-12 py-4 border-2 border-white text-white font-cyber text-xs hover:bg-white hover:text-black transition uppercase">Request Security Audit</button>
+
+            <div class="grid md:grid-cols-2 gap-8 mb-12">
+                <div class="card p-8 border-t-2 border-cyan-500">
+                    <h3 class="font-cyber text-xl text-white mb-3 uppercase">Hardware Assembly & Sourcing</h3>
+                    <p class="text-xs font-mono text-slate-400 leading-relaxed">Need 50 workstations for a new office? Or a render farm capable of massive compute? We handle parts sourcing, complete physical assembly, cable routing, and thermal optimization for large-scale operations.</p>
+                </div>
+                <div class="card p-8 border-t-2 border-cyan-500">
+                    <h3 class="font-cyber text-xl text-white mb-3 uppercase">Node Deployment & OS Imaging</h3>
+                    <p class="text-xs font-mono text-slate-400 leading-relaxed">Mass deployment of operating systems. We create custom, debloated, and secure OS images (Windows/Linux) and deploy them seamlessly across your entire corporate hardware fleet.</p>
+                </div>
+                <div class="card p-8 border-t-2 border-cyan-500">
+                    <h3 class="font-cyber text-xl text-white mb-3 uppercase">Network Infrastructure</h3>
+                    <p class="text-xs font-mono text-slate-400 leading-relaxed">Designing, wiring, and configuring secure physical networks. From running Cat6/Fiber to setting up secure subnets, VPN tunnels, and enterprise-grade Wi-Fi with isolated guest portals.</p>
+                </div>
+                <div class="card p-8 border-t-2 border-cyan-500">
+                    <h3 class="font-cyber text-xl text-white mb-3 uppercase">Cyber-Security Auditing</h3>
+                    <p class="text-xs font-mono text-slate-400 leading-relaxed">We think like attackers so you don't have to. Penetration testing of your physical network, physical access vulnerability assessments, and employee security protocol reviews.</p>
+                </div>
+            </div>
+            
+            <div class="text-center">
+                <button onclick="openModal('CONSULTING')" class="px-12 py-4 border-2 border-cyan-500 text-cyan-500 font-cyber text-xs hover:bg-cyan-500 hover:text-black transition uppercase tracking-widest">Request a Consultation</button>
+            </div>
         </section>
 
-        <section id="tab-files" class="tab-content px-6 max-w-5xl mx-auto">
-            <h2 class="font-cyber text-2xl text-cyan-500 mb-10 tracking-widest uppercase text-center">Operational_Archives</h2>
-            <div class="space-y-6">
-                <div class="card p-8 flex flex-col md:flex-row justify-between items-center gap-4 border-l-2 border-cyan-500">
-                    <div>
+        <section id="tab-files" class="tab-content px-6 max-w-6xl mx-auto">
+            <h2 class="font-cyber text-2xl text-cyan-500 mb-10 tracking-widest uppercase text-center">Operational_Archives & Firmware</h2>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="card p-6 flex flex-col justify-between border-l-2 border-cyan-500">
+                    <div class="mb-6">
                         <h4 class="font-cyber text-white uppercase text-sm mb-1">Kali Linux Portal</h4>
                         <p class="font-mono text-[10px] text-slate-500">OFFENSIVE_SECURITY_REQUISITION</p>
                     </div>
-                    <div class="flex gap-4">
-                        <a href="https://www.kali.org/get-kali/" target="_blank" class="px-6 py-3 border border-cyan-500 text-cyan-500 font-mono text-[10px] hover:bg-cyan-500 hover:text-black uppercase transition">Redirect to Kali.org</a>
-                    </div>
+                    <a href="https://www.kali.org/get-kali/" target="_blank" class="text-center w-full py-3 border border-cyan-500 text-cyan-500 font-mono text-[10px] hover:bg-cyan-500 hover:text-black uppercase transition">Redirect to Kali.org</a>
                 </div>
-                <div class="card p-8 flex flex-col md:flex-row justify-between items-center gap-4 border-l-2 border-blue-500">
-                    <div>
+                <div class="card p-6 flex flex-col justify-between border-l-2 border-blue-500">
+                    <div class="mb-6">
                         <h4 class="font-cyber text-white uppercase text-sm mb-1">Windows 11 Image</h4>
                         <p class="font-mono text-[10px] text-slate-500">OFFICIAL_MICROSOFT_DEPLOYMENT</p>
                     </div>
-                    <a href="https://www.microsoft.com/software-download/windows11" target="_blank" class="px-6 py-3 border border-blue-500 text-blue-500 font-mono text-[10px] hover:bg-blue-500 hover:text-black uppercase transition">Microsoft Portal</a>
+                    <a href="https://www.microsoft.com/software-download/windows11" target="_blank" class="text-center w-full py-3 border border-blue-500 text-blue-500 font-mono text-[10px] hover:bg-blue-500 hover:text-black uppercase transition">Microsoft Portal</a>
                 </div>
-                <div class="card p-8 flex flex-col md:flex-row justify-between items-center gap-4 border-l-2 border-blue-400">
-                    <div>
+                <div class="card p-6 flex flex-col justify-between border-l-2 border-blue-400">
+                    <div class="mb-6">
                         <h4 class="font-cyber text-white uppercase text-sm mb-1">Windows 10 Image</h4>
                         <p class="font-mono text-[10px] text-slate-500">LEGACY_STABLE_DEPLOYMENT</p>
                     </div>
-                    <a href="https://www.microsoft.com/software-download/windows10" target="_blank" class="px-6 py-3 border border-blue-400 text-blue-400 font-mono text-[10px] hover:bg-blue-400 hover:text-black uppercase transition">Microsoft Portal</a>
+                    <a href="https://www.microsoft.com/software-download/windows10" target="_blank" class="text-center w-full py-3 border border-blue-400 text-blue-400 font-mono text-[10px] hover:bg-blue-400 hover:text-black uppercase transition">Microsoft Portal</a>
+                </div>
+                <div class="card p-6 flex flex-col justify-between border-l-2 border-gray-400">
+                    <div class="mb-6">
+                        <h4 class="font-cyber text-white uppercase text-sm mb-1">Vintage macOS</h4>
+                        <p class="font-mono text-[10px] text-slate-500">OFFICIAL_APPLE_LEGACY_SUPPORT</p>
+                    </div>
+                    <a href="https://support.apple.com/en-us/HT211683" target="_blank" class="text-center w-full py-3 border border-gray-400 text-gray-300 font-mono text-[10px] hover:bg-gray-400 hover:text-black uppercase transition">Apple Support Portal</a>
+                </div>
+                <div class="card p-6 flex flex-col justify-between border-l-2 border-blue-600">
+                    <div class="mb-6">
+                        <h4 class="font-cyber text-white uppercase text-sm mb-1">PS5 OS Reinstallation</h4>
+                        <p class="font-mono text-[10px] text-slate-500">SONY_OFFICIAL_FIRMWARE</p>
+                    </div>
+                    <a href="https://www.playstation.com/en-us/support/hardware/ps5/system-software/" target="_blank" class="text-center w-full py-3 border border-blue-600 text-blue-500 font-mono text-[10px] hover:bg-blue-600 hover:text-white uppercase transition">PlayStation Portal</a>
+                </div>
+                <div class="card p-6 flex flex-col justify-between border-l-2 border-blue-700">
+                    <div class="mb-6">
+                        <h4 class="font-cyber text-white uppercase text-sm mb-1">PS4 OS Reinstallation</h4>
+                        <p class="font-mono text-[10px] text-slate-500">SONY_OFFICIAL_FIRMWARE</p>
+                    </div>
+                    <a href="https://www.playstation.com/en-us/support/hardware/ps4/system-software/" target="_blank" class="text-center w-full py-3 border border-blue-700 text-blue-500 font-mono text-[10px] hover:bg-blue-700 hover:text-white uppercase transition">PlayStation Portal</a>
+                </div>
+                <div class="card p-6 flex flex-col justify-between border-l-2 border-green-600">
+                    <div class="mb-6">
+                        <h4 class="font-cyber text-white uppercase text-sm mb-1">Xbox One OSU</h4>
+                        <p class="font-mono text-[10px] text-slate-500">OFFLINE_SYSTEM_UPDATE_FILE</p>
+                    </div>
+                    <a href="https://support.xbox.com/en-US/help/hardware-network/console/system-update-solution/offline-system-update" target="_blank" class="text-center w-full py-3 border border-green-600 text-green-500 font-mono text-[10px] hover:bg-green-600 hover:text-white uppercase transition">Xbox Support Portal</a>
                 </div>
             </div>
         </section>
@@ -397,7 +527,7 @@
                     <div class="flex justify-between font-mono text-[10px] mb-4 text-slate-400"><span>01_FIREWALL [JUMP]</span><span id="score-fw" class="text-cyan-400">0</span></div>
                     <div class="game-canvas-container mb-4">
                         <canvas id="canvas-fw" class="w-full h-full absolute inset-0"></canvas>
-                        <div id="ui-fw" class="absolute inset-0 flex items-center justify-center bg-black/80"><button onclick="startFW()" class="border border-cyan-500 text-cyan-500 px-6 py-2 font-cyber text-[10px]">EXECUTE</button></div>
+                        <div id="ui-fw" class="absolute inset-0 flex items-center justify-center bg-black/80"><button onclick="startFW()" class="border border-cyan-500 text-cyan-500 px-6 py-2 font-cyber text-[10px] hover:bg-cyan-500 hover:text-black transition">EXECUTE</button></div>
                     </div>
                 </div>
 
@@ -405,7 +535,7 @@
                     <div class="flex justify-between font-mono text-[10px] mb-4 text-slate-400"><span>02_DECRYPT [MEMORY]</span><span id="score-dc" class="text-green-500">LVL: 1</span></div>
                     <div class="game-canvas-container flex items-center justify-center mb-4">
                         <div id="grid-dc" class="decrypt-grid"></div>
-                        <div id="ui-dc" class="absolute inset-0 flex items-center justify-center bg-black/80"><button onclick="startDC()" class="border border-green-500 text-green-500 px-6 py-2 font-cyber text-[10px]">SYNC</button></div>
+                        <div id="ui-dc" class="absolute inset-0 flex items-center justify-center bg-black/80"><button onclick="startDC()" class="border border-green-500 text-green-500 px-6 py-2 font-cyber text-[10px] hover:bg-green-500 hover:text-black transition">SYNC</button></div>
                     </div>
                 </div>
 
@@ -413,7 +543,7 @@
                     <div class="flex justify-between font-mono text-[10px] mb-4 text-slate-400"><span>03_BIT_SNAKE [VECTOR]</span><span id="score-sn" class="text-yellow-500">0</span></div>
                     <div class="game-canvas-container mb-4">
                         <canvas id="canvas-sn" class="w-full h-full absolute inset-0"></canvas>
-                        <div id="ui-sn" class="absolute inset-0 flex items-center justify-center bg-black/80"><button onclick="startSN()" class="border border-yellow-500 text-yellow-500 px-6 py-2 font-cyber text-[10px]">INJECT</button></div>
+                        <div id="ui-sn" class="absolute inset-0 flex items-center justify-center bg-black/80"><button onclick="startSN()" class="border border-yellow-500 text-yellow-500 px-6 py-2 font-cyber text-[10px] hover:bg-yellow-500 hover:text-black transition">INJECT</button></div>
                     </div>
                 </div>
 
@@ -421,17 +551,17 @@
                     <div class="flex justify-between font-mono text-[10px] mb-4 text-slate-400"><span>04_TARGET_ACQ [REFLEX]</span><span id="score-ta" class="text-red-500">0</span></div>
                     <div class="game-canvas-container mb-4">
                         <canvas id="canvas-ta" class="w-full h-full absolute inset-0"></canvas>
-                        <div id="ui-ta" class="absolute inset-0 flex items-center justify-center bg-black/80"><button onclick="startTA()" class="border border-red-500 text-red-500 px-6 py-2 font-cyber text-[10px]">ACQUIRE</button></div>
+                        <div id="ui-ta" class="absolute inset-0 flex items-center justify-center bg-black/80"><button onclick="startTA()" class="border border-red-500 text-red-500 px-6 py-2 font-cyber text-[10px] hover:bg-red-500 hover:text-white transition">ACQUIRE</button></div>
                     </div>
                 </div>
 
-                <div class="card p-6 flex flex-col border-cyan-900">
-                    <div class="flex justify-between font-mono text-[10px] mb-4 text-slate-400"><span>05_CODE_HACKER [LOGIC]</span><span class="text-cyan-500">ACTIVE</span></div>
-                    <div class="game-canvas-container flex flex-col items-center justify-center p-6 mb-4">
-                        <div id="code-ch" class="font-mono text-xl text-cyan-400 mb-4 tracking-widest">_ _ _ _</div>
-                        <div class="grid grid-cols-5 gap-2" id="keypad-ch"></div>
-                        <div id="ui-ch" class="absolute inset-0 flex items-center justify-center bg-black/80"><button onclick="startCH()" class="border border-cyan-500 text-cyan-500 px-6 py-2 font-cyber text-[10px]">BRUTE_FORCE</button></div>
+                <div class="card p-6 flex flex-col border-cyan-500">
+                    <div class="flex justify-between font-mono text-[10px] mb-4 text-slate-400"><span>05_SYS_DEFENDER [DEFENSE]</span><span id="score-inv" class="text-cyan-500">0</span></div>
+                    <div class="game-canvas-container mb-4 relative">
+                        <canvas id="canvas-inv" class="w-full h-full absolute inset-0"></canvas>
+                        <div id="ui-inv" class="absolute inset-0 flex items-center justify-center bg-black/80"><button onclick="startINV()" class="border border-cyan-500 text-cyan-500 px-6 py-2 font-cyber text-[10px] hover:bg-cyan-500 hover:text-black transition">INITIALIZE_DEFENSE</button></div>
                     </div>
+                    <p class="font-mono text-[8px] text-center text-slate-500 uppercase">Hover/Drag to move | Click/Tap to shoot</p>
                 </div>
 
             </div>
@@ -480,7 +610,7 @@
             }
         }, 4000);
 
-        // --- THREAT MAP ANIMATION (RED ARCS + PINGS) ---
+        // --- THREAT MAP ANIMATION ---
         const attackCvs = document.getElementById('attackCanvas');
         const attackCtx = attackCvs.getContext('2d');
         let attacks = [];
@@ -495,11 +625,9 @@
                 attacks.push({ x1: s.x*attackCvs.width, y1: s.y*attackCvs.height, x2: e.x*attackCvs.width, y2: e.y*attackCvs.height, l: 1.0 });
             }
             attacks.forEach((a, i) => {
-                // Draw arc
                 attackCtx.beginPath(); attackCtx.moveTo(a.x1, a.y1);
                 attackCtx.quadraticCurveTo((a.x1+a.x2)/2, Math.min(a.y1,a.y2)-50, a.x2, a.y2);
                 attackCtx.strokeStyle = `rgba(255, 0, 60, ${a.l})`; attackCtx.lineWidth = 1.5; attackCtx.stroke();
-                // Draw ping at target
                 attackCtx.beginPath(); attackCtx.arc(a.x2, a.y2, (1-a.l)*5, 0, Math.PI*2);
                 attackCtx.fillStyle = `rgba(0, 243, 255, ${a.l})`; attackCtx.fill();
                 a.l -= 0.008; if(a.l <= 0) attacks.splice(i,1);
@@ -582,25 +710,70 @@
         };
         cvTA.addEventListener('mousedown', hitTA); cvTA.addEventListener('touchstart', hitTA, {passive:false});
 
-        // --- GAME 5: CODE_HACKER ---
-        let chT = [], chI = [];
-        function startCH() {
-            chT = Array.from({length:4}, () => Math.floor(Math.random()*9)+1);
-            chI = []; document.getElementById('ui-ch').style.display='none';
-            document.getElementById('code-ch').innerText = "_ _ _ _";
-            const k = document.getElementById('keypad-ch'); k.innerHTML = '';
-            for(let i=1;i<10;i++) k.innerHTML += `<button onclick="pressCH(${i})" class="w-8 h-8 border border-slate-800 text-[10px] font-mono hover:bg-cyan-500 hover:text-black transition">${i}</button>`;
+        // --- GAME 5: SYS_DEFENDER (Space Invaders) ---
+        let invG=false, invP={}, invB=[], invE=[], invS=0, invDir=1, invReq;
+        const cvINV = document.getElementById('canvas-inv'), ctxINV = cvINV.getContext('2d');
+        cvINV.width=300; cvINV.height=150;
+        function startINV() {
+            document.getElementById('ui-inv').style.display='none';
+            invG=true; invS=0; document.getElementById('score-inv').innerText="0";
+            invP = {x: 140, y: 135, w: 20, h: 10}; invB = []; invE = []; invDir = 0.5;
+            for(let r=0; r<3; r++) { for(let c=0; c<8; c++) { invE.push({x: 20 + c*30, y: 10 + r*20, w: 15, h: 10, alive: true}); } }
+            loopINV();
         }
-        function pressCH(n) {
-            if(chI.length < 4) {
-                chI.push(n);
-                document.getElementById('code-ch').innerText = chI.join(' ') + " _".repeat(4-chI.length);
-                if(chI.length === 4) {
-                    if(chI.join('') === chT.join('')) { document.getElementById('code-ch').innerText="PASS"; setTimeout(startCH, 2000); }
-                    else { chI=[]; setTimeout(()=>document.getElementById('code-ch').innerText="_ _ _ _", 800); }
+        function loopINV() {
+            if(!invG) return;
+            ctxINV.fillStyle="#000"; ctxINV.fillRect(0,0,300,150);
+            
+            // Draw Player
+            ctxINV.fillStyle="#0ff"; ctxINV.fillRect(invP.x, invP.y, invP.w, invP.h);
+            
+            // Bullets
+            ctxINV.fillStyle="#ffb700";
+            for(let i=invB.length-1; i>=0; i--) {
+                invB[i].y -= 4; ctxINV.fillRect(invB[i].x, invB[i].y, 2, 6);
+                if(invB[i].y < 0) invB.splice(i, 1);
+            }
+            
+            // Enemies
+            ctxINV.fillStyle="#f03"; let hitEdge = false;
+            invE.forEach(e => {
+                if(e.alive) {
+                    e.x += invDir; if(e.x > 285 || e.x < 0) hitEdge = true;
+                    ctxINV.fillRect(e.x, e.y, e.w, e.h);
+                    for(let i=invB.length-1; i>=0; i--) {
+                        let b = invB[i];
+                        if(b.x > e.x && b.x < e.x+e.w && b.y > e.y && b.y < e.y+e.h) {
+                            e.alive = false; invB.splice(i, 1); invS += 10;
+                            document.getElementById('score-inv').innerText=invS;
+                        }
+                    }
+                    if(e.y + e.h > invP.y) invG = false;
                 }
+            });
+            
+            if(hitEdge) { invDir *= -1; invE.forEach(e => { if(e.alive) e.y += 10; }); }
+            
+            if(invE.filter(e=>e.alive).length === 0) {
+                invG = false; document.getElementById('ui-inv').style.display='flex'; document.querySelector('#ui-inv button').innerText="SYS_CLEARED - REBOOT";
+            } else if (!invG) {
+                document.getElementById('ui-inv').style.display='flex'; document.querySelector('#ui-inv button').innerText="BREACHED - RETRY";
+            } else {
+                invReq = requestAnimationFrame(loopINV);
             }
         }
+        function moveInvP(clientX) {
+            const rect = cvINV.getBoundingClientRect();
+            const scaleX = cvINV.width / rect.width;
+            invP.x = (clientX - rect.left) * scaleX - (invP.w/2);
+            if(invP.x < 0) invP.x = 0;
+            if(invP.x > 300 - invP.w) invP.x = 300 - invP.w;
+        }
+        cvINV.addEventListener('touchmove', (e) => { e.preventDefault(); if(invG) moveInvP(e.touches[0].clientX); }, {passive:false});
+        cvINV.addEventListener('mousemove', (e) => { if(invG) moveInvP(e.clientX); });
+        cvINV.addEventListener('mousedown', () => { if(invG) invB.push({x: invP.x+(invP.w/2)-1, y: invP.y}); });
+        cvINV.addEventListener('touchstart', (e) => { e.preventDefault(); if(invG) invB.push({x: invP.x+(invP.w/2)-1, y: invP.y}); }, {passive:false});
+
     </script>
 </body>
 </html>
