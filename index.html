@@ -655,11 +655,13 @@
                         <div id="ui-inv" class="absolute inset-0 flex items-center justify-center bg-black/80 backdrop-blur-sm"><button type="button" onclick="startINV()" class="bg-zinc-800 text-cyan-400 px-6 py-2 rounded text-xs font-bold hover:bg-cyan-500 hover:text-white transition">START</button></div>
                     </div>
                     <p class="font-sans text-[10px] text-center text-zinc-500">Hover/Drag to move | Click/Tap to shoot</p>
+                </article>
 
                 <article class="card p-6 flex flex-col lg:col-span-3 md:col-span-2 border-pink-400 border">
                     <div class="flex justify-between font-mono text-[10px] mb-4 text-zinc-400"><span>06_PURRGRESS [SIM]</span><span class="text-pink-400">CAT TRAINER</span></div>
                     <div class="game-canvas-container mb-4 relative" style="aspect-ratio:16/10; background:#fff2e0;">
-                        <iframe id="frame-purr" title="Purrgress - Cat Training Game" class="w-full h-full absolute inset-0" style="border:0; display:none;" loading="lazy"></iframe>
+                        <iframe id="frame-purr" title="Purrgress - Cat Training Game" class="w-full h-full absolute inset-0" style="border:0; display:none;" loading="lazy" allow="fullscreen" allowfullscreen></iframe>
+                        <button type="button" id="fs-purr" onclick="fsPURR()" class="absolute top-2 right-2 bg-black/60 text-white text-[10px] font-bold px-3 py-1.5 rounded hover:bg-pink-500 transition" style="display:none;" aria-label="Fullscreen">&#x26F6; FULLSCREEN</button>
                         <div id="ui-purr" class="absolute inset-0 flex items-center justify-center bg-black/80 backdrop-blur-sm"><button type="button" onclick="startPURR()" class="bg-zinc-800 text-pink-400 px-6 py-2 rounded text-xs font-bold hover:bg-pink-500 hover:text-white transition">PLAY</button></div>
                     </div>
                     <p class="font-sans text-[10px] text-center text-zinc-500">Train, customise and care for your cats &middot; click the floor to walk (WASD / arrow keys also work)</p>
@@ -941,6 +943,13 @@
             var f = document.getElementById('frame-purr');
             f.style.display='block';
             f.src = 'games/purrgress/index.html';
+            document.getElementById('fs-purr').style.display='block';
+        }
+        function fsPURR(){
+            var f = document.getElementById('frame-purr');
+            if(f.requestFullscreen) f.requestFullscreen();
+            else if(f.webkitRequestFullscreen) f.webkitRequestFullscreen();
+            else if(f.msRequestFullscreen) f.msRequestFullscreen();
         }
     </script>
 </body>
