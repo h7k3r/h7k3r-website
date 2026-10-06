@@ -655,6 +655,14 @@
                         <div id="ui-inv" class="absolute inset-0 flex items-center justify-center bg-black/80 backdrop-blur-sm"><button type="button" onclick="startINV()" class="bg-zinc-800 text-cyan-400 px-6 py-2 rounded text-xs font-bold hover:bg-cyan-500 hover:text-white transition">START</button></div>
                     </div>
                     <p class="font-sans text-[10px] text-center text-zinc-500">Hover/Drag to move | Click/Tap to shoot</p>
+
+                <article class="card p-6 flex flex-col lg:col-span-3 md:col-span-2 border-pink-400 border">
+                    <div class="flex justify-between font-mono text-[10px] mb-4 text-zinc-400"><span>06_PURRGRESS [SIM]</span><span class="text-pink-400">CAT TRAINER</span></div>
+                    <div class="game-canvas-container mb-4 relative" style="aspect-ratio:16/10; background:#fff2e0;">
+                        <iframe id="frame-purr" title="Purrgress - Cat Training Game" class="w-full h-full absolute inset-0" style="border:0; display:none;" loading="lazy"></iframe>
+                        <div id="ui-purr" class="absolute inset-0 flex items-center justify-center bg-black/80 backdrop-blur-sm"><button type="button" onclick="startPURR()" class="bg-zinc-800 text-pink-400 px-6 py-2 rounded text-xs font-bold hover:bg-pink-500 hover:text-white transition">PLAY</button></div>
+                    </div>
+                    <p class="font-sans text-[10px] text-center text-zinc-500">Train, customise and care for your cats &middot; click the floor to walk (WASD / arrow keys also work)</p>
                 </article>
 
             </div>
@@ -927,6 +935,13 @@
         cvINV.addEventListener('mousedown', () => { if(invG) invB.push({x: invP.x+(invP.w/2)-1, y: invP.y}); });
         cvINV.addEventListener('touchstart', (e) => { e.preventDefault(); if(invG) invB.push({x: invP.x+(invP.w/2)-1, y: invP.y}); }, {passive:false});
 
+
+        function startPURR(){
+            document.getElementById('ui-purr').style.display='none';
+            var f = document.getElementById('frame-purr');
+            f.style.display='block';
+            f.src = 'games/purrgress/index.html';
+        }
     </script>
 </body>
 </html>
