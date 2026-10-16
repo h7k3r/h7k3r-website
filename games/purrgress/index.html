@@ -217,7 +217,7 @@
         <button class="ghost" id="cancelPlacementBtn">Cancel</button>
       </div>
     </div>
-    <div id="controlsHint">Click the floor to walk (or use WASD / arrow keys) · Click a cat to interact · 🧹 toggles furniture removal</div>
+    <div id="controlsHint">Click the floor to walk (or use WASD / ZQSD / arrow keys) · Click a cat to interact · 🧹 toggles furniture removal</div>
   </div>
 
 </div>
@@ -794,9 +794,9 @@
     const p = state.player;
     let dx=0, dy=0;
     const k = state.keys;
-    if(k["arrowleft"]||k["a"]) dx -= 1;
+    if(k["arrowleft"]||k["a"]||k["q"]) dx -= 1;
     if(k["arrowright"]||k["d"]) dx += 1;
-    if(k["arrowup"]||k["w"]) dy -= 1;
+    if(k["arrowup"]||k["w"]||k["z"]) dy -= 1;
     if(k["arrowdown"]||k["s"]) dy += 1;
 
     if(dx!==0 || dy!==0){

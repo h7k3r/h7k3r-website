@@ -23,7 +23,10 @@ OUT_DIR = ROOT / "fr"
 BASE_URL = "https://h7k3r.com"
 
 GROUPS = [M.HEAD, M.MODAL, M.HEADER, M.HOME, M.HARDWARE, M.GEAR,
-          M.REPAIR, M.GALLERY, M.CONSULTING, M.FILES, M.GAMES]
+          M.REPAIR, M.GALLERY, M.CONSULTING, M.FILES, M.GAMES, M.NAV, M.A11Y]
+
+GAME_SRC = ROOT / "games" / "purrgress" / "index.html"
+GAME_OUT = ROOT / "fr" / "games" / "purrgress" / "index.html"
 
 HREFLANG = (
     '\n<link rel="alternate" hreflang="en" href="%s/">'
@@ -92,6 +95,11 @@ def main():
     en = src.replace("</nav>", SWITCH % ("/fr/", "fr", "Version française", "FR"), 1)
     en = with_lang_js(en)
     SRC.write_text(en, encoding="utf-8")
+
+    # 3. French Purrgress, loaded by the French page's arcade.
+    game = apply_pairs(GAME_SRC.read_text(encoding="utf-8"), M.PURRGRESS)
+    GAME_OUT.parent.mkdir(parents=True, exist_ok=True)
+    GAME_OUT.write_text(game, encoding="utf-8")
 
     for name, html in (("index.html", en), ("fr/index.html", fr)):
         n = html.count('id="lang-switch"')
