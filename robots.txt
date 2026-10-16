@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://h7k3r.com/sitemap.xml
