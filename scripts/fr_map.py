@@ -228,8 +228,8 @@ GALLERY = [
     ('aria-label="Gallery Section"', 'aria-label="Galerie"'),
     (">Wallpapers<", ">Fonds d'écran<"),
     (">Past PC Builds<", ">Réalisations<"),
-    (">Download<", ">Télécharger<", 20),
-    (">Request Build<", ">Demander ce PC<", 20),
+    (">Download<", ">Télécharger<", 2),
+    (">Request Build<", ">Demander ce PC<", 5),
 ]
 
 CONSULTING = [
