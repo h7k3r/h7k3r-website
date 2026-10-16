@@ -12,31 +12,86 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
         
-        :root { --cyan: #0ea5e9; --cyan-glow: rgba(14, 165, 233, 0.4); --bg-dark: #09090b; --card-bg: #18181b; }
-        body { background-color: var(--bg-dark); color: #f4f4f5; font-family: 'Inter', sans-serif; overflow-x: hidden; margin: 0; -webkit-font-smoothing: antialiased; }
+        :root {
+            --cyan: #22d3ee; --cyan-2: #0ea5e9; --cyan-glow: rgba(34, 211, 238, 0.45);
+            --violet: #7c5cff; --bg-dark: #05060c; --bg-2: #080b16;
+            --card-bg: rgba(18, 21, 34, 0.62); --line: rgba(120, 140, 190, 0.14);
+            --ink: #eef2ff; --muted: #9aa6c4;
+            --mx: 50%; --my: 0%;
+        }
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            background-color: var(--bg-dark); color: var(--ink);
+            font-family: 'Inter', sans-serif; overflow-x: hidden; margin: 0;
+            -webkit-font-smoothing: antialiased; position: relative;
+        }
+
+        /* ---- WEBGL 3D BACKGROUND ---- */
+        #bg-webgl { position: fixed; inset: 0; width: 100%; height: 100%; z-index: -3; display: block; }
+        #bg-grid {
+            position: fixed; inset: 0; z-index: -2; pointer-events: none;
+            background-image:
+                linear-gradient(rgba(120,160,220,0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(120,160,220,0.05) 1px, transparent 1px);
+            background-size: 54px 54px;
+            mask-image: radial-gradient(ellipse 120% 90% at 50% 0%, #000 35%, transparent 80%);
+            -webkit-mask-image: radial-gradient(ellipse 120% 90% at 50% 0%, #000 35%, transparent 80%);
+        }
+        /* cursor spotlight that follows the pointer across the whole page */
+        body::before {
+            content: ''; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+            background: radial-gradient(420px circle at var(--mx) var(--my), rgba(34,211,238,0.07), transparent 60%);
+            transition: background .2s ease;
+        }
+
+        .font-cyber { font-family: 'Orbitron', sans-serif; }
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
+
+        ::selection { background: var(--cyan); color: #04121a; }
+        ::-webkit-scrollbar { width: 11px; }
+        ::-webkit-scrollbar-track { background: #05070e; }
+        ::-webkit-scrollbar-thumb { background: #1b2540; border-radius: 10px; border: 2px solid #05070e; }
+        ::-webkit-scrollbar-thumb:hover { background: #2a3a66; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+
+        /* ---- GLASS + REVEAL + MAGNETIC ---- */
+        .glass { background: rgba(10, 14, 26, 0.55); backdrop-filter: blur(18px) saturate(140%); -webkit-backdrop-filter: blur(18px) saturate(140%); border: 1px solid var(--line); }
+        .reveal { opacity: 0; transform: translateY(26px); filter: blur(10px); transition: opacity .9s cubic-bezier(.2,.8,.2,1), transform .9s cubic-bezier(.2,.8,.2,1), filter .9s ease; will-change: opacity, transform; }
+        .reveal.in { opacity: 1; transform: none; filter: blur(0); }
+        .magnetic { will-change: transform; transition: transform .25s cubic-bezier(.2,.8,.2,1); }
+
+        /* glowing primary button */
+        .btn-glow { position: relative; isolation: isolate; }
+        .btn-glow::after { content: ''; position: absolute; inset: 0; border-radius: inherit; box-shadow: 0 0 0 0 var(--cyan-glow); transition: box-shadow .35s ease; z-index: -1; }
+        .btn-glow:hover::after { box-shadow: 0 10px 40px -6px var(--cyan-glow); }
         .font-cyber { font-family: 'Orbitron', sans-serif; }
         .font-mono { font-family: 'JetBrains Mono', monospace; }
         
         /* MODERNIZED NAVIGATION */
-        .nav-btn { 
-            color: #a1a1aa; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
-            padding: 8px 16px; border-radius: 9999px; transition: all 0.3s ease; cursor: pointer; white-space: nowrap; border: 1px solid transparent;
+        .nav-btn {
+            color: var(--muted); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
+            padding: 9px 16px; border-radius: 9999px; transition: all 0.3s cubic-bezier(.2,.8,.2,1); cursor: pointer; white-space: nowrap; border: 1px solid transparent; position: relative;
         }
-        .nav-btn:hover, .nav-btn.active { color: #fff; background-color: rgba(14, 165, 233, 0.1); border-color: var(--cyan); box-shadow: 0 0 15px var(--cyan-glow); }
+        .nav-btn:hover { color: #fff; background-color: rgba(34, 211, 238, 0.08); }
+        .nav-btn.active { color: #fff; background-color: rgba(34, 211, 238, 0.12); border-color: rgba(34,211,238,0.5); box-shadow: 0 0 18px var(--cyan-glow), inset 0 0 12px rgba(34,211,238,0.08); }
 
         .tab-content { display: none; }
-        .tab-content.active { display: block; animation: fadeUp 0.5s ease-out forwards; }
-        @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .tab-content.active { display: block; animation: tabIn 0.6s cubic-bezier(.2,.8,.2,1) forwards; }
+        @keyframes tabIn { from { opacity: 0; transform: translateY(18px) scale(.985); filter: blur(8px); } to { opacity: 1; transform: none; filter: blur(0); } }
 
         .hero-slide { display: none; opacity: 0; transition: opacity 1s ease-in-out; }
         .hero-slide.active { display: flex; opacity: 1; }
 
         /* PREMIUM CARD DESIGN */
-        .card { background: var(--card-bg); border: 1px solid #27272a; border-radius: 12px; transition: all 0.3s ease; position: relative; overflow: hidden; display: flex; flex-direction: column; }
-        .card:hover { border-color: var(--cyan); box-shadow: 0 10px 30px -10px rgba(14, 165, 233, 0.15); transform: translateY(-2px); }
+        .card { background: var(--card-bg); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border: 1px solid var(--line); border-radius: 16px; transition: transform .4s cubic-bezier(.2,.8,.2,1), border-color .4s ease, box-shadow .4s ease; position: relative; overflow: hidden; display: flex; flex-direction: column; }
+        .card::before { content: ''; position: absolute; inset: 0; border-radius: inherit; opacity: 0; transition: opacity .4s ease; background: radial-gradient(360px circle at var(--cx, 50%) var(--cy, 50%), rgba(34,211,238,0.10), transparent 60%); pointer-events: none; z-index: 1; }
+        .card:hover { border-color: rgba(34,211,238,0.5); box-shadow: 0 20px 50px -22px rgba(34, 211, 238, 0.4); transform: translateY(-5px); }
+        .card:hover::before { opacity: 1; }
+        .card > * { position: relative; z-index: 2; }
 
-        .img-header { width: 100%; height: 180px; background-size: cover; background-position: center; background-color: #27272a; position: relative; }
-        .img-header::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, transparent, var(--card-bg)); }
+        .img-header { width: 100%; height: 180px; background-size: cover; background-position: center; background-color: #10131f; position: relative; }
+        .img-header::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 40%, rgba(10,12,20,0.95)); }
 
         /* THREAT MAP */
         #map-container { background: #000; position: relative; overflow: hidden; border: 1px solid #27272a; border-radius: 12px; aspect-ratio: 2/1; width: 100%; max-height: 450px; margin: 0 auto; box-shadow: 0 20px 40px -20px var(--cyan-glow); }
@@ -64,11 +119,83 @@
         .marquee { overflow: hidden; white-space: nowrap; width: 100%; border-top: 1px solid #27272a; border-bottom: 1px solid #27272a; padding: 20px 0; background: #09090b; }
         .marquee-content { display: inline-block; animation: marquee 50s linear infinite; }
         @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+        /* ---------- PREMIUM HERO ---------- */
+        .hero {
+            position: relative; min-height: 86vh; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; text-align: center;
+            padding: 40px 24px 70px; overflow: visible; perspective: 1200px; margin-bottom: 40px;
+        }
+        .hero-inner { transform-style: preserve-3d; transition: transform .3s ease-out; max-width: 1000px; }
+        .hero-eyebrow {
+            display: inline-flex; align-items: center; gap: 10px; margin-bottom: 26px;
+            font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; letter-spacing: 0.32em;
+            text-transform: uppercase; color: var(--cyan); padding: 8px 16px; border-radius: 999px;
+            border: 1px solid rgba(34,211,238,0.25); background: rgba(34,211,238,0.05);
+        }
+        .hero-eyebrow .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 10px var(--cyan); animation: pulse 2s infinite; }
+        @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .35; } }
+        .hero h1 {
+            font-family: 'Orbitron', sans-serif; font-weight: 700; line-height: 0.98;
+            font-size: clamp(2.6rem, 8vw, 6.4rem); letter-spacing: -0.02em; margin: 0 0 8px;
+            color: #fff;
+        }
+        .hero .grad {
+            background: linear-gradient(100deg, #22d3ee 0%, #7c5cff 48%, #22d3ee 100%);
+            background-size: 220% auto; -webkit-background-clip: text; background-clip: text;
+            -webkit-text-fill-color: transparent; animation: sheen 6s linear infinite;
+        }
+        @keyframes sheen { to { background-position: 220% center; } }
+        .rotator { display: inline-block; position: relative; height: 1em; overflow: hidden; vertical-align: bottom; }
+        .rotator span {
+            display: block; position: absolute; left: 0; right: 0; white-space: nowrap;
+            opacity: 0; transform: translateY(100%) rotateX(-40deg); filter: blur(6px);
+            transition: opacity .7s, transform .7s cubic-bezier(.2,.9,.2,1), filter .7s;
+        }
+        .rotator span.on { opacity: 1; transform: none; filter: blur(0); position: relative; }
+        .hero-sub { max-width: 620px; margin: 28px auto 0; color: var(--muted); font-size: clamp(.95rem, 2.4vw, 1.1rem); line-height: 1.7; }
+        .hero-cta { display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; margin-top: 40px; }
+        .hero-chips { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; margin-top: 54px; }
+        .chip {
+            display: flex; flex-direction: column; align-items: flex-start; gap: 2px;
+            padding: 12px 18px; border-radius: 14px; background: rgba(12,16,28,0.6);
+            border: 1px solid var(--line); backdrop-filter: blur(10px);
+            transform: translateZ(40px);
+        }
+        .chip b { font-family: 'Orbitron', sans-serif; font-size: 1.05rem; color: #fff; letter-spacing: .02em; }
+        .chip small { font-size: .62rem; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); }
+        .chip .c { color: var(--cyan); }
+        .scroll-cue { position: absolute; bottom: 26px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 8px; color: var(--muted); font-family: 'JetBrains Mono', monospace; font-size: .6rem; letter-spacing: .3em; text-transform: uppercase; }
+        .scroll-cue .line { width: 1px; height: 38px; background: linear-gradient(var(--cyan), transparent); animation: cue 1.8s ease-in-out infinite; }
+        @keyframes cue { 0%,100% { opacity: .3; transform: scaleY(.6); } 50% { opacity: 1; transform: scaleY(1); } }
+
+        .btn-primary {
+            padding: 15px 30px; border-radius: 12px; font-weight: 700; font-size: .82rem; letter-spacing: .04em;
+            background: linear-gradient(100deg, var(--cyan), var(--cyan-2)); color: #04121a; border: none; cursor: pointer;
+            transition: filter .3s ease;
+        }
+        .btn-primary:hover { filter: brightness(1.12); }
+        .btn-ghost {
+            padding: 15px 30px; border-radius: 12px; font-weight: 600; font-size: .82rem; letter-spacing: .04em;
+            background: rgba(255,255,255,0.03); color: #fff; border: 1px solid var(--line); cursor: pointer;
+            transition: border-color .3s ease, background .3s ease;
+        }
+        .btn-ghost:hover { border-color: rgba(34,211,238,0.6); background: rgba(34,211,238,0.06); }
+
+        @media (prefers-reduced-motion: reduce) {
+            .reveal { opacity: 1 !important; transform: none !important; filter: none !important; }
+            .hero .grad, .hero-eyebrow .dot, .scroll-cue .line { animation: none !important; }
+            html { scroll-behavior: auto; }
+        }
     </style>
 
 <script>(function(){try{var K='h7k_lang',p=location.pathname,onFr=/^\/fr(\/|$)/.test(p),s=null;try{s=localStorage.getItem(K)}catch(e){}document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('[data-lang]');if(a){try{localStorage.setItem(K,a.getAttribute('data-lang'))}catch(e){}}});if(onFr||s)return;var L=(navigator.languages||[navigator.language||'']).join(',').toLowerCase();if(/(^|,)fr(-[a-z]+)?(,|$)/.test(L)){location.replace((p==='/'?'/fr/':'/fr'+p)+location.search+location.hash)}}catch(e){}})();</script>
 </head>
 <body class="min-h-screen flex flex-col">
+
+    <canvas id="bg-webgl" aria-hidden="true"></canvas>
+    <div id="bg-scrim" aria-hidden="true" style="position:fixed;inset:0;z-index:-2;pointer-events:none;background:linear-gradient(180deg, rgba(5,6,12,0.15) 0%, rgba(5,6,12,0.5) 55%, rgba(5,6,12,0.72) 100%);"></div>
+    <div id="bg-grid" aria-hidden="true"></div>
 
     <div id="modal" class="fixed inset-0 z-[1000] bg-black/80 hidden items-center justify-center p-4 backdrop-blur-sm transition-opacity" role="dialog" aria-labelledby="modal-title" aria-modal="true">
         <div class="client-modal max-w-lg w-full relative flex flex-col max-h-[90vh] overflow-y-auto no-scrollbar">
@@ -106,7 +233,7 @@
                                 <option value="APEX">Buy PC: APEX NODE (£2,100)</option>
                                 <option value="TRIDENT">Buy PC: TRIDENT APEX (£8,610)</option>
                                 <option value="CUSTOM_RIG">Custom PC Build Enquiry</option>
-                                <option value="ACCESS_TOOL">Offensive Access Tools</option>
+                                <option value="SECURITY_HW">Security Testing Hardware (professionals — verification required)</option>
                             </optgroup>
                             <optgroup label="IT Consulting">
                                 <option value="CONSULTING_ASSEMBLY">Hardware Assembly & Sourcing</option>
@@ -149,21 +276,35 @@
     <main class="flex-grow pt-40 lg:pt-32 pb-20">
 
         <section id="tab-home" class="tab-content active" aria-label="Home Section">
-            <div class="relative h-[50vh] flex items-center justify-center bg-black border-b border-zinc-800 mb-16 overflow-hidden">
-                <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-sky-900/20 via-black to-black pointer-events-none"></div>
-                
-                <div class="hero-slide active flex-col items-center text-center px-4 w-full z-10 cursor-pointer" onclick="showTab('hardware')">
-                    <h1 class="font-cyber text-4xl lg:text-7xl font-bold mb-6 text-white tracking-tight">ELITE <span class="text-sky-500">HARDWARE.</span></h1>
-                    <p class="font-mono text-xs text-zinc-400 uppercase tracking-[0.3em]">Precision Assembly & Custom Architecture</p>
+            <div class="hero" id="hero">
+                <div class="hero-inner" id="hero-inner">
+                    <div class="hero-eyebrow reveal"><span class="dot"></span> H7K3R Systems · Since 1996</div>
+                    <h1 class="reveal" style="transition-delay:.05s">
+                        ELITE HARDWARE,<br>
+                        <span class="grad">FORENSIC-GRADE</span><br>
+                        <span class="rotator" id="rotator" aria-label="repairs, recovery, security and builds">
+                            <span class="on">REPAIRS.</span>
+                            <span>RECOVERY.</span>
+                            <span>SECURITY.</span>
+                            <span>BUILDS.</span>
+                        </span>
+                    </h1>
+                    <p class="hero-sub reveal" style="transition-delay:.12s">
+                        Custom PC builds, laboratory data recovery, device repair and privacy engineering.
+                        Thirty years of hands-on precision &mdash; the kind usually reserved for corporations, available to everyone.
+                    </p>
+                    <div class="hero-cta reveal" style="transition-delay:.18s">
+                        <button type="button" onclick="openModal('REPAIR_EVERYDAY')" class="btn-primary btn-glow magnetic">Start a request</button>
+                        <button type="button" onclick="showTab('hardware')" class="btn-ghost magnetic">Explore the builds</button>
+                    </div>
+                    <div class="hero-chips reveal" style="transition-delay:.26s">
+                        <div class="chip"><b class="c">#3</b><small>HWBOT · World</small></div>
+                        <div class="chip"><b>1996 &rarr; now</b><small>30 years hands-on</small></div>
+                        <div class="chip"><b>24&ndash;48h</b><small>Typical repair</small></div>
+                        <div class="chip"><b>Lab-grade</b><small>Data recovery</small></div>
+                    </div>
                 </div>
-                <div class="hero-slide flex-col items-center text-center px-4 w-full z-10 cursor-pointer" onclick="showTab('repair')">
-                    <h1 class="font-cyber text-4xl lg:text-7xl font-bold mb-6 text-white tracking-tight">RECOVER <span class="text-sky-500">DATA.</span></h1>
-                    <p class="font-mono text-xs text-zinc-400 uppercase tracking-[0.3em]">Expert Phone & PC Forensics</p>
-                </div>
-                <div class="hero-slide flex-col items-center text-center px-4 w-full z-10 cursor-pointer" onclick="showTab('gear')">
-                    <h1 class="font-cyber text-4xl lg:text-7xl font-bold mb-6 text-white tracking-tight">PROTECT <span class="text-sky-500">PRIVACY.</span></h1>
-                    <p class="font-mono text-xs text-zinc-400 uppercase tracking-[0.3em]">Tactical Faraday Gear & Security</p>
-                </div>
+                <div class="scroll-cue" aria-hidden="true"><span>Scroll</span><span class="line"></span></div>
             </div>
 
             <div class="max-w-7xl mx-auto px-6 mb-16">
@@ -218,25 +359,11 @@
             <div class="text-center mb-12 max-w-2xl mx-auto">
                 <h2 class="font-cyber text-3xl text-white mb-4 uppercase tracking-widest">Hardware Architecture</h2>
                 <p class="font-sans text-sm text-zinc-400 leading-relaxed">
-                    From high-performance entry-level gaming desktops to multi-GPU rendering powerhouses and offensive access tools. We source, assemble, and optimize top-tier silicon.
+                    From high-performance entry-level gaming desktops to multi-GPU rendering powerhouses and professional security-testing hardware. We source, assemble, and optimize top-tier silicon.
                 </p>
             </div>
 
-            <div id="hardware-root" class="grid md:grid-cols-2 gap-8">
-                <button type="button" onclick="showSub('hardware-assembly')" class="card p-16 text-center flex flex-col items-center justify-center hover:border-sky-500">
-                    <h3 class="font-cyber text-2xl text-white mb-2">CUSTOM PCs</h3>
-                    <p class="font-mono text-[10px] text-zinc-500 uppercase tracking-widest">Assembly & High-Tier Systems</p>
-                </button>
-                <button type="button" onclick="showSub('hardware-access')" class="card p-16 text-center flex flex-col items-center justify-center hover:border-red-500">
-                    <h3 class="font-cyber text-2xl text-white mb-2">ACCESS TOOLS</h3>
-                    <p class="font-mono text-[10px] text-zinc-500 uppercase tracking-widest">Offensive Security Hardware</p>
-                </button>
-            </div>
-
-            <div id="hardware-assembly" class="hidden space-y-8">
-                <button type="button" onclick="backToRoot('hardware')" class="text-sm font-semibold text-sky-500 hover:text-white transition flex items-center gap-2">
-                    <span>←</span> Back to Hardware
-                </button>
+            <div id="hardware-assembly" class="space-y-8">
                 <div class="grid lg:grid-cols-3 md:grid-cols-2 gap-6">
                     <article class="card">
                         <div class="img-header" style="background-image: url('hw_veno.jpg');" aria-label="Veno Killer PC"></div>
@@ -291,38 +418,42 @@
                 </div>
             </div>
 
-            <div id="hardware-access" class="hidden space-y-8">
-                <button type="button" onclick="backToRoot('hardware')" class="text-sm font-semibold text-red-500 hover:text-white transition flex items-center gap-2">
-                    <span>←</span> Back to Hardware
-                </button>
-                <div class="grid lg:grid-cols-3 gap-6">
-                    <article class="card border-t-2 border-t-red-600">
-                        <div class="img-header" style="background-image: url('hw_usb.jpg');" aria-label="USB Killer"></div>
+            <div class="mt-16 pt-12 border-t border-zinc-800/60">
+                <div class="glass rounded-2xl p-6 md:p-8 mb-8 flex flex-col md:flex-row md:items-center gap-5" style="border-color:rgba(124,92,255,0.3)">
+                    <div class="flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center" style="background:rgba(124,92,255,0.12);border:1px solid rgba(124,92,255,0.35)">
+                        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#a78bfa" stroke-width="1.8"><path d="M12 3l7 4v5c0 4-3 7-7 8-4-1-7-4-7-8V7z"/><path d="M9.5 12l2 2 3.5-4"/></svg>
+                    </div>
+                    <div class="flex-grow">
+                        <h3 class="font-cyber text-lg text-white mb-1">Security Testing Hardware <span class="text-[10px] font-mono tracking-widest uppercase px-2 py-1 rounded-md ml-2 align-middle" style="background:rgba(124,92,255,0.15);color:#c4b5fd">Restricted</span></h3>
+                        <p class="font-sans text-xs text-zinc-400 leading-relaxed max-w-2xl">Red-team and hardware-assessment equipment for <strong class="text-zinc-200">authorised professionals only</strong>. Supplied strictly for lawful, in-scope engagements. Every order requires proof of identity, organisation and written authorisation before anything ships.</p>
+                    </div>
+                </div>
+                <div class="grid lg:grid-cols-3 md:grid-cols-2 gap-6">
+                    <article class="card">
+                        <div class="img-header" style="background-image: url('hw_usb.jpg');" aria-label="USB surge tester"></div>
                         <div class="p-6 flex flex-col flex-grow">
-                            <h4 class="font-cyber text-lg text-white mb-1">USB_Killer_V4</h4>
-                            <p class="font-sans text-xs text-zinc-400 mb-6 leading-relaxed">Designed for hardware surge-testing. Instantly disables unprotected USB bus terminals.</p>
-                            <button type="button" onclick="openModal('ACCESS_TOOL')" class="mt-auto w-full py-3 bg-zinc-800 text-white rounded-lg font-semibold text-xs hover:bg-red-600 transition">Email Enquiry</button>
+                            <h4 class="font-cyber text-lg text-white mb-1">USB Surge Tester</h4>
+                            <p class="font-sans text-xs text-zinc-400 mb-6 leading-relaxed">Bench tool for validating USB-port surge and over-voltage protection on hardware you own or are authorised to assess.</p>
+                            <button type="button" onclick="openModal('SECURITY_HW')" class="mt-auto w-full py-3 bg-zinc-800 text-white rounded-lg font-semibold text-xs hover:bg-violet-600 transition">Request access (pros)</button>
                         </div>
                     </article>
-                    <article class="card border-t-2 border-red-600">
-                        <div class="img-header" style="background-image: url('hw_signal.jpg');" aria-label="Signal Blocker"></div>
+                    <article class="card">
+                        <div class="img-header" style="background-image: url('hw_cable.jpg');" aria-label="Assessment cable"></div>
                         <div class="p-6 flex flex-col flex-grow">
-                            <h4 class="font-cyber text-lg text-white mb-1">Signal_Blocker</h4>
-                            <p class="font-sans text-xs text-zinc-400 mb-6 leading-relaxed">Creates a localized dead-zone to prevent remote tracking and unauthorized Wi-Fi handshakes.</p>
-                            <button type="button" onclick="openModal('ACCESS_TOOL')" class="mt-auto w-full py-3 bg-zinc-800 text-white rounded-lg font-semibold text-xs hover:bg-red-600 transition">Email Enquiry</button>
+                            <h4 class="font-cyber text-lg text-white mb-1">Red-Team Assessment Cable</h4>
+                            <p class="font-sans text-xs text-zinc-400 mb-6 leading-relaxed">Instrumented test cable for authorised physical-security and phishing-resilience assessments carried out under a signed engagement.</p>
+                            <button type="button" onclick="openModal('SECURITY_HW')" class="mt-auto w-full py-3 bg-zinc-800 text-white rounded-lg font-semibold text-xs hover:bg-violet-600 transition">Request access (pros)</button>
                         </div>
                     </article>
-                    <article class="card border-t-2 border-red-600">
-                        <div class="img-header" style="background-image: url('hw_cable.jpg');" aria-label="Malicious Cable"></div>
-                        <div class="p-6 flex flex-col flex-grow">
-                            <h4 class="font-cyber text-lg text-white mb-1">Malicious_Cable</h4>
-                            <p class="font-sans text-xs text-zinc-400 mb-6 leading-relaxed">Visually identical to a standard charging cable, containing a hidden Wi-Fi chip for payload deployment.</p>
-                            <button type="button" onclick="openModal('ACCESS_TOOL')" class="mt-auto w-full py-3 bg-zinc-800 text-white rounded-lg font-semibold text-xs hover:bg-red-600 transition">Email Enquiry</button>
-                        </div>
+                    <article class="card flex flex-col justify-center text-center p-8" style="background:rgba(124,92,255,0.04)">
+                        <h4 class="font-cyber text-base text-white mb-2">Verification required</h4>
+                        <p class="font-sans text-xs text-zinc-400 leading-relaxed mb-6">Tell us your role, organisation and the engagement. We verify before any quote. Not sold to the general public.</p>
+                        <button type="button" onclick="openModal('SECURITY_HW')" class="w-full py-3 border border-violet-500/60 text-violet-200 rounded-lg font-semibold text-xs hover:bg-violet-600 hover:text-white transition mt-auto">Start verification</button>
                     </article>
                 </div>
             </div>
-        </section>
+
+            </section>
 
         <section id="tab-gear" class="tab-content px-6 max-w-7xl mx-auto" aria-label="Gear Section">
             <div class="text-center mb-12 max-w-2xl mx-auto">
@@ -957,6 +1088,151 @@
             else if(f.webkitRequestFullscreen) f.webkitRequestFullscreen();
             else if(f.msRequestFullscreen) f.msRequestFullscreen();
         }
+    </script>
+
+    <script>
+    /* ============ WEBGL 3D BACKGROUND ============ */
+    (function () {
+        var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        var cv = document.getElementById('bg-webgl');
+        var gl = null;
+        try { gl = cv.getContext('webgl') || cv.getContext('experimental-webgl'); } catch (e) {}
+        if (!gl) {
+            // graceful fallback: a static deep gradient
+            document.body.style.background =
+                'radial-gradient(ellipse 120% 80% at 50% -10%, #0b1836 0%, #05060c 55%), #05060c';
+            return;
+        }
+        var vsrc = 'attribute vec2 p;void main(){gl_Position=vec4(p,0.0,1.0);}';
+        var fsrc = [
+            'precision highp float;',
+            'uniform vec2 u_res;uniform float u_time;uniform vec2 u_mouse;',
+            'float hash(vec2 p){p=fract(p*vec2(123.34,456.21));p+=dot(p,p+45.32);return fract(p.x*p.y);}',
+            'float noise(vec2 p){vec2 i=floor(p),f=fract(p);vec2 u=f*f*(3.0-2.0*f);',
+            ' float a=hash(i),b=hash(i+vec2(1.0,0.0)),c=hash(i+vec2(0.0,1.0)),d=hash(i+vec2(1.0,1.0));',
+            ' return mix(mix(a,b,u.x),mix(c,d,u.x),u.y);}',
+            'float fbm(vec2 p){float v=0.0,a=0.5;for(int i=0;i<6;i++){v+=a*noise(p);p*=2.02;a*=0.5;}return v;}',
+            'void main(){',
+            ' vec2 uv=gl_FragCoord.xy/u_res.xy;',
+            ' vec2 p=(gl_FragCoord.xy-0.5*u_res.xy)/u_res.y;',
+            ' float t=u_time*0.045;',
+            ' vec2 m=(u_mouse-0.5*u_res.xy)/u_res.y;',
+            ' vec2 q=vec2(fbm(p*1.6+vec2(0.0,t)),fbm(p*1.6+vec2(5.2,-t)));',
+            ' vec2 r=vec2(fbm(p*1.6+4.0*q+vec2(1.7,9.2)+t*0.4),fbm(p*1.6+4.0*q+vec2(8.3,2.8)-t*0.3));',
+            ' float f=fbm(p*1.6+4.0*r);',
+            ' float d=length(p-m*0.6);',
+            ' float glow=0.14/(d*d+0.12);',
+            ' vec3 deep=vec3(0.010,0.014,0.034);',
+            ' vec3 cyan=vec3(0.13,0.78,0.92);',
+            ' vec3 viol=vec3(0.42,0.33,1.0);',
+            ' vec3 col=mix(deep,viol,smoothstep(0.1,0.9,f));',
+            ' col=mix(col,cyan,smoothstep(0.55,1.15,f+0.25*r.x));',
+            ' col+=cyan*glow*0.35;',
+            ' col*=0.5+0.5*smoothstep(1.3,0.1,length(p));',          // vignette
+            ' col*=0.82;',                                             // overall dim for text contrast
+            ' col+=hash(uv+t)*0.012;',                                 // dither
+            ' gl_FragColor=vec4(col,1.0);',
+            '}'
+        ].join('\n');
+        function sh(type, src) { var s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); return s; }
+        var prog = gl.createProgram();
+        gl.attachShader(prog, sh(gl.VERTEX_SHADER, vsrc));
+        gl.attachShader(prog, sh(gl.FRAGMENT_SHADER, fsrc));
+        gl.linkProgram(prog); gl.useProgram(prog);
+        var buf = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 3,-1, -1,3]), gl.STATIC_DRAW);
+        var loc = gl.getAttribLocation(prog, 'p'); gl.enableVertexAttribArray(loc);
+        gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+        var uRes = gl.getUniformLocation(prog, 'u_res'),
+            uTime = gl.getUniformLocation(prog, 'u_time'),
+            uMouse = gl.getUniformLocation(prog, 'u_mouse');
+        var mouse = [0, 0], dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+        function resize() {
+            var w = Math.floor(innerWidth * dpr * 0.5), h = Math.floor(innerHeight * dpr * 0.5); // half-res
+            cv.width = w; cv.height = h; mouse = [w * 0.5, h * 0.5];
+            gl.viewport(0, 0, w, h);
+        }
+        resize(); window.addEventListener('resize', resize);
+        window.addEventListener('pointermove', function (e) { mouse = [e.clientX * dpr * 0.5, (innerHeight - e.clientY) * dpr * 0.5]; }, { passive: true });
+        var start = performance.now(), raf, visible = true;
+        document.addEventListener('visibilitychange', function () { visible = !document.hidden; if (visible) loop(); });
+        function loop() {
+            if (!visible) return;
+            var tnow = (performance.now() - start) / 1000;
+            gl.uniform2f(uRes, cv.width, cv.height);
+            gl.uniform1f(uTime, reduce ? 6.0 : tnow);
+            gl.uniform2f(uMouse, mouse[0], mouse[1]);
+            gl.drawArrays(gl.TRIANGLES, 0, 3);
+            if (!reduce) raf = requestAnimationFrame(loop);
+        }
+        loop();
+    })();
+
+    /* ============ CURSOR SPOTLIGHT (page + cards) ============ */
+    window.addEventListener('pointermove', function (e) {
+        document.documentElement.style.setProperty('--mx', e.clientX + 'px');
+        document.documentElement.style.setProperty('--my', e.clientY + 'px');
+    }, { passive: true });
+    document.addEventListener('pointermove', function (e) {
+        var c = e.target.closest && e.target.closest('.card');
+        if (c) { var r = c.getBoundingClientRect(); c.style.setProperty('--cx', (e.clientX - r.left) + 'px'); c.style.setProperty('--cy', (e.clientY - r.top) + 'px'); }
+    }, { passive: true });
+
+    /* ============ REVEAL ON SCROLL ============ */
+    var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+    function scanReveals() {
+        document.querySelectorAll('.reveal:not(.in)').forEach(function (el) {
+            // auto-tag cards/sections that weren't marked, for a consistent feel
+            io.observe(el);
+        });
+    }
+    // auto-apply reveal to content blocks that don't have it yet
+    document.querySelectorAll('.card, .tab-content h2, .marquee').forEach(function (el, i) {
+        if (!el.classList.contains('reveal')) { el.classList.add('reveal'); el.style.transitionDelay = (Math.min(i % 6, 5) * 0.05) + 's'; }
+    });
+    scanReveals();
+
+    /* ============ MAGNETIC BUTTONS ============ */
+    if (!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)) {
+        document.querySelectorAll('.magnetic').forEach(function (el) {
+            el.addEventListener('pointermove', function (e) {
+                var r = el.getBoundingClientRect();
+                el.style.transform = 'translate(' + (e.clientX - r.left - r.width / 2) * 0.28 + 'px,' + (e.clientY - r.top - r.height / 2) * 0.4 + 'px)';
+            });
+            el.addEventListener('pointerleave', function () { el.style.transform = ''; });
+        });
+
+        /* ============ HERO 3D TILT ============ */
+        var hero = document.getElementById('hero'), inner = document.getElementById('hero-inner');
+        if (hero && inner) {
+            hero.addEventListener('pointermove', function (e) {
+                var r = hero.getBoundingClientRect();
+                var rx = ((e.clientY - r.top) / r.height - 0.5) * -6;
+                var ry = ((e.clientX - r.left) / r.width - 0.5) * 8;
+                inner.style.transform = 'rotateX(' + rx + 'deg) rotateY(' + ry + 'deg)';
+            });
+            hero.addEventListener('pointerleave', function () { inner.style.transform = ''; });
+        }
+    }
+
+    /* ============ HERO WORD ROTATOR ============ */
+    (function () {
+        var r = document.getElementById('rotator'); if (!r) return;
+        var words = r.querySelectorAll('span'), i = 0;
+        setInterval(function () {
+            words[i].classList.remove('on'); i = (i + 1) % words.length; words[i].classList.add('on');
+        }, 2600);
+    })();
+
+    /* re-scan reveals whenever a tab is shown */
+    (function () {
+        var orig = window.showTab;
+        if (typeof orig === 'function') {
+            window.showTab = function (id, push) { orig(id, push); setTimeout(scanReveals, 30); };
+        }
+    })();
     </script>
 </body>
 </html>
