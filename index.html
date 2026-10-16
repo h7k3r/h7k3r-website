@@ -65,6 +65,8 @@
         .marquee-content { display: inline-block; animation: marquee 50s linear infinite; }
         @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
     </style>
+
+<script>(function(){try{var K='h7k_lang',p=location.pathname,onFr=/^\/fr(\/|$)/.test(p),s=null;try{s=localStorage.getItem(K)}catch(e){}document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('[data-lang]');if(a){try{localStorage.setItem(K,a.getAttribute('data-lang'))}catch(e){}}});if(onFr||s)return;var L=(navigator.languages||[navigator.language||'']).join(',').toLowerCase();if(/(^|,)fr(-[a-z]+)?(,|$)/.test(L)){location.replace((p==='/'?'/fr/':'/fr'+p)+location.search+location.hash)}}catch(e){}})();</script>
 </head>
 <body class="min-h-screen flex flex-col">
 
@@ -139,7 +141,7 @@
                 <button type="button" onclick="showTab('consulting')" class="nav-btn" id="btn-consulting">Consulting</button>
                 <button type="button" onclick="showTab('files')" class="nav-btn" id="btn-files">Files</button>
                 <button type="button" onclick="showTab('games')" class="nav-btn" style="color: #fbbf24;" id="btn-games">Arcade</button>
-            <a href="/fr/" class="nav-btn" id="lang-switch" aria-label="Version française" style="border-color:#3f3f46;color:#fff">FR</a>
+            <a href="/fr/" class="nav-btn" id="lang-switch" data-lang="fr" aria-label="Version française" style="border-color:#3f3f46;color:#fff">FR</a>
             </nav>
         </div>
     </header>
