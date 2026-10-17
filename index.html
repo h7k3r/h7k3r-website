@@ -143,6 +143,37 @@
         #game-overlay { position: fixed; inset: 0; z-index: 500; display: none; flex-direction: column;
             background: radial-gradient(130% 90% at 50% -10%, #0b1226 0%, #05060c 60%), #05060c; }
         #game-overlay.on { display: flex; animation: gmfade .22s ease; }
+        #game-overlay { height: 100vh; height: 100dvh; }
+        #game-screen { overflow: auto; align-items: safe center; }
+        @media (max-width: 640px) {
+            .game-bar { flex-wrap: wrap; gap: 4px 12px; padding: 10px 14px; }
+            .game-bar-title { font-size: 14px; letter-spacing: .1em; }
+            .game-bar-hint { order: 3; flex-basis: 100%; font-size: 10.5px; line-height: 1.4; }
+            .game-exit { padding: 7px 14px; font-size: 11px; }
+            #game-screen { padding: 14px 10px; }
+            #game-screen .g-score { font-size: 11px; margin-bottom: 8px; }
+            #game-screen .game-canvas-container { max-height: none; }
+            /* Purrgress is a full app: give it the whole screen on phones */
+            #game-screen #stage-purr .game-canvas-container { aspect-ratio: auto !important; width: 100%; height: calc(100dvh - 200px); }
+        }
+        /* arcade games are wide: suggest turning the phone when it's held upright */
+        .g-rotate { display: none; }
+        @media (max-width: 640px) and (orientation: portrait) {
+            #game-overlay:not(.is-purr) .g-rotate { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 14px;
+                font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: .08em; color: #a1a1aa; }
+            .g-rotate svg { width: 18px; height: 18px; stroke: #22d3ee; fill: none; stroke-width: 2; animation: grot 2.4s ease-in-out infinite; }
+            @keyframes grot { 0%, 40% { transform: rotate(0); } 60%, 100% { transform: rotate(90deg); } }
+        }
+        /* phone turned sideways: use the full height */
+        @media (max-height: 520px) and (orientation: landscape) {
+            .game-bar { padding: 6px 14px; }
+            .game-bar-hint { display: none; }
+            #game-screen { padding: 8px 12px; }
+            #game-screen .g-score { display: none; }
+            #game-screen .game-canvas-container { max-height: calc(100dvh - 64px); width: auto; aspect-ratio: 16/9; margin: 0 auto; }
+            #game-screen .game-stage { width: auto; }
+            #game-screen #stage-purr .game-canvas-container { aspect-ratio: auto !important; width: 96vw; height: calc(100dvh - 64px); }
+        }
         @keyframes gmfade { from { opacity: 0; } to { opacity: 1; } }
         .game-bar { display:flex; align-items:center; gap:16px; padding: 14px 20px; border-bottom: 1px solid rgba(255,255,255,0.08);
             background: rgba(9,9,11,0.7); backdrop-filter: blur(10px); flex: 0 0 auto; }
@@ -1078,6 +1109,7 @@
                     <button type="button" class="game-exit" onclick="exitGame()" aria-label="Exit game">Exit ✕</button>
                 </div>
                 <div id="game-screen"></div>
+                <div class="g-rotate" id="g-rotate"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="3" width="10" height="18" rx="2"/><path d="M11 18h2"/></svg><span>Turn your phone sideways for a bigger screen</span></div>
             </div>
         </section>
 
@@ -1372,6 +1404,9 @@
         }
 
         /* ===== FULL-SCREEN GAME PLAYER ===== */
+        // The player must live at the top level of the page: the tab-switch animation leaves a CSS
+        // filter on each section, which would otherwise trap position:fixed inside the section.
+        (function(){ var ov=document.getElementById('game-overlay'); if(ov && ov.parentNode!==document.body) document.body.appendChild(ov); })();
         function __stopGames(){
             try{ fwG=false; }catch(e){}
             try{ snG=false; if(snID) clearInterval(snID); }catch(e){}
@@ -1391,6 +1426,7 @@
             document.getElementById('game-title').innerText = stage.getAttribute('data-title')||'Game';
             document.getElementById('game-hint').innerText = stage.getAttribute('data-hint')||'';
             screen.appendChild(stage);
+            ov.classList.toggle('is-purr', key==='purr');
             ov.classList.add('on'); document.body.classList.add('game-open');
         }
         function exitGame(){

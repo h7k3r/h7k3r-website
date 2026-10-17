@@ -333,6 +333,7 @@ GAMES = [
     # full-screen player chrome
     ('id="game-title">Game</span>', 'id="game-title">Jeu</span>'),
     (">Exit ✕<", ">Quitter ✕<"),
+    (">Turn your phone sideways for a bigger screen<", ">Tournez votre téléphone pour un écran plus grand<"),
     # per-game titles + hints (shown in the player bar)
     ('data-title="Firewall" data-hint="Click / tap to jump the firewall"',
      'data-title="Pare-feu" data-hint="Cliquez / touchez pour sauter le pare-feu"'),
