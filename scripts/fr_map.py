@@ -61,7 +61,7 @@ HEADER = [
     ('id="btn-gallery">Gallery<', 'id="btn-gallery">Galerie<'),
     ('id="btn-consulting">Consulting<', 'id="btn-consulting">Conseil<'),
     ('id="btn-files">Files<', 'id="btn-files">Fichiers<'),
-    ('style="color: #fbbf24;" id="btn-games">Arcade<', 'style="color: #fbbf24;" id="btn-games">Arcade<'),
+    ('style="color: #fbbf24;" id="btn-games">Games<', 'style="color: #fbbf24;" id="btn-games">Jeux<'),
 ]
 
 HOME = [
@@ -249,46 +249,95 @@ CONSULTING = [
     (">Cyber-Security Auditing<", ">Audit de cybersécurité<"),
     ("We think like attackers so you don't have to. Penetration testing of your physical network, physical access vulnerability assessments, and comprehensive employee security protocol reviews.",
      "Nous pensons comme des attaquants pour que vous n'ayez pas à le faire. Tests d'intrusion de votre réseau physique, évaluation des failles d'accès physique et revue complète des protocoles de sécurité de vos équipes."),
+    # h7k studio cross-link callout
+    (">Need web, apps or video production?<", ">Besoin de sites web, d'applications ou de vidéos ?<"),
+    ('Our sister studio <strong class="text-violet-300">h7k studio</strong> handles websites, applications and AI video content for clients.',
+     'Notre studio partenaire <strong class="text-violet-300">h7k studio</strong> réalise des sites web, des applications et du contenu vidéo IA pour les clients.'),
+    (">Visit h7k studio →<", ">Voir h7k studio →<"),
     (">Request a Consultation<", ">Demander un rendez-vous<"),
 ]
 
 FILES = [
     ('aria-label="Firmware and Files Section"', 'aria-label="Micrologiciels et fichiers"'),
     (">Firmware & OS Archive<", ">Micrologiciels et systèmes<"),
-    (">Kali Linux Portal<", ">Portail Kali Linux<"),
-    (">Offensive Security OS<", ">Système de sécurité offensive<"),
-    (">Visit Kali.org<", ">Aller sur Kali.org<"),
-    (">Windows 11 Image<", ">Image Windows 11<"),
-    (">Official Microsoft Deployment<", ">Déploiement officiel Microsoft<"),
-    (">Windows 10 Image<", ">Image Windows 10<"),
-    (">Legacy Stable OS<", ">Ancien système stable<"),
-    (">Microsoft Portal<", ">Portail Microsoft<", 2),
+    ("Official and open-source operating systems &amp; firmware we deploy during repairs and imaging. Every link points to the vendor or project's own source — nothing unofficial.",
+     "Systèmes d'exploitation et micrologiciels officiels et open source que nous installons lors des réparations et de l'imagerie. Chaque lien pointe vers la source officielle de l'éditeur ou du projet — rien d'illégal."),
+    # group heading tags
+    (">ISO / MEDIA<", ">ISO / MÉDIA<"),
+    (">OPEN SOURCE<", ">LIBRE<"),
+    (">SONY FIRMWARE<", ">FIRMWARE SONY<"),
+    (">SYSTEM UPDATE<", ">MISE À JOUR<"),
+    # titles that carry descriptive words
+    (">macOS (current)<", ">macOS (actuel)<"),
     (">Vintage macOS<", ">macOS ancien<"),
-    (">Apple Legacy Support<", ">Assistance Apple pour anciens appareils<"),
-    (">Apple Support<", ">Assistance Apple<"),
-    (">PS5 OS Reinstallation<", ">Réinstallation système PS5<"),
-    (">PS4 OS Reinstallation<", ">Réinstallation système PS4<"),
-    (">Sony Official Firmware<", ">Micrologiciel officiel Sony<", 2),
-    (">PlayStation Portal<", ">Portail PlayStation<", 2),
-    (">Xbox One OSU<", ">Xbox One OSU<"),
-    (">Offline System Update File<", ">Fichier de mise à jour hors ligne<"),
-    (">Xbox Support<", ">Assistance Xbox<"),
+    (">Samsung Firmware<", ">Firmware Samsung<", 2),   # appears as title + button
+    # subtitles
+    (">Official Microsoft ISO<", ">ISO officielle Microsoft<", 3),
+    (">Legacy · preservation<", ">Ancien · préservation<", 3),
+    (">Security / pen-testing<", ">Sécurité / tests d'intrusion<"),
+    (">Everyday desktop Linux<", ">Linux bureautique quotidien<"),
+    (">Rock-solid stable Linux<", ">Linux stable et fiable<"),
+    (">Beginner-friendly desktop<", ">Bureau pour débutants<"),
+    (">Leading-edge Linux<", ">Linux à la pointe<"),
+    (">Minimal rolling-release<", ">Minimal, mise à jour continue<"),
+    (">Security &amp; privacy distro<", ">Distro sécurité &amp; vie privée<"),
+    (">Official Sony firmware<", ">Micrologiciel officiel Sony<", 3),
+    (">Offline system update (OSU)<", ">Mise à jour hors ligne (OSU)<"),
+    (">Official system update<", ">Mise à jour système officielle<"),
+    (">Latest Apple macOS<", ">Dernier macOS d'Apple<"),
+    (">Legacy Apple builds<", ">Anciennes versions Apple<"),
+    (">Official stock firmware (SamFW)<", ">Firmware d'origine officiel (SamFW)<"),
+    (">Hardened Android (Pixel)<", ">Android renforcé (Pixel)<"),
+    (">Open-source Android<", ">Android open source<"),
+    # button labels
+    (">Get ISO<", ">Obtenir l'ISO<", 3),
+    (">Official Site<", ">Site officiel<", 9),
+    (">Xbox Support<", ">Assistance Xbox<", 2),
+    (">Apple Support<", ">Assistance Apple<", 2),
 ]
 
 GAMES = [
-    ('aria-label="Arcade Section"', 'aria-label="Arcade"'),
+    ('aria-label="Games Section"', 'aria-label="Section Jeux"'),
     (">PLAY<", ">JOUER<", 5),
     (">START<", ">DÉMARRER<"),
     ('.innerText="SYS_CLEARED"', '.innerText="SYS_NETTOYÉ"'),
     ('.innerText="BREACHED - RETRY"', '.innerText="INTRUSION - RÉESSAYER"'),
-    ("Hover/Drag to move | Click/Tap to shoot", "Survolez/glissez pour bouger | Cliquez/touchez pour tirer"),
     (">CAT TRAINER<", ">DRESSEUR DE CHATS<"),
-    ("Train, customise and care for your cats &middot; click the floor to walk (WASD / arrow keys also work)",
-     "Dressez, personnalisez et prenez soin de vos chats &middot; cliquez sur le sol pour marcher (les touches ZQSD / flèches fonctionnent aussi)"),
     ('aria-label="Fullscreen"', 'aria-label="Plein écran"'),
     ("&#x26F6; FULLSCREEN", "&#x26F6; PLEIN ÉCRAN"),
     # The French page loads the French copy of Purrgress (built from the same source).
     ("f.src = 'games/purrgress/index.html';", "f.src = 'fr/games/purrgress/index.html';"),
+
+    # --- Games picker (new full-screen arcade) ---
+    ('>Pick a game to play it full-screen. More titles are added over time — press <span class="font-mono text-zinc-300">',
+     '>Choisissez un jeu pour y jouer en plein écran. De nouveaux titres sont ajoutés régulièrement — appuyez sur <span class="font-mono text-zinc-300">'),
+    ("</span> or Exit to come back.</p>", "</span> ou Quitter pour revenir.</p>"),
+    # card titles + genres
+    ("<b>Purrgress</b><small>Cat trainer · Sim</small>", "<b>Purrgress</b><small>Dresseur de chats · Sim</small>"),
+    ("<b>Sys Defender</b><small>Defense · Shooter</small>", "<b>Sys Defender</b><small>Défense · Tir</small>"),
+    ("<b>Firewall</b><small>Jump · Arcade</small>", "<b>Pare-feu</b><small>Saut · Arcade</small>"),
+    ("<b>Bit Snake</b><small>Vector · Classic</small>", "<b>Bit Snake</b><small>Vecteur · Classique</small>"),
+    ("<b>Target Acq</b><small>Reflex · Aim</small>", "<b>Visée</b><small>Réflexe · Tir</small>"),
+    ("<b>Decrypt</b><small>Memory · Puzzle</small>", "<b>Décryptage</b><small>Mémoire · Puzzle</small>"),
+    ("<b>More soon</b><small>In development</small>", "<b>Bientôt plus</b><small>En développement</small>"),
+    (">▶ Play<", ">▶ Jouer<", 6),
+    (">FEATURED<", ">À LA UNE<"),
+    # full-screen player chrome
+    ('id="game-title">Game</span>', 'id="game-title">Jeu</span>'),
+    (">Exit ✕<", ">Quitter ✕<"),
+    # per-game titles + hints (shown in the player bar)
+    ('data-title="Firewall" data-hint="Click / tap to jump the firewall"',
+     'data-title="Pare-feu" data-hint="Cliquez / touchez pour sauter le pare-feu"'),
+    ('data-title="Decrypt" data-hint="Repeat the sequence"',
+     'data-title="Décryptage" data-hint="Reproduisez la séquence"'),
+    ('data-title="Bit Snake" data-hint="Arrow keys / swipe"',
+     'data-title="Bit Snake" data-hint="Flèches / balayage"'),
+    ('data-title="Target Acquisition" data-hint="Click the targets, fast"',
+     'data-title="Acquisition de cible" data-hint="Cliquez vite sur les cibles"'),
+    ('data-title="Sys Defender" data-hint="Hover / drag to move · click / tap to shoot"',
+     'data-title="Sys Defender" data-hint="Survolez / glissez pour bouger · cliquez / touchez pour tirer"'),
+    ('data-title="Purrgress" data-hint="Click the floor to walk · WASD / arrow keys"',
+     'data-title="Purrgress" data-hint="Cliquez sur le sol pour marcher · ZQSD / flèches"'),
 ]
 
 # The French page has <base href="/"> so its images and downloads load from the

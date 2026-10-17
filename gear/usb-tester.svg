@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 230" role="img" aria-label="USB surge tester outline illustration">
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0c1120"/><stop offset="1" stop-color="#06090f"/></linearGradient>
+<radialGradient id="gl" cx="0.5" cy="0.24" r="0.64"><stop offset="0" stop-color="#22d3ee" stop-opacity="0.18"/><stop offset="1" stop-color="#22d3ee" stop-opacity="0"/></radialGradient>
+<linearGradient id="ink" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7defe6"/><stop offset="0.5" stop-color="#22d3ee"/><stop offset="1" stop-color="#8b74ff"/></linearGradient>
+</defs>
+<rect width="400" height="230" fill="url(#bg)"/>
+<g stroke="#5a7bb0" stroke-opacity="0.09" stroke-width="1"><path d="M0 46H400M0 92H400M0 138H400M0 184H400M54 0V230M108 0V230M162 0V230M216 0V230M270 0V230M324 0V230"/></g>
+<rect width="400" height="230" fill="url(#gl)"/>
+<g fill="none" stroke="url(#ink)" stroke-linecap="round" stroke-linejoin="round">
+<path stroke-width="3" d="M158 96 l76 0 q6 0 6 6 l0 26 q0 6 -6 6 l-76 0 z"/><path stroke-width="3" d="M142 104 l16 0 l0 22 l-16 0 z"/><path stroke-width="3" d="M234 104 l16 0 l0 22 l-16 0 z"/><path stroke-width="3" d="M170 104 l22 0 l0 20 l-22 0 z"/><path stroke-width="1.6" stroke-opacity="0.65" d="M176 114 l10 0"/><path stroke-width="3" d="M210 100 l-8 15 l10 0 l-8 15"/></g>
+<text x="16" y="214" fill="#9aa6c4" fill-opacity="0.4" font-family="'JetBrains Mono',monospace" font-size="10" letter-spacing="3">H7K3R</text>
+<text x="384" y="214" text-anchor="end" fill="#22d3ee" fill-opacity="0.5" font-family="'JetBrains Mono',monospace" font-size="10" letter-spacing="2">RESTRICTED</text>
+</svg>

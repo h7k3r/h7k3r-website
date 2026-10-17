@@ -72,9 +72,14 @@
         .nav-btn {
             color: var(--muted); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
             padding: 9px 16px; border-radius: 9999px; transition: all 0.3s cubic-bezier(.2,.8,.2,1); cursor: pointer; white-space: nowrap; border: 1px solid transparent; position: relative;
+            -webkit-tap-highlight-color: transparent; outline: none; background-clip: padding-box;
         }
         .nav-btn:hover { color: #fff; background-color: rgba(34, 211, 238, 0.08); }
-        .nav-btn.active { color: #fff; background-color: rgba(34, 211, 238, 0.12); border-color: rgba(34,211,238,0.5); box-shadow: 0 0 18px var(--cyan-glow), inset 0 0 12px rgba(34,211,238,0.08); }
+        .nav-btn.active { color: #fff; background-color: rgba(34, 211, 238, 0.12); border-color: rgba(34,211,238,0.5); box-shadow: 0 0 14px 1px rgba(34,211,238,0.35), inset 0 0 10px rgba(34,211,238,0.10); }
+        .nav-btn:focus-visible { box-shadow: 0 0 0 2px rgba(34,211,238,0.9); }
+        /* give the glow room inside the scrolling nav so it isn't clipped into a square */
+        .main-nav { padding: 14px 14px; margin: -14px -14px; }
+        @media (min-width: 1024px) { .main-nav { overflow: visible; } }
 
         .tab-content { display: none; }
         .tab-content.active { display: block; animation: tabIn 0.6s cubic-bezier(.2,.8,.2,1) forwards; }
@@ -95,7 +100,7 @@
 
         /* THREAT MAP */
         #map-container { background: #000; position: relative; overflow: hidden; border: 1px solid #27272a; border-radius: 12px; aspect-ratio: 2/1; width: 100%; max-height: 450px; margin: 0 auto; box-shadow: 0 20px 40px -20px var(--cyan-glow); }
-        .world-map-img { position: absolute; inset: 0; width: 100%; height: 100%; background-image: url('https://upload.wikimedia.org/wikipedia/commons/e/ec/World_map_blank_without_borders.svg'); background-size: 100% 100%; filter: invert(1) brightness(3) opacity(0.15); pointer-events: none; }
+        .world-map-img { position: absolute; inset: 0; width: 100%; height: 100%; background-image: url('gear/worldmap.svg'); background-size: 100% 100%; opacity: 0.6; pointer-events: none; }
         
         /* HOVER SPECS FOR GALLERY */
         .rig-card { position: relative; width: 100%; aspect-ratio: 16/9; background-color: #27272a; background-size: cover; background-position: center; border-radius: 8px; border: 1px solid #3f3f46; overflow: hidden; }
@@ -110,6 +115,66 @@
         .game-canvas-container { position: relative; background: #000; border: 1px solid #27272a; border-radius: 8px; aspect-ratio: 16/9; overflow: hidden; touch-action: none; }
         .decrypt-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
         .decrypt-grid div { width: 45px; height: 45px; background: #27272a; border-radius: 4px; border: 1px solid #3f3f46; cursor: pointer; transition: 0.2s; }
+
+        /* GAME PICKER (roblox-style selectable cards) */
+        .game-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 18px; }
+        .game-card { --gc:#22d3ee; position: relative; display: flex; flex-direction: column; align-items: stretch; text-align: left;
+            background: linear-gradient(180deg, rgba(24,24,27,0.9), rgba(9,9,11,0.9)); border: 1px solid #27272a; border-radius: 16px;
+            padding: 16px; cursor: pointer; overflow: hidden; transition: transform .25s cubic-bezier(.2,.7,.3,1), border-color .25s, box-shadow .25s; }
+        .game-card::before { content:""; position:absolute; inset:0; background: radial-gradient(130% 80% at 50% -10%, color-mix(in srgb, var(--gc) 22%, transparent), transparent 60%); opacity:.5; transition:opacity .25s; pointer-events:none; }
+        .game-card:hover { transform: translateY(-6px); border-color: color-mix(in srgb, var(--gc) 70%, #27272a); box-shadow: 0 18px 40px -18px color-mix(in srgb, var(--gc) 80%, transparent), 0 0 0 1px color-mix(in srgb, var(--gc) 40%, transparent) inset; }
+        .game-card:hover::before { opacity:1; }
+        .game-card:focus-visible { outline: none; border-color: var(--gc); box-shadow: 0 0 0 2px color-mix(in srgb, var(--gc) 90%, transparent); }
+        .game-thumb { position: relative; display:flex; align-items:center; justify-content:center; aspect-ratio: 16/10; border-radius: 11px;
+            background: radial-gradient(120% 120% at 50% 0%, color-mix(in srgb, var(--gc) 16%, #0a0e16), #06080e); border: 1px solid color-mix(in srgb, var(--gc) 30%, #1b1b1f); margin-bottom: 13px; }
+        .game-thumb svg { width: 46%; height: 46%; fill: none; stroke: var(--gc); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; filter: drop-shadow(0 0 7px color-mix(in srgb, var(--gc) 60%, transparent)); }
+        .game-info { display:flex; flex-direction:column; gap:3px; position:relative; }
+        .game-info b { font-family:'Orbitron',sans-serif; font-size: 15px; color:#fafafa; letter-spacing:.04em; }
+        .game-info small { font-family:'JetBrains Mono',monospace; font-size: 10.5px; color:#8a8a93; letter-spacing:.08em; text-transform:uppercase; }
+        .game-go { position:relative; margin-top: 12px; font-family:'JetBrains Mono',monospace; font-size: 11px; font-weight:700; letter-spacing:.14em;
+            color: var(--gc); text-transform:uppercase; }
+        .game-badge { position:absolute; top:13px; right:13px; z-index:2; font-family:'JetBrains Mono',monospace; font-size:8.5px; font-weight:700; letter-spacing:.14em;
+            background: var(--gc); color:#07090d; padding:3px 7px; border-radius:999px; }
+        .game-soon { cursor: default; opacity: .5; --gc:#64748b; }
+        .game-soon:hover { transform:none; border-color:#27272a; box-shadow:none; }
+        .game-soon:hover::before { opacity:.5; }
+
+        /* FULL-SCREEN PLAYER */
+        #game-overlay { position: fixed; inset: 0; z-index: 500; display: none; flex-direction: column;
+            background: radial-gradient(130% 90% at 50% -10%, #0b1226 0%, #05060c 60%), #05060c; }
+        #game-overlay.on { display: flex; animation: gmfade .22s ease; }
+        @keyframes gmfade { from { opacity: 0; } to { opacity: 1; } }
+        .game-bar { display:flex; align-items:center; gap:16px; padding: 14px 20px; border-bottom: 1px solid rgba(255,255,255,0.08);
+            background: rgba(9,9,11,0.7); backdrop-filter: blur(10px); flex: 0 0 auto; }
+        .game-bar-title { font-size: 16px; color:#fff; letter-spacing:.14em; text-transform:uppercase; }
+        .game-bar-hint { font-size: 11px; color:#7a8699; letter-spacing:.05em; flex:1 1 auto; }
+        .game-exit { margin-left:auto; font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:700; letter-spacing:.12em;
+            color:#fca5a5; background: rgba(248,113,113,0.1); border:1px solid rgba(248,113,113,0.4); padding: 8px 16px; border-radius:999px; cursor:pointer; transition:.2s; }
+        .game-exit:hover { background:#ef4444; color:#fff; border-color:#ef4444; box-shadow: 0 0 18px rgba(239,68,68,0.5); }
+        #game-screen { flex:1 1 auto; display:flex; align-items:center; justify-content:center; padding: 24px; min-height:0; }
+        #game-screen .game-stage { width: min(96vw, 1180px); }
+        #game-screen .g-score { display:flex; justify-content:space-between; font-family:'JetBrains Mono',monospace; font-size:12px; color:#a1a1aa; margin-bottom:12px; letter-spacing:.1em; }
+        #game-screen .game-canvas-container { aspect-ratio:16/9; max-height: 74vh; margin:0 auto; }
+        #game-screen #stage-purr .game-canvas-container { aspect-ratio:16/10; }
+        .g-ui { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; background: rgba(0,0,0,0.8); backdrop-filter: blur(4px); }
+        .g-play { --gc:#22d3ee; background:#18181b; color:var(--gc); border:1px solid color-mix(in srgb, var(--gc) 50%, #27272a); padding: 12px 34px; border-radius:10px;
+            font-family:'JetBrains Mono',monospace; font-size:14px; font-weight:700; letter-spacing:.16em; cursor:pointer; transition:.2s; }
+        .g-play:hover { background: var(--gc); color:#07090d; box-shadow:0 0 24px color-mix(in srgb, var(--gc) 70%, transparent); }
+        body.game-open { overflow: hidden; }
+
+        /* CONSULTING ILLUSTRATIONS */
+        .consult-illus { aspect-ratio: 400/150; border-radius: 10px; background-size: cover; background-position: center;
+            margin: -6px -6px 20px; border: 1px solid #1b2436; background-color: #06090f; }
+        /* FILES / OS ARCHIVE LOGO TILES */
+        .os-logo { display:flex; align-items:center; justify-content:center; width: 52px; height: 52px; flex: 0 0 auto;
+            border-radius: 12px; background: radial-gradient(120% 120% at 50% 0%, rgba(34,211,238,0.12), #0a0e16); border: 1px solid #1b2436; }
+        .os-logo svg { width: 28px; height: 28px; fill: none; stroke: #38bdf8; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+            filter: drop-shadow(0 0 6px rgba(56,189,248,0.45)); }
+        .os-head { display:flex; align-items:center; gap:14px; }
+        .os-group { font-family:'Orbitron',sans-serif; font-size:13px; letter-spacing:.22em; text-transform:uppercase; color:#e4e4e7; margin: 34px 0 16px; display:flex; align-items:center; gap:14px; }
+        .os-group:first-of-type { margin-top: 4px; }
+        .os-group .os-tag { font-family:'JetBrains Mono',monospace; font-size:10px; color:#71717a; letter-spacing:.1em; }
+        .os-group::after { content:""; flex:1; height:1px; background:linear-gradient(90deg, rgba(34,211,238,0.35), transparent); }
 
         /* MODERN SECURE MODAL */
         .client-modal { background: #18181b; border: 1px solid #3f3f46; border-radius: 16px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); }
@@ -255,11 +320,14 @@
 
     <header class="fixed top-0 w-full z-[150] border-b border-zinc-800 bg-black/80 backdrop-blur-lg">
         <div class="max-w-7xl mx-auto px-4 py-5 flex flex-col lg:flex-row justify-between items-center gap-4">
-            <div class="font-cyber font-bold text-2xl text-white tracking-widest cursor-pointer flex items-center gap-2" onclick="location.reload()" aria-label="Reload Home">
-                <div class="w-6 h-6 bg-sky-500 rounded-sm rotate-45"></div>
-                H7K3R<span class="text-sky-500 font-light">SYSTEMS</span>
+            <div class="font-cyber cursor-pointer flex items-center gap-2 select-none wordmark" onclick="location.reload()" aria-label="Reload Home">
+                <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" style="flex:none">
+                    <defs><linearGradient id="navbolt" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7defe6"/><stop offset="1" stop-color="#8b74ff"/></linearGradient></defs>
+                    <path d="M13 2 4 14h6l-1 8 9-12h-6z" fill="none" stroke="url(#navbolt)" stroke-width="1.9" stroke-linejoin="round"/>
+                </svg>
+                <span class="text-xl font-bold tracking-[0.18em] grad">H7K3R</span><span class="text-xl font-light tracking-[0.18em] text-zinc-400">SYSTEMS</span>
             </div>
-            <nav class="flex overflow-x-auto no-scrollbar gap-2 pb-2 w-full lg:w-auto justify-start lg:justify-end" aria-label="Main Navigation">
+            <nav class="main-nav flex overflow-x-auto no-scrollbar gap-2 w-full lg:w-auto justify-start lg:justify-end" aria-label="Main Navigation">
                 <button type="button" onclick="showTab('home')" class="nav-btn active" id="btn-home">Home</button>
                 <button type="button" onclick="showTab('hardware')" class="nav-btn" id="btn-hardware">Hardware</button>
                 <button type="button" onclick="showTab('gear')" class="nav-btn" id="btn-gear">Gear</button>
@@ -267,7 +335,7 @@
                 <button type="button" onclick="showTab('gallery')" class="nav-btn" id="btn-gallery">Gallery</button>
                 <button type="button" onclick="showTab('consulting')" class="nav-btn" id="btn-consulting">Consulting</button>
                 <button type="button" onclick="showTab('files')" class="nav-btn" id="btn-files">Files</button>
-                <button type="button" onclick="showTab('games')" class="nav-btn" style="color: #fbbf24;" id="btn-games">Arcade</button>
+                <button type="button" onclick="showTab('games')" class="nav-btn" style="color: #fbbf24;" id="btn-games">Games</button>
             <a href="/fr/" class="nav-btn" id="lang-switch" data-lang="fr" aria-label="Version française" style="border-color:#3f3f46;color:#fff">FR</a>
             </nav>
         </div>
@@ -366,7 +434,7 @@
             <div id="hardware-assembly" class="space-y-8">
                 <div class="grid lg:grid-cols-3 md:grid-cols-2 gap-6">
                     <article class="card">
-                        <div class="img-header" style="background-image: url('rig_1.jpg');" aria-label="Veno Killer PC"></div>
+                        <div class="img-header" style="background-image: url('gear/build-veno.svg');" aria-label="VENO_KILLER build sketch"></div>
                         <div class="p-6 flex flex-col flex-grow">
                             <h4 class="font-cyber text-lg text-white">VENO_KILLER</h4>
                             <p class="font-sans text-xs text-zinc-400 mt-2 leading-relaxed">A budget-friendly powerhouse designed to outperform off-the-shelf market PCs without the e-waste.</p>
@@ -375,7 +443,7 @@
                         </div>
                     </article>
                     <article class="card">
-                        <div class="img-header" style="background-image: url('rig_2.jpg');" aria-label="Project P PC"></div>
+                        <div class="img-header" style="background-image: url('gear/build-projectp.svg');" aria-label="PROJECT_P build sketch"></div>
                         <div class="p-6 flex flex-col flex-grow">
                             <h4 class="font-cyber text-lg text-white">PROJECT_P</h4>
                             <p class="font-sans text-xs text-zinc-400 mt-2 leading-relaxed">Built for solid 1440p gaming and reliable multi-threaded productivity tasks.</p>
@@ -384,7 +452,7 @@
                         </div>
                     </article>
                     <article class="card">
-                        <div class="img-header" style="background-image: url('rig_3.jpg');" aria-label="Xproto PC"></div>
+                        <div class="img-header" style="background-image: url('gear/build-xproto.svg');" aria-label="XPROTO_STEALTH build sketch"></div>
                         <div class="p-6 flex flex-col flex-grow">
                             <h4 class="font-cyber text-lg text-white">XPROTO_STEALTH</h4>
                             <p class="font-sans text-xs text-zinc-400 mt-2 leading-relaxed">A stunning, open-air miniature build prioritizing aesthetics and raw airflow.</p>
@@ -393,7 +461,7 @@
                         </div>
                     </article>
                     <article class="card">
-                        <div class="img-header" style="background-image: url('rig_4.jpg');" aria-label="Apex Node PC"></div>
+                        <div class="img-header" style="background-image: url('gear/build-apex.svg');" aria-label="APEX_NODE build sketch"></div>
                         <div class="p-6 flex flex-col flex-grow">
                             <h4 class="font-cyber text-lg text-white">APEX_NODE</h4>
                             <p class="font-sans text-xs text-zinc-400 mt-2 leading-relaxed">Zero bottlenecks. Optimized for competitive high-refresh-rate esports titles.</p>
@@ -402,7 +470,7 @@
                         </div>
                     </article>
                     <article class="card border-t-2 border-t-sky-500">
-                        <div class="img-header" style="background-image: url('rig_5.jpg');" aria-label="Trident PC"></div>
+                        <div class="img-header" style="background-image: url('gear/build-trident.svg');" aria-label="TRIDENT APEX build sketch"></div>
                         <div class="p-6 flex flex-col flex-grow">
                             <h4 class="font-cyber text-lg text-white">TRIDENT APEX</h4>
                             <p class="font-sans text-xs text-zinc-400 mt-2 leading-relaxed">Our flagship rig. Engineered for massive CAD rendering, AI generation, and uncompromised 4K fidelity.</p>
@@ -430,7 +498,7 @@
                 </div>
                 <div class="grid lg:grid-cols-3 md:grid-cols-2 gap-6">
                     <article class="card">
-                        <div class="img-header" style="background-image: url('hw_usb.jpg');" aria-label="USB surge tester"></div>
+                        <div class="img-header" style="background-image: url('gear/usb-tester.svg');" aria-label="USB surge tester"></div>
                         <div class="p-6 flex flex-col flex-grow">
                             <h4 class="font-cyber text-lg text-white mb-1">USB Surge Tester</h4>
                             <p class="font-sans text-xs text-zinc-400 mb-6 leading-relaxed">Bench tool for validating USB-port surge and over-voltage protection on hardware you own or are authorised to assess.</p>
@@ -438,7 +506,7 @@
                         </div>
                     </article>
                     <article class="card">
-                        <div class="img-header" style="background-image: url('hw_cable.jpg');" aria-label="Assessment cable"></div>
+                        <div class="img-header" style="background-image: url('gear/cable.svg');" aria-label="Assessment cable"></div>
                         <div class="p-6 flex flex-col flex-grow">
                             <h4 class="font-cyber text-lg text-white mb-1">Red-Team Assessment Cable</h4>
                             <p class="font-sans text-xs text-zinc-400 mb-6 leading-relaxed">Instrumented test cable for authorised physical-security and phishing-resilience assessments carried out under a signed engagement.</p>
@@ -465,7 +533,7 @@
             
             <div class="grid lg:grid-cols-4 md:grid-cols-2 gap-6">
                 <article class="card">
-                    <div class="h-40 w-full bg-zinc-900 bg-cover bg-center border-b border-zinc-800" style="background-image: url('gear_pouch.jpg');" aria-label="Faraday Pouch"></div>
+                    <div class="h-40 w-full bg-zinc-900 bg-cover bg-center border-b border-zinc-800" style="background-image: url('gear/pouch.svg');" aria-label="Faraday Pouch"></div>
                     <div class="p-5 flex flex-col flex-grow text-center">
                         <h4 class="font-bold text-white mb-1">Faraday Pouch</h4>
                         <p class="font-sans text-xs text-zinc-400 mb-4">Stop phone tracking & keyless car theft.</p>
@@ -474,7 +542,7 @@
                     </div>
                 </article>
                 <article class="card">
-                    <div class="h-40 w-full bg-zinc-900 bg-cover bg-center border-b border-zinc-800" style="background-image: url('gear_blocker.jpg');" aria-label="USB Blocker"></div>
+                    <div class="h-40 w-full bg-zinc-900 bg-cover bg-center border-b border-zinc-800" style="background-image: url('gear/usb-blocker.svg');" aria-label="USB Blocker"></div>
                     <div class="p-5 flex flex-col flex-grow text-center">
                         <h4 class="font-bold text-white mb-1">USB Data Blocker</h4>
                         <p class="font-sans text-xs text-zinc-400 mb-4">Safe public charging. Blocks data pins.</p>
@@ -483,7 +551,7 @@
                     </div>
                 </article>
                 <article class="card">
-                    <div class="h-40 w-full bg-zinc-900 bg-cover bg-center border-b border-zinc-800" style="background-image: url('gear_sleeve.jpg');" aria-label="Laptop Sleeve"></div>
+                    <div class="h-40 w-full bg-zinc-900 bg-cover bg-center border-b border-zinc-800" style="background-image: url('gear/sleeve.svg');" aria-label="Laptop Sleeve"></div>
                     <div class="p-5 flex flex-col flex-grow text-center">
                         <h4 class="font-bold text-white mb-1">Faraday Sleeve</h4>
                         <p class="font-sans text-xs text-zinc-400 mb-4">Complete offline laptop isolation.</p>
@@ -492,7 +560,7 @@
                     </div>
                 </article>
                 <article class="card">
-                    <div class="h-40 w-full bg-zinc-900 bg-cover bg-center border-b border-zinc-800" style="background-image: url('gear_hat.jpg');" aria-label="Faraday Hat"></div>
+                    <div class="h-40 w-full bg-zinc-900 bg-cover bg-center border-b border-zinc-800" style="background-image: url('gear/hat.svg');" aria-label="Faraday Hat"></div>
                     <div class="p-5 flex flex-col flex-grow text-center">
                         <h4 class="font-bold text-white mb-1">Signal-Proof Hat</h4>
                         <p class="font-sans text-xs text-zinc-400 mb-4">Silver-lined EMF protection.</p>
@@ -501,7 +569,7 @@
                     </div>
                 </article>
                 <article class="card">
-                    <div class="h-40 w-full bg-zinc-900 bg-cover bg-center border-b border-zinc-800" style="background-image: url('gear_backpack.jpg');" aria-label="Stealth Backpack"></div>
+                    <div class="h-40 w-full bg-zinc-900 bg-cover bg-center border-b border-zinc-800" style="background-image: url('gear/backpack.svg');" aria-label="Stealth Backpack"></div>
                     <div class="p-5 flex flex-col flex-grow text-center">
                         <h4 class="font-bold text-white mb-1">Stealth Backpack</h4>
                         <p class="font-sans text-xs text-zinc-400 mb-4">Built-in Faraday compartments.</p>
@@ -510,7 +578,7 @@
                     </div>
                 </article>
                 <article class="card border-t-2 border-t-sky-500">
-                    <div class="h-40 w-full bg-zinc-900 bg-cover bg-center border-b border-zinc-800" style="background-image: url('gear_parka.jpg');" aria-label="Faraday Parka"></div>
+                    <div class="h-40 w-full bg-zinc-900 bg-cover bg-center border-b border-zinc-800" style="background-image: url('gear/parka.svg');" aria-label="Faraday Parka"></div>
                     <div class="p-5 flex flex-col flex-grow text-center">
                         <h4 class="font-bold text-white mb-1">Faraday Parka</h4>
                         <p class="font-sans text-xs text-zinc-400 mb-4">Full-Body EMF Shielding jacket.</p>
@@ -519,7 +587,7 @@
                     </div>
                 </article>
                 <article class="card">
-                    <div class="h-40 w-full bg-zinc-900 bg-cover bg-center border-b border-zinc-800" style="background-image: url('gear_hoodie.jpg');" aria-label="Operator Hoodie"></div>
+                    <div class="h-40 w-full bg-zinc-900 bg-cover bg-center border-b border-zinc-800" style="background-image: url('gear/hoodie.svg');" aria-label="Operator Hoodie"></div>
                     <div class="p-5 flex flex-col flex-grow text-center">
                         <h4 class="font-bold text-white mb-1">Operator Hoodie</h4>
                         <p class="font-sans text-xs text-zinc-400 mb-4">Heavyweight Tactical Cotton.</p>
@@ -528,7 +596,7 @@
                     </div>
                 </article>
                 <article class="card">
-                    <div class="h-40 w-full bg-zinc-900 bg-cover bg-center border-b border-zinc-800" style="background-image: url('gear_bits.jpg');" aria-label="Precision Bits"></div>
+                    <div class="h-40 w-full bg-zinc-900 bg-cover bg-center border-b border-zinc-800" style="background-image: url('gear/bits.svg');" aria-label="Precision Bits"></div>
                     <div class="p-5 flex flex-col flex-grow text-center">
                         <h4 class="font-bold text-white mb-1">Precision Bit Set</h4>
                         <p class="font-sans text-xs text-zinc-400 mb-4">S2 Steel Device Teardown Kit.</p>
@@ -549,7 +617,7 @@
 
             <div class="grid lg:grid-cols-2 gap-8 mb-10">
                 <article class="card border-t-4 border-t-emerald-500">
-                    <div class="img-header h-40" style="background-image: url('rep_everyday.jpg'); border-bottom: 1px solid rgba(16, 185, 129, 0.3);" aria-label="Phone Repair"></div>
+                    <div class="img-header h-40" style="background-image: url('gear/repair-device.svg'); border-bottom: 1px solid rgba(16, 185, 129, 0.3);" aria-label="Phone Repair"></div>
                     <div class="p-8 flex flex-col flex-grow">
                         <h3 class="text-xl font-bold text-emerald-400 mb-6">Everyday Device Repair</h3>
                         <div class="space-y-6">
@@ -567,7 +635,7 @@
                 </article>
 
                 <article class="card border-t-4 border-t-sky-500">
-                    <div class="img-header h-40" style="background-image: url('rep_cyber.jpg'); border-bottom: 1px solid rgba(14, 165, 233, 0.3);" aria-label="Cyber Security"></div>
+                    <div class="img-header h-40" style="background-image: url('gear/cyber.svg'); border-bottom: 1px solid rgba(14, 165, 233, 0.3);" aria-label="Cyber Security"></div>
                     <div class="p-8 flex flex-col flex-grow">
                         <h3 class="text-xl font-bold text-sky-400 mb-6">Personal Cyber Security</h3>
                         <div class="space-y-6">
@@ -585,7 +653,7 @@
                 </article>
 
                 <article class="card border-t-4 border-t-red-500 lg:col-span-2">
-                    <div class="img-header h-48" style="background-image: url('rep_lab.jpg'); border-bottom: 1px solid rgba(239, 68, 68, 0.3);" aria-label="Laboratory Forensics"></div>
+                    <div class="img-header h-48" style="background-image: url('gear/lab.svg'); border-bottom: 1px solid rgba(239, 68, 68, 0.3);" aria-label="Laboratory Forensics"></div>
                     <div class="p-8 flex flex-col flex-grow">
                         <h3 class="text-xl font-bold text-red-500 mb-4">Advanced Laboratory Data Recovery</h3>
                         <p class="text-sm text-zinc-300 mb-8 max-w-3xl">When a hard drive clicks, or a phone is completely dead from water damage, software isn't enough. We take devices apart in a dust-free laboratory to physically rebuild them and extract your irreplaceable data.</p>
@@ -654,137 +722,272 @@
 
             <div class="grid md:grid-cols-2 gap-6 mb-12">
                 <article class="card p-8 border-t-2 border-sky-500">
+                    <div class="consult-illus" style="background-image:url('gear/consult-assembly.svg')" aria-hidden="true"></div>
                     <h3 class="text-lg font-bold text-white mb-2">Hardware Assembly & Sourcing</h3>
                     <p class="text-sm font-sans text-zinc-400 leading-relaxed">Need 50 workstations for a new office? Or a render farm capable of massive compute? We handle global parts sourcing, complete physical assembly, precise cable routing, and thermal optimization for large-scale corporate operations.</p>
                 </article>
                 <article class="card p-8 border-t-2 border-sky-500">
+                    <div class="consult-illus" style="background-image:url('gear/consult-imaging.svg')" aria-hidden="true"></div>
                     <h3 class="text-lg font-bold text-white mb-2">Node Deployment & OS Imaging</h3>
                     <p class="text-sm font-sans text-zinc-400 leading-relaxed">Mass deployment of operating systems. We create custom, debloated, and highly secure OS images (Windows/Linux) and deploy them seamlessly across your entire corporate hardware fleet.</p>
                 </article>
                 <article class="card p-8 border-t-2 border-sky-500">
+                    <div class="consult-illus" style="background-image:url('gear/consult-network.svg')" aria-hidden="true"></div>
                     <h3 class="text-lg font-bold text-white mb-2">Network Infrastructure</h3>
                     <p class="text-sm font-sans text-zinc-400 leading-relaxed">Designing, wiring, and configuring secure physical networks. From running Cat6/Fiber to setting up secure subnets, zero-trust VPN tunnels, and enterprise-grade Wi-Fi with isolated guest portals.</p>
                 </article>
                 <article class="card p-8 border-t-2 border-sky-500">
+                    <div class="consult-illus" style="background-image:url('gear/consult-audit.svg')" aria-hidden="true"></div>
                     <h3 class="text-lg font-bold text-white mb-2">Cyber-Security Auditing</h3>
                     <p class="text-sm font-sans text-zinc-400 leading-relaxed">We think like attackers so you don't have to. Penetration testing of your physical network, physical access vulnerability assessments, and comprehensive employee security protocol reviews.</p>
                 </article>
             </div>
             
+            <div class="card p-6 mb-12 flex flex-col sm:flex-row items-center justify-between gap-5 border border-violet-500/40" style="background:linear-gradient(90deg, rgba(139,116,255,0.1), rgba(34,211,238,0.04) 60%, transparent);">
+                <div>
+                    <h3 class="text-lg font-bold text-white mb-1">Need web, apps or video production?</h3>
+                    <p class="text-sm font-sans text-zinc-400 leading-relaxed">Our sister studio <strong class="text-violet-300">h7k studio</strong> handles websites, applications and AI video content for clients.</p>
+                </div>
+                <a href="https://h7kstudio.com" target="_blank" rel="noopener noreferrer" class="whitespace-nowrap px-6 py-3 bg-violet-600 text-white rounded-lg font-bold text-sm hover:bg-violet-500 transition shadow-lg shadow-violet-500/20">Visit h7k studio →</a>
+            </div>
+
             <div class="text-center">
                 <button type="button" onclick="openModal('CONSULTING')" class="px-10 py-4 bg-sky-600 text-white rounded-lg font-bold text-sm hover:bg-sky-500 transition shadow-lg shadow-sky-500/20">Request a Consultation</button>
             </div>
         </section>
 
-        <section id="tab-files" class="tab-content px-6 max-w-5xl mx-auto" aria-label="Firmware and Files Section">
-            <h2 class="font-cyber text-2xl text-white mb-10 tracking-widest uppercase text-center">Firmware & OS Archive</h2>
-            <div class="grid md:grid-cols-2 gap-4">
-                <article class="card p-6 flex flex-col justify-between border-l-4 border-sky-500">
-                    <div class="mb-4">
-                        <h4 class="font-bold text-white text-md mb-1">Kali Linux Portal</h4>
-                        <p class="font-sans text-xs text-zinc-400">Offensive Security OS</p>
-                    </div>
-                    <a href="https://www.kali.org/get-kali/" target="_blank" rel="noopener noreferrer" class="text-center w-full py-2 bg-zinc-800 text-sky-400 rounded text-xs font-semibold hover:bg-sky-500 hover:text-white transition">Visit Kali.org</a>
+        <section id="tab-files" class="tab-content px-6 max-w-6xl mx-auto" aria-label="Firmware and Files Section">
+            <h2 class="font-cyber text-2xl text-white mb-3 tracking-widest uppercase text-center">Firmware & OS Archive</h2>
+            <p class="font-sans text-sm text-zinc-400 text-center max-w-2xl mx-auto mb-10 leading-relaxed">Official and open-source operating systems &amp; firmware we deploy during repairs and imaging. Every link points to the vendor or project's own source — nothing unofficial.</p>
+
+            <h3 class="os-group">PC · Windows <span class="os-tag">ISO / MEDIA</span></h3>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <article class="card p-5 flex flex-col justify-between border-l-4 border-sky-500">
+                    <div class="mb-4 os-head"><span class="os-logo"><svg viewBox="0 0 32 32"><rect x="4" y="6" width="24" height="16" rx="2"/><path d="M12 26h8M16 22v4"/></svg></span>
+                        <div><h4 class="font-bold text-white text-md mb-1">Windows 11</h4><p class="font-sans text-xs text-zinc-400">Official Microsoft ISO</p></div></div>
+                    <a href="https://www.microsoft.com/software-download/windows11" target="_blank" rel="noopener noreferrer" class="text-center w-full py-2 bg-zinc-800 text-sky-400 rounded text-xs font-semibold hover:bg-sky-500 hover:text-white transition">Get ISO</a>
                 </article>
-                <article class="card p-6 flex flex-col justify-between border-l-4 border-blue-500">
-                    <div class="mb-4">
-                        <h4 class="font-bold text-white text-md mb-1">Windows 11 Image</h4>
-                        <p class="font-sans text-xs text-zinc-400">Official Microsoft Deployment</p>
-                    </div>
-                    <a href="https://www.microsoft.com/software-download/windows11" target="_blank" rel="noopener noreferrer" class="text-center w-full py-2 bg-zinc-800 text-blue-400 rounded text-xs font-semibold hover:bg-blue-500 hover:text-white transition">Microsoft Portal</a>
+                <article class="card p-5 flex flex-col justify-between border-l-4 border-sky-500">
+                    <div class="mb-4 os-head"><span class="os-logo"><svg viewBox="0 0 32 32"><rect x="4" y="6" width="24" height="16" rx="2"/><path d="M12 26h8M16 22v4"/></svg></span>
+                        <div><h4 class="font-bold text-white text-md mb-1">Windows 10</h4><p class="font-sans text-xs text-zinc-400">Official Microsoft ISO</p></div></div>
+                    <a href="https://www.microsoft.com/software-download/windows10" target="_blank" rel="noopener noreferrer" class="text-center w-full py-2 bg-zinc-800 text-sky-400 rounded text-xs font-semibold hover:bg-sky-500 hover:text-white transition">Get ISO</a>
                 </article>
-                <article class="card p-6 flex flex-col justify-between border-l-4 border-blue-400">
-                    <div class="mb-4">
-                        <h4 class="font-bold text-white text-md mb-1">Windows 10 Image</h4>
-                        <p class="font-sans text-xs text-zinc-400">Legacy Stable OS</p>
-                    </div>
-                    <a href="https://www.microsoft.com/software-download/windows10" target="_blank" rel="noopener noreferrer" class="text-center w-full py-2 bg-zinc-800 text-blue-400 rounded text-xs font-semibold hover:bg-blue-400 hover:text-white transition">Microsoft Portal</a>
+                <article class="card p-5 flex flex-col justify-between border-l-4 border-sky-500">
+                    <div class="mb-4 os-head"><span class="os-logo"><svg viewBox="0 0 32 32"><rect x="4" y="6" width="24" height="16" rx="2"/><path d="M12 26h8M16 22v4"/></svg></span>
+                        <div><h4 class="font-bold text-white text-md mb-1">Windows 8.1</h4><p class="font-sans text-xs text-zinc-400">Official Microsoft ISO</p></div></div>
+                    <a href="https://www.microsoft.com/software-download/windows8ISO" target="_blank" rel="noopener noreferrer" class="text-center w-full py-2 bg-zinc-800 text-sky-400 rounded text-xs font-semibold hover:bg-sky-500 hover:text-white transition">Get ISO</a>
                 </article>
-                <article class="card p-6 flex flex-col justify-between border-l-4 border-zinc-400">
-                    <div class="mb-4">
-                        <h4 class="font-bold text-white text-md mb-1">Vintage macOS</h4>
-                        <p class="font-sans text-xs text-zinc-400">Apple Legacy Support</p>
-                    </div>
+                <article class="card p-5 flex flex-col justify-between border-l-4 border-amber-500">
+                    <div class="mb-4 os-head"><span class="os-logo"><svg viewBox="0 0 32 32"><rect x="4" y="6" width="24" height="16" rx="2"/><path d="M12 26h8M16 22v4"/></svg></span>
+                        <div><h4 class="font-bold text-white text-md mb-1">Windows 7</h4><p class="font-sans text-xs text-zinc-400">Legacy · preservation</p></div></div>
+                    <a href="https://archive.org/search?query=Windows+7+ISO" target="_blank" rel="noopener noreferrer" class="text-center w-full py-2 bg-zinc-800 text-amber-400 rounded text-xs font-semibold hover:bg-amber-500 hover:text-black transition">Internet Archive</a>
+                </article>
+                <article class="card p-5 flex flex-col justify-between border-l-4 border-amber-500">
+                    <div class="mb-4 os-head"><span class="os-logo"><svg viewBox="0 0 32 32"><rect x="4" y="6" width="24" height="16" rx="2"/><path d="M12 26h8M16 22v4"/></svg></span>
+                        <div><h4 class="font-bold text-white text-md mb-1">Windows Vista</h4><p class="font-sans text-xs text-zinc-400">Legacy · preservation</p></div></div>
+                    <a href="https://archive.org/search?query=Windows+Vista+ISO" target="_blank" rel="noopener noreferrer" class="text-center w-full py-2 bg-zinc-800 text-amber-400 rounded text-xs font-semibold hover:bg-amber-500 hover:text-black transition">Internet Archive</a>
+                </article>
+                <article class="card p-5 flex flex-col justify-between border-l-4 border-amber-500">
+                    <div class="mb-4 os-head"><span class="os-logo"><svg viewBox="0 0 32 32"><rect x="4" y="6" width="24" height="16" rx="2"/><path d="M12 26h8M16 22v4"/></svg></span>
+                        <div><h4 class="font-bold text-white text-md mb-1">Windows XP</h4><p class="font-sans text-xs text-zinc-400">Legacy · preservation</p></div></div>
+                    <a href="https://archive.org/search?query=Windows+XP+ISO" target="_blank" rel="noopener noreferrer" class="text-center w-full py-2 bg-zinc-800 text-amber-400 rounded text-xs font-semibold hover:bg-amber-500 hover:text-black transition">Internet Archive</a>
+                </article>
+            </div>
+
+            <h3 class="os-group">PC · Linux <span class="os-tag">OPEN SOURCE</span></h3>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <article class="card p-5 flex flex-col justify-between border-l-4 border-emerald-500">
+                    <div class="mb-4 os-head"><span class="os-logo"><svg viewBox="0 0 32 32"><rect x="4" y="6" width="24" height="20" rx="2.5"/><path d="M9 14l4 3-4 3M16 20h7"/></svg></span>
+                        <div><h4 class="font-bold text-white text-md mb-1">Kali Linux</h4><p class="font-sans text-xs text-zinc-400">Security / pen-testing</p></div></div>
+                    <a href="https://www.kali.org/get-kali/" target="_blank" rel="noopener noreferrer" class="text-center w-full py-2 bg-zinc-800 text-emerald-400 rounded text-xs font-semibold hover:bg-emerald-500 hover:text-white transition">Official Site</a>
+                </article>
+                <article class="card p-5 flex flex-col justify-between border-l-4 border-emerald-500">
+                    <div class="mb-4 os-head"><span class="os-logo"><svg viewBox="0 0 32 32"><rect x="4" y="6" width="24" height="20" rx="2.5"/><path d="M9 14l4 3-4 3M16 20h7"/></svg></span>
+                        <div><h4 class="font-bold text-white text-md mb-1">Ubuntu</h4><p class="font-sans text-xs text-zinc-400">Everyday desktop Linux</p></div></div>
+                    <a href="https://ubuntu.com/download/desktop" target="_blank" rel="noopener noreferrer" class="text-center w-full py-2 bg-zinc-800 text-emerald-400 rounded text-xs font-semibold hover:bg-emerald-500 hover:text-white transition">Official Site</a>
+                </article>
+                <article class="card p-5 flex flex-col justify-between border-l-4 border-emerald-500">
+                    <div class="mb-4 os-head"><span class="os-logo"><svg viewBox="0 0 32 32"><rect x="4" y="6" width="24" height="20" rx="2.5"/><path d="M9 14l4 3-4 3M16 20h7"/></svg></span>
+                        <div><h4 class="font-bold text-white text-md mb-1">Debian</h4><p class="font-sans text-xs text-zinc-400">Rock-solid stable Linux</p></div></div>
+                    <a href="https://www.debian.org/distrib/" target="_blank" rel="noopener noreferrer" class="text-center w-full py-2 bg-zinc-800 text-emerald-400 rounded text-xs font-semibold hover:bg-emerald-500 hover:text-white transition">Official Site</a>
+                </article>
+                <article class="card p-5 flex flex-col justify-between border-l-4 border-emerald-500">
+                    <div class="mb-4 os-head"><span class="os-logo"><svg viewBox="0 0 32 32"><rect x="4" y="6" width="24" height="20" rx="2.5"/><path d="M9 14l4 3-4 3M16 20h7"/></svg></span>
+                        <div><h4 class="font-bold text-white text-md mb-1">Linux Mint</h4><p class="font-sans text-xs text-zinc-400">Beginner-friendly desktop</p></div></div>
+                    <a href="https://linuxmint.com/download.php" target="_blank" rel="noopener noreferrer" class="text-center w-full py-2 bg-zinc-800 text-emerald-400 rounded text-xs font-semibold hover:bg-emerald-500 hover:text-white transition">Official Site</a>
+                </article>
+                <article class="card p-5 flex flex-col justify-between border-l-4 border-emerald-500">
+                    <div class="mb-4 os-head"><span class="os-logo"><svg viewBox="0 0 32 32"><rect x="4" y="6" width="24" height="20" rx="2.5"/><path d="M9 14l4 3-4 3M16 20h7"/></svg></span>
+                        <div><h4 class="font-bold text-white text-md mb-1">Fedora</h4><p class="font-sans text-xs text-zinc-400">Leading-edge Linux</p></div></div>
+                    <a href="https://fedoraproject.org/workstation/download/" target="_blank" rel="noopener noreferrer" class="text-center w-full py-2 bg-zinc-800 text-emerald-400 rounded text-xs font-semibold hover:bg-emerald-500 hover:text-white transition">Official Site</a>
+                </article>
+                <article class="card p-5 flex flex-col justify-between border-l-4 border-emerald-500">
+                    <div class="mb-4 os-head"><span class="os-logo"><svg viewBox="0 0 32 32"><rect x="4" y="6" width="24" height="20" rx="2.5"/><path d="M9 14l4 3-4 3M16 20h7"/></svg></span>
+                        <div><h4 class="font-bold text-white text-md mb-1">Arch Linux</h4><p class="font-sans text-xs text-zinc-400">Minimal rolling-release</p></div></div>
+                    <a href="https://archlinux.org/download/" target="_blank" rel="noopener noreferrer" class="text-center w-full py-2 bg-zinc-800 text-emerald-400 rounded text-xs font-semibold hover:bg-emerald-500 hover:text-white transition">Official Site</a>
+                </article>
+                <article class="card p-5 flex flex-col justify-between border-l-4 border-emerald-500">
+                    <div class="mb-4 os-head"><span class="os-logo"><svg viewBox="0 0 32 32"><rect x="4" y="6" width="24" height="20" rx="2.5"/><path d="M9 14l4 3-4 3M16 20h7"/></svg></span>
+                        <div><h4 class="font-bold text-white text-md mb-1">Parrot OS</h4><p class="font-sans text-xs text-zinc-400">Security &amp; privacy distro</p></div></div>
+                    <a href="https://parrotsec.org/download/" target="_blank" rel="noopener noreferrer" class="text-center w-full py-2 bg-zinc-800 text-emerald-400 rounded text-xs font-semibold hover:bg-emerald-500 hover:text-white transition">Official Site</a>
+                </article>
+            </div>
+
+            <h3 class="os-group">PlayStation <span class="os-tag">SONY FIRMWARE</span></h3>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <article class="card p-5 flex flex-col justify-between border-l-4 border-indigo-500">
+                    <div class="mb-4 os-head"><span class="os-logo"><svg viewBox="0 0 32 32"><path d="M11 12h10a7 7 0 0 1 6.8 5.4l.9 4a3 3 0 0 1-5.4 2.3L21 25a4 4 0 0 0-3.2-1.6h-3.6A4 4 0 0 0 11 25l-2.3 1.7A3 3 0 0 1 3.3 23.7l.9-4A7 7 0 0 1 11 12z"/><path d="M8.5 17v4M6.5 19h4M21.5 18.5h.01M24 20.5h.01"/></svg></span>
+                        <div><h4 class="font-bold text-white text-md mb-1">PlayStation 5</h4><p class="font-sans text-xs text-zinc-400">Official Sony firmware</p></div></div>
+                    <a href="https://www.playstation.com/support/hardware/ps5/system-software/" target="_blank" rel="noopener noreferrer" class="text-center w-full py-2 bg-zinc-800 text-indigo-400 rounded text-xs font-semibold hover:bg-indigo-500 hover:text-white transition">PlayStation</a>
+                </article>
+                <article class="card p-5 flex flex-col justify-between border-l-4 border-indigo-500">
+                    <div class="mb-4 os-head"><span class="os-logo"><svg viewBox="0 0 32 32"><path d="M11 12h10a7 7 0 0 1 6.8 5.4l.9 4a3 3 0 0 1-5.4 2.3L21 25a4 4 0 0 0-3.2-1.6h-3.6A4 4 0 0 0 11 25l-2.3 1.7A3 3 0 0 1 3.3 23.7l.9-4A7 7 0 0 1 11 12z"/><path d="M8.5 17v4M6.5 19h4M21.5 18.5h.01M24 20.5h.01"/></svg></span>
+                        <div><h4 class="font-bold text-white text-md mb-1">PlayStation 4</h4><p class="font-sans text-xs text-zinc-400">Official Sony firmware</p></div></div>
+                    <a href="https://www.playstation.com/support/hardware/ps4/system-software/" target="_blank" rel="noopener noreferrer" class="text-center w-full py-2 bg-zinc-800 text-indigo-400 rounded text-xs font-semibold hover:bg-indigo-500 hover:text-white transition">PlayStation</a>
+                </article>
+                <article class="card p-5 flex flex-col justify-between border-l-4 border-indigo-500">
+                    <div class="mb-4 os-head"><span class="os-logo"><svg viewBox="0 0 32 32"><path d="M11 12h10a7 7 0 0 1 6.8 5.4l.9 4a3 3 0 0 1-5.4 2.3L21 25a4 4 0 0 0-3.2-1.6h-3.6A4 4 0 0 0 11 25l-2.3 1.7A3 3 0 0 1 3.3 23.7l.9-4A7 7 0 0 1 11 12z"/><path d="M8.5 17v4M6.5 19h4M21.5 18.5h.01M24 20.5h.01"/></svg></span>
+                        <div><h4 class="font-bold text-white text-md mb-1">PlayStation 3</h4><p class="font-sans text-xs text-zinc-400">Official Sony firmware</p></div></div>
+                    <a href="https://www.playstation.com/support/hardware/ps3/system-software/" target="_blank" rel="noopener noreferrer" class="text-center w-full py-2 bg-zinc-800 text-indigo-400 rounded text-xs font-semibold hover:bg-indigo-500 hover:text-white transition">PlayStation</a>
+                </article>
+            </div>
+
+            <h3 class="os-group">Xbox <span class="os-tag">SYSTEM UPDATE</span></h3>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <article class="card p-5 flex flex-col justify-between border-l-4 border-green-500">
+                    <div class="mb-4 os-head"><span class="os-logo"><svg viewBox="0 0 32 32"><path d="M11 12h10a7 7 0 0 1 6.8 5.4l.9 4a3 3 0 0 1-5.4 2.3L21 25a4 4 0 0 0-3.2-1.6h-3.6A4 4 0 0 0 11 25l-2.3 1.7A3 3 0 0 1 3.3 23.7l.9-4A7 7 0 0 1 11 12z"/><path d="M8.5 17v4M6.5 19h4M21.5 18.5h.01M24 20.5h.01"/></svg></span>
+                        <div><h4 class="font-bold text-white text-md mb-1">Xbox One</h4><p class="font-sans text-xs text-zinc-400">Offline system update (OSU)</p></div></div>
+                    <a href="https://support.xbox.com/en-US/help/hardware-network/console/system-update-solution/offline-system-update" target="_blank" rel="noopener noreferrer" class="text-center w-full py-2 bg-zinc-800 text-green-400 rounded text-xs font-semibold hover:bg-green-500 hover:text-white transition">Xbox Support</a>
+                </article>
+                <article class="card p-5 flex flex-col justify-between border-l-4 border-green-500">
+                    <div class="mb-4 os-head"><span class="os-logo"><svg viewBox="0 0 32 32"><path d="M11 12h10a7 7 0 0 1 6.8 5.4l.9 4a3 3 0 0 1-5.4 2.3L21 25a4 4 0 0 0-3.2-1.6h-3.6A4 4 0 0 0 11 25l-2.3 1.7A3 3 0 0 1 3.3 23.7l.9-4A7 7 0 0 1 11 12z"/><path d="M8.5 17v4M6.5 19h4M21.5 18.5h.01M24 20.5h.01"/></svg></span>
+                        <div><h4 class="font-bold text-white text-md mb-1">Xbox 360</h4><p class="font-sans text-xs text-zinc-400">Official system update</p></div></div>
+                    <a href="https://support.xbox.com/help/hardware-network/console/xbox-360-system-update" target="_blank" rel="noopener noreferrer" class="text-center w-full py-2 bg-zinc-800 text-green-400 rounded text-xs font-semibold hover:bg-green-500 hover:text-white transition">Xbox Support</a>
+                </article>
+            </div>
+
+            <h3 class="os-group">Apple <span class="os-tag">macOS</span></h3>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <article class="card p-5 flex flex-col justify-between border-l-4 border-zinc-400">
+                    <div class="mb-4 os-head"><span class="os-logo"><svg viewBox="0 0 32 32"><rect x="7" y="7" width="18" height="12" rx="1.5"/><path d="M3 24h26l-2-4H5z"/></svg></span>
+                        <div><h4 class="font-bold text-white text-md mb-1">macOS (current)</h4><p class="font-sans text-xs text-zinc-400">Latest Apple macOS</p></div></div>
+                    <a href="https://www.apple.com/macos/how-to-upgrade/" target="_blank" rel="noopener noreferrer" class="text-center w-full py-2 bg-zinc-800 text-zinc-300 rounded text-xs font-semibold hover:bg-zinc-600 hover:text-white transition">Apple Support</a>
+                </article>
+                <article class="card p-5 flex flex-col justify-between border-l-4 border-zinc-400">
+                    <div class="mb-4 os-head"><span class="os-logo"><svg viewBox="0 0 32 32"><rect x="7" y="7" width="18" height="12" rx="1.5"/><path d="M3 24h26l-2-4H5z"/></svg></span>
+                        <div><h4 class="font-bold text-white text-md mb-1">Vintage macOS</h4><p class="font-sans text-xs text-zinc-400">Legacy Apple builds</p></div></div>
                     <a href="https://support.apple.com/en-us/HT211683" target="_blank" rel="noopener noreferrer" class="text-center w-full py-2 bg-zinc-800 text-zinc-300 rounded text-xs font-semibold hover:bg-zinc-600 hover:text-white transition">Apple Support</a>
                 </article>
-                <article class="card p-6 flex flex-col justify-between border-l-4 border-indigo-600">
-                    <div class="mb-4">
-                        <h4 class="font-bold text-white text-md mb-1">PS5 OS Reinstallation</h4>
-                        <p class="font-sans text-xs text-zinc-400">Sony Official Firmware</p>
-                    </div>
-                    <a href="https://www.playstation.com/en-us/support/hardware/ps5/system-software/" target="_blank" rel="noopener noreferrer" class="text-center w-full py-2 bg-zinc-800 text-indigo-400 rounded text-xs font-semibold hover:bg-indigo-600 hover:text-white transition">PlayStation Portal</a>
+            </div>
+
+            <h3 class="os-group">Mobile <span class="os-tag">FIRMWARE / ROMs</span></h3>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <article class="card p-5 flex flex-col justify-between border-l-4 border-fuchsia-500">
+                    <div class="mb-4 os-head"><span class="os-logo"><svg viewBox="0 0 32 32"><rect x="9" y="4" width="14" height="24" rx="3"/><path d="M14 24h4"/></svg></span>
+                        <div><h4 class="font-bold text-white text-md mb-1">Samsung Firmware</h4><p class="font-sans text-xs text-zinc-400">Official stock firmware (SamFW)</p></div></div>
+                    <a href="https://samfw.com/" target="_blank" rel="noopener noreferrer" class="text-center w-full py-2 bg-zinc-800 text-fuchsia-400 rounded text-xs font-semibold hover:bg-fuchsia-500 hover:text-white transition">Samsung Firmware</a>
                 </article>
-                <article class="card p-6 flex flex-col justify-between border-l-4 border-indigo-700">
-                    <div class="mb-4">
-                        <h4 class="font-bold text-white text-md mb-1">PS4 OS Reinstallation</h4>
-                        <p class="font-sans text-xs text-zinc-400">Sony Official Firmware</p>
-                    </div>
-                    <a href="https://www.playstation.com/en-us/support/hardware/ps4/system-software/" target="_blank" rel="noopener noreferrer" class="text-center w-full py-2 bg-zinc-800 text-indigo-400 rounded text-xs font-semibold hover:bg-indigo-700 hover:text-white transition">PlayStation Portal</a>
+                <article class="card p-5 flex flex-col justify-between border-l-4 border-fuchsia-500">
+                    <div class="mb-4 os-head"><span class="os-logo"><svg viewBox="0 0 32 32"><rect x="9" y="4" width="14" height="24" rx="3"/><path d="M14 24h4"/></svg></span>
+                        <div><h4 class="font-bold text-white text-md mb-1">GrapheneOS</h4><p class="font-sans text-xs text-zinc-400">Hardened Android (Pixel)</p></div></div>
+                    <a href="https://grapheneos.org/" target="_blank" rel="noopener noreferrer" class="text-center w-full py-2 bg-zinc-800 text-fuchsia-400 rounded text-xs font-semibold hover:bg-fuchsia-500 hover:text-white transition">Official Site</a>
                 </article>
-                <article class="card p-6 flex flex-col justify-between border-l-4 border-emerald-600">
-                    <div class="mb-4">
-                        <h4 class="font-bold text-white text-md mb-1">Xbox One OSU</h4>
-                        <p class="font-sans text-xs text-zinc-400">Offline System Update File</p>
-                    </div>
-                    <a href="https://support.xbox.com/en-US/help/hardware-network/console/system-update-solution/offline-system-update" target="_blank" rel="noopener noreferrer" class="text-center w-full py-2 bg-zinc-800 text-emerald-400 rounded text-xs font-semibold hover:bg-emerald-600 hover:text-white transition">Xbox Support</a>
+                <article class="card p-5 flex flex-col justify-between border-l-4 border-fuchsia-500">
+                    <div class="mb-4 os-head"><span class="os-logo"><svg viewBox="0 0 32 32"><rect x="9" y="4" width="14" height="24" rx="3"/><path d="M14 24h4"/></svg></span>
+                        <div><h4 class="font-bold text-white text-md mb-1">LineageOS</h4><p class="font-sans text-xs text-zinc-400">Open-source Android</p></div></div>
+                    <a href="https://lineageos.org/" target="_blank" rel="noopener noreferrer" class="text-center w-full py-2 bg-zinc-800 text-fuchsia-400 rounded text-xs font-semibold hover:bg-fuchsia-500 hover:text-white transition">Official Site</a>
                 </article>
             </div>
         </section>
 
-        <section id="tab-games" class="tab-content px-6 max-w-7xl mx-auto" aria-label="Arcade Section">
-            <div class="grid lg:grid-cols-3 md:grid-cols-2 gap-8">
-                
-                <article class="card p-6 flex flex-col">
-                    <div class="flex justify-between font-mono text-[10px] mb-4 text-zinc-400"><span>01_FIREWALL [JUMP]</span><span id="score-fw" class="text-cyan-400">0</span></div>
-                    <div class="game-canvas-container mb-4">
-                        <canvas id="canvas-fw" class="w-full h-full absolute inset-0" aria-label="Firewall Game"></canvas>
-                        <div id="ui-fw" class="absolute inset-0 flex items-center justify-center bg-black/80 backdrop-blur-sm"><button type="button" onclick="startFW()" class="bg-zinc-800 text-cyan-400 px-6 py-2 rounded text-xs font-bold hover:bg-cyan-500 hover:text-white transition">PLAY</button></div>
-                    </div>
-                </article>
+        <section id="tab-games" class="tab-content px-6 max-w-7xl mx-auto" aria-label="Games Section">
+            <div class="text-center mb-10 max-w-2xl mx-auto">
+                <h2 class="font-cyber text-3xl text-white mb-3 uppercase tracking-widest">H7K3R Arcade</h2>
+                <p class="font-sans text-sm text-zinc-400 leading-relaxed">Pick a game to play it full-screen. More titles are added over time — press <span class="font-mono text-zinc-300">Esc</span> or Exit to come back.</p>
+            </div>
 
-                <article class="card p-6 flex flex-col">
-                    <div class="flex justify-between font-mono text-[10px] mb-4 text-zinc-400"><span>02_DECRYPT [MEMORY]</span><span id="score-dc" class="text-emerald-500">LVL: 1</span></div>
-                    <div class="game-canvas-container flex items-center justify-center mb-4">
-                        <div id="grid-dc" class="decrypt-grid" aria-label="Decrypt Memory Grid"></div>
-                        <div id="ui-dc" class="absolute inset-0 flex items-center justify-center bg-black/80 backdrop-blur-sm"><button type="button" onclick="startDC()" class="bg-zinc-800 text-emerald-400 px-6 py-2 rounded text-xs font-bold hover:bg-emerald-500 hover:text-white transition">PLAY</button></div>
-                    </div>
-                </article>
+            <!-- selectable game cards -->
+            <div class="game-grid">
+                <button type="button" class="game-card" data-game="purr" style="--gc:#f472b6" onclick="openGame('purr')">
+                    <span class="game-thumb"><svg viewBox="0 0 48 48"><path d="M14 20c-3-10 2-12 5-6 4-2 8-2 12 0 3-6 8-4 5 6 3 3 3 9 0 13-2 8-23 8-27 0-3-4-3-10 0-13z"/><circle cx="19" cy="26" r="1.6" fill="currentColor" stroke="none"/><circle cx="29" cy="26" r="1.6" fill="currentColor" stroke="none"/><path d="M21 31c2 1.5 4 1.5 6 0"/></svg></span>
+                    <span class="game-info"><b>Purrgress</b><small>Cat trainer · Sim</small></span>
+                    <span class="game-go">▶ Play</span><span class="game-badge">FEATURED</span>
+                </button>
+                <button type="button" class="game-card" data-game="inv" style="--gc:#22d3ee" onclick="openGame('inv')">
+                    <span class="game-thumb"><svg viewBox="0 0 48 48"><path d="M16 14h4v4h8v-4h4v4h4v8h-4v6h-4v4h-4v-4h-8v4h-4v-4h-4v-6h-4v-8h4z"/><path d="M20 24h2m4 0h2"/></svg></span>
+                    <span class="game-info"><b>Sys Defender</b><small>Defense · Shooter</small></span>
+                    <span class="game-go">▶ Play</span>
+                </button>
+                <button type="button" class="game-card" data-game="fw" style="--gc:#38bdf8" onclick="openGame('fw')">
+                    <span class="game-thumb"><svg viewBox="0 0 48 48"><path d="M10 14h28M10 22h28M10 30h28M18 10v28M28 10v28"/><circle cx="23" cy="26" r="3" fill="currentColor" stroke="none"/></svg></span>
+                    <span class="game-info"><b>Firewall</b><small>Jump · Arcade</small></span>
+                    <span class="game-go">▶ Play</span>
+                </button>
+                <button type="button" class="game-card" data-game="sn" style="--gc:#eab308" onclick="openGame('sn')">
+                    <span class="game-thumb"><svg viewBox="0 0 48 48"><path d="M12 14h12v8h-8v8h16v-8h-4"/><rect x="30" y="28" width="6" height="6" rx="1" fill="currentColor" stroke="none"/></svg></span>
+                    <span class="game-info"><b>Bit Snake</b><small>Vector · Classic</small></span>
+                    <span class="game-go">▶ Play</span>
+                </button>
+                <button type="button" class="game-card" data-game="ta" style="--gc:#f87171" onclick="openGame('ta')">
+                    <span class="game-thumb"><svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="12"/><circle cx="24" cy="24" r="6"/><circle cx="24" cy="24" r="1.4" fill="currentColor" stroke="none"/><path d="M24 6v6M24 36v6M6 24h6M36 24h6"/></svg></span>
+                    <span class="game-info"><b>Target Acq</b><small>Reflex · Aim</small></span>
+                    <span class="game-go">▶ Play</span>
+                </button>
+                <button type="button" class="game-card" data-game="dc" style="--gc:#34d399" onclick="openGame('dc')">
+                    <span class="game-thumb"><svg viewBox="0 0 48 48"><rect x="12" y="12" width="8" height="8" rx="1.5"/><rect x="28" y="12" width="8" height="8" rx="1.5"/><rect x="12" y="28" width="8" height="8" rx="1.5"/><rect x="28" y="28" width="8" height="8" rx="1.5" fill="currentColor" stroke="none"/></svg></span>
+                    <span class="game-info"><b>Decrypt</b><small>Memory · Puzzle</small></span>
+                    <span class="game-go">▶ Play</span>
+                </button>
+                <div class="game-card game-soon" aria-hidden="true">
+                    <span class="game-thumb"><svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="14"/><path d="M24 17v7l5 3"/></svg></span>
+                    <span class="game-info"><b>More soon</b><small>In development</small></span>
+                </div>
+            </div>
 
-                <article class="card p-6 flex flex-col">
-                    <div class="flex justify-between font-mono text-[10px] mb-4 text-zinc-400"><span>03_BIT_SNAKE [VECTOR]</span><span id="score-sn" class="text-yellow-500">0</span></div>
-                    <div class="game-canvas-container mb-4">
-                        <canvas id="canvas-sn" class="w-full h-full absolute inset-0" aria-label="Snake Game"></canvas>
-                        <div id="ui-sn" class="absolute inset-0 flex items-center justify-center bg-black/80 backdrop-blur-sm"><button type="button" onclick="startSN()" class="bg-zinc-800 text-yellow-400 px-6 py-2 rounded text-xs font-bold hover:bg-yellow-500 hover:text-black transition">PLAY</button></div>
-                    </div>
-                </article>
-
-                <article class="card p-6 flex flex-col">
-                    <div class="flex justify-between font-mono text-[10px] mb-4 text-zinc-400"><span>04_TARGET_ACQ [REFLEX]</span><span id="score-ta" class="text-red-500">0</span></div>
-                    <div class="game-canvas-container mb-4">
-                        <canvas id="canvas-ta" class="w-full h-full absolute inset-0" aria-label="Target Acquisition Game"></canvas>
-                        <div id="ui-ta" class="absolute inset-0 flex items-center justify-center bg-black/80 backdrop-blur-sm"><button type="button" onclick="startTA()" class="bg-zinc-800 text-red-400 px-6 py-2 rounded text-xs font-bold hover:bg-red-500 hover:text-white transition">PLAY</button></div>
-                    </div>
-                </article>
-
-                <article class="card p-6 flex flex-col border-cyan-500 border">
-                    <div class="flex justify-between font-mono text-[10px] mb-4 text-zinc-400"><span>05_SYS_DEFENDER [DEFENSE]</span><span id="score-inv" class="text-cyan-500">0</span></div>
-                    <div class="game-canvas-container mb-4 relative">
-                        <canvas id="canvas-inv" class="w-full h-full absolute inset-0" aria-label="Space Invaders Game"></canvas>
-                        <div id="ui-inv" class="absolute inset-0 flex items-center justify-center bg-black/80 backdrop-blur-sm"><button type="button" onclick="startINV()" class="bg-zinc-800 text-cyan-400 px-6 py-2 rounded text-xs font-bold hover:bg-cyan-500 hover:text-white transition">START</button></div>
-                    </div>
-                    <p class="font-sans text-[10px] text-center text-zinc-500">Hover/Drag to move | Click/Tap to shoot</p>
-                </article>
-
-                <article class="card p-6 flex flex-col lg:col-span-3 md:col-span-2 border-pink-400 border">
-                    <div class="flex justify-between font-mono text-[10px] mb-4 text-zinc-400"><span>06_PURRGRESS [SIM]</span><span class="text-pink-400">CAT TRAINER</span></div>
-                    <div class="game-canvas-container mb-4 relative" style="aspect-ratio:16/10; background:#fff2e0;">
+            <!-- playable blocks live here, hidden, until launched full-screen -->
+            <div id="game-vault" style="display:none">
+                <div class="game-stage" id="stage-fw" data-title="Firewall" data-hint="Click / tap to jump the firewall">
+                    <div class="g-score"><span>01_FIREWALL</span><span id="score-fw">0</span></div>
+                    <div class="game-canvas-container"><canvas id="canvas-fw" class="w-full h-full absolute inset-0" aria-label="Firewall Game"></canvas>
+                        <div id="ui-fw" class="g-ui"><button type="button" onclick="startFW()" class="g-play" style="--gc:#38bdf8">PLAY</button></div></div>
+                </div>
+                <div class="game-stage" id="stage-dc" data-title="Decrypt" data-hint="Repeat the sequence">
+                    <div class="g-score"><span>02_DECRYPT</span><span id="score-dc">LVL: 1</span></div>
+                    <div class="game-canvas-container flex items-center justify-center"><div id="grid-dc" class="decrypt-grid" aria-label="Decrypt Memory Grid"></div>
+                        <div id="ui-dc" class="g-ui"><button type="button" onclick="startDC()" class="g-play" style="--gc:#34d399">PLAY</button></div></div>
+                </div>
+                <div class="game-stage" id="stage-sn" data-title="Bit Snake" data-hint="Arrow keys / swipe">
+                    <div class="g-score"><span>03_BIT_SNAKE</span><span id="score-sn">0</span></div>
+                    <div class="game-canvas-container"><canvas id="canvas-sn" class="w-full h-full absolute inset-0" aria-label="Snake Game"></canvas>
+                        <div id="ui-sn" class="g-ui"><button type="button" onclick="startSN()" class="g-play" style="--gc:#eab308">PLAY</button></div></div>
+                </div>
+                <div class="game-stage" id="stage-ta" data-title="Target Acquisition" data-hint="Click the targets, fast">
+                    <div class="g-score"><span>04_TARGET_ACQ</span><span id="score-ta">0</span></div>
+                    <div class="game-canvas-container"><canvas id="canvas-ta" class="w-full h-full absolute inset-0" aria-label="Target Acquisition Game"></canvas>
+                        <div id="ui-ta" class="g-ui"><button type="button" onclick="startTA()" class="g-play" style="--gc:#f87171">PLAY</button></div></div>
+                </div>
+                <div class="game-stage" id="stage-inv" data-title="Sys Defender" data-hint="Hover / drag to move · click / tap to shoot">
+                    <div class="g-score"><span>05_SYS_DEFENDER</span><span id="score-inv">0</span></div>
+                    <div class="game-canvas-container relative"><canvas id="canvas-inv" class="w-full h-full absolute inset-0" aria-label="Space Invaders Game"></canvas>
+                        <div id="ui-inv" class="g-ui"><button type="button" onclick="startINV()" class="g-play" style="--gc:#22d3ee">START</button></div></div>
+                </div>
+                <div class="game-stage" id="stage-purr" data-title="Purrgress" data-hint="Click the floor to walk · WASD / arrow keys">
+                    <div class="g-score"><span>06_PURRGRESS</span><span>CAT TRAINER</span></div>
+                    <div class="game-canvas-container relative" style="aspect-ratio:16/10; background:#fff2e0;">
                         <iframe id="frame-purr" title="Purrgress - Cat Training Game" class="w-full h-full absolute inset-0" style="border:0; display:none;" loading="lazy" allow="fullscreen" allowfullscreen></iframe>
-                        <button type="button" id="fs-purr" onclick="fsPURR()" class="absolute top-2 right-2 bg-black/60 text-white text-[10px] font-bold px-3 py-1.5 rounded hover:bg-pink-500 transition" style="display:none;" aria-label="Fullscreen">&#x26F6; FULLSCREEN</button>
-                        <div id="ui-purr" class="absolute inset-0 flex items-center justify-center bg-black/80 backdrop-blur-sm"><button type="button" onclick="startPURR()" class="bg-zinc-800 text-pink-400 px-6 py-2 rounded text-xs font-bold hover:bg-pink-500 hover:text-white transition">PLAY</button></div>
-                    </div>
-                    <p class="font-sans text-[10px] text-center text-zinc-500">Train, customise and care for your cats &middot; click the floor to walk (WASD / arrow keys also work)</p>
-                </article>
+                        <button type="button" id="fs-purr" onclick="fsPURR()" class="absolute top-2 right-2 bg-black/60 text-white text-[10px] font-bold px-3 py-1.5 rounded" style="display:none;" aria-label="Fullscreen">&#x26F6; FULLSCREEN</button>
+                        <div id="ui-purr" class="g-ui"><button type="button" onclick="startPURR()" class="g-play" style="--gc:#f472b6">PLAY</button></div></div>
+                </div>
+            </div>
 
+            <!-- full-screen player -->
+            <div id="game-overlay" role="dialog" aria-modal="true" aria-label="Game player">
+                <div class="game-bar">
+                    <span class="game-bar-title font-cyber" id="game-title">Game</span>
+                    <span class="game-bar-hint font-mono" id="game-hint"></span>
+                    <button type="button" class="game-exit" onclick="exitGame()" aria-label="Exit game">Exit ✕</button>
+                </div>
+                <div id="game-screen"></div>
             </div>
         </section>
 
@@ -880,14 +1083,14 @@
         const attackCtx = attackCvs.getContext('2d');
         let attacks = [];
         
-        const regions = [
-            {x: 0.15, y: 0.3},  // North America
-            {x: 0.48, y: 0.25}, // Europe
-            {x: 0.75, y: 0.3},  // Asia
-            {x: 0.3, y: 0.65},  // South America
-            {x: 0.52, y: 0.55}, // Africa
-            {x: 0.85, y: 0.75}  // Australia
+        // Real cities (lon/lat) projected equirectangularly onto the same world map.
+        const cities = [
+            {lon:-74,lat:40.7},{lon:-118,lat:34},{lon:-99,lat:19.4},{lon:-46.6,lat:-23.5},
+            {lon:-0.1,lat:51.5},{lon:2.3,lat:48.9},{lon:13.4,lat:52.5},{lon:37.6,lat:55.7},
+            {lon:3.4,lat:6.5},{lon:28,lat:-26},{lon:55.3,lat:25.2},{lon:72.8,lat:19},
+            {lon:116.4,lat:39.9},{lon:139.7,lat:35.7},{lon:103.8,lat:1.3},{lon:151.2,lat:-33.9}
         ];
+        const proj = (c, w, h) => ({ x: (c.lon + 180) / 360 * w, y: (90 - c.lat) / 180 * h });
         
         function resM() { 
             if(attackCvs) {
@@ -899,22 +1102,30 @@
         setTimeout(resM, 500); 
         
         function drawM() {
-            attackCtx.clearRect(0,0,attackCvs.width, attackCvs.height);
-            if(Math.random() < 0.03 && attackCvs.width > 0) {
-                let s = regions[Math.floor(Math.random()*regions.length)];
-                let e = regions[Math.floor(Math.random()*regions.length)];
-                attacks.push({ x1: s.x*attackCvs.width, y1: s.y*attackCvs.height, x2: e.x*attackCvs.width, y2: e.y*attackCvs.height, l: 1.0 });
+            const W = attackCvs.width, H = attackCvs.height;
+            attackCtx.clearRect(0,0,W,H);
+            if (W > 0) {
+                // static monitored nodes
+                attackCtx.fillStyle = 'rgba(34,211,238,0.5)';
+                cities.forEach(c => { const q = proj(c, W, H); attackCtx.beginPath(); attackCtx.arc(q.x, q.y, 1.6, 0, Math.PI*2); attackCtx.fill(); });
+                if (Math.random() < 0.04) {
+                    const s = proj(cities[Math.floor(Math.random()*cities.length)], W, H);
+                    const e = proj(cities[Math.floor(Math.random()*cities.length)], W, H);
+                    attacks.push({ x1:s.x, y1:s.y, x2:e.x, y2:e.y, l:1.0 });
+                }
             }
             attacks.forEach((a, i) => {
+                const lift = Math.min(60, Math.hypot(a.x2-a.x1, a.y2-a.y1) * 0.28);
                 attackCtx.beginPath(); attackCtx.moveTo(a.x1, a.y1);
-                attackCtx.quadraticCurveTo((a.x1+a.x2)/2, Math.min(a.y1,a.y2)-50, a.x2, a.y2);
-                attackCtx.strokeStyle = `rgba(239, 68, 68, ${a.l})`; // Red lines
-                attackCtx.lineWidth = 1.5; attackCtx.stroke();
-                
-                attackCtx.beginPath(); attackCtx.arc(a.x2, a.y2, (1-a.l)*5, 0, Math.PI*2);
-                attackCtx.fillStyle = `rgba(14, 165, 233, ${a.l})`; // Cyan pings
-                attackCtx.fill();
-                
+                attackCtx.quadraticCurveTo((a.x1+a.x2)/2, Math.min(a.y1,a.y2)-lift, a.x2, a.y2);
+                attackCtx.strokeStyle = `rgba(248, 113, 113, ${a.l*0.9})`;
+                attackCtx.lineWidth = 1.4; attackCtx.stroke();
+
+                attackCtx.beginPath(); attackCtx.arc(a.x1, a.y1, 2.2, 0, Math.PI*2);
+                attackCtx.fillStyle = `rgba(248,113,113,${a.l})`; attackCtx.fill();
+                attackCtx.beginPath(); attackCtx.arc(a.x2, a.y2, (1-a.l)*6, 0, Math.PI*2);
+                attackCtx.strokeStyle = `rgba(34,211,238,${a.l})`; attackCtx.lineWidth = 1; attackCtx.stroke();
+
                 a.l -= 0.008; if(a.l <= 0) attacks.splice(i,1);
             });
             requestAnimationFrame(drawM);
@@ -1069,6 +1280,41 @@
             else if(f.webkitRequestFullscreen) f.webkitRequestFullscreen();
             else if(f.msRequestFullscreen) f.msRequestFullscreen();
         }
+
+        /* ===== FULL-SCREEN GAME PLAYER ===== */
+        function __stopGames(){
+            try{ fwG=false; }catch(e){}
+            try{ snG=false; if(snID) clearInterval(snID); }catch(e){}
+            try{ taG=false; if(taID) clearTimeout(taID); }catch(e){}
+            try{ invG=false; if(invReq) cancelAnimationFrame(invReq); }catch(e){}
+        }
+        function __resetUIs(){
+            ['fw','dc','sn','ta','inv','purr'].forEach(function(k){
+                var u=document.getElementById('ui-'+k); if(u) u.style.display='flex';
+            });
+            var f=document.getElementById('frame-purr'); if(f){ f.src=''; f.style.display='none'; }
+            var fb=document.getElementById('fs-purr'); if(fb) fb.style.display='none';
+        }
+        function openGame(key){
+            var stage=document.getElementById('stage-'+key); if(!stage) return;
+            var ov=document.getElementById('game-overlay'), screen=document.getElementById('game-screen');
+            document.getElementById('game-title').innerText = stage.getAttribute('data-title')||'Game';
+            document.getElementById('game-hint').innerText = stage.getAttribute('data-hint')||'';
+            screen.appendChild(stage);
+            ov.classList.add('on'); document.body.classList.add('game-open');
+        }
+        function exitGame(){
+            __stopGames();
+            if(document.fullscreenElement && document.exitFullscreen) document.exitFullscreen().catch(function(){});
+            var ov=document.getElementById('game-overlay'), vault=document.getElementById('game-vault');
+            // return every stage to the hidden vault and reset its launch button
+            document.querySelectorAll('#game-screen .game-stage').forEach(function(s){ vault.appendChild(s); });
+            __resetUIs();
+            ov.classList.remove('on'); document.body.classList.remove('game-open');
+        }
+        document.addEventListener('keydown', function(e){
+            if(e.key==='Escape' && document.getElementById('game-overlay').classList.contains('on')) exitGame();
+        });
     </script>
 
     <script>
@@ -1085,37 +1331,79 @@
             return;
         }
         var vsrc = 'attribute vec2 p;void main(){gl_Position=vec4(p,0.0,1.0);}';
-        var fsrc = [
-            'precision highp float;',
-            'uniform vec2 u_res;uniform float u_time;uniform vec2 u_mouse;',
-            'float hash(vec2 p){p=fract(p*vec2(123.34,456.21));p+=dot(p,p+45.32);return fract(p.x*p.y);}',
-            'float noise(vec2 p){vec2 i=floor(p),f=fract(p);vec2 u=f*f*(3.0-2.0*f);',
-            ' float a=hash(i),b=hash(i+vec2(1.0,0.0)),c=hash(i+vec2(0.0,1.0)),d=hash(i+vec2(1.0,1.0));',
-            ' return mix(mix(a,b,u.x),mix(c,d,u.x),u.y);}',
-            'float fbm(vec2 p){float v=0.0,a=0.5;for(int i=0;i<6;i++){v+=a*noise(p);p*=2.02;a*=0.5;}return v;}',
-            'void main(){',
-            ' vec2 uv=gl_FragCoord.xy/u_res.xy;',
-            ' vec2 p=(gl_FragCoord.xy-0.5*u_res.xy)/u_res.y;',
-            ' float t=u_time*0.045;',
-            ' vec2 m=(u_mouse-0.5*u_res.xy)/u_res.y;',
-            ' vec2 q=vec2(fbm(p*1.6+vec2(0.0,t)),fbm(p*1.6+vec2(5.2,-t)));',
-            ' vec2 r=vec2(fbm(p*1.6+4.0*q+vec2(1.7,9.2)+t*0.4),fbm(p*1.6+4.0*q+vec2(8.3,2.8)-t*0.3));',
-            ' float f=fbm(p*1.6+4.0*r);',
-            ' float d=length(p-m*0.6);',
-            ' float glow=0.14/(d*d+0.12);',
-            ' vec3 deep=vec3(0.010,0.014,0.034);',
-            ' vec3 cyan=vec3(0.13,0.78,0.92);',
-            ' vec3 viol=vec3(0.42,0.33,1.0);',
-            ' vec3 col=mix(deep,viol,smoothstep(0.1,0.9,f));',
-            ' col=mix(col,cyan,smoothstep(0.55,1.15,f+0.25*r.x));',
-            ' col+=cyan*glow*0.35;',
-            ' col*=0.5+0.5*smoothstep(1.3,0.1,length(p));',          // vignette
-            ' col*=0.82;',                                             // overall dim for text contrast
-            ' col+=hash(uv+t)*0.012;',                                 // dither
-            ' gl_FragColor=vec4(col,1.0);',
-            '}'
-        ].join('\n');
-        function sh(type, src) { var s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); return s; }
+        var fsrc = `precision highp float;
+uniform vec2 u_res;uniform float u_time;uniform vec2 u_mouse;
+uniform vec3 u_colA;uniform vec3 u_colB;uniform int u_mode;
+float hash(vec2 p){p=fract(p*vec2(123.34,456.21));p+=dot(p,p+45.32);return fract(p.x*p.y);}
+float noise(vec2 p){vec2 i=floor(p),f=fract(p);vec2 u=f*f*(3.0-2.0*f);
+ return mix(mix(hash(i),hash(i+vec2(1.0,0.0)),u.x),mix(hash(i+vec2(0.0,1.0)),hash(i+vec2(1.0,1.0)),u.x),u.y);}
+float fbm(vec2 p){float v=0.0,a=0.5;for(int i=0;i<5;i++){v+=a*noise(p);p=p*2.03+vec2(1.7,1.1);a*=0.5;}return v;}
+void main(){
+ vec2 res=u_res; vec2 uv=gl_FragCoord.xy/res;
+ vec2 p=(gl_FragCoord.xy-0.5*res)/res.y;
+ float t=u_time; vec2 m=(u_mouse-0.5*res)/res.y;
+ vec3 deep=vec3(0.009,0.012,0.028); vec3 col=deep;
+ if(u_mode==0){                    // LAVA LAMP — melting metaballs
+   float field=0.0;
+   for(int i=0;i<7;i++){ float fi=float(i);
+     vec2 c=vec2(sin(t*0.13+fi*2.1)*0.78, cos(t*0.11+fi*1.7)*0.52+0.08*sin(t*0.2+fi));
+     float rr=0.17+0.05*sin(t*0.18+fi*1.3); float d2=dot(p-c,p-c); field+=rr*rr/(d2+0.0045); }
+   vec2 dm=p-m*0.85; field+=0.05/(dot(dm,dm)+0.012);
+   col=mix(deep,u_colA,clamp(smoothstep(0.75,2.3,field),0.0,1.0));
+   col=mix(col,u_colB,smoothstep(0.95,2.4,field)*0.85);
+   col+=u_colB*(smoothstep(1.25,1.7,field)-smoothstep(1.7,2.5,field))*0.22;
+ } else if(u_mode==1){             // SMOKE — flowing domain-warp
+   float tt=t*0.04;
+   vec2 q=vec2(fbm(p*1.5+vec2(0.0,tt)),fbm(p*1.5+vec2(5.2,-tt)));
+   vec2 r=vec2(fbm(p*1.5+4.0*q+tt*0.4),fbm(p*1.5+4.0*q+vec2(8.3,2.8)-tt*0.3));
+   float f=fbm(p*1.5+4.0*r);
+   col=mix(deep,u_colA,smoothstep(0.1,0.9,f));
+   col=mix(col,u_colB,smoothstep(0.6,1.15,f+0.25*r.x));
+ } else if(u_mode==2){             // ACRYLIC — marbled pour with veins
+   float tt=t*0.05;
+   vec2 q=vec2(fbm(p*2.0+tt),fbm(p*2.0+vec2(3.0,1.0)-tt));
+   float f=fbm(p*2.2+3.0*q);
+   float veins=abs(sin((f+0.1*q.x)*18.0)); veins=smoothstep(0.85,1.0,1.0-veins);
+   col=mix(deep,u_colA,smoothstep(0.2,0.8,f));
+   col=mix(col,u_colB,smoothstep(0.5,0.9,f));
+   col+=u_colB*veins*0.45;
+ } else if(u_mode==3){             // AURORA — vertical curtains
+   float tt=t*0.15; float cur=0.0;
+   for(int i=0;i<4;i++){ float fi=float(i);
+     float x=p.x*1.2 + sin(p.y*1.5+tt+fi)*0.4 + fi*0.5;
+     float band=exp(-abs(fract(x*0.5)-0.5)*6.0);
+     cur+=band*smoothstep(-0.7,0.4,p.y)*smoothstep(0.95,0.1,p.y)*(0.6+0.4*noise(vec2(x*2.0,p.y*2.0+tt))); }
+   col=deep+mix(u_colA,u_colB,clamp(p.y*0.5+0.5,0.0,1.0))*clamp(cur,0.0,1.3);
+ } else if(u_mode==4){             // BUBBLES — rising orbs
+   vec3 cc=deep;
+   for(int i=0;i<10;i++){ float fi=float(i);
+     float sp=0.05+0.05*hash(vec2(fi,1.0));
+     float bx=(hash(vec2(fi,2.0))-0.5)*1.9+0.06*sin(t*0.3+fi);
+     float by=mod(hash(vec2(fi,3.0))+t*sp,1.8)-0.9;
+     float rr=0.05+0.05*hash(vec2(fi,4.0));
+     float dd=length(p-vec2(bx,by));
+     float disk=smoothstep(rr,rr*0.7,dd);
+     float edge=smoothstep(rr,rr*0.85,dd)-smoothstep(rr*0.85,rr*0.6,dd);
+     cc+=mix(u_colA,u_colB,hash(vec2(fi,5.0)))*(disk*0.33+edge*0.5); }
+   col=cc;
+ } else if(u_mode==5){             // PLASMA — flowing silk
+   float v=sin(p.x*3.0+t*0.4)+sin(p.y*3.5-t*0.3)+sin((p.x+p.y)*2.5+t*0.5);
+   v+=fbm(p*2.0+t*0.05)*2.0; v=0.5+0.5*sin(v*1.5);
+   col=mix(deep,u_colA,v); col=mix(col,u_colB,smoothstep(0.55,1.0,v));
+ } else {                          // CONFETTI — scattered liquid blobs
+   vec3 cc=deep;
+   for(int i=0;i<14;i++){ float fi=float(i);
+     vec2 c=vec2(sin(t*0.2+fi*1.7)*0.9, cos(t*0.17+fi*2.3)*0.6);
+     float dd=length(p-c); float rr=0.09+0.03*sin(t+fi);
+     cc+=mix(u_colA,u_colB,fract(fi*0.37))*smoothstep(rr,rr*0.4,dd)*0.5; }
+   col=cc;
+ }
+ float dg=length(p-m*0.85); col+=u_colA*0.04/(dg*dg+0.08);
+ col*=0.5+0.5*smoothstep(1.5,0.05,length(p));
+ col*=0.92; col+=hash(uv+t*0.01)*0.012;
+ gl_FragColor=vec4(col,1.0);
+}`;
+        function sh(type, src) { var s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) { console.error('[bg shader]', gl.getShaderInfoLog(s)); } return s; }
         var prog = gl.createProgram();
         gl.attachShader(prog, sh(gl.VERTEX_SHADER, vsrc));
         gl.attachShader(prog, sh(gl.FRAGMENT_SHADER, fsrc));
@@ -1126,7 +1414,37 @@
         gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
         var uRes = gl.getUniformLocation(prog, 'u_res'),
             uTime = gl.getUniformLocation(prog, 'u_time'),
-            uMouse = gl.getUniformLocation(prog, 'u_mouse');
+            uMouse = gl.getUniformLocation(prog, 'u_mouse'),
+            uColA = gl.getUniformLocation(prog, 'u_colA'),
+            uColB = gl.getUniformLocation(prog, 'u_colB'),
+            uMode = gl.getUniformLocation(prog, 'u_mode');
+        // Per-page theme: [colA, colB, mode] — each page gets its own colour AND style.
+        // modes: 0 lava · 1 smoke · 2 acrylic · 3 aurora · 4 bubbles · 5 plasma · 6 confetti
+        var PAL = {
+            home:      [[0.13,0.78,0.92],[0.49,0.36,1.00], 0],
+            hardware:  [[0.20,0.52,0.98],[0.13,0.78,0.92], 1],
+            gear:      [[0.60,0.34,0.98],[0.90,0.28,0.92], 2],
+            repair:    [[0.07,0.80,0.50],[0.16,0.84,0.80], 3],
+            gallery:   [[0.98,0.60,0.16],[0.98,0.40,0.55], 4],
+            consulting:[[0.40,0.42,0.97],[0.26,0.74,0.98], 5],
+            files:     [[0.08,0.78,0.66],[0.18,0.82,0.96], 1],
+            games:     [[0.98,0.28,0.62],[0.99,0.72,0.22], 6]
+        };
+        var curA = PAL.home[0].slice(), curB = PAL.home[1].slice();
+        var tgtA = PAL.home[0], tgtB = PAL.home[1], curMode = 0;
+        window.__setBg = function (route) {
+            var pal = PAL[route] || PAL.home; tgtA = pal[0]; tgtB = pal[1];
+            var nm = pal[2];
+            if (nm !== curMode && !reduce) {
+                // quick crossfade when the style itself changes
+                cv.style.transition = 'opacity .28s ease';
+                cv.style.opacity = '0';
+                setTimeout(function () { curMode = nm; curA = tgtA.slice(); curB = tgtB.slice(); cv.style.opacity = '1'; }, 280);
+            } else {
+                curMode = nm;
+                if (reduce) { curA = tgtA.slice(); curB = tgtB.slice(); draw((performance.now()-start)/1000); }
+            }
+        };
         var mouse = [0, 0], dpr = Math.min(window.devicePixelRatio || 1, 1.5);
         function resize() {
             var w = Math.floor(innerWidth * dpr * 0.5), h = Math.floor(innerHeight * dpr * 0.5); // half-res
@@ -1137,13 +1455,19 @@
         window.addEventListener('pointermove', function (e) { mouse = [e.clientX * dpr * 0.5, (innerHeight - e.clientY) * dpr * 0.5]; }, { passive: true });
         var start = performance.now(), raf, visible = true;
         document.addEventListener('visibilitychange', function () { visible = !document.hidden; if (visible) loop(); });
-        function loop() {
-            if (!visible) return;
-            var tnow = (performance.now() - start) / 1000;
+        function draw(tnow) {
+            for (var k = 0; k < 3; k++) { curA[k] += (tgtA[k] - curA[k]) * 0.04; curB[k] += (tgtB[k] - curB[k]) * 0.04; }
             gl.uniform2f(uRes, cv.width, cv.height);
             gl.uniform1f(uTime, reduce ? 6.0 : tnow);
             gl.uniform2f(uMouse, mouse[0], mouse[1]);
+            gl.uniform3f(uColA, curA[0], curA[1], curA[2]);
+            gl.uniform3f(uColB, curB[0], curB[1], curB[2]);
+            gl.uniform1i(uMode, curMode);
             gl.drawArrays(gl.TRIANGLES, 0, 3);
+        }
+        function loop() {
+            if (!visible) return;
+            draw((performance.now() - start) / 1000);
             if (!reduce) raf = requestAnimationFrame(loop);
         }
         loop();
@@ -1207,12 +1531,15 @@
         }, 2600);
     })();
 
-    /* re-scan reveals whenever a tab is shown */
+    /* re-scan reveals + recolour the background whenever a tab is shown */
     (function () {
         var orig = window.showTab;
         if (typeof orig === 'function') {
-            window.showTab = function (id, push) { orig(id, push); setTimeout(scanReveals, 30); };
+            window.showTab = function (id, push) { orig(id, push); setTimeout(scanReveals, 30); if (window.__setBg) window.__setBg(id); };
         }
+        // initial palette from the current route
+        var h = (location.hash || '').replace(/^#\/?/, '');
+        if (window.__setBg) window.__setBg(h || 'home');
     })();
     </script>
 </body>

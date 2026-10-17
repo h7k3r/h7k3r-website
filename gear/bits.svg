@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 230" role="img" aria-label="Precision bit set outline illustration">
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0c1120"/><stop offset="1" stop-color="#06090f"/></linearGradient>
+<radialGradient id="gl" cx="0.5" cy="0.24" r="0.64"><stop offset="0" stop-color="#22d3ee" stop-opacity="0.18"/><stop offset="1" stop-color="#22d3ee" stop-opacity="0"/></radialGradient>
+<linearGradient id="ink" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7defe6"/><stop offset="0.5" stop-color="#22d3ee"/><stop offset="1" stop-color="#8b74ff"/></linearGradient>
+</defs>
+<rect width="400" height="230" fill="url(#bg)"/>
+<g stroke="#5a7bb0" stroke-opacity="0.09" stroke-width="1"><path d="M0 46H400M0 92H400M0 138H400M0 184H400M54 0V230M108 0V230M162 0V230M216 0V230M270 0V230M324 0V230"/></g>
+<rect width="400" height="230" fill="url(#gl)"/>
+<g fill="none" stroke="url(#ink)" stroke-linecap="round" stroke-linejoin="round">
+<path stroke-width="3" d="M150 92 q-6 0 -6 8 l0 14 q0 8 6 8 l34 0 l0 -30 z"/><path stroke-width="1.6" stroke-opacity="0.65" d="M152 100 l0 20"/><path stroke-width="1.6" stroke-opacity="0.65" d="M160 100 l0 20"/><path stroke-width="1.6" stroke-opacity="0.65" d="M168 100 l0 20"/><path stroke-width="3" d="M184 100 l28 0 l0 10 l-28 0 z"/><path stroke-width="3" d="M212 98 l10 7 l-10 7 z"/><path stroke-width="3" d="M236 90 q-4 0 -4 4 l0 44 q0 4 4 4 l34 0 q4 0 4 -4 l0 -44 q0 -4 -4 -4 z"/><path stroke-width="1.6" stroke-opacity="0.65" d="M232 108 l42 0"/><path stroke-width="1.6" stroke-opacity="0.65" d="M232 124 l42 0"/><path stroke-width="3" d="M242 98 l0 6"/><path stroke-width="3" d="M253 98 l-3 6 l6 0 z"/><path stroke-width="3" d="M264 98 l0 6 m-3 -3 l6 0"/></g>
+<text x="16" y="214" fill="#9aa6c4" fill-opacity="0.4" font-family="'JetBrains Mono',monospace" font-size="10" letter-spacing="3">H7K3R</text>
+<text x="384" y="214" text-anchor="end" fill="#22d3ee" fill-opacity="0.5" font-family="'JetBrains Mono',monospace" font-size="10" letter-spacing="2">GEAR</text>
+</svg>

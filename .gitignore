@@ -1,1 +1,7 @@
+# scratch / prototype files
+_*.html
+# unused legacy assets
+h7k-logo-*.png
+# python
 __pycache__/
+*.pyc
