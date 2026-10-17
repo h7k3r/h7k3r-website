@@ -35,9 +35,13 @@
                 linear-gradient(rgba(120,160,220,0.05) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(120,160,220,0.05) 1px, transparent 1px);
             background-size: 54px 54px;
-            mask-image: radial-gradient(ellipse 120% 90% at 50% 0%, #000 35%, transparent 80%);
-            -webkit-mask-image: radial-gradient(ellipse 120% 90% at 50% 0%, #000 35%, transparent 80%);
+            /* only a soft circle of grid around the pointer, so it never sits over the picture like a screen */
+            mask-image: radial-gradient(260px circle at var(--mx) var(--my), rgba(0,0,0,.9), transparent 70%);
+            -webkit-mask-image: radial-gradient(260px circle at var(--mx) var(--my), rgba(0,0,0,.9), transparent 70%);
+            opacity: 0; transition: opacity .6s ease;
         }
+        body.pointer-live #bg-grid { opacity: 1; }
+        @media (hover: none) { #bg-grid { display: none; } }
         /* cursor spotlight that follows the pointer across the whole page */
         body::before {
             content: ''; position: fixed; inset: 0; z-index: -1; pointer-events: none;
@@ -68,19 +72,93 @@
         .font-cyber { font-family: 'Orbitron', sans-serif; }
         .font-mono { font-family: 'JetBrains Mono', monospace; }
         
-        /* MODERNIZED NAVIGATION */
+        /* NAVIGATION: numbered rail with one light that glides to the active tab (desktop),
+           and a full-screen command menu on phones and tablets */
+        .main-nav { position: relative; display: flex; align-items: center; gap: 2px; counter-reset: navc; padding: 4px; border-radius: 14px;
+            background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01)); border: 1px solid rgba(120,140,190,.12); }
         .nav-btn {
-            color: var(--muted); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
-            padding: 9px 16px; border-radius: 9999px; transition: all 0.3s cubic-bezier(.2,.8,.2,1); cursor: pointer; white-space: nowrap; border: 1px solid transparent; position: relative;
-            -webkit-tap-highlight-color: transparent; outline: none; background-clip: padding-box;
+            position: relative; z-index: 1; display: inline-flex; align-items: baseline; gap: 6px;
+            color: var(--muted); font-size: 0.7rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+            padding: 10px 13px 11px; border-radius: 10px; cursor: pointer; white-space: nowrap; border: 0; background: none;
+            transition: color .25s ease; -webkit-tap-highlight-color: transparent; outline: none;
         }
-        .nav-btn:hover { color: #fff; background-color: rgba(34, 211, 238, 0.08); }
-        .nav-btn.active { color: #fff; background-color: rgba(34, 211, 238, 0.12); border-color: rgba(34,211,238,0.5); box-shadow: 0 0 14px 1px rgba(34,211,238,0.35), inset 0 0 10px rgba(34,211,238,0.10); }
+        .nav-btn[id^="btn-"]::before { counter-increment: navc; content: counter(navc, decimal-leading-zero);
+            font-family: 'JetBrains Mono', monospace; font-size: .58rem; letter-spacing: 0; color: rgba(34,211,238,.45); transition: color .25s; }
+        .nav-btn:hover { color: #fff; }
+        .nav-btn:hover::before, .nav-btn.active::before { color: var(--cyan); }
+        .nav-btn.active { color: #fff; }
         .nav-btn:focus-visible { box-shadow: 0 0 0 2px rgba(34,211,238,0.9); }
-        /* give the glow room inside the scrolling nav so it isn't clipped into a square */
-        .main-nav { padding: 14px 14px; margin: -14px -14px; }
-        @media (min-width: 1024px) { .main-nav { overflow: visible; } }
+        #btn-games { color: #fbbf24; }
+        #btn-games::before { color: rgba(251,191,36,.5); }
+        #btn-games.active, #btn-games:hover { color: #fde68a; }
+        #btn-games.active::before { color: #fbbf24; }
+        #lang-switch { font-family: 'JetBrains Mono', monospace; letter-spacing: .08em; margin-left: 6px; padding: 7px 10px; color: #fff; border: 1px solid #3f3f46 !important; }
+        .nav-ink { position: absolute; z-index: 0; top: 4px; bottom: 4px; left: 0; width: 0; border-radius: 10px; pointer-events: none;
+            background: linear-gradient(180deg, rgba(34,211,238,.16), rgba(34,211,238,.05)); box-shadow: inset 0 0 0 1px rgba(34,211,238,.35), 0 0 22px -4px rgba(34,211,238,.55);
+            transition: transform .5s cubic-bezier(.22,1,.36,1), width .5s cubic-bezier(.22,1,.36,1), background .3s, box-shadow .3s; opacity: 0; }
+        .nav-ink::after { content: ''; position: absolute; left: 18%; right: 18%; bottom: -1px; height: 2px; border-radius: 2px; background: var(--cyan); box-shadow: 0 0 10px var(--cyan); }
+        .nav-ink.ready { opacity: 1; }
+        .nav-ink.amber { background: linear-gradient(180deg, rgba(251,191,36,.16), rgba(251,191,36,.04)); box-shadow: inset 0 0 0 1px rgba(251,191,36,.4), 0 0 22px -4px rgba(251,191,36,.55); }
+        .nav-ink.amber::after { background: #fbbf24; box-shadow: 0 0 10px #fbbf24; }
 
+        .menu-btn { display: none; }
+        @media (max-width: 1023px) {
+            .main-nav { display: none; }
+            .menu-btn { display: inline-flex; align-items: center; gap: 10px; padding: 9px 12px 9px 14px; border-radius: 12px; cursor: pointer;
+                font-family: 'JetBrains Mono', monospace; font-size: .7rem; letter-spacing: .18em; color: #e4e4e7; text-transform: uppercase;
+                background: rgba(34,211,238,.06); border: 1px solid rgba(34,211,238,.3); -webkit-tap-highlight-color: transparent; }
+            .menu-btn .bars { position: relative; width: 18px; height: 12px; }
+            .menu-btn .bars i { position: absolute; left: 0; right: 0; height: 2px; border-radius: 2px; background: var(--cyan); transition: transform .35s cubic-bezier(.22,1,.36,1), opacity .2s, top .35s; }
+            .menu-btn .bars i:nth-child(1) { top: 0; } .menu-btn .bars i:nth-child(2) { top: 5px; right: 5px; } .menu-btn .bars i:nth-child(3) { top: 10px; }
+            body.cmd-open .menu-btn .bars i:nth-child(1) { top: 5px; transform: rotate(45deg); }
+            body.cmd-open .menu-btn .bars i:nth-child(2) { opacity: 0; }
+            body.cmd-open .menu-btn .bars i:nth-child(3) { top: 5px; transform: rotate(-45deg); }
+        }
+        .cmd { position: fixed; inset: 0; z-index: 140; display: flex; flex-direction: column; padding: calc(80px + env(safe-area-inset-top)) 22px calc(24px + env(safe-area-inset-bottom));
+            background: radial-gradient(120% 70% at 100% 0%, rgba(34,211,238,.10), transparent 60%), rgba(4,6,12,.94); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+            clip-path: circle(0px at calc(100% - 50px) 34px); transition: clip-path .6s cubic-bezier(.7,0,.2,1); visibility: hidden; overflow-y: auto; }
+        body.cmd-open .cmd { clip-path: circle(150% at calc(100% - 50px) 34px); visibility: visible; }
+        body.cmd-open { overflow: hidden; }
+        .cmd-head { font-family: 'JetBrains Mono', monospace; font-size: .74rem; letter-spacing: .06em; color: rgba(34,211,238,.75); margin-bottom: 14px; }
+        .cmd-item:focus { outline: none; }
+        .cmd-item:focus-visible { outline: none; box-shadow: 0 0 0 2px rgba(34,211,238,.85); }
+        .cmd-head b { color: #fff; font-weight: 400; }
+        .cmd-head .caret { display: inline-block; width: 7px; height: 12px; background: var(--cyan); vertical-align: -1px; margin-left: 4px; animation: caret 1s steps(1) infinite; }
+        @keyframes caret { 50% { opacity: 0; } }
+        .cmd-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr; gap: 2px; }
+        @media (min-width: 640px) { .cmd-list { grid-template-columns: 1fr 1fr; gap: 8px 18px; } }
+        .cmd-item { display: grid; grid-template-columns: 34px 1fr auto; align-items: center; gap: 12px; width: 100%; text-align: left; padding: 13px 12px; border-radius: 14px;
+            color: #e4e4e7; background: none; border: 1px solid transparent; cursor: pointer; -webkit-tap-highlight-color: transparent;
+            opacity: 0; transform: translateX(26px); transition: opacity .45s ease, transform .55s cubic-bezier(.22,1,.36,1), background .2s, border-color .2s; }
+        body.cmd-open .cmd-item { opacity: 1; transform: none; transition-delay: calc(var(--i) * 45ms + 180ms), calc(var(--i) * 45ms + 180ms), 0s, 0s; }
+        .cmd-item .n { font-family: 'JetBrains Mono', monospace; font-size: .72rem; color: rgba(34,211,238,.6); }
+        .cmd-item .t { display: flex; flex-direction: column; gap: 3px; }
+        .cmd-item .t b { font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 1.15rem; letter-spacing: .08em; text-transform: uppercase; }
+        .cmd-item .t small { font-size: .78rem; color: #8b93ad; }
+        .cmd-item .go { color: #52525b; font-size: 1.1rem; transition: transform .2s, color .2s; }
+        .cmd-item:active, .cmd-item:hover { background: rgba(34,211,238,.06); border-color: rgba(34,211,238,.2); }
+        .cmd-item.on { background: rgba(34,211,238,.09); border-color: rgba(34,211,238,.45); box-shadow: 0 0 24px -8px rgba(34,211,238,.6); }
+        .cmd-item.on .n, .cmd-item.on .go { color: var(--cyan); }
+        .cmd-item.amber .t b { color: #fbbf24; } .cmd-item.amber .n { color: rgba(251,191,36,.7); }
+        .cmd-item.amber.on { background: rgba(251,191,36,.08); border-color: rgba(251,191,36,.45); box-shadow: 0 0 24px -8px rgba(251,191,36,.6); }
+        .cmd-foot { margin-top: auto; padding-top: 22px; display: flex; justify-content: space-between; align-items: center; gap: 12px; font-family: 'JetBrains Mono', monospace; font-size: .68rem; color: #71717a; letter-spacing: .08em; }
+        .cmd-foot a { color: #fff; text-decoration: none; border: 1px solid #3f3f46; border-radius: 10px; padding: 9px 14px; letter-spacing: .14em; }
+        @media (min-width: 1024px) { .cmd { display: none; } }
+        @media (prefers-reduced-motion: reduce) { .cmd, .cmd-item, .nav-ink { transition: none !important; } }
+
+        /* product pictures (local FLUX renders, labelled as illustrations) */
+        .prod-media { position: relative; aspect-ratio: 5 / 3; overflow: hidden; background: #070912; border-bottom: 1px solid rgba(120,140,190,.14); }
+        .prod-media img { display: block; width: 100%; height: 100%; object-fit: cover; transform: scale(1.02); transition: transform .8s cubic-bezier(.22,1,.36,1), filter .5s; }
+        .card:hover .prod-media img { transform: scale(1.08); filter: brightness(1.08); }
+        .prod-media::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 55%, rgba(10,12,20,.55)); pointer-events: none; }
+        .prod-tag { position: absolute; z-index: 1; right: 8px; bottom: 7px; font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: .12em; text-transform: uppercase; color: rgba(228,228,231,.55); }
+        @media (max-width: 639px) {
+            .gear-grid .card .p-5 { padding: 12px 10px 12px; }
+            .gear-grid .card h4 { font-size: 13.5px; line-height: 1.25; }
+            .gear-grid .card p { font-size: 11px; line-height: 1.4; margin-bottom: 10px; }
+            .gear-grid .card .font-mono { margin-bottom: 10px; }
+            .gear-grid .card button { padding: 9px 0; font-size: 11px; }
+        }
         .tab-content { display: none; }
         .tab-content.active { display: block; animation: tabIn 0.6s cubic-bezier(.2,.8,.2,1) forwards; }
         @keyframes tabIn { from { opacity: 0; transform: translateY(18px) scale(.985); filter: blur(8px); } to { opacity: 1; transform: none; filter: blur(0); } }
@@ -405,7 +483,7 @@
     </div>
 
     <header class="fixed top-0 w-full z-[150] border-b border-zinc-800 bg-black/80 backdrop-blur-lg">
-        <div class="max-w-7xl mx-auto px-4 py-5 flex flex-col lg:flex-row justify-between items-center gap-4">
+        <div class="max-w-7xl mx-auto px-4 py-3 lg:py-5 flex flex-row justify-between items-center gap-4">
             <div class="font-cyber cursor-pointer flex items-center gap-2 select-none wordmark" onclick="location.reload()" aria-label="Reload Home">
                 <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" style="flex:none">
                     <defs><linearGradient id="navbolt" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7defe6"/><stop offset="1" stop-color="#8b74ff"/></linearGradient></defs>
@@ -413,21 +491,28 @@
                 </svg>
                 <span class="text-xl font-bold tracking-[0.18em] grad">H7K3R</span><span class="text-xl font-light tracking-[0.18em] text-zinc-400">SYSTEMS</span>
             </div>
-            <nav class="main-nav flex overflow-x-auto no-scrollbar gap-2 w-full lg:w-auto justify-start lg:justify-end" aria-label="Main Navigation">
-                <button type="button" onclick="showTab('home')" class="nav-btn active" id="btn-home">Home</button>
-                <button type="button" onclick="showTab('hardware')" class="nav-btn" id="btn-hardware">Hardware</button>
-                <button type="button" onclick="showTab('gear')" class="nav-btn" id="btn-gear">Gear</button>
-                <button type="button" onclick="showTab('repair')" class="nav-btn" id="btn-repair">Repair</button>
-                <button type="button" onclick="showTab('gallery')" class="nav-btn" id="btn-gallery">Gallery</button>
-                <button type="button" onclick="showTab('consulting')" class="nav-btn" id="btn-consulting">Consulting</button>
-                <button type="button" onclick="showTab('files')" class="nav-btn" id="btn-files">Files</button>
-                <button type="button" onclick="showTab('games')" class="nav-btn" style="color: #fbbf24;" id="btn-games">Games</button>
+            <button type="button" class="menu-btn" id="menu-btn" aria-expanded="false" aria-controls="cmd-menu"><span class="bars" aria-hidden="true"><i></i><i></i><i></i></span><span class="menu-lbl">Menu</span></button>
+            <nav class="main-nav" aria-label="Main Navigation">
+                <span class="nav-ink" aria-hidden="true"></span>
+                <button type="button" onclick="showTab('home')" class="nav-btn active" data-sub="Start here" id="btn-home">Home</button>
+                <button type="button" onclick="showTab('hardware')" class="nav-btn" data-sub="Custom PC builds" id="btn-hardware">Hardware</button>
+                <button type="button" onclick="showTab('gear')" class="nav-btn" data-sub="Privacy gear" id="btn-gear">Gear</button>
+                <button type="button" onclick="showTab('repair')" class="nav-btn" data-sub="Phones, consoles, data" id="btn-repair">Repair</button>
+                <button type="button" onclick="showTab('gallery')" class="nav-btn" data-sub="Builds and repairs" id="btn-gallery">Gallery</button>
+                <button type="button" onclick="showTab('consulting')" class="nav-btn" data-sub="Expert advice" id="btn-consulting">Consulting</button>
+                <button type="button" onclick="showTab('files')" class="nav-btn" data-sub="OS and firmware archive" id="btn-files">Files</button>
+                <button type="button" onclick="showTab('games')" class="nav-btn" data-sub="Play in your browser" style="color: #fbbf24;" id="btn-games">Games</button>
             <a href="/fr/" class="nav-btn" id="lang-switch" data-lang="fr" aria-label="Version française" style="border-color:#3f3f46;color:#fff">FR</a>
             </nav>
         </div>
     </header>
+    <div class="cmd" id="cmd-menu" role="dialog" aria-modal="true" aria-label="Site menu">
+        <div class="cmd-head">h7k3r@systems:~$ <b class="cmd-cmd">ls ./sections</b><span class="caret"></span></div>
+        <ul class="cmd-list"></ul>
+        <div class="cmd-foot"><span class="cmd-sig">H7K3R SYSTEMS · CROYDON</span></div>
+    </div>
 
-    <main class="flex-grow pt-40 lg:pt-32 pb-20">
+    <main class="flex-grow pt-24 lg:pt-32 pb-20">
 
         <section id="tab-home" class="tab-content active" aria-label="Home Section">
             <div class="hero" id="hero">
@@ -619,7 +704,7 @@
                 </div>
                 <div class="grid lg:grid-cols-3 md:grid-cols-2 gap-6">
                     <article class="card">
-                        <div class="img-header" style="background-image: url('gear/usb-tester.svg');" aria-label="USB surge tester"></div>
+                        <div class="prod-media"><img src="gear/p/usb-tester-800.webp" srcset="gear/p/usb-tester-480.webp 480w, gear/p/usb-tester-800.webp 800w, gear/p/usb-tester-1280.webp 1280w" sizes="(min-width:1024px) 30vw, (min-width:768px) 48vw, 92vw" width="1280" height="768" alt="USB surge tester" loading="lazy" decoding="async"><span class="prod-tag">Illustration</span></div>
                         <div class="p-6 flex flex-col flex-grow">
                             <h4 class="font-cyber text-lg text-white mb-1">USB Surge Tester</h4>
                             <p class="font-sans text-xs text-zinc-400 mb-6 leading-relaxed">Bench tool for validating USB-port surge and over-voltage protection on hardware you own or are authorised to assess.</p>
@@ -627,7 +712,7 @@
                         </div>
                     </article>
                     <article class="card">
-                        <div class="img-header" style="background-image: url('gear/cable.svg');" aria-label="Assessment cable"></div>
+                        <div class="prod-media"><img src="gear/p/cable-800.webp" srcset="gear/p/cable-480.webp 480w, gear/p/cable-800.webp 800w, gear/p/cable-1280.webp 1280w" sizes="(min-width:1024px) 30vw, (min-width:768px) 48vw, 92vw" width="1280" height="768" alt="Assessment cable" loading="lazy" decoding="async"><span class="prod-tag">Illustration</span></div>
                         <div class="p-6 flex flex-col flex-grow">
                             <h4 class="font-cyber text-lg text-white mb-1">Red-Team Assessment Cable</h4>
                             <p class="font-sans text-xs text-zinc-400 mb-6 leading-relaxed">Instrumented test cable for authorised physical-security and phishing-resilience assessments carried out under a signed engagement.</p>
@@ -652,9 +737,9 @@
                 </p>
             </div>
             
-            <div class="grid lg:grid-cols-4 md:grid-cols-2 gap-6">
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 gear-grid">
                 <article class="card">
-                    <div class="h-40 w-full bg-zinc-900 bg-cover bg-center border-b border-zinc-800" style="background-image: url('gear/pouch.svg');" aria-label="Faraday Pouch"></div>
+                    <div class="prod-media"><img src="gear/p/pouch-800.webp" srcset="gear/p/pouch-480.webp 480w, gear/p/pouch-800.webp 800w, gear/p/pouch-1280.webp 1280w" sizes="(min-width:1024px) 22vw, 48vw" width="1280" height="768" alt="Faraday Pouch" loading="lazy" decoding="async"><span class="prod-tag">Illustration</span></div>
                     <div class="p-5 flex flex-col flex-grow text-center">
                         <h4 class="font-bold text-white mb-1">Faraday Pouch</h4>
                         <p class="font-sans text-xs text-zinc-400 mb-4">Stop phone tracking & keyless car theft.</p>
@@ -663,7 +748,7 @@
                     </div>
                 </article>
                 <article class="card">
-                    <div class="h-40 w-full bg-zinc-900 bg-cover bg-center border-b border-zinc-800" style="background-image: url('gear/usb-blocker.svg');" aria-label="USB Blocker"></div>
+                    <div class="prod-media"><img src="gear/p/usb-blocker-800.webp" srcset="gear/p/usb-blocker-480.webp 480w, gear/p/usb-blocker-800.webp 800w, gear/p/usb-blocker-1280.webp 1280w" sizes="(min-width:1024px) 22vw, 48vw" width="1280" height="768" alt="USB Blocker" loading="lazy" decoding="async"><span class="prod-tag">Illustration</span></div>
                     <div class="p-5 flex flex-col flex-grow text-center">
                         <h4 class="font-bold text-white mb-1">USB Data Blocker</h4>
                         <p class="font-sans text-xs text-zinc-400 mb-4">Safe public charging. Blocks data pins.</p>
@@ -672,7 +757,7 @@
                     </div>
                 </article>
                 <article class="card">
-                    <div class="h-40 w-full bg-zinc-900 bg-cover bg-center border-b border-zinc-800" style="background-image: url('gear/sleeve.svg');" aria-label="Laptop Sleeve"></div>
+                    <div class="prod-media"><img src="gear/p/sleeve-800.webp" srcset="gear/p/sleeve-480.webp 480w, gear/p/sleeve-800.webp 800w, gear/p/sleeve-1280.webp 1280w" sizes="(min-width:1024px) 22vw, 48vw" width="1280" height="768" alt="Laptop Sleeve" loading="lazy" decoding="async"><span class="prod-tag">Illustration</span></div>
                     <div class="p-5 flex flex-col flex-grow text-center">
                         <h4 class="font-bold text-white mb-1">Faraday Sleeve</h4>
                         <p class="font-sans text-xs text-zinc-400 mb-4">Complete offline laptop isolation.</p>
@@ -681,7 +766,7 @@
                     </div>
                 </article>
                 <article class="card">
-                    <div class="h-40 w-full bg-zinc-900 bg-cover bg-center border-b border-zinc-800" style="background-image: url('gear/hat.svg');" aria-label="Faraday Hat"></div>
+                    <div class="prod-media"><img src="gear/p/hat-800.webp" srcset="gear/p/hat-480.webp 480w, gear/p/hat-800.webp 800w, gear/p/hat-1280.webp 1280w" sizes="(min-width:1024px) 22vw, 48vw" width="1280" height="768" alt="Faraday Hat" loading="lazy" decoding="async"><span class="prod-tag">Illustration</span></div>
                     <div class="p-5 flex flex-col flex-grow text-center">
                         <h4 class="font-bold text-white mb-1">Signal-Proof Hat</h4>
                         <p class="font-sans text-xs text-zinc-400 mb-4">Silver-lined EMF protection.</p>
@@ -690,7 +775,7 @@
                     </div>
                 </article>
                 <article class="card">
-                    <div class="h-40 w-full bg-zinc-900 bg-cover bg-center border-b border-zinc-800" style="background-image: url('gear/backpack.svg');" aria-label="Stealth Backpack"></div>
+                    <div class="prod-media"><img src="gear/p/backpack-800.webp" srcset="gear/p/backpack-480.webp 480w, gear/p/backpack-800.webp 800w, gear/p/backpack-1280.webp 1280w" sizes="(min-width:1024px) 22vw, 48vw" width="1280" height="768" alt="Stealth Backpack" loading="lazy" decoding="async"><span class="prod-tag">Illustration</span></div>
                     <div class="p-5 flex flex-col flex-grow text-center">
                         <h4 class="font-bold text-white mb-1">Stealth Backpack</h4>
                         <p class="font-sans text-xs text-zinc-400 mb-4">Built-in Faraday compartments.</p>
@@ -699,7 +784,7 @@
                     </div>
                 </article>
                 <article class="card border-t-2 border-t-sky-500">
-                    <div class="h-40 w-full bg-zinc-900 bg-cover bg-center border-b border-zinc-800" style="background-image: url('gear/parka.svg');" aria-label="Faraday Parka"></div>
+                    <div class="prod-media"><img src="gear/p/parka-800.webp" srcset="gear/p/parka-480.webp 480w, gear/p/parka-800.webp 800w, gear/p/parka-1280.webp 1280w" sizes="(min-width:1024px) 22vw, 48vw" width="1280" height="768" alt="Faraday Parka" loading="lazy" decoding="async"><span class="prod-tag">Illustration</span></div>
                     <div class="p-5 flex flex-col flex-grow text-center">
                         <h4 class="font-bold text-white mb-1">Faraday Parka</h4>
                         <p class="font-sans text-xs text-zinc-400 mb-4">Full-Body EMF Shielding jacket.</p>
@@ -708,7 +793,7 @@
                     </div>
                 </article>
                 <article class="card">
-                    <div class="h-40 w-full bg-zinc-900 bg-cover bg-center border-b border-zinc-800" style="background-image: url('gear/hoodie.svg');" aria-label="Operator Hoodie"></div>
+                    <div class="prod-media"><img src="gear/p/hoodie-800.webp" srcset="gear/p/hoodie-480.webp 480w, gear/p/hoodie-800.webp 800w, gear/p/hoodie-1280.webp 1280w" sizes="(min-width:1024px) 22vw, 48vw" width="1280" height="768" alt="Operator Hoodie" loading="lazy" decoding="async"><span class="prod-tag">Illustration</span></div>
                     <div class="p-5 flex flex-col flex-grow text-center">
                         <h4 class="font-bold text-white mb-1">Operator Hoodie</h4>
                         <p class="font-sans text-xs text-zinc-400 mb-4">Heavyweight Tactical Cotton.</p>
@@ -717,7 +802,7 @@
                     </div>
                 </article>
                 <article class="card">
-                    <div class="h-40 w-full bg-zinc-900 bg-cover bg-center border-b border-zinc-800" style="background-image: url('gear/bits.svg');" aria-label="Precision Bits"></div>
+                    <div class="prod-media"><img src="gear/p/bits-800.webp" srcset="gear/p/bits-480.webp 480w, gear/p/bits-800.webp 800w, gear/p/bits-1280.webp 1280w" sizes="(min-width:1024px) 22vw, 48vw" width="1280" height="768" alt="Precision Bits" loading="lazy" decoding="async"><span class="prod-tag">Illustration</span></div>
                     <div class="p-5 flex flex-col flex-grow text-center">
                         <h4 class="font-bold text-white mb-1">Precision Bit Set</h4>
                         <p class="font-sans text-xs text-zinc-400 mb-4">S2 Steel Device Teardown Kit.</p>
@@ -1119,23 +1204,14 @@
         // --- HISTORY API NAV (Fixes "Back" Button) ---
         function showTab(id, pushState = true) {
             document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.nav-btn').forEach(b => {
-                b.classList.remove('active');
-                b.style.color = ''; // Reset inline colors
-                b.style.borderColor = '';
-            });
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
             
             const targetTab = document.getElementById('tab-' + id);
             const targetBtn = document.getElementById('btn-' + id);
             
             if(targetTab) targetTab.classList.add('active');
-            if(targetBtn) {
-                targetBtn.classList.add('active');
-                if(id === 'games') {
-                    targetBtn.style.color = '#fbbf24';
-                    targetBtn.style.borderColor = '#fbbf24';
-                }
-            }
+            if(targetBtn) targetBtn.classList.add('active');
+            if(window.__navSync) window.__navSync(id);
             
             window.scrollTo(0,0);
             
@@ -1749,6 +1825,52 @@ void main(){
             if (!state.open) document.getElementById('about').scrollIntoView({ behavior: 'smooth', block: 'start' });
         });
         render();
+    })();
+    </script>
+
+    <script>
+    /* ===== NAV: gliding light on desktop, command menu on phones/tablets ===== */
+    (function(){
+        var nav = document.querySelector('.main-nav'), ink = nav && nav.querySelector('.nav-ink');
+        var btns = [].slice.call(document.querySelectorAll('.main-nav .nav-btn[id^="btn-"]'));
+        function place(){
+            var a = nav && nav.querySelector('.nav-btn.active');
+            if(!ink || !a || !a.offsetWidth) return;
+            ink.style.width = a.offsetWidth + 'px';
+            ink.style.transform = 'translateX(' + a.offsetLeft + 'px)';
+            ink.classList.toggle('amber', a.id === 'btn-games');
+            ink.classList.add('ready');
+        }
+        // command menu, built from the same buttons so labels/translations stay in one place
+        var list = document.querySelector('.cmd-list'), menuBtn = document.getElementById('menu-btn'), cmd = document.getElementById('cmd-menu');
+        btns.forEach(function(b, i){
+            var id = b.id.slice(4), li = document.createElement('li'), it = document.createElement('button');
+            it.type = 'button'; it.className = 'cmd-item' + (id === 'games' ? ' amber' : ''); it.style.setProperty('--i', i); it.dataset.tab = id;
+            it.innerHTML = '<span class="n">' + String(i + 1).padStart(2, '0') + '</span><span class="t"><b></b><small></small></span><span class="go" aria-hidden="true">→</span>';
+            it.querySelector('b').textContent = b.textContent.trim();
+            it.querySelector('small').textContent = b.getAttribute('data-sub') || '';
+            it.addEventListener('click', function(){ close(); showTab(id); });
+            li.appendChild(it); list.appendChild(li);
+        });
+        var ls = document.getElementById('lang-switch');
+        if(ls){ var a = document.createElement('a'); a.href = ls.getAttribute('href'); a.textContent = ls.textContent.trim();
+            a.setAttribute('data-lang', ls.getAttribute('data-lang')); a.setAttribute('aria-label', ls.getAttribute('aria-label') || '');
+            document.querySelector('.cmd-foot').appendChild(a); }
+        function open(){ document.body.classList.add('cmd-open'); menuBtn.setAttribute('aria-expanded', 'true'); var on = cmd.querySelector('.cmd-item.on') || cmd.querySelector('.cmd-item'); setTimeout(function(){ on && on.focus({preventScroll:true}); }, 350); }
+        function close(){ document.body.classList.remove('cmd-open'); menuBtn.setAttribute('aria-expanded', 'false'); }
+        menuBtn && menuBtn.addEventListener('click', function(){ document.body.classList.contains('cmd-open') ? close() : open(); });
+        document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && document.body.classList.contains('cmd-open')) close(); });
+        window.__navSync = function(id){
+            [].forEach.call(document.querySelectorAll('.cmd-item'), function(it){ it.classList.toggle('on', it.dataset.tab === id); });
+            place();
+        };
+        var cur = document.querySelector('.main-nav .nav-btn.active');
+        window.__navSync(cur ? cur.id.slice(4) : 'home');
+        addEventListener('resize', place);
+        if(document.fonts && document.fonts.ready) document.fonts.ready.then(place);
+        setTimeout(place, 400);
+        // the background grid only lights up once a real pointer moves
+        addEventListener('pointermove', function(e){ if(e.pointerType === 'mouse') document.body.classList.add('pointer-live'); }, {passive:true});
     })();
     </script>
 </body>
