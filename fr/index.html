@@ -177,6 +177,58 @@
         .os-group .os-tag { font-family:'JetBrains Mono',monospace; font-size:10px; color:#71717a; letter-spacing:.1em; }
         .os-group::after { content:""; flex:1; height:1px; background:linear-gradient(90deg, rgba(34,211,238,0.35), transparent); }
 
+        /* ABOUT + REVIEWS */
+        .about-grid { display:grid; gap: 48px; align-items:center; margin-bottom: 56px; }
+        @media (min-width:1024px){ .about-grid { grid-template-columns: 1.05fr 1fr; gap: 64px; } }
+        .about-eyebrow { display:inline-flex; align-items:center; gap:10px; margin-bottom:18px; font-family:'JetBrains Mono',monospace; font-size:.68rem; letter-spacing:.26em; text-transform:uppercase; color: var(--muted); }
+        .about-eyebrow .dot { width:7px; height:7px; border-radius:50%; background:#22d3ee; box-shadow:0 0 10px #22d3ee; }
+        .proof-grid { display:grid; gap:14px; grid-template-columns: 1fr; }
+        @media (min-width:640px){ .proof-grid { grid-template-columns: 1fr 1fr; } .proof-grid .proof-link { grid-column: 1 / -1; } }
+        .proof-tile { position:relative; display:block; padding: 22px 22px 20px; border-radius:16px; background: var(--card-bg); border:1px solid var(--line);
+            backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); overflow:hidden; transition: transform .35s cubic-bezier(.2,.8,.2,1), border-color .35s; }
+        .proof-tile::before { content:""; position:absolute; inset:0; background: radial-gradient(120% 90% at 0% 0%, rgba(34,211,238,.10), transparent 55%); pointer-events:none; }
+        .proof-num { display:block; font-family:'Orbitron',sans-serif; font-size: clamp(2.2rem, 5vw, 3rem); line-height:1; margin-bottom:12px;
+            background: linear-gradient(120deg,#7defe6,#22d3ee 45%,#8b74ff); -webkit-background-clip:text; background-clip:text; color:transparent; }
+        .proof-tile p { color:#d4d8e8; font-size:.92rem; line-height:1.5; position:relative; }
+        .proof-link, .proof-link:hover, .rev-foot a, .proof-banner { text-decoration:none; }
+        .proof-link:hover { transform: translateY(-4px); border-color: rgba(34,211,238,.45); }
+        .proof-cta { display:inline-block; margin-top:10px; font-family:'JetBrains Mono',monospace; font-size:.68rem; letter-spacing:.14em; text-transform:uppercase; color:#22d3ee; }
+        .rev-head { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:16px; margin: 8px 0 20px; }
+        .rev-filters { display:flex; flex-wrap:wrap; gap:8px; }
+        .rev-chip { font-family:'JetBrains Mono',monospace; font-size:.7rem; letter-spacing:.1em; text-transform:uppercase; color: var(--muted);
+            padding: 7px 14px; border-radius:999px; border:1px solid var(--line); background: rgba(10,14,26,.5); cursor:pointer; transition:.2s; }
+        .rev-chip:hover { color:#fff; border-color: rgba(34,211,238,.4); }
+        .rev-chip[aria-pressed="true"] { color:#07090d; background:#22d3ee; border-color:#22d3ee; }
+        .rev-grid { display:grid; gap:14px; grid-template-columns: 1fr; }
+        @media (min-width:700px){ .rev-grid { grid-template-columns: 1fr 1fr; } }
+        @media (min-width:1100px){ .rev-grid { grid-template-columns: 1fr 1fr 1fr; } }
+        .rev-card { display:flex; flex-direction:column; gap:10px; padding:20px; border-radius:14px; background: var(--card-bg); border:1px solid var(--line);
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); animation: revIn .45s cubic-bezier(.2,.8,.2,1) both; }
+        @keyframes revIn { from { opacity:0; transform: translateY(10px); } to { opacity:1; transform:none; } }
+        .rev-top { display:flex; align-items:center; justify-content:space-between; gap:10px; }
+        .stars { color:#fbbf24; letter-spacing:2px; font-size:.95rem; line-height:1; }
+        .stars .off { color:#3f3f46; }
+        .rev-cat { font-family:'JetBrains Mono',monospace; font-size:.62rem; letter-spacing:.14em; text-transform:uppercase; color:#22d3ee;
+            padding:3px 9px; border-radius:999px; border:1px solid rgba(34,211,238,.3); }
+        .rev-label { font-family:'JetBrains Mono',monospace; font-size:.6rem; letter-spacing:.16em; text-transform:uppercase; color:#71717a; }
+        .rev-sum { color:#d4d8e8; font-size:.92rem; line-height:1.55; flex:1; }
+        .rev-foot { display:flex; align-items:center; justify-content:space-between; gap:10px; padding-top:10px; border-top:1px solid var(--line); }
+        .rev-who { color:#fff; font-weight:600; font-size:.85rem; }
+        .rev-who small { color: var(--muted); font-weight:400; }
+        .rev-foot a { font-family:'JetBrains Mono',monospace; font-size:.66rem; letter-spacing:.1em; text-transform:uppercase; color:#22d3ee; white-space:nowrap; }
+        .rev-foot a:hover { color:#fff; }
+        .rev-src { font-size:.68rem; color:#71717a; line-height:1.4; }
+        .rev-featured { display:grid; gap:16px; margin-bottom:40px; grid-template-columns: 1fr; }
+        @media (min-width:900px){ .rev-featured { grid-template-columns: 1fr 1fr 1fr; } }
+        .rev-quote { margin:0; padding:26px; border-radius:16px; background: linear-gradient(160deg, rgba(34,211,238,.08), rgba(139,116,255,.06)), var(--card-bg); border:1px solid rgba(34,211,238,.22); display:flex; flex-direction:column; gap:12px; }
+        .rev-quote blockquote { margin:0; color:#fff; font-size:1.02rem; line-height:1.6; }
+        .rev-note { margin-top:22px; text-align:center; font-size:.75rem; color:#71717a; max-width:620px; margin-left:auto; margin-right:auto; line-height:1.6; }
+        .proof-banner { display:block; color:#a1a1aa; text-decoration:none; background: linear-gradient(90deg, rgba(34,211,238,.06), rgba(139,116,255,.06)), #07090f; }
+        .proof-banner:hover .marquee-content { animation-play-state: paused; }
+        .proof-banner .hl { color:#22d3ee; }
+        .proof-banner .sep { color:#3f3f46; }
+        .proof-banner:focus-visible { outline: 2px solid #22d3ee; outline-offset: -2px; }
+
         /* MODERN SECURE MODAL */
         .client-modal { background: #18181b; border: 1px solid #3f3f46; border-radius: 16px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); }
         .modal-header { background: #27272a; color: #f4f4f5; padding: 16px 24px; border-top-left-radius: 16px; border-top-right-radius: 16px; font-weight: 600; display: flex; justify-content: space-between; border-bottom: 1px solid #3f3f46; }
@@ -406,22 +458,57 @@
                 </div>
             </div>
 
-            <div class="marquee">
-                <div class="marquee-content font-mono text-[10px] text-zinc-500 uppercase tracking-widest flex gap-16">
-                    <span>★ « 4 To de fichiers d'architecture perdus, récupérés. Incroyable. » - Dossier_#8842</span>
-                    <span>★ « Latence réduite de 14 ms sur mon PC Apex. » - OP_VENO</span>
-                    <span>★ « Ils ont trouvé et retiré le logiciel de surveillance sur mon téléphone. » - Client (vie privée)</span>
-                    <span>★ « Écran de S23 Ultra remplacé parfaitement en 45 minutes. » - Client local</span>
-                    <span>★ « Ils ont réparé le court-circuit de la carte mère de mon MacBook mort. » - Dossier_#1109</span>
-                    <span>★ « Le Trident gère le rendu 4K sans effort. » - Studio de design</span>
-                    <span>★ « 4 To de fichiers d'architecture perdus, récupérés. Incroyable. » - Dossier_#8842</span>
-                    <span>★ « Latence réduite de 14 ms sur mon PC Apex. » - OP_VENO</span>
-                    <span>★ « Ils ont trouvé et retiré le logiciel de surveillance sur mon téléphone. » - Client (vie privée)</span>
-                    <span>★ « Écran de S23 Ultra remplacé parfaitement en 45 minutes. » - Client local</span>
-                    <span>★ « Ils ont réparé le court-circuit de la carte mère de mon MacBook mort. » - Dossier_#1109</span>
-                    <span>★ « Le Trident gère le rendu 4K sans effort. » - Studio de design</span>
+            <!-- ABOUT + REVIEWS (real reviews: see scripts/build_reviews.py) -->
+            <div class="max-w-7xl mx-auto px-6 mb-20" id="about" aria-labelledby="about-title">
+                <div class="about-grid">
+                    <div class="about-copy reveal">
+                        <div class="about-eyebrow"><span class="dot"></span> À propos · Avis</div>
+                        <h2 id="about-title" class="font-cyber text-3xl md:text-4xl text-white mb-6 uppercase tracking-wider leading-tight">Dix ans derrière<br><span class="grad">le comptoir de réparation.</span></h2>
+                        <p class="text-zinc-400 font-sans leading-relaxed mb-4">Avant H7K3R Systems, il y avait l'établi. Pendant dix ans, j'ai tenu le comptoir de réparation de Game On à Croydon &mdash; téléphones, PC portables, tablettes, cartes mères de MacBook et consoles, y compris les réparations que les autres boutiques avaient refusées.</p>
+                        <p class="text-zinc-400 font-sans leading-relaxed mb-8">H7K3R Systems apporte ce même soin d'établi aux PC sur mesure, à la récupération de données en laboratoire et à la protection de la vie privée. Le nom H7K3R vient de la communauté du modding de consoles, et il concourt aujourd'hui en overclocking sur HWBOT.</p>
+                        <a href="https://www.google.com/maps/place/Game+On/@51.3736532,-0.0998115,17z/data=!3m1!4b1!4m6!3m5!1s0x4876073151b74c2f:0xebac085c7d7653ff!8m2!3d51.3736532!4d-0.0998115!16s%2Fg%2F11c45tfxzj" target="_blank" rel="noopener noreferrer" class="btn-primary btn-glow magnetic inline-flex items-center gap-2">Lire tous les avis sur Google <span aria-hidden="true">&#8599;</span></a>
+                    </div>
+                    <div class="proof-grid reveal" style="transition-delay:.08s">
+                        <div class="proof-tile">
+                            <b class="proof-num">37</b>
+                            <p>37 avis Google cinq étoiles me citent personnellement.</p>
+                        </div>
+                        <div class="proof-tile">
+                            <b class="proof-num">10</b>
+                            <p>10 ans à la tête du comptoir de réparation de Game On, à Croydon.</p>
+                        </div>
+                        <a class="proof-tile proof-link" href="https://www.ebay.co.uk/fdbk/feedback_profile/h7k3r-0" target="_blank" rel="noopener noreferrer">
+                            <b class="proof-num">100%</b>
+                            <p>100 % d'évaluations positives sur eBay depuis 2017.</p>
+                            <span class="proof-cta">Profil d'évaluations eBay &#8599;</span>
+                        </a>
+                    </div>
                 </div>
+
+                <div id="rev-featured" class="rev-featured" hidden></div>
+
+                <div class="rev-head">
+                    <h3 class="font-cyber text-xl text-white uppercase tracking-widest">Ce que disent nos clients</h3>
+                    <div id="rev-filters" class="rev-filters" role="group" aria-label="Filtrer les avis par appareil"></div>
+                </div>
+                <div id="rev-list" class="rev-grid" aria-live="polite"></div>
+                <div class="text-center mt-8"><button type="button" id="rev-more" class="btn-ghost magnetic">Afficher tous les avis</button></div>
+                <p class="rev-note">Les résumés sont rédigés par nos soins pour faciliter la lecture &mdash; ce ne sont pas les mots des clients. Chaque avis est listé avec son année et un lien vers l'original sur Google.</p>
             </div>
+
+            <!-- BOTTOM PROOF BANNER -->
+            <a class="marquee proof-banner" href="https://www.google.com/maps/place/Game+On/@51.3736532,-0.0998115,17z/data=!3m1!4b1!4m6!3m5!1s0x4876073151b74c2f:0xebac085c7d7653ff!8m2!3d51.3736532!4d-0.0998115!16s%2Fg%2F11c45tfxzj" target="_blank" rel="noopener noreferrer" aria-label="Lire tous les avis sur Google">
+                <div class="marquee-content font-mono text-[11px] uppercase tracking-widest flex gap-14" aria-hidden="true">
+                    <span>&#9733; 37 avis Google cinq étoiles me citent personnellement.</span><span class="sep">&#9670;</span>
+                    <span>10 ans à la tête du comptoir de réparation de Game On, à Croydon.</span><span class="sep">&#9670;</span>
+                    <span>100 % d'évaluations positives sur eBay depuis 2017.</span><span class="sep">&#9670;</span>
+                    <span class="hl">Lire tous les avis sur Google &#8599;</span><span class="sep">&#9670;</span>
+                    <span>&#9733; 37 avis Google cinq étoiles me citent personnellement.</span><span class="sep">&#9670;</span>
+                    <span>10 ans à la tête du comptoir de réparation de Game On, à Croydon.</span><span class="sep">&#9670;</span>
+                    <span>100 % d'évaluations positives sur eBay depuis 2017.</span><span class="sep">&#9670;</span>
+                    <span class="hl">Lire tous les avis sur Google &#8599;</span><span class="sep">&#9670;</span>
+                </div>
+            </a>
         </section>
 
         <section id="tab-hardware" class="tab-content px-6 max-w-7xl mx-auto" aria-label="Matériel">
@@ -1541,6 +1628,89 @@ void main(){
         // initial palette from the current route
         var h = (location.hash || '').replace(/^#\/?/, '');
         if (window.__setBg) window.__setBg(h || 'home');
+    })();
+    </script>
+    <script src="reviews-data.js"></script>
+    <script>
+    /* ===== REAL REVIEWS =====
+       Data: reviews-data.js (built by scripts/build_reviews.py from the private review file).
+       Rules: every review listed in file order; summaries are labelled as summaries and never
+       shown in quotation marks; a quote card appears only once the customer's exact words are
+       filled in; each review shows its year and links to the original. No averages anywhere. */
+    (function () {
+        var D = window.H7K_REVIEWS; if (!D) return;
+        var fr = (document.documentElement.lang || '').slice(0, 2) === 'fr';
+        var T = fr ? {
+            all: 'Tous', more: 'Afficher tous les avis', less: 'Réduire',
+            label: 'Résumé d’un avis Google (en anglais)', read: 'Lire sur Google', readT: 'Lire sur Trustpilot',
+            stars: function (n) { return n + ' étoiles sur Google'; },
+            cat: { phone: 'Téléphone', laptop: 'PC portable', tablet: 'Tablette', pc: 'PC', audio: 'Audio', other: 'Autre', general: 'Général' }
+        } : {
+            all: 'All', more: 'Show all reviews', less: 'Show fewer',
+            label: 'Summary of a Google review', read: 'Read on Google', readT: 'Read on Trustpilot',
+            stars: function (n) { return 'Rated ' + n + ' stars on Google'; },
+            cat: { phone: 'Phone', laptop: 'Laptop', tablet: 'Tablet', pc: 'PC', audio: 'Audio', other: 'Other', general: 'General' }
+        };
+        var ORDER = ['phone', 'laptop', 'tablet', 'pc', 'audio', 'other', 'general'];
+        var PAGE = 9, state = { cat: 'all', open: false };
+        function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+        function stars(r) {
+            if (!r) return '';
+            var on = '', off = '';
+            for (var i = 0; i < 5; i++) { if (i < r) on += '★'; else off += '★'; }
+            return '<span class="stars" role="img" aria-label="' + esc(T.stars(r)) + '">' + on + (off ? '<span class="off">' + off + '</span>' : '') + '</span>';
+        }
+        function link(src) {
+            var s = D.sources[src] || {};
+            var t = /trustpilot/.test(s.url || '') ? T.readT : T.read;
+            return '<a href="' + esc(s.url || '#') + '" target="_blank" rel="noopener noreferrer">' + t + ' ↗</a>';
+        }
+        function who(r) { return '<span class="rev-who">' + esc(r.n) + (r.y ? ' <small>· ' + esc(r.y) + '</small>' : '') + '</span>'; }
+        function card(r) {
+            return '<article class="rev-card">' +
+                '<div class="rev-top">' + stars(r.r) + '<span class="rev-cat">' + esc(T.cat[r.c] || r.c) + '</span></div>' +
+                '<div class="rev-label">' + T.label + '</div>' +
+                '<p class="rev-sum">' + esc(r.s) + '</p>' +
+                '<div class="rev-foot">' + who(r) + link(r.src) + '</div>' +
+                '<div class="rev-src">' + esc((D.sources[r.src] || {}).label || '') + '</div>' +
+            '</article>';
+        }
+        // Featured quote cards: only reviews flagged featured AND whose exact quote has been filled in.
+        var feat = D.reviews.filter(function (r) { return r.f && r.q; });
+        var fBox = document.getElementById('rev-featured');
+        if (fBox && feat.length) {
+            fBox.innerHTML = feat.map(function (r) {
+                return '<figure class="rev-quote">' + stars(r.r) +
+                    '<blockquote lang="' + esc(r.lang) + '">“' + esc(r.q) + '”</blockquote>' +
+                    '<figcaption class="rev-foot">' + who(r) + link(r.src) + '</figcaption>' +
+                    '<div class="rev-src">' + esc((D.sources[r.src] || {}).label || '') + '</div></figure>';
+            }).join('');
+            fBox.hidden = false;
+        }
+        var list = document.getElementById('rev-list'), more = document.getElementById('rev-more'), fl = document.getElementById('rev-filters');
+        if (!list) return;
+        var cats = ORDER.filter(function (c) { return D.reviews.some(function (r) { return r.c === c; }); });
+        fl.innerHTML = ['all'].concat(cats).map(function (c) {
+            return '<button type="button" class="rev-chip" data-c="' + c + '" aria-pressed="' + (c === 'all') + '">' + esc(c === 'all' ? T.all : T.cat[c]) + '</button>';
+        }).join('');
+        function render() {
+            var rows = D.reviews.filter(function (r) { return state.cat === 'all' || r.c === state.cat; });
+            var shown = state.open ? rows : rows.slice(0, PAGE);
+            list.innerHTML = shown.map(card).join('');
+            more.hidden = rows.length <= PAGE;
+            more.textContent = state.open ? T.less : T.more;
+        }
+        fl.addEventListener('click', function (e) {
+            var b = e.target.closest('.rev-chip'); if (!b) return;
+            state.cat = b.getAttribute('data-c'); state.open = false;
+            fl.querySelectorAll('.rev-chip').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+            render();
+        });
+        more.addEventListener('click', function () {
+            state.open = !state.open; render();
+            if (!state.open) document.getElementById('about').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+        render();
     })();
     </script>
 </body>
