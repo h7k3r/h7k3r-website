@@ -162,6 +162,9 @@
             font-family:'JetBrains Mono',monospace; font-size:14px; font-weight:700; letter-spacing:.16em; cursor:pointer; transition:.2s; }
         .g-play:hover { background: var(--gc); color:#07090d; box-shadow:0 0 24px color-mix(in srgb, var(--gc) 70%, transparent); }
         body.game-open { overflow: hidden; }
+        /* no square tap flash on phones; focus rings follow rounded shapes */
+        a, button, [role="button"], [onclick], label { -webkit-tap-highlight-color: transparent; }
+        :focus:not(:focus-visible) { outline: none; }
 
         /* CONSULTING ILLUSTRATIONS */
         .consult-illus { aspect-ratio: 400/150; border-radius: 10px; background-size: cover; background-position: center;
