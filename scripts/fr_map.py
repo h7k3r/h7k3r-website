@@ -339,6 +339,16 @@ GAMES = [
     ('alt="XPROTO_STEALTH build"', 'alt="Configuration XPROTO_STEALTH"'),
     ('alt="APEX_NODE build"', 'alt="Configuration APEX_NODE"'),
     ('alt="TRIDENT APEX build"', 'alt="Configuration TRIDENT APEX"'),
+    # roblox games
+    ('<h3 class="font-cyber">Made on Roblox</h3>', '<h3 class="font-cyber">Créé sur Roblox</h3>'),
+    (">Free to play · opens Roblox in a new tab<", ">Gratuit · s'ouvre sur Roblox dans un nouvel onglet<"),
+    ("<small>Tycoon · Up to 4 players</small>", "<small>Tycoon · Jusqu'à 4 joueurs</small>"),
+    (">Fix phones on your benches, sell them, unlock microsoldering and a board-level lab, then rebirth.<",
+     ">Réparez des téléphones sur vos établis, revendez-les, débloquez la microsoudure et un labo de réparation de cartes mères, puis faites un rebirth.<"),
+    (">▶ Play on Roblox ↗<", ">▶ Jouer sur Roblox ↗<"),
+    ("<b>All my Roblox games</b>", "<b>Tous mes jeux Roblox</b>"),
+    (">More titles are on the way. Follow the profile to see them first.<", ">D'autres jeux arrivent. Suivez le profil pour les découvrir en premier.<"),
+    (">View profile ↗<", ">Voir le profil ↗<"),
     # arcade hall of fame
     ('<h3 class="font-cyber">Hall of Fame</h3>', '<h3 class="font-cyber">Panthéon</h3>'),
     (">Top 10 per game · enter your 3 letters when you make the board<", ">Top 10 par jeu · entrez vos 3 lettres si vous y entrez<"),
