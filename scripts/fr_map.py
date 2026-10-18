@@ -333,6 +333,12 @@ GAMES = [
     # full-screen player chrome
     ('id="game-title">Game</span>', 'id="game-title">Jeu</span>'),
     (">Exit ✕<", ">Quitter ✕<"),
+    # build pictures
+    ('alt="VENO_KILLER build"', 'alt="Configuration VENO_KILLER"'),
+    ('alt="PROJECT_P build"', 'alt="Configuration PROJECT_P"'),
+    ('alt="XPROTO_STEALTH build"', 'alt="Configuration XPROTO_STEALTH"'),
+    ('alt="APEX_NODE build"', 'alt="Configuration APEX_NODE"'),
+    ('alt="TRIDENT APEX build"', 'alt="Configuration TRIDENT APEX"'),
     # nav: subtitles in the phone/tablet menu
     ('data-sub="Start here"', 'data-sub="Pour commencer"'),
     ('data-sub="Custom PC builds"', 'data-sub="PC sur mesure"'),
@@ -370,9 +376,9 @@ NAV = [
 
 # Screen-reader labels and tooltips (not visible, but read aloud and indexed).
 A11Y = [
-    ('aria-label="Cyber Security"', 'aria-label="Cybersécurité"'),
-    ('aria-label="Laboratory Forensics"', 'aria-label="Récupération de données en laboratoire"'),
-    ('aria-label="Phone Repair"', 'aria-label="Réparation de smartphones"'),
+    ('alt="Cyber Security"', 'alt="Cybersécurité"'),
+    ('alt="Laboratory Forensics"', 'alt="Récupération de données en laboratoire"'),
+    ('alt="Phone Repair"', 'alt="Réparation de smartphones"'),
     ('aria-label="Decrypt Memory Grid"', 'aria-label="Grille mémoire à décrypter"'),
     ('aria-label="Firewall Game"', 'aria-label="Jeu du pare-feu"'),
     ('aria-label="Snake Game"', 'aria-label="Jeu du serpent"'),

@@ -7,6 +7,9 @@
 <link rel="alternate" hreflang="en" href="https://h7k3r.com/">
 <link rel="alternate" hreflang="fr" href="https://h7k3r.com/fr/">
 <link rel="alternate" hreflang="x-default" href="https://h7k3r.com/">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <meta name="description" content="Premium custom PC builds, expert mobile repair, advanced data forensics, and personal cyber-security solutions.">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -159,6 +162,9 @@
             .gear-grid .card .font-mono { margin-bottom: 10px; }
             .gear-grid .card button { padding: 9px 0; font-size: 11px; }
         }
+        .prod-media.wide { aspect-ratio: 12 / 5; }
+        .consult-illus.pic { position: relative; overflow: hidden; }
+        .consult-illus.pic img { display: block; width: 100%; height: 100%; object-fit: cover; }
         .tab-content { display: none; }
         .tab-content.active { display: block; animation: tabIn 0.6s cubic-bezier(.2,.8,.2,1) forwards; }
         @keyframes tabIn { from { opacity: 0; transform: translateY(18px) scale(.985); filter: blur(8px); } to { opacity: 1; transform: none; filter: blur(0); } }
@@ -640,7 +646,7 @@
             <div id="hardware-assembly" class="space-y-8">
                 <div class="grid lg:grid-cols-3 md:grid-cols-2 gap-6">
                     <article class="card">
-                        <div class="img-header" style="background-image: url('gear/build-veno.svg');" aria-label="VENO_KILLER build sketch"></div>
+                        <div class="prod-media"><img src="gear/p/build-veno-800.webp" srcset="gear/p/build-veno-480.webp 480w, gear/p/build-veno-800.webp 800w, gear/p/build-veno-1280.webp 1280w" sizes="(min-width:1024px) 30vw, (min-width:768px) 48vw, 92vw" width="1280" height="768" alt="VENO_KILLER build" loading="lazy" decoding="async"><span class="prod-tag">Illustration</span></div>
                         <div class="p-6 flex flex-col flex-grow">
                             <h4 class="font-cyber text-lg text-white">VENO_KILLER</h4>
                             <p class="font-sans text-xs text-zinc-400 mt-2 leading-relaxed">A budget-friendly powerhouse designed to outperform off-the-shelf market PCs without the e-waste.</p>
@@ -649,7 +655,7 @@
                         </div>
                     </article>
                     <article class="card">
-                        <div class="img-header" style="background-image: url('gear/build-projectp.svg');" aria-label="PROJECT_P build sketch"></div>
+                        <div class="prod-media"><img src="gear/p/build-projectp-800.webp" srcset="gear/p/build-projectp-480.webp 480w, gear/p/build-projectp-800.webp 800w, gear/p/build-projectp-1280.webp 1280w" sizes="(min-width:1024px) 30vw, (min-width:768px) 48vw, 92vw" width="1280" height="768" alt="PROJECT_P build" loading="lazy" decoding="async"><span class="prod-tag">Illustration</span></div>
                         <div class="p-6 flex flex-col flex-grow">
                             <h4 class="font-cyber text-lg text-white">PROJECT_P</h4>
                             <p class="font-sans text-xs text-zinc-400 mt-2 leading-relaxed">Built for solid 1440p gaming and reliable multi-threaded productivity tasks.</p>
@@ -658,7 +664,7 @@
                         </div>
                     </article>
                     <article class="card">
-                        <div class="img-header" style="background-image: url('gear/build-xproto.svg');" aria-label="XPROTO_STEALTH build sketch"></div>
+                        <div class="prod-media"><img src="gear/p/build-xproto-800.webp" srcset="gear/p/build-xproto-480.webp 480w, gear/p/build-xproto-800.webp 800w, gear/p/build-xproto-1280.webp 1280w" sizes="(min-width:1024px) 30vw, (min-width:768px) 48vw, 92vw" width="1280" height="768" alt="XPROTO_STEALTH build" loading="lazy" decoding="async"><span class="prod-tag">Illustration</span></div>
                         <div class="p-6 flex flex-col flex-grow">
                             <h4 class="font-cyber text-lg text-white">XPROTO_STEALTH</h4>
                             <p class="font-sans text-xs text-zinc-400 mt-2 leading-relaxed">A stunning, open-air miniature build prioritizing aesthetics and raw airflow.</p>
@@ -667,7 +673,7 @@
                         </div>
                     </article>
                     <article class="card">
-                        <div class="img-header" style="background-image: url('gear/build-apex.svg');" aria-label="APEX_NODE build sketch"></div>
+                        <div class="prod-media"><img src="gear/p/build-apex-800.webp" srcset="gear/p/build-apex-480.webp 480w, gear/p/build-apex-800.webp 800w, gear/p/build-apex-1280.webp 1280w" sizes="(min-width:1024px) 30vw, (min-width:768px) 48vw, 92vw" width="1280" height="768" alt="APEX_NODE build" loading="lazy" decoding="async"><span class="prod-tag">Illustration</span></div>
                         <div class="p-6 flex flex-col flex-grow">
                             <h4 class="font-cyber text-lg text-white">APEX_NODE</h4>
                             <p class="font-sans text-xs text-zinc-400 mt-2 leading-relaxed">Zero bottlenecks. Optimized for competitive high-refresh-rate esports titles.</p>
@@ -676,7 +682,7 @@
                         </div>
                     </article>
                     <article class="card border-t-2 border-t-sky-500">
-                        <div class="img-header" style="background-image: url('gear/build-trident.svg');" aria-label="TRIDENT APEX build sketch"></div>
+                        <div class="prod-media"><img src="gear/p/build-trident-800.webp" srcset="gear/p/build-trident-480.webp 480w, gear/p/build-trident-800.webp 800w, gear/p/build-trident-1280.webp 1280w" sizes="(min-width:1024px) 30vw, (min-width:768px) 48vw, 92vw" width="1280" height="768" alt="TRIDENT APEX build" loading="lazy" decoding="async"><span class="prod-tag">Illustration</span></div>
                         <div class="p-6 flex flex-col flex-grow">
                             <h4 class="font-cyber text-lg text-white">TRIDENT APEX</h4>
                             <p class="font-sans text-xs text-zinc-400 mt-2 leading-relaxed">Our flagship rig. Engineered for massive CAD rendering, AI generation, and uncompromised 4K fidelity.</p>
@@ -823,7 +829,7 @@
 
             <div class="grid lg:grid-cols-2 gap-8 mb-10">
                 <article class="card border-t-4 border-t-emerald-500">
-                    <div class="img-header h-40" style="background-image: url('gear/repair-device.svg'); border-bottom: 1px solid rgba(16, 185, 129, 0.3);" aria-label="Phone Repair"></div>
+                    <div class="prod-media wide" style="border-bottom: 1px solid rgba(16, 185, 129, 0.3)"><img src="gear/p/repair-device-1000.webp" srcset="gear/p/repair-device-640.webp 640w, gear/p/repair-device-1000.webp 1000w, gear/p/repair-device-1536.webp 1536w" sizes="(min-width:1024px) 40vw, 92vw" width="1536" height="640" alt="Phone Repair" loading="lazy" decoding="async"><span class="prod-tag">Illustration</span></div>
                     <div class="p-8 flex flex-col flex-grow">
                         <h3 class="text-xl font-bold text-emerald-400 mb-6">Everyday Device Repair</h3>
                         <div class="space-y-6">
@@ -841,7 +847,7 @@
                 </article>
 
                 <article class="card border-t-4 border-t-sky-500">
-                    <div class="img-header h-40" style="background-image: url('gear/cyber.svg'); border-bottom: 1px solid rgba(14, 165, 233, 0.3);" aria-label="Cyber Security"></div>
+                    <div class="prod-media wide" style="border-bottom: 1px solid rgba(14, 165, 233, 0.3)"><img src="gear/p/cyber-1000.webp" srcset="gear/p/cyber-640.webp 640w, gear/p/cyber-1000.webp 1000w, gear/p/cyber-1536.webp 1536w" sizes="(min-width:1024px) 40vw, 92vw" width="1536" height="640" alt="Cyber Security" loading="lazy" decoding="async"><span class="prod-tag">Illustration</span></div>
                     <div class="p-8 flex flex-col flex-grow">
                         <h3 class="text-xl font-bold text-sky-400 mb-6">Personal Cyber Security</h3>
                         <div class="space-y-6">
@@ -859,7 +865,7 @@
                 </article>
 
                 <article class="card border-t-4 border-t-red-500 lg:col-span-2">
-                    <div class="img-header h-48" style="background-image: url('gear/lab.svg'); border-bottom: 1px solid rgba(239, 68, 68, 0.3);" aria-label="Laboratory Forensics"></div>
+                    <div class="prod-media wide" style="border-bottom: 1px solid rgba(239, 68, 68, 0.3)"><img src="gear/p/lab-1000.webp" srcset="gear/p/lab-640.webp 640w, gear/p/lab-1000.webp 1000w, gear/p/lab-1536.webp 1536w" sizes="(min-width:1024px) 40vw, 92vw" width="1536" height="640" alt="Laboratory Forensics" loading="lazy" decoding="async"><span class="prod-tag">Illustration</span></div>
                     <div class="p-8 flex flex-col flex-grow">
                         <h3 class="text-xl font-bold text-red-500 mb-4">Advanced Laboratory Data Recovery</h3>
                         <p class="text-sm text-zinc-300 mb-8 max-w-3xl">When a hard drive clicks, or a phone is completely dead from water damage, software isn't enough. We take devices apart in a dust-free laboratory to physically rebuild them and extract your irreplaceable data.</p>
@@ -928,22 +934,22 @@
 
             <div class="grid md:grid-cols-2 gap-6 mb-12">
                 <article class="card p-8 border-t-2 border-sky-500">
-                    <div class="consult-illus" style="background-image:url('gear/consult-assembly.svg')" aria-hidden="true"></div>
+                    <div class="consult-illus pic"><img src="gear/p/consult-assembly-1000.webp" srcset="gear/p/consult-assembly-640.webp 640w, gear/p/consult-assembly-1000.webp 1000w, gear/p/consult-assembly-1536.webp 1536w" sizes="(min-width:1024px) 40vw, 92vw" width="1600" height="592" alt="" aria-hidden="true" loading="lazy" decoding="async"><span class="prod-tag">Illustration</span></div>
                     <h3 class="text-lg font-bold text-white mb-2">Hardware Assembly & Sourcing</h3>
                     <p class="text-sm font-sans text-zinc-400 leading-relaxed">Need 50 workstations for a new office? Or a render farm capable of massive compute? We handle global parts sourcing, complete physical assembly, precise cable routing, and thermal optimization for large-scale corporate operations.</p>
                 </article>
                 <article class="card p-8 border-t-2 border-sky-500">
-                    <div class="consult-illus" style="background-image:url('gear/consult-imaging.svg')" aria-hidden="true"></div>
+                    <div class="consult-illus pic"><img src="gear/p/consult-imaging-1000.webp" srcset="gear/p/consult-imaging-640.webp 640w, gear/p/consult-imaging-1000.webp 1000w, gear/p/consult-imaging-1536.webp 1536w" sizes="(min-width:1024px) 40vw, 92vw" width="1600" height="592" alt="" aria-hidden="true" loading="lazy" decoding="async"><span class="prod-tag">Illustration</span></div>
                     <h3 class="text-lg font-bold text-white mb-2">Node Deployment & OS Imaging</h3>
                     <p class="text-sm font-sans text-zinc-400 leading-relaxed">Mass deployment of operating systems. We create custom, debloated, and highly secure OS images (Windows/Linux) and deploy them seamlessly across your entire corporate hardware fleet.</p>
                 </article>
                 <article class="card p-8 border-t-2 border-sky-500">
-                    <div class="consult-illus" style="background-image:url('gear/consult-network.svg')" aria-hidden="true"></div>
+                    <div class="consult-illus pic"><img src="gear/p/consult-network-1000.webp" srcset="gear/p/consult-network-640.webp 640w, gear/p/consult-network-1000.webp 1000w, gear/p/consult-network-1536.webp 1536w" sizes="(min-width:1024px) 40vw, 92vw" width="1600" height="592" alt="" aria-hidden="true" loading="lazy" decoding="async"><span class="prod-tag">Illustration</span></div>
                     <h3 class="text-lg font-bold text-white mb-2">Network Infrastructure</h3>
                     <p class="text-sm font-sans text-zinc-400 leading-relaxed">Designing, wiring, and configuring secure physical networks. From running Cat6/Fiber to setting up secure subnets, zero-trust VPN tunnels, and enterprise-grade Wi-Fi with isolated guest portals.</p>
                 </article>
                 <article class="card p-8 border-t-2 border-sky-500">
-                    <div class="consult-illus" style="background-image:url('gear/consult-audit.svg')" aria-hidden="true"></div>
+                    <div class="consult-illus pic"><img src="gear/p/consult-audit-1000.webp" srcset="gear/p/consult-audit-640.webp 640w, gear/p/consult-audit-1000.webp 1000w, gear/p/consult-audit-1536.webp 1536w" sizes="(min-width:1024px) 40vw, 92vw" width="1600" height="592" alt="" aria-hidden="true" loading="lazy" decoding="async"><span class="prod-tag">Illustration</span></div>
                     <h3 class="text-lg font-bold text-white mb-2">Cyber-Security Auditing</h3>
                     <p class="text-sm font-sans text-zinc-400 leading-relaxed">We think like attackers so you don't have to. Penetration testing of your physical network, physical access vulnerability assessments, and comprehensive employee security protocol reviews.</p>
                 </article>
