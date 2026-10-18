@@ -1288,6 +1288,8 @@
     if(skill.level>=10) skill.xp=0;
     $("#trainResult").textContent = tier + `  +${xpGain} XP, +$${moneyGain}` + (leveledUp?"  — LEVEL UP! 🎉":"");
     renderTopbar();
+    // tell the h7k3r.com arcade the player's total cat level, for the Hall of Fame
+    try { if(window.parent !== window) window.parent.postMessage({ type: "h7k-score", game: "purr", score: playerTotalLevel() }, location.origin); } catch(e) {}
   }
 
   $("#catchBtn").addEventListener("click", resolveMinigame);
