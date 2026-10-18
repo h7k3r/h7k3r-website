@@ -7,6 +7,7 @@
 <link rel="alternate" hreflang="en" href="https://h7k3r.com/">
 <link rel="alternate" hreflang="fr" href="https://h7k3r.com/fr/">
 <link rel="alternate" hreflang="x-default" href="https://h7k3r.com/">
+    <script type="application/ld+json">{"@context": "https://schema.org", "@type": "LocalBusiness", "@id": "https://h7k3r.com/#business", "name": "H7K3R Systems", "url": "https://h7k3r.com/", "telephone": "+447732423474", "image": "https://h7k3r.com/apple-touch-icon.png", "description": "Phone, laptop and console repair, data recovery, custom PCs and privacy gear in Croydon and Kingston upon Thames.", "areaServed": [{"@type": "City", "name": "Croydon"}, {"@type": "City", "name": "Kingston upon Thames"}, {"@type": "Country", "name": "United Kingdom"}]}</script>
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
     <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -220,6 +221,16 @@
         .lb-actions { display: flex; gap: 8px; margin-top: 12px; } .lb-actions button { flex: 1; }
         .lb-again { background: rgba(34,211,238,.1); color: #fff; border: 1px solid rgba(34,211,238,.4); }
         .lb-close { background: none; color: #a1a1aa; border: 1px solid #3f3f46; }
+        /* ---- SITE FOOTER ---- */
+        .site-foot { border-top: 1px solid var(--line); padding: 34px 0 120px; margin-top: 10px; background: rgba(5,6,12,.6); }
+        .sf-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 26px; }
+        @media (max-width: 720px) { .sf-grid { grid-template-columns: 1fr; } }
+        .sf-brand { letter-spacing: .18em; color: #fff; font-size: 14px; }
+        .sf-line { color: #9aa6c4; font-size: 14px; margin: 8px 0 14px; max-width: 46ch; }
+        .sf-call { display: inline-block; color: #fff; font-family: 'JetBrains Mono', monospace; font-size: 13px; padding: 10px 14px; border: 1px solid rgba(34,211,238,.4); border-radius: 10px; text-decoration: none; }
+        .sf-h { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--cyan); margin-bottom: 8px; }
+        .sf-links a { display: block; color: #c7cee3; text-decoration: none; font-size: 14px; padding: 5px 0; }
+        .sf-links a:hover { color: #fff; }
         .tab-content { display: none; }
         .tab-content.active { display: block; animation: tabIn 0.6s cubic-bezier(.2,.8,.2,1) forwards; }
         @keyframes tabIn { from { opacity: 0; transform: translateY(18px) scale(.985); filter: blur(8px); } to { opacity: 1; transform: none; filter: blur(0); } }
@@ -498,7 +509,10 @@
                 <p class="text-sm text-zinc-400 mb-6">
                     Fill out the form below. Whether you need a cracked screen fixed, a custom PC built, or emergency cyber-security assistance, our team will respond within 24 hours.
                 </p>
-                <form action="https://formspree.io/f/mnjblgln" method="POST" class="space-y-5">
+                <form id="quote-form" action="https://formspree.io/f/mnjblgln" method="POST" class="space-y-5">
+                    <input type="hidden" name="_subject" id="q-subject" value="H7K3R enquiry">
+                    <input type="hidden" name="page" id="q-page" value="">
+                    <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
                     <div class="flex flex-col gap-1">
                         <label for="client-name" class="text-xs font-semibold text-zinc-300 uppercase">Your Name</label>
                         <input type="text" id="client-name" name="name" required class="w-full bg-zinc-900 border border-zinc-700 rounded-lg p-3 text-sm text-white outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition">
@@ -506,6 +520,10 @@
                     <div class="flex flex-col gap-1">
                         <label for="client-email" class="text-xs font-semibold text-zinc-300 uppercase">Email Address</label>
                         <input type="email" id="client-email" name="email" required class="w-full bg-zinc-900 border border-zinc-700 rounded-lg p-3 text-sm text-white outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition">
+                    </div>
+                    <div class="flex flex-col gap-1">
+                        <label for="client-phone" class="text-xs font-semibold text-zinc-300 uppercase">Phone <span class="normal-case font-normal text-zinc-500">(optional, for a quick call back)</span></label>
+                        <input type="tel" id="client-phone" name="phone" autocomplete="tel" class="w-full bg-zinc-900 border border-zinc-700 rounded-lg p-3 text-sm text-white outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition">
                     </div>
                     <div class="flex flex-col gap-1">
                         <label for="modal-select" class="text-xs font-semibold text-zinc-300 uppercase">Service Requested</label>
@@ -526,6 +544,7 @@
                                 <option value="SECURITY_HW">Security Testing Hardware (professionals — verification required)</option>
                             </optgroup>
                             <optgroup label="IT Consulting">
+                                <option value="CONSULTING">General IT consulting</option>
                                 <option value="CONSULTING_ASSEMBLY">Hardware Assembly & Sourcing</option>
                                 <option value="CONSULTING_DEPLOY">Node Deployment & Setup</option>
                                 <option value="CONSULTING_NETWORK">Network Infrastructure</option>
@@ -537,8 +556,15 @@
                         <label for="client-msg" class="text-xs font-semibold text-zinc-300 uppercase">Details</label>
                         <textarea id="client-msg" name="msg" placeholder="Tell us what's going on..." class="w-full bg-zinc-900 border border-zinc-700 rounded-lg p-3 text-sm h-24 text-white outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition resize-none"></textarea>
                     </div>
-                    <button type="submit" class="w-full mt-4 py-4 bg-sky-500 text-white rounded-lg font-bold text-sm tracking-wide hover:bg-sky-400 transition shadow-lg shadow-sky-500/20">Send Secure Message</button>
+                    <button type="submit" id="q-send" class="w-full mt-4 py-4 bg-sky-500 text-white rounded-lg font-bold text-sm tracking-wide hover:bg-sky-400 transition shadow-lg shadow-sky-500/20">Send Secure Message</button>
+                    <p class="q-err text-sm text-red-300" id="q-err" hidden>Sorry, that didn't send. Please call or text <a href="tel:+447732423474" class="underline">07732 423474</a>, or try again.</p>
+                    <p class="text-xs text-zinc-500 text-center">Prefer to talk? Call or text <a href="tel:+447732423474" class="text-zinc-300 underline">07732 423474</a></p>
                 </form>
+                <div class="q-done text-center py-6" id="q-done" hidden>
+                    <div class="text-4xl mb-3" aria-hidden="true">✓</div>
+                    <h3 class="text-xl font-bold text-white mb-2">Message received</h3>
+                    <p class="text-sm text-zinc-400">Thanks, we'll reply within 24 hours. Urgent? Call or text <a href="tel:+447732423474" class="text-zinc-200 underline">07732 423474</a>.</p>
+                </div>
             </div>
         </div>
     </div>
@@ -594,7 +620,7 @@
                         Thirty years of hands-on precision &mdash; the kind usually reserved for corporations, available to everyone.
                     </p>
                     <div class="hero-cta reveal" style="transition-delay:.18s">
-                        <button type="button" onclick="openModal('REPAIR_EVERYDAY')" class="btn-primary btn-glow magnetic">Start a request</button>
+                        <button type="button" onclick="openModal('REPAIR_EVERYDAY', this)" class="btn-primary btn-glow magnetic">Start a request</button>
                         <button type="button" onclick="showTab('hardware')" class="btn-ghost magnetic">Explore the builds</button>
                     </div>
                     <div class="hero-chips reveal" style="transition-delay:.26s">
@@ -706,7 +732,7 @@
                             <h4 class="font-cyber text-lg text-white">VENO_KILLER</h4>
                             <p class="font-sans text-xs text-zinc-400 mt-2 leading-relaxed">A budget-friendly powerhouse designed to outperform off-the-shelf market PCs without the e-waste.</p>
                             <div class="text-xl font-bold text-white my-4 mt-auto">£449.00</div>
-                            <button type="button" onclick="openModal('VENO')" class="w-full py-3 bg-zinc-800 text-white rounded-lg font-semibold text-xs hover:bg-sky-500 transition">Enquire</button>
+                            <button type="button" onclick="openModal('VENO', this)" class="w-full py-3 bg-zinc-800 text-white rounded-lg font-semibold text-xs hover:bg-sky-500 transition">Enquire</button>
                         </div>
                     </article>
                     <article class="card">
@@ -715,7 +741,7 @@
                             <h4 class="font-cyber text-lg text-white">PROJECT_P</h4>
                             <p class="font-sans text-xs text-zinc-400 mt-2 leading-relaxed">Built for solid 1440p gaming and reliable multi-threaded productivity tasks.</p>
                             <div class="text-xl font-bold text-white my-4 mt-auto">£850.00</div>
-                            <button type="button" onclick="openModal('PROJECT_P')" class="w-full py-3 bg-zinc-800 text-white rounded-lg font-semibold text-xs hover:bg-sky-500 transition">Enquire</button>
+                            <button type="button" onclick="openModal('PROJECT_P', this)" class="w-full py-3 bg-zinc-800 text-white rounded-lg font-semibold text-xs hover:bg-sky-500 transition">Enquire</button>
                         </div>
                     </article>
                     <article class="card">
@@ -724,7 +750,7 @@
                             <h4 class="font-cyber text-lg text-white">XPROTO_STEALTH</h4>
                             <p class="font-sans text-xs text-zinc-400 mt-2 leading-relaxed">A stunning, open-air miniature build prioritizing aesthetics and raw airflow.</p>
                             <div class="text-xl font-bold text-white my-4 mt-auto">£1,850.00</div>
-                            <button type="button" onclick="openModal('XPROTO')" class="w-full py-3 bg-zinc-800 text-white rounded-lg font-semibold text-xs hover:bg-sky-500 transition">Enquire</button>
+                            <button type="button" onclick="openModal('XPROTO', this)" class="w-full py-3 bg-zinc-800 text-white rounded-lg font-semibold text-xs hover:bg-sky-500 transition">Enquire</button>
                         </div>
                     </article>
                     <article class="card">
@@ -733,7 +759,7 @@
                             <h4 class="font-cyber text-lg text-white">APEX_NODE</h4>
                             <p class="font-sans text-xs text-zinc-400 mt-2 leading-relaxed">Zero bottlenecks. Optimized for competitive high-refresh-rate esports titles.</p>
                             <div class="text-xl font-bold text-white my-4 mt-auto">£2,100.00</div>
-                            <button type="button" onclick="openModal('APEX')" class="w-full py-3 bg-zinc-800 text-white rounded-lg font-semibold text-xs hover:bg-sky-500 transition">Enquire</button>
+                            <button type="button" onclick="openModal('APEX', this)" class="w-full py-3 bg-zinc-800 text-white rounded-lg font-semibold text-xs hover:bg-sky-500 transition">Enquire</button>
                         </div>
                     </article>
                     <article class="card border-t-2 border-t-sky-500">
@@ -742,13 +768,13 @@
                             <h4 class="font-cyber text-lg text-white">TRIDENT APEX</h4>
                             <p class="font-sans text-xs text-zinc-400 mt-2 leading-relaxed">Our flagship rig. Engineered for massive CAD rendering, AI generation, and uncompromised 4K fidelity.</p>
                             <div class="text-xl font-bold text-white my-4 mt-auto">£8,610.00</div>
-                            <button type="button" onclick="openModal('TRIDENT')" class="w-full py-3 bg-sky-600 text-white rounded-lg font-semibold text-xs hover:bg-sky-500 transition">Reserve Build</button>
+                            <button type="button" onclick="openModal('TRIDENT', this)" class="w-full py-3 bg-sky-600 text-white rounded-lg font-semibold text-xs hover:bg-sky-500 transition">Reserve Build</button>
                         </div>
                     </article>
                     <article class="card bg-zinc-900 flex flex-col justify-center text-center p-8">
                         <h4 class="font-cyber text-xl text-white mb-2">CUSTOM COMMISSION</h4>
                         <p class="font-sans text-xs text-zinc-400 leading-relaxed mb-6">Don't see exactly what you need? We source and build fully customized hardware loops directly to your specification.</p>
-                        <button type="button" onclick="openModal('CUSTOM_RIG')" class="w-full py-3 border border-white text-white rounded-lg font-semibold text-xs hover:bg-white hover:text-black transition mt-auto">Request Consultation</button>
+                        <button type="button" onclick="openModal('CUSTOM_RIG', this)" class="w-full py-3 border border-white text-white rounded-lg font-semibold text-xs hover:bg-white hover:text-black transition mt-auto">Request Consultation</button>
                     </article>
                 </div>
             </div>
@@ -769,7 +795,7 @@
                         <div class="p-6 flex flex-col flex-grow">
                             <h4 class="font-cyber text-lg text-white mb-1">USB Surge Tester</h4>
                             <p class="font-sans text-xs text-zinc-400 mb-6 leading-relaxed">Bench tool for validating USB-port surge and over-voltage protection on hardware you own or are authorised to assess.</p>
-                            <button type="button" onclick="openModal('SECURITY_HW')" class="mt-auto w-full py-3 bg-zinc-800 text-white rounded-lg font-semibold text-xs hover:bg-violet-600 transition">Request access (pros)</button>
+                            <button type="button" onclick="openModal('SECURITY_HW', this)" class="mt-auto w-full py-3 bg-zinc-800 text-white rounded-lg font-semibold text-xs hover:bg-violet-600 transition">Request access (pros)</button>
                         </div>
                     </article>
                     <article class="card">
@@ -777,13 +803,13 @@
                         <div class="p-6 flex flex-col flex-grow">
                             <h4 class="font-cyber text-lg text-white mb-1">Red-Team Assessment Cable</h4>
                             <p class="font-sans text-xs text-zinc-400 mb-6 leading-relaxed">Instrumented test cable for authorised physical-security and phishing-resilience assessments carried out under a signed engagement.</p>
-                            <button type="button" onclick="openModal('SECURITY_HW')" class="mt-auto w-full py-3 bg-zinc-800 text-white rounded-lg font-semibold text-xs hover:bg-violet-600 transition">Request access (pros)</button>
+                            <button type="button" onclick="openModal('SECURITY_HW', this)" class="mt-auto w-full py-3 bg-zinc-800 text-white rounded-lg font-semibold text-xs hover:bg-violet-600 transition">Request access (pros)</button>
                         </div>
                     </article>
                     <article class="card flex flex-col justify-center text-center p-8" style="background:rgba(124,92,255,0.04)">
                         <h4 class="font-cyber text-base text-white mb-2">Verification required</h4>
                         <p class="font-sans text-xs text-zinc-400 leading-relaxed mb-6">Tell us your role, organisation and the engagement. We verify before any quote. Not sold to the general public.</p>
-                        <button type="button" onclick="openModal('SECURITY_HW')" class="w-full py-3 border border-violet-500/60 text-violet-200 rounded-lg font-semibold text-xs hover:bg-violet-600 hover:text-white transition mt-auto">Start verification</button>
+                        <button type="button" onclick="openModal('SECURITY_HW', this)" class="w-full py-3 border border-violet-500/60 text-violet-200 rounded-lg font-semibold text-xs hover:bg-violet-600 hover:text-white transition mt-auto">Start verification</button>
                     </article>
                 </div>
             </div>
@@ -805,7 +831,7 @@
                         <h4 class="font-bold text-white mb-1">Faraday Pouch</h4>
                         <p class="font-sans text-xs text-zinc-400 mb-4">Stop phone tracking & keyless car theft.</p>
                         <span class="font-mono text-white text-sm mb-4 mt-auto">£25.00</span>
-                        <button type="button" onclick="openModal('PRIVACY_GEAR')" class="w-full py-2.5 bg-zinc-800 text-white rounded-lg text-xs font-semibold hover:bg-sky-500 transition">Buy Now</button>
+                        <button type="button" onclick="openModal('PRIVACY_GEAR', this)" class="w-full py-2.5 bg-zinc-800 text-white rounded-lg text-xs font-semibold hover:bg-sky-500 transition">Buy Now</button>
                     </div>
                 </article>
                 <article class="card">
@@ -814,7 +840,7 @@
                         <h4 class="font-bold text-white mb-1">USB Data Blocker</h4>
                         <p class="font-sans text-xs text-zinc-400 mb-4">Safe public charging. Blocks data pins.</p>
                         <span class="font-mono text-white text-sm mb-4 mt-auto">£15.00</span>
-                        <button type="button" onclick="openModal('PRIVACY_GEAR')" class="w-full py-2.5 bg-zinc-800 text-white rounded-lg text-xs font-semibold hover:bg-sky-500 transition">Buy Now</button>
+                        <button type="button" onclick="openModal('PRIVACY_GEAR', this)" class="w-full py-2.5 bg-zinc-800 text-white rounded-lg text-xs font-semibold hover:bg-sky-500 transition">Buy Now</button>
                     </div>
                 </article>
                 <article class="card">
@@ -823,7 +849,7 @@
                         <h4 class="font-bold text-white mb-1">Faraday Sleeve</h4>
                         <p class="font-sans text-xs text-zinc-400 mb-4">Complete offline laptop isolation.</p>
                         <span class="font-mono text-white text-sm mb-4 mt-auto">£45.00</span>
-                        <button type="button" onclick="openModal('PRIVACY_GEAR')" class="w-full py-2.5 bg-zinc-800 text-white rounded-lg text-xs font-semibold hover:bg-sky-500 transition">Buy Now</button>
+                        <button type="button" onclick="openModal('PRIVACY_GEAR', this)" class="w-full py-2.5 bg-zinc-800 text-white rounded-lg text-xs font-semibold hover:bg-sky-500 transition">Buy Now</button>
                     </div>
                 </article>
                 <article class="card">
@@ -832,7 +858,7 @@
                         <h4 class="font-bold text-white mb-1">Signal-Proof Hat</h4>
                         <p class="font-sans text-xs text-zinc-400 mb-4">Silver-lined EMF protection.</p>
                         <span class="font-mono text-white text-sm mb-4 mt-auto">£35.00</span>
-                        <button type="button" onclick="openModal('PRIVACY_GEAR')" class="w-full py-2.5 bg-zinc-800 text-white rounded-lg text-xs font-semibold hover:bg-sky-500 transition">Buy Now</button>
+                        <button type="button" onclick="openModal('PRIVACY_GEAR', this)" class="w-full py-2.5 bg-zinc-800 text-white rounded-lg text-xs font-semibold hover:bg-sky-500 transition">Buy Now</button>
                     </div>
                 </article>
                 <article class="card">
@@ -841,7 +867,7 @@
                         <h4 class="font-bold text-white mb-1">Stealth Backpack</h4>
                         <p class="font-sans text-xs text-zinc-400 mb-4">Built-in Faraday compartments.</p>
                         <span class="font-mono text-white text-sm mb-4 mt-auto">£120.00</span>
-                        <button type="button" onclick="openModal('PRIVACY_GEAR')" class="w-full py-2.5 bg-zinc-800 text-white rounded-lg text-xs font-semibold hover:bg-sky-500 transition">Buy Now</button>
+                        <button type="button" onclick="openModal('PRIVACY_GEAR', this)" class="w-full py-2.5 bg-zinc-800 text-white rounded-lg text-xs font-semibold hover:bg-sky-500 transition">Buy Now</button>
                     </div>
                 </article>
                 <article class="card border-t-2 border-t-sky-500">
@@ -850,7 +876,7 @@
                         <h4 class="font-bold text-white mb-1">Faraday Parka</h4>
                         <p class="font-sans text-xs text-zinc-400 mb-4">Full-Body EMF Shielding jacket.</p>
                         <span class="font-mono text-white text-sm mb-4 mt-auto">£185.00</span>
-                        <button type="button" onclick="openModal('GEAR')" class="w-full py-2.5 bg-sky-600 text-white rounded-lg text-xs font-semibold hover:bg-sky-500 transition">Buy Now</button>
+                        <button type="button" onclick="openModal('PRIVACY_GEAR', this)" class="w-full py-2.5 bg-sky-600 text-white rounded-lg text-xs font-semibold hover:bg-sky-500 transition">Buy Now</button>
                     </div>
                 </article>
                 <article class="card">
@@ -859,7 +885,7 @@
                         <h4 class="font-bold text-white mb-1">Operator Hoodie</h4>
                         <p class="font-sans text-xs text-zinc-400 mb-4">Heavyweight Tactical Cotton.</p>
                         <span class="font-mono text-white text-sm mb-4 mt-auto">£65.00</span>
-                        <button type="button" onclick="openModal('GEAR')" class="w-full py-2.5 bg-zinc-800 text-white rounded-lg text-xs font-semibold hover:bg-sky-500 transition">Buy Now</button>
+                        <button type="button" onclick="openModal('PRIVACY_GEAR', this)" class="w-full py-2.5 bg-zinc-800 text-white rounded-lg text-xs font-semibold hover:bg-sky-500 transition">Buy Now</button>
                     </div>
                 </article>
                 <article class="card">
@@ -868,7 +894,7 @@
                         <h4 class="font-bold text-white mb-1">Precision Bit Set</h4>
                         <p class="font-sans text-xs text-zinc-400 mb-4">S2 Steel Device Teardown Kit.</p>
                         <span class="font-mono text-white text-sm mb-4 mt-auto">£45.00</span>
-                        <button type="button" onclick="openModal('GEAR')" class="w-full py-2.5 bg-zinc-800 text-white rounded-lg text-xs font-semibold hover:bg-sky-500 transition">Buy Now</button>
+                        <button type="button" onclick="openModal('PRIVACY_GEAR', this)" class="w-full py-2.5 bg-zinc-800 text-white rounded-lg text-xs font-semibold hover:bg-sky-500 transition">Buy Now</button>
                     </div>
                 </article>
             </div>
@@ -897,7 +923,7 @@
                                 <p class="text-sm text-zinc-400 leading-relaxed">System running slow? We provide virus removal, Windows reinstallations, hard drive upgrades, and physical hinge/screen repair for all major personal laptops.</p>
                             </div>
                         </div>
-                        <button type="button" onclick="openModal('REPAIR_EVERYDAY')" class="mt-auto pt-8 w-full py-3 bg-zinc-800 text-white rounded-lg font-semibold text-sm hover:bg-emerald-600 transition">Get a Free Quote</button>
+                        <button type="button" onclick="openModal('REPAIR_EVERYDAY', this)" class="mt-auto pt-8 w-full py-3 bg-zinc-800 text-white rounded-lg font-semibold text-sm hover:bg-emerald-600 transition">Get a Free Quote</button>
                     </div>
                 </article>
 
@@ -915,7 +941,7 @@
                                 <p class="text-sm text-zinc-400 leading-relaxed">Helping you regain control of compromised social media, email, and banking accounts, and applying physical hardware keys to lock them down permanently.</p>
                             </div>
                         </div>
-                        <button type="button" onclick="openModal('HELP_HACKED')" class="mt-auto pt-8 w-full py-3 bg-zinc-800 text-white rounded-lg font-semibold text-sm hover:bg-sky-500 transition">Request Urgent Help</button>
+                        <button type="button" onclick="openModal('HELP_HACKED', this)" class="mt-auto pt-8 w-full py-3 bg-zinc-800 text-white rounded-lg font-semibold text-sm hover:bg-sky-500 transition">Request Urgent Help</button>
                     </div>
                 </article>
 
@@ -939,7 +965,7 @@
                                 <p class="text-sm text-zinc-400 leading-relaxed">Direct memory interfacing for critically damaged iPhones and Androids. Bypassing logical software locks via direct hardware-level extraction.</p>
                             </div>
                         </div>
-                        <button type="button" onclick="openModal('DATA_RECOVERY')" class="mt-8 px-8 py-4 bg-red-600 text-white rounded-lg font-bold text-sm tracking-wide hover:bg-red-500 transition mx-auto md:w-auto w-full">Initiate Lab Recovery Ticket</button>
+                        <button type="button" onclick="openModal('DATA_RECOVERY', this)" class="mt-8 px-8 py-4 bg-red-600 text-white rounded-lg font-bold text-sm tracking-wide hover:bg-red-500 transition mx-auto md:w-auto w-full">Initiate Lab Recovery Ticket</button>
                     </div>
                 </article>
             </div>
@@ -963,19 +989,19 @@
             </div>
 
             <div id="gal-work" class="hidden grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="rig-card" style="background-image: url('rig_1.jpg');"><div class="rig-specs"><h4 class="font-cyber text-white mb-4">ARCHIVE // RIG 01</h4><button type="button" onclick="openModal('CUSTOM_RIG')" class="px-6 py-2 bg-sky-500 text-white rounded text-xs font-bold hover:bg-sky-400">Request Build</button></div></div>
-                <div class="rig-card" style="background-image: url('rig_2.jpg');"><div class="rig-specs"><h4 class="font-cyber text-white mb-4">ARCHIVE // RIG 02</h4><button type="button" onclick="openModal('CUSTOM_RIG')" class="px-6 py-2 bg-sky-500 text-white rounded text-xs font-bold hover:bg-sky-400">Request Build</button></div></div>
-                <div class="rig-card" style="background-image: url('rig_3.jpg');"><div class="rig-specs"><h4 class="font-cyber text-white mb-4">ARCHIVE // RIG 03</h4><button type="button" onclick="openModal('CUSTOM_RIG')" class="px-6 py-2 bg-sky-500 text-white rounded text-xs font-bold hover:bg-sky-400">Request Build</button></div></div>
-                <div class="rig-card" style="background-image: url('rig_4.jpg');"><div class="rig-specs"><h4 class="font-cyber text-white mb-4">ARCHIVE // RIG 04</h4><button type="button" onclick="openModal('CUSTOM_RIG')" class="px-6 py-2 bg-sky-500 text-white rounded text-xs font-bold hover:bg-sky-400">Request Build</button></div></div>
-                <div class="rig-card" style="background-image: url('rig_5.jpg');"><div class="rig-specs"><h4 class="font-cyber text-white mb-4">ARCHIVE // RIG 05</h4><button type="button" onclick="openModal('CUSTOM_RIG')" class="px-6 py-2 bg-sky-500 text-white rounded text-xs font-bold hover:bg-sky-400">Request Build</button></div></div>
-                <div class="rig-card" style="background-image: url('rig_6.jpg');"><div class="rig-specs"><h4 class="font-cyber text-white mb-4">ARCHIVE // RIG 06</h4><button type="button" onclick="openModal('CUSTOM_RIG')" class="px-6 py-2 bg-sky-500 text-white rounded text-xs font-bold hover:bg-sky-400">Request Build</button></div></div>
-                <div class="rig-card" style="background-image: url('rig_7.jpg');"><div class="rig-specs"><h4 class="font-cyber text-white mb-4">ARCHIVE // RIG 07</h4><button type="button" onclick="openModal('CUSTOM_RIG')" class="px-6 py-2 bg-sky-500 text-white rounded text-xs font-bold hover:bg-sky-400">Request Build</button></div></div>
-                <div class="rig-card" style="background-image: url('rig_8.jpg');"><div class="rig-specs"><h4 class="font-cyber text-white mb-4">ARCHIVE // RIG 08</h4><button type="button" onclick="openModal('CUSTOM_RIG')" class="px-6 py-2 bg-sky-500 text-white rounded text-xs font-bold hover:bg-sky-400">Request Build</button></div></div>
-                <div class="rig-card" style="background-image: url('rig_9.jpg');"><div class="rig-specs"><h4 class="font-cyber text-white mb-4">ARCHIVE // RIG 09</h4><button type="button" onclick="openModal('CUSTOM_RIG')" class="px-6 py-2 bg-sky-500 text-white rounded text-xs font-bold hover:bg-sky-400">Request Build</button></div></div>
-                <div class="rig-card" style="background-image: url('rig_10.jpg');"><div class="rig-specs"><h4 class="font-cyber text-white mb-4">ARCHIVE // RIG 10</h4><button type="button" onclick="openModal('CUSTOM_RIG')" class="px-6 py-2 bg-sky-500 text-white rounded text-xs font-bold hover:bg-sky-400">Request Build</button></div></div>
-                <div class="rig-card" style="background-image: url('rig_11.jpg');"><div class="rig-specs"><h4 class="font-cyber text-white mb-4">ARCHIVE // RIG 11</h4><button type="button" onclick="openModal('CUSTOM_RIG')" class="px-6 py-2 bg-sky-500 text-white rounded text-xs font-bold hover:bg-sky-400">Request Build</button></div></div>
-                <div class="rig-card" style="background-image: url('rig_12.jpg');"><div class="rig-specs"><h4 class="font-cyber text-white mb-4">ARCHIVE // RIG 12</h4><button type="button" onclick="openModal('CUSTOM_RIG')" class="px-6 py-2 bg-sky-500 text-white rounded text-xs font-bold hover:bg-sky-400">Request Build</button></div></div>
-                <div class="rig-card" style="background-image: url('rig_13.jpg');"><div class="rig-specs"><h4 class="font-cyber text-white mb-4">ARCHIVE // RIG 13</h4><button type="button" onclick="openModal('CUSTOM_RIG')" class="px-6 py-2 bg-sky-500 text-white rounded text-xs font-bold hover:bg-sky-400">Request Build</button></div></div>
+                <div class="rig-card" style="background-image: url('rig_1.jpg');"><div class="rig-specs"><h4 class="font-cyber text-white mb-4">ARCHIVE // RIG 01</h4><button type="button" onclick="openModal('CUSTOM_RIG', this)" class="px-6 py-2 bg-sky-500 text-white rounded text-xs font-bold hover:bg-sky-400">Request Build</button></div></div>
+                <div class="rig-card" style="background-image: url('rig_2.jpg');"><div class="rig-specs"><h4 class="font-cyber text-white mb-4">ARCHIVE // RIG 02</h4><button type="button" onclick="openModal('CUSTOM_RIG', this)" class="px-6 py-2 bg-sky-500 text-white rounded text-xs font-bold hover:bg-sky-400">Request Build</button></div></div>
+                <div class="rig-card" style="background-image: url('rig_3.jpg');"><div class="rig-specs"><h4 class="font-cyber text-white mb-4">ARCHIVE // RIG 03</h4><button type="button" onclick="openModal('CUSTOM_RIG', this)" class="px-6 py-2 bg-sky-500 text-white rounded text-xs font-bold hover:bg-sky-400">Request Build</button></div></div>
+                <div class="rig-card" style="background-image: url('rig_4.jpg');"><div class="rig-specs"><h4 class="font-cyber text-white mb-4">ARCHIVE // RIG 04</h4><button type="button" onclick="openModal('CUSTOM_RIG', this)" class="px-6 py-2 bg-sky-500 text-white rounded text-xs font-bold hover:bg-sky-400">Request Build</button></div></div>
+                <div class="rig-card" style="background-image: url('rig_5.jpg');"><div class="rig-specs"><h4 class="font-cyber text-white mb-4">ARCHIVE // RIG 05</h4><button type="button" onclick="openModal('CUSTOM_RIG', this)" class="px-6 py-2 bg-sky-500 text-white rounded text-xs font-bold hover:bg-sky-400">Request Build</button></div></div>
+                <div class="rig-card" style="background-image: url('rig_6.jpg');"><div class="rig-specs"><h4 class="font-cyber text-white mb-4">ARCHIVE // RIG 06</h4><button type="button" onclick="openModal('CUSTOM_RIG', this)" class="px-6 py-2 bg-sky-500 text-white rounded text-xs font-bold hover:bg-sky-400">Request Build</button></div></div>
+                <div class="rig-card" style="background-image: url('rig_7.jpg');"><div class="rig-specs"><h4 class="font-cyber text-white mb-4">ARCHIVE // RIG 07</h4><button type="button" onclick="openModal('CUSTOM_RIG', this)" class="px-6 py-2 bg-sky-500 text-white rounded text-xs font-bold hover:bg-sky-400">Request Build</button></div></div>
+                <div class="rig-card" style="background-image: url('rig_8.jpg');"><div class="rig-specs"><h4 class="font-cyber text-white mb-4">ARCHIVE // RIG 08</h4><button type="button" onclick="openModal('CUSTOM_RIG', this)" class="px-6 py-2 bg-sky-500 text-white rounded text-xs font-bold hover:bg-sky-400">Request Build</button></div></div>
+                <div class="rig-card" style="background-image: url('rig_9.jpg');"><div class="rig-specs"><h4 class="font-cyber text-white mb-4">ARCHIVE // RIG 09</h4><button type="button" onclick="openModal('CUSTOM_RIG', this)" class="px-6 py-2 bg-sky-500 text-white rounded text-xs font-bold hover:bg-sky-400">Request Build</button></div></div>
+                <div class="rig-card" style="background-image: url('rig_10.jpg');"><div class="rig-specs"><h4 class="font-cyber text-white mb-4">ARCHIVE // RIG 10</h4><button type="button" onclick="openModal('CUSTOM_RIG', this)" class="px-6 py-2 bg-sky-500 text-white rounded text-xs font-bold hover:bg-sky-400">Request Build</button></div></div>
+                <div class="rig-card" style="background-image: url('rig_11.jpg');"><div class="rig-specs"><h4 class="font-cyber text-white mb-4">ARCHIVE // RIG 11</h4><button type="button" onclick="openModal('CUSTOM_RIG', this)" class="px-6 py-2 bg-sky-500 text-white rounded text-xs font-bold hover:bg-sky-400">Request Build</button></div></div>
+                <div class="rig-card" style="background-image: url('rig_12.jpg');"><div class="rig-specs"><h4 class="font-cyber text-white mb-4">ARCHIVE // RIG 12</h4><button type="button" onclick="openModal('CUSTOM_RIG', this)" class="px-6 py-2 bg-sky-500 text-white rounded text-xs font-bold hover:bg-sky-400">Request Build</button></div></div>
+                <div class="rig-card" style="background-image: url('rig_13.jpg');"><div class="rig-specs"><h4 class="font-cyber text-white mb-4">ARCHIVE // RIG 13</h4><button type="button" onclick="openModal('CUSTOM_RIG', this)" class="px-6 py-2 bg-sky-500 text-white rounded text-xs font-bold hover:bg-sky-400">Request Build</button></div></div>
             </div>
         </section>
 
@@ -1019,7 +1045,7 @@
             </div>
 
             <div class="text-center">
-                <button type="button" onclick="openModal('CONSULTING')" class="px-10 py-4 bg-sky-600 text-white rounded-lg font-bold text-sm hover:bg-sky-500 transition shadow-lg shadow-sky-500/20">Request a Consultation</button>
+                <button type="button" onclick="openModal('CONSULTING', this)" class="px-10 py-4 bg-sky-600 text-white rounded-lg font-bold text-sm hover:bg-sky-500 transition shadow-lg shadow-sky-500/20">Request a Consultation</button>
             </div>
         </section>
 
@@ -1292,6 +1318,23 @@
 
     </main>
 
+    <footer class="site-foot" aria-label="Services and contact">
+        <div class="max-w-7xl mx-auto px-6 sf-grid">
+            <div>
+                <p class="sf-brand font-cyber">H7K3R SYSTEMS</p>
+                <p class="sf-line">Repairs, data recovery and custom PCs in Croydon &amp; Kingston upon Thames. Collection, visits or post-in.</p>
+                <a class="sf-call" href="tel:+447732423474">Call or text 07732 423474</a>
+            </div>
+            <nav class="sf-links" aria-label="Service pages">
+                <p class="sf-h">Services</p>
+                <a href="/repair/croydon/">Phone &amp; laptop repair in Croydon</a>
+                <a href="/repair/kingston/">Phone &amp; laptop repair in Kingston</a>
+                <a href="/data-recovery/">Data recovery for drives &amp; phones</a>
+                <a href="/custom-pc/">Custom gaming PCs</a>
+            </nav>
+        </div>
+    </footer>
+
     <script>
         // --- HISTORY API NAV (Fixes "Back" Button) ---
         function showTab(id, pushState = true) {
@@ -1355,7 +1398,32 @@
         }
 
         function closeModal() { document.getElementById('modal').classList.add('hidden'); }
-        function openModal(v) { document.getElementById('modal-select').value = v; document.getElementById('modal').classList.remove('hidden'); }
+        function openModal(v, btn) {
+            var sel = document.getElementById('modal-select');
+            sel.value = v; if (sel.value !== v) sel.selectedIndex = 0;
+            // reset after a previous send
+            var f = document.getElementById('quote-form'); f.hidden = false; document.getElementById('q-done').hidden = true; document.getElementById('q-err').hidden = true;
+            // name the product that was clicked, so you know exactly what they want
+            var card = btn && btn.closest ? btn.closest('article, .card') : null;
+            var name = card && card.querySelector('h4, h3') ? card.querySelector('h4, h3').textContent.trim() : '';
+            var msg = document.getElementById('client-msg');
+            if (name && !msg.value) msg.value = (document.documentElement.lang === 'fr' ? 'Je suis intéressé par : ' : "I'm interested in: ") + name + '\n';
+            document.getElementById('modal').classList.remove('hidden');
+        }
+        (function () {
+            var f = document.getElementById('quote-form'); if (!f) return;
+            f.addEventListener('submit', function (e) {
+                e.preventDefault();
+                var sel = document.getElementById('modal-select'), btn = document.getElementById('q-send'), err = document.getElementById('q-err');
+                document.getElementById('q-subject').value = 'H7K3R enquiry: ' + (sel.options[sel.selectedIndex] ? sel.options[sel.selectedIndex].text : 'General');
+                document.getElementById('q-page').value = location.pathname + location.hash;
+                err.hidden = true; btn.disabled = true; var label = btn.textContent; btn.textContent = '…';
+                fetch(f.action, { method: 'POST', body: new FormData(f), headers: { Accept: 'application/json' } })
+                    .then(function (r) { if (!r.ok) throw new Error(r.status); f.reset(); f.hidden = true; document.getElementById('q-done').hidden = false; })
+                    .catch(function () { err.hidden = false; })
+                    .then(function () { btn.disabled = false; btn.textContent = label; });
+            });
+        })();
 
         // --- HERO SLIDER ---
         const slides = document.querySelectorAll('.hero-slide');

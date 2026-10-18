@@ -352,6 +352,22 @@ GAMES = [
     ('id="lb-close">Close<', 'id="lb-close">Fermer<'),
     ('{"empty":"No scores yet. Be the first.","saving":"Saving…","saved":"Saved!","offline":"Leaderboard offline: kept on this device","level":"LVL"}',
      '{"empty":"Aucun score pour l\'instant. Soyez le premier.","saving":"Enregistrement…","saved":"Enregistré !","offline":"Classement hors ligne : gardé sur cet appareil","level":"NIV"}'),
+    # quote form
+    ('uppercase">Phone <span', 'uppercase">Téléphone <span'),
+    ('(optional, for a quick call back)</span>', '(facultatif, pour un rappel rapide)</span>'),
+    ('<option value="CONSULTING">General IT consulting</option>', '<option value="CONSULTING">Conseil informatique général</option>'),
+    (">Sorry, that didn't send. Please call or text <", ">Désolé, l'envoi a échoué. Appelez ou envoyez un SMS au <"),
+    (", or try again.</p>", ", ou réessayez.</p>"),
+    (">Prefer to talk? Call or text <", ">Vous préférez parler ? Appelez ou envoyez un SMS au <"),
+    (">Message received</h3>", ">Message bien reçu</h3>"),
+    (">Thanks, we'll reply within 24 hours. Urgent? Call or text <", ">Merci, nous répondons sous 24 heures. Urgent ? Appelez ou envoyez un SMS au <"),
+    # footer
+    ('aria-label="Services and contact"', 'aria-label="Services et contact"'),
+    ("Repairs, data recovery and custom PCs in Croydon &amp; Kingston upon Thames. Collection, visits or post-in.",
+     "Réparations, récupération de données et PC sur mesure à Croydon et Kingston upon Thames. Collecte, déplacement ou envoi postal."),
+    (">Call or text 07732 423474</a>", ">Appel ou SMS : 07732 423474</a>"),
+    ('aria-label="Service pages"', 'aria-label="Pages services"'),
+    ('<p class="sf-h">Services</p>', '<p class="sf-h">Services (en anglais)</p>'),
     # nav: subtitles in the phone/tablet menu
     ('data-sub="Start here"', 'data-sub="Pour commencer"'),
     ('data-sub="Custom PC builds"', 'data-sub="PC sur mesure"'),

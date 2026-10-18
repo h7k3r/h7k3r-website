@@ -2,16 +2,32 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://h7k3r.com/</loc>
-    <lastmod>2026-10-16</lastmod>
+    <lastmod>2026-10-18</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://h7k3r.com/"/>
     <xhtml:link rel="alternate" hreflang="fr" href="https://h7k3r.com/fr/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://h7k3r.com/"/>
   </url>
   <url>
     <loc>https://h7k3r.com/fr/</loc>
-    <lastmod>2026-10-16</lastmod>
+    <lastmod>2026-10-18</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://h7k3r.com/"/>
     <xhtml:link rel="alternate" hreflang="fr" href="https://h7k3r.com/fr/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://h7k3r.com/"/>
+  </url>
+  <url>
+    <loc>https://h7k3r.com/repair/croydon/</loc>
+    <lastmod>2026-10-18</lastmod>
+  </url>
+  <url>
+    <loc>https://h7k3r.com/repair/kingston/</loc>
+    <lastmod>2026-10-18</lastmod>
+  </url>
+  <url>
+    <loc>https://h7k3r.com/data-recovery/</loc>
+    <lastmod>2026-10-18</lastmod>
+  </url>
+  <url>
+    <loc>https://h7k3r.com/custom-pc/</loc>
+    <lastmod>2026-10-18</lastmod>
   </url>
 </urlset>
