@@ -8,7 +8,7 @@
 <link rel="alternate" hreflang="en" href="https://h7k3r.com/">
 <link rel="alternate" hreflang="fr" href="https://h7k3r.com/fr/">
 <link rel="alternate" hreflang="x-default" href="https://h7k3r.com/">
-    <script type="application/ld+json">{"@context": "https://schema.org", "@type": "LocalBusiness", "@id": "https://h7k3r.com/#business", "name": "H7K3R Systems", "url": "https://h7k3r.com/", "telephone": "+447732423474", "image": "https://h7k3r.com/apple-touch-icon.png", "description": "Phone, laptop and console repair, data recovery, custom PCs and privacy gear in Croydon and Kingston upon Thames.", "areaServed": [{"@type": "City", "name": "Croydon"}, {"@type": "City", "name": "Kingston upon Thames"}, {"@type": "Country", "name": "United Kingdom"}]}</script>
+    <script type="application/ld+json">{"@context": "https://schema.org", "@type": "LocalBusiness", "@id": "https://h7k3r.com/#business", "name": "H7K3R Systems", "url": "https://h7k3r.com/", "image": "https://h7k3r.com/apple-touch-icon.png", "description": "Phone, laptop and console repair, data recovery, custom PCs and privacy gear in Croydon and Kingston upon Thames.", "areaServed": [{"@type": "City", "name": "Croydon"}, {"@type": "City", "name": "Kingston upon Thames"}, {"@type": "Country", "name": "United Kingdom"}]}</script>
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
     <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -426,8 +426,95 @@
         .proof-banner:focus-visible { outline: 2px solid #22d3ee; outline-offset: -2px; }
 
         /* MODERN SECURE MODAL */
-        .client-modal { background: #18181b; border: 1px solid #3f3f46; border-radius: 16px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); }
-        .modal-header { background: #27272a; color: #f4f4f5; padding: 16px 24px; border-top-left-radius: 16px; border-top-right-radius: 16px; font-weight: 600; display: flex; justify-content: space-between; border-bottom: 1px solid #3f3f46; }
+        .qm[hidden]{display:none}
+        .qm{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;padding:16px}
+        .qm-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.78);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);animation:qmFade .2s ease}
+        .qm-panel{position:relative;width:100%;max-width:560px;max-height:calc(100dvh - 32px);display:flex;flex-direction:column;background:#141417;border:1px solid #3f3f46;border-radius:18px;box-shadow:0 30px 70px -20px rgba(0,0,0,.8),0 0 0 1px rgba(56,189,248,.08);animation:qmIn .24s cubic-bezier(.2,.9,.3,1.1)}
+        .qm-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 18px 14px 22px;background:#1f1f23;border-bottom:1px solid #3f3f46;border-radius:18px 18px 0 0;flex:none}
+        .qm-head span{font-size:13px;letter-spacing:.14em;color:#e4e4e7;text-transform:uppercase}
+        .qm-x{width:36px;height:36px;border-radius:10px;color:#a1a1aa;font-size:16px;display:grid;place-items:center;transition:background .15s,color .15s}
+        .qm-x:hover,.qm-x:focus-visible{background:#2e2e33;color:#fff;outline:none}
+        .qm-body{overflow-y:auto;overscroll-behavior:contain;padding:24px 26px 26px}
+        .qm-h{font-size:24px;font-weight:700;color:#fff;margin-bottom:6px}
+        .qm-intro{font-size:14px;line-height:1.55;color:#a1a1aa;margin-bottom:20px}
+        .qm-trap{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+        .qm-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+        .qm-f{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+        .qm-f label{font-size:11.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#d4d4d8}
+        .qm-opt{text-transform:none;letter-spacing:0;font-weight:400;color:#71717a}
+        .qm-f input,.qm-f select,.qm-f textarea{width:100%;background:#0c0c0f;border:1px solid #3f3f46;border-radius:10px;padding:12px 13px;font-size:16px;color:#fff;outline:none;transition:border-color .15s,box-shadow .15s}
+        .qm-f textarea{resize:vertical;min-height:104px;line-height:1.5}
+        .qm-f select{appearance:none;-webkit-appearance:none;padding-right:38px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23a1a1aa' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center}
+        .qm-f select option,.qm-f select optgroup{background:#18181b;color:#fff}
+        .qm-f input::placeholder,.qm-f textarea::placeholder{color:#5b5b63}
+        .qm-f input:focus,.qm-f select:focus,.qm-f textarea:focus{border-color:#22d3ee;box-shadow:0 0 0 3px rgba(34,211,238,.18)}
+        .qm-e{display:none;font-size:12.5px;color:#fca5a5}
+        .qm-f.bad input,.qm-f.bad textarea{border-color:#f87171}
+        .qm-f.bad .qm-e{display:block}
+        .qm-send{width:100%;margin-top:6px;padding:15px;border-radius:11px;background:#0ea5e9;color:#fff;font-weight:700;font-size:15px;letter-spacing:.02em;box-shadow:0 10px 26px -10px rgba(14,165,233,.7);transition:background .15s,transform .1s}
+        .qm-send:hover{background:#38bdf8}.qm-send:active{transform:translateY(1px)}
+        .qm-send[disabled]{opacity:.7;cursor:progress}
+        .qm-ghost{background:#27272a;box-shadow:none;margin-top:18px}.qm-ghost:hover{background:#3f3f46}
+        .qm-err{margin-top:12px;font-size:14px;color:#fca5a5;text-align:center}
+        .qm-note{margin-top:12px;font-size:12px;color:#71717a;text-align:center;line-height:1.5}
+        .qm-done{text-align:center;padding:26px 6px 6px;outline:none}
+        .qm-done h3{font-size:22px;font-weight:700;color:#fff;margin:10px 0 6px}
+        .qm-done p{font-size:14px;color:#a1a1aa;line-height:1.55}
+        .qm-tick{width:58px;height:58px;margin:0 auto;border-radius:50%;display:grid;place-items:center;font-size:28px;color:#22d3ee;background:rgba(34,211,238,.1);border:1px solid rgba(34,211,238,.35)}
+        body.qm-open{overflow:hidden}
+        .qm-panel{background:radial-gradient(120% 60% at 50% -10%,rgba(34,211,238,.10),transparent 60%),linear-gradient(#141417,#0f0f12)}
+        .qm-panel::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:22px 22px;-webkit-mask:linear-gradient(#000,transparent 55%);mask:linear-gradient(#000,transparent 55%)}
+        .qm-head,.qm-body{position:relative}
+        .qm-head span::before{content:"//";color:#22d3ee;margin-right:8px}
+        .qm-hero{margin-bottom:18px}
+        .qm-live{display:inline-flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:#67e8f9;padding:5px 10px;border:1px solid rgba(34,211,238,.3);border-radius:999px;background:rgba(34,211,238,.06);margin-bottom:12px}
+        .qm-live i{width:7px;height:7px;border-radius:50%;background:#22d3ee;box-shadow:0 0 0 0 rgba(34,211,238,.6);animation:qmPulse 1.8s infinite}
+        @keyframes qmPulse{70%{box-shadow:0 0 0 7px rgba(34,211,238,0)}100%{box-shadow:0 0 0 0 rgba(34,211,238,0)}}
+        .qm-native{position:absolute;opacity:0;pointer-events:none;width:1px;height:1px}
+        .qm-step{border:0;padding:0;margin:0 0 18px;min-width:0}
+        .qm-step legend{display:flex;align-items:center;gap:10px;font-family:'Orbitron',sans-serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#fafafa;margin-bottom:12px;padding:0;width:100%}
+        .qm-step legend::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,#3f3f46,transparent)}
+        .qm-n{font-family:'JetBrains Mono',monospace;font-size:11px;color:#22d3ee;padding:3px 7px;border:1px solid rgba(34,211,238,.35);border-radius:6px;letter-spacing:.06em}
+        .qm-tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+        .qm-tile{--c:#22d3ee;position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:3px;text-align:left;padding:12px 12px 11px;border-radius:12px;background:#0c0c0f;border:1px solid #2e2e33;transition:border-color .18s,background .18s,transform .18s,box-shadow .18s;overflow:hidden}
+        .qm-tile::after{content:"";position:absolute;inset:0;background:radial-gradient(120% 90% at 0% 0%,color-mix(in srgb,var(--c) 20%,transparent),transparent 60%);opacity:0;transition:opacity .2s;pointer-events:none}
+        .qm-tile:hover{border-color:color-mix(in srgb,var(--c) 55%,#2e2e33);transform:translateY(-2px)}
+        .qm-tile:hover::after{opacity:.6}
+        .qm-tile:focus-visible{outline:none;box-shadow:0 0 0 2px color-mix(in srgb,var(--c) 80%,transparent)}
+        .qm-tile[aria-checked="true"]{border-color:var(--c);background:color-mix(in srgb,var(--c) 7%,#0c0c0f);box-shadow:0 10px 26px -14px var(--c),inset 0 0 0 1px color-mix(in srgb,var(--c) 40%,transparent)}
+        .qm-tile[aria-checked="true"]::after{opacity:1}
+        .qm-tile[aria-checked="true"]::before{content:"✓";position:absolute;top:8px;right:9px;width:18px;height:18px;border-radius:50%;display:grid;place-items:center;font-size:11px;font-weight:700;color:#0b0b0d;background:var(--c);z-index:1}
+        .qm-ti{width:32px;height:32px;border-radius:9px;display:grid;place-items:center;background:color-mix(in srgb,var(--c) 12%,transparent);margin-bottom:6px;position:relative;z-index:1}
+        .qm-ti svg{width:19px;height:19px;fill:none;stroke:var(--c);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+        .qm-tile b{font-size:13.5px;color:#fafafa;font-weight:600;position:relative;z-index:1}
+        .qm-tile small{font-size:11.5px;color:#8a8a93;line-height:1.3;position:relative;z-index:1}
+        .qm-chips{--c:#22d3ee;display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;padding:12px;border-radius:12px;border:1px dashed color-mix(in srgb,var(--c) 35%,#2e2e33);background:color-mix(in srgb,var(--c) 4%,transparent);animation:qmFade .2s ease}
+        .qm-chips[hidden]{display:none}
+        .qm-chip{font-family:'JetBrains Mono',monospace;font-size:12px;padding:8px 12px;border-radius:999px;border:1px solid #3f3f46;color:#d4d4d8;background:#0c0c0f;transition:all .15s}
+        .qm-chip:hover{border-color:var(--c);color:#fff}
+        .qm-chip[aria-pressed="true"]{background:var(--c);border-color:var(--c);color:#0b0b0d;font-weight:700}
+        .qm-e-svc{margin-top:8px}
+        .qm-step.bad .qm-e-svc{display:block}
+        .qm-step.bad .qm-tiles .qm-tile{border-color:rgba(248,113,113,.45)}
+        .qm-send{display:flex;align-items:center;justify-content:center;gap:10px;background:linear-gradient(90deg,#0ea5e9,#22d3ee)}
+        .qm-send:hover{background:linear-gradient(90deg,#38bdf8,#67e8f9)}
+        .qm-send svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;transition:transform .2s}
+        .qm-send:hover svg{transform:translateX(3px)}
+        .qm-send.is-busy span::after{content:"";display:inline-block;width:14px;height:14px;margin-left:10px;vertical-align:-2px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:qmSpin .7s linear infinite}
+        .qm-send.is-busy svg{display:none}
+        @keyframes qmSpin{to{transform:rotate(360deg)}}
+        @media (max-width:560px){.qm-tiles{grid-template-columns:1fr 1fr}.qm-tile small{display:none}.qm-tile{padding:11px}}
+        @keyframes qmIn{from{opacity:0;transform:translateY(14px) scale(.98)}to{opacity:1;transform:none}}
+        @keyframes qmFade{from{opacity:0}to{opacity:1}}
+        @media (max-width:560px){
+          .qm{padding:0;align-items:flex-end}
+          .qm-panel{max-width:none;max-height:94dvh;border-radius:18px 18px 0 0;border-bottom:0;animation:qmUp .26s cubic-bezier(.2,.9,.3,1)}
+          .qm-body{padding:20px 18px calc(22px + env(safe-area-inset-bottom))}
+          .qm-row{grid-template-columns:1fr;gap:0}
+          .qm-h{font-size:21px}
+        }
+        @keyframes qmUp{from{transform:translateY(40px);opacity:.4}to{transform:none;opacity:1}}
+        @media (prefers-reduced-motion:reduce){.qm-panel,.qm-backdrop{animation:none}}
         
         /* CLEAN MARQUEE */
         .marquee { overflow: hidden; white-space: nowrap; width: 100%; border-top: 1px solid #27272a; border-bottom: 1px solid #27272a; padding: 20px 0; background: #09090b; }
@@ -511,72 +598,73 @@
     <div id="bg-scrim" aria-hidden="true" style="position:fixed;inset:0;z-index:-2;pointer-events:none;background:linear-gradient(180deg, rgba(5,6,12,0.15) 0%, rgba(5,6,12,0.5) 55%, rgba(5,6,12,0.72) 100%);"></div>
     <div id="bg-grid" aria-hidden="true"></div>
 
-    <div id="modal" class="fixed inset-0 z-[1000] bg-black/80 hidden items-center justify-center p-4 backdrop-blur-sm transition-opacity" role="dialog" aria-labelledby="modal-title" aria-modal="true">
-        <div class="client-modal max-w-lg w-full relative flex flex-col max-h-[90vh] overflow-y-auto no-scrollbar">
-            <div class="modal-header">
-                <span id="modal-title" class="font-cyber tracking-wider">Espace demande client</span>
-                <button type="button" onclick="closeModal()" class="text-zinc-400 hover:text-white transition" aria-label="Fermer">✕</button>
+    <div id="modal" class="qm" hidden>
+        <div class="qm-backdrop" data-close></div>
+        <div class="qm-panel" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-describedby="qm-intro">
+            <div class="qm-head">
+                <span id="modal-title" class="font-cyber">Espace demande client</span>
+                <button type="button" class="qm-x" data-close aria-label="Fermer">✕</button>
             </div>
-            <div class="p-8">
-                <h2 class="text-2xl font-bold mb-2 text-white">Comment pouvons-nous vous aider ?</h2>
-                <p class="text-sm text-zinc-400 mb-6">
-                    Remplissez le formulaire ci-dessous. Écran cassé, PC sur mesure ou urgence en cybersécurité : notre équipe vous répond sous 24 heures.
-                </p>
-                <form id="quote-form" action="https://formspree.io/f/mnjblgln" method="POST" class="space-y-5">
+            <div class="qm-body">
+                <form id="quote-form" action="https://formspree.io/f/mnjblgln" method="POST" novalidate>
+                    <div class="qm-hero">
+                        <span class="qm-live"><i></i>Canal ouvert · réponse sous 24 h</span>
+                        <h2 class="qm-h">Comment pouvons-nous vous aider ?</h2>
+                        <p class="qm-intro" id="qm-intro">Choisissez ce dont vous avez besoin, ajoutez quelques détails et vous recevrez une réponse par e-mail.</p>
+                    </div>
                     <input type="hidden" name="_subject" id="q-subject" value="H7K3R enquiry">
                     <input type="hidden" name="page" id="q-page" value="">
-                    <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
-                    <div class="flex flex-col gap-1">
-                        <label for="client-name" class="text-xs font-semibold text-zinc-300 uppercase">Votre nom</label>
-                        <input type="text" id="client-name" name="name" required class="w-full bg-zinc-900 border border-zinc-700 rounded-lg p-3 text-sm text-white outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition">
-                    </div>
-                    <div class="flex flex-col gap-1">
-                        <label for="client-email" class="text-xs font-semibold text-zinc-300 uppercase">Adresse e-mail</label>
-                        <input type="email" id="client-email" name="email" required class="w-full bg-zinc-900 border border-zinc-700 rounded-lg p-3 text-sm text-white outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition">
-                    </div>
-                    <div class="flex flex-col gap-1">
-                        <label for="client-phone" class="text-xs font-semibold text-zinc-300 uppercase">Téléphone <span class="normal-case font-normal text-zinc-500">(facultatif, pour un rappel rapide)</span></label>
-                        <input type="tel" id="client-phone" name="phone" autocomplete="tel" class="w-full bg-zinc-900 border border-zinc-700 rounded-lg p-3 text-sm text-white outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition">
-                    </div>
-                    <div class="flex flex-col gap-1">
-                        <label for="modal-select" class="text-xs font-semibold text-zinc-300 uppercase">Service souhaité</label>
-                        <select id="modal-select" name="interest" class="w-full bg-zinc-900 border border-zinc-700 rounded-lg p-3 text-sm text-white outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition">
-                            <optgroup label="Assistance et réparation">
-                                <option value="HELP_HACKED">Au secours ! Piraté(e) ou espionné(e)</option>
-                                <option value="REPAIR_EVERYDAY">Réparation courante smartphone / PC portable</option>
-                                <option value="DATA_RECOVERY">Récupération de données avancée (disque ou téléphone HS)</option>
-                            </optgroup>
-                            <optgroup label="Matériel et équipement">
-                                <option value="PRIVACY_GEAR">Acheter de l'équipement de protection (pochettes Faraday, etc.)</option>
-                                <option value="VENO">Acheter le PC : VENO_KILLER (449 £)</option>
-                                <option value="PROJECT_P">Acheter le PC : PROJECT P (850 £)</option>
-                                <option value="XPROTO">Acheter le PC : XPROTO STEALTH (1 850 £)</option>
-                                <option value="APEX">Acheter le PC : APEX NODE (2 100 £)</option>
-                                <option value="TRIDENT">Acheter le PC : TRIDENT APEX (8 610 £)</option>
-                                <option value="CUSTOM_RIG">Demande de PC sur mesure</option>
-                                <option value="SECURITY_HW">Matériel de test de sécurité (professionnels — vérification requise)</option>
-                            </optgroup>
-                            <optgroup label="Conseil informatique">
-                                <option value="CONSULTING">Conseil informatique général</option>
-                                <option value="CONSULTING_ASSEMBLY">Assemblage et approvisionnement matériel</option>
-                                <option value="CONSULTING_DEPLOY">Déploiement et installation de postes</option>
-                                <option value="CONSULTING_NETWORK">Infrastructure réseau</option>
-                                <option value="CONSULTING_AUDIT">Audit de sécurité informatique</option>
-                            </optgroup>
-                        </select>
-                    </div>
-                    <div class="flex flex-col gap-1">
-                        <label for="client-msg" class="text-xs font-semibold text-zinc-300 uppercase">Détails</label>
-                        <textarea id="client-msg" name="msg" placeholder="Expliquez-nous ce qui se passe…" class="w-full bg-zinc-900 border border-zinc-700 rounded-lg p-3 text-sm h-24 text-white outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition resize-none"></textarea>
-                    </div>
-                    <button type="submit" id="q-send" class="w-full mt-4 py-4 bg-sky-500 text-white rounded-lg font-bold text-sm tracking-wide hover:bg-sky-400 transition shadow-lg shadow-sky-500/20">Envoyer le message sécurisé</button>
-                    <p class="q-err text-sm text-red-300" id="q-err" hidden>Désolé, l'envoi a échoué. Appelez ou envoyez un SMS au <a href="tel:+447732423474" class="underline">07732 423474</a>, ou réessayez.</p>
-                    <p class="text-xs text-zinc-500 text-center">Vous préférez parler ? Appelez ou envoyez un SMS au <a href="tel:+447732423474" class="text-zinc-300 underline">07732 423474</a></p>
+                    <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" class="qm-trap">
+                    <select id="modal-select" name="interest" class="qm-native" tabindex="-1" aria-hidden="true"><option value="REPAIR_EVERYDAY" data-cat="repair">Réparation téléphone, PC portable, tablette ou console</option><option value="DATA_RECOVERY" data-cat="recovery">Récupération de données (disque ou téléphone HS)</option><option value="HELP_HACKED" data-cat="security">Je pense être piraté ou pisté</option><option value="VENO" data-cat="pcs">Acheter un PC : VENO_KILLER (£449)</option><option value="PROJECT_P" data-cat="pcs">Acheter un PC : PROJECT_P (£850)</option><option value="XPROTO" data-cat="pcs">Acheter un PC : XPROTO_STEALTH (£1,850)</option><option value="APEX" data-cat="pcs">Acheter un PC : APEX_NODE (£2,100)</option><option value="TRIDENT" data-cat="pcs">Acheter un PC : TRIDENT APEX (£8,610)</option><option value="CUSTOM_RIG" data-cat="pcs">Acheter un PC : sur mesure</option><option value="PRIVACY_GEAR" data-cat="gear">Protection : pochettes Faraday</option><option value="SECURITY_HW" data-cat="gear">Protection : matériel de test de sécurité (pros)</option><option value="CONSULTING" data-cat="consult">Conseil IT : informatique générale</option><option value="CONSULTING_ASSEMBLY" data-cat="consult">Conseil IT : assemblage et sourcing</option><option value="CONSULTING_DEPLOY" data-cat="consult">Conseil IT : déploiement de postes</option><option value="CONSULTING_NETWORK" data-cat="consult">Conseil IT : infrastructure réseau</option><option value="CONSULTING_AUDIT" data-cat="consult">Conseil IT : audit de sécurité</option></select>
+
+                    <fieldset class="qm-step">
+                        <legend><span class="qm-n">01</span>Service</legend>
+                        <div class="qm-tiles" role="radiogroup" aria-label="Service"><button type="button" class="qm-tile" role="radio" aria-checked="false" data-cat="repair" style="--c:#34d399"><span class="qm-ti"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="2.5" width="10" height="19" rx="2"/><path d="M11 18.5h2M9.5 7l2.5 3-1.5 2 2.5 3"/></svg></span><b>Réparation</b><small>Téléphone, PC portable, console</small></button><button type="button" class="qm-tile" role="radio" aria-checked="false" data-cat="recovery" style="--c:#f87171"><span class="qm-ti"><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="6" rx="7" ry="2.8"/><path d="M5 6v12c0 1.5 3.1 2.8 7 2.8s7-1.3 7-2.8V6M5 12c0 1.5 3.1 2.8 7 2.8s7-1.3 7-2.8"/></svg></span><b>Récupération</b><small>Disque ou téléphone HS</small></button><button type="button" class="qm-tile" role="radio" aria-checked="false" data-cat="security" style="--c:#38bdf8"><span class="qm-ti"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l7.5 3v5.5c0 4.6-3.2 8.6-7.5 10-4.3-1.4-7.5-5.4-7.5-10V5.5z"/><path d="M12 8v5M12 16h.01"/></svg></span><b>Piraté ou pisté</b><small>Aide sécurité urgente</small></button><button type="button" class="qm-tile" role="radio" aria-checked="false" data-cat="pcs" style="--c:#fbbf24"><span class="qm-ti"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="2.5" width="12" height="19" rx="2"/><circle cx="12" cy="9" r="3"/><path d="M9.5 16h5M9.5 18.5h5"/></svg></span><b>Acheter un PC</b><small>Configs prêtes ou sur mesure</small></button><button type="button" class="qm-tile" role="radio" aria-checked="false" data-cat="gear" style="--c:#a78bfa"><span class="qm-ti"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="7" width="16" height="13" rx="2"/><path d="M8 7V5.5a4 4 0 0 1 8 0V7M12 12v3"/></svg></span><b>Protection</b><small>Faraday et matériel pro</small></button><button type="button" class="qm-tile" role="radio" aria-checked="false" data-cat="consult" style="--c:#22d3ee"><span class="qm-ti"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4M7 9l2.5 2L7 13M12 13h4"/></svg></span><b>Conseil IT</b><small>Réseaux, audits, installation</small></button></div>
+                        <div class="qm-chips" data-for="pcs" style="--c:#fbbf24" hidden><button type="button" class="qm-chip" data-v="VENO">VENO_KILLER · £449</button><button type="button" class="qm-chip" data-v="PROJECT_P">PROJECT_P · £850</button><button type="button" class="qm-chip" data-v="XPROTO">XPROTO_STEALTH · £1,850</button><button type="button" class="qm-chip" data-v="APEX">APEX_NODE · £2,100</button><button type="button" class="qm-chip" data-v="TRIDENT">TRIDENT APEX · £8,610</button><button type="button" class="qm-chip" data-v="CUSTOM_RIG">Sur mesure</button></div><div class="qm-chips" data-for="gear" style="--c:#a78bfa" hidden><button type="button" class="qm-chip" data-v="PRIVACY_GEAR">Pochettes Faraday et protection</button><button type="button" class="qm-chip" data-v="SECURITY_HW">Matériel de test de sécurité (pros)</button></div><div class="qm-chips" data-for="consult" style="--c:#22d3ee" hidden><button type="button" class="qm-chip" data-v="CONSULTING">Informatique générale</button><button type="button" class="qm-chip" data-v="CONSULTING_ASSEMBLY">Assemblage et sourcing</button><button type="button" class="qm-chip" data-v="CONSULTING_DEPLOY">Déploiement de postes</button><button type="button" class="qm-chip" data-v="CONSULTING_NETWORK">Infrastructure réseau</button><button type="button" class="qm-chip" data-v="CONSULTING_AUDIT">Audit de sécurité</button></div>
+                        <small class="qm-e qm-e-svc" id="e-svc">Choisissez un service pour continuer.</small>
+                    </fieldset>
+
+                    <fieldset class="qm-step">
+                        <legend><span class="qm-n">02</span>Détails</legend>
+                        <div class="qm-f" id="qm-device-f">
+                            <label for="client-device">Appareil et modèle <span class="qm-opt">facultatif</span></label>
+                            <input type="text" id="client-device" name="device" maxlength="100" placeholder="ex. iPhone 13, PS5, MacBook Air M1">
+                        </div>
+                        <div class="qm-f">
+                            <label for="client-msg">Que se passe-t-il ?</label>
+                            <textarea id="client-msg" name="msg" required rows="4" maxlength="3000" placeholder="Décrivez le problème ou ce que vous cherchez"></textarea>
+                            <small class="qm-e" id="e-msg">Ajoutez quelques mots pour que l'on sache comment vous aider.</small>
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="qm-step">
+                        <legend><span class="qm-n">03</span>Coordonnées</legend>
+                        <div class="qm-row">
+                            <div class="qm-f">
+                                <label for="client-name">Votre nom</label>
+                                <input type="text" id="client-name" name="name" required autocomplete="name" maxlength="80">
+                                <small class="qm-e" id="e-name">Merci d'indiquer votre nom.</small>
+                            </div>
+                            <div class="qm-f">
+                                <label for="client-email">E-mail</label>
+                                <input type="email" id="client-email" name="email" required autocomplete="email" inputmode="email" maxlength="120">
+                                <small class="qm-e" id="e-email">Merci d'indiquer un e-mail valide pour que l'on puisse répondre.</small>
+                            </div>
+                        </div>
+                        <div class="qm-f">
+                            <label for="client-phone">Téléphone <span class="qm-opt">facultatif, si vous souhaitez être rappelé</span></label>
+                            <input type="tel" id="client-phone" name="phone" autocomplete="tel" inputmode="tel" maxlength="30">
+                        </div>
+                    </fieldset>
+                    <button type="submit" id="q-send" class="qm-send"><span>Envoyer le message</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></button>
+                    <p class="qm-err" id="q-err" role="alert" hidden>Désolé, l'envoi a échoué. Vérifiez votre connexion et réessayez dans un instant.</p>
+                    <p class="qm-note">Vos coordonnées servent uniquement à répondre à cette demande. Rien n'est partagé ni ajouté à une liste de diffusion.</p>
                 </form>
-                <div class="q-done text-center py-6" id="q-done" hidden>
-                    <div class="text-4xl mb-3" aria-hidden="true">✓</div>
-                    <h3 class="text-xl font-bold text-white mb-2">Message bien reçu</h3>
-                    <p class="text-sm text-zinc-400">Merci, nous répondons sous 24 heures. Urgent ? Appelez ou envoyez un SMS au <a href="tel:+447732423474" class="text-zinc-200 underline">07732 423474</a>.</p>
+                <div class="qm-done" id="q-done" hidden tabindex="-1">
+                    <div class="qm-tick" aria-hidden="true">✓</div>
+                    <h3>Message bien reçu</h3>
+                    <p>Merci, nous vous répondons par e-mail sous 24 heures. Pensez à vérifier vos spams.</p>
+                    <button type="button" class="qm-send qm-ghost" data-close>Fermer</button>
                 </div>
             </div>
         </div>
@@ -1376,7 +1464,7 @@
             <div>
                 <p class="sf-brand font-cyber">H7K3R SYSTEMS</p>
                 <p class="sf-line">Réparations, récupération de données et PC sur mesure à Croydon et Kingston upon Thames. Collecte, déplacement ou envoi postal.</p>
-                <a class="sf-call" href="tel:+447732423474">Appel ou SMS : 07732 423474</a>
+                <button type="button" class="sf-call" onclick="openModal('', this)">Envoyer une demande &rarr;</button>
             </div>
             <nav class="sf-links" aria-label="Pages services">
                 <p class="sf-h">Services (en anglais)</p>
@@ -1450,31 +1538,111 @@
             activeBtn.classList.add('bg-zinc-800');
         }
 
-        function closeModal() { document.getElementById('modal').classList.add('hidden'); }
-        function openModal(v, btn) {
-            var sel = document.getElementById('modal-select');
-            sel.value = v; if (sel.value !== v) sel.selectedIndex = 0;
-            // reset after a previous send
-            var f = document.getElementById('quote-form'); f.hidden = false; document.getElementById('q-done').hidden = true; document.getElementById('q-err').hidden = true;
-            // name the product that was clicked, so you know exactly what they want
-            var card = btn && btn.closest ? btn.closest('article, .card') : null;
-            var name = card && card.querySelector('h4, h3') ? card.querySelector('h4, h3').textContent.trim() : '';
-            var msg = document.getElementById('client-msg');
-            if (name && !msg.value) msg.value = (document.documentElement.lang === 'fr' ? 'Je suis intéressé par : ' : "I'm interested in: ") + name + '\n';
-            document.getElementById('modal').classList.remove('hidden');
-        }
+        // --- CLIENT INTAKE PORTAL ---
         (function () {
-            var f = document.getElementById('quote-form'); if (!f) return;
-            f.addEventListener('submit', function (e) {
+            var M = document.getElementById('modal'); if (!M) return;
+            var F = document.getElementById('quote-form'), SEL = document.getElementById('modal-select'),
+                DONE = document.getElementById('q-done'), ERR = document.getElementById('q-err'),
+                BTN = document.getElementById('q-send'), MSG = document.getElementById('client-msg'),
+                DEV = document.getElementById('qm-device-f'), FR = document.documentElement.lang === 'fr',
+                tiles = [].slice.call(M.querySelectorAll('.qm-tile')), lastFocus = null, autoLine = '';
+            var NEEDS_DEVICE = { repair: 1, recovery: 1, security: 1 };
+            function catOf(v) { var o = SEL.querySelector('option[value="' + v + '"]'); return o ? o.getAttribute('data-cat') : null; }
+            function pick(v) {
+                var cat = catOf(v); if (!cat) return;
+                SEL.value = v;
+                tiles.forEach(function (t) { t.setAttribute('aria-checked', t.getAttribute('data-cat') === cat ? 'true' : 'false'); t.tabIndex = t.getAttribute('data-cat') === cat ? 0 : -1; });
+                [].forEach.call(M.querySelectorAll('.qm-chips'), function (c) {
+                    var on = c.getAttribute('data-for') === cat; c.hidden = !on;
+                    [].forEach.call(c.querySelectorAll('.qm-chip'), function (ch) { ch.setAttribute('aria-pressed', on && ch.getAttribute('data-v') === v ? 'true' : 'false'); });
+                });
+                DEV.hidden = !NEEDS_DEVICE[cat];
+                M.querySelector('.qm-step').classList.remove('bad');
+            }
+            function firstOf(cat) { var o = SEL.querySelector('option[data-cat="' + cat + '"]'); return o && o.value; }
+            function clearPick() {
+                SEL.selectedIndex = -1;
+                tiles.forEach(function (t, i) { t.setAttribute('aria-checked', 'false'); t.tabIndex = i ? -1 : 0; });
+                [].forEach.call(M.querySelectorAll('.qm-chips'), function (c) { c.hidden = true; });
+                DEV.hidden = false;
+            }
+            tiles.forEach(function (t, i) {
+                t.addEventListener('click', function () {
+                    var cat = t.getAttribute('data-cat');
+                    if (catOf(SEL.value) !== cat) pick(firstOf(cat));
+                });
+                t.addEventListener('keydown', function (e) {
+                    var k = e.key, n = null;
+                    if (k === 'ArrowRight' || k === 'ArrowDown') n = tiles[(i + 1) % tiles.length];
+                    if (k === 'ArrowLeft' || k === 'ArrowUp') n = tiles[(i - 1 + tiles.length) % tiles.length];
+                    if (n) { e.preventDefault(); n.focus(); n.click(); }
+                });
+            });
+            [].forEach.call(M.querySelectorAll('.qm-chip'), function (ch) { ch.addEventListener('click', function () { pick(ch.getAttribute('data-v')); }); });
+
+            function focusables() { return [].slice.call(M.querySelectorAll('button,input:not([type=hidden]):not(.qm-trap),textarea,select:not(.qm-native),a[href]')).filter(function (el) { return el.offsetParent !== null && el.tabIndex !== -1; }); }
+            function onKey(e) {
+                if (e.key === 'Escape') { e.preventDefault(); closeModal(); return; }
+                if (e.key !== 'Tab') return;
+                var f = focusables(); if (!f.length) return;
+                if (e.shiftKey && document.activeElement === f[0]) { e.preventDefault(); f[f.length - 1].focus(); }
+                else if (!e.shiftKey && document.activeElement === f[f.length - 1]) { e.preventDefault(); f[0].focus(); }
+            }
+            window.closeModal = function () {
+                if (M.hidden) return;
+                M.hidden = true; document.body.classList.remove('qm-open');
+                document.removeEventListener('keydown', onKey);
+                if (lastFocus && lastFocus.focus) lastFocus.focus();
+            };
+            window.openModal = function (v, btn) {
+                lastFocus = btn || document.activeElement;
+                F.hidden = false; DONE.hidden = true; ERR.hidden = true;
+                [].forEach.call(M.querySelectorAll('.bad'), function (el) { el.classList.remove('bad'); });
+                if (v && catOf(v)) pick(v); else clearPick();
+                // say which product was clicked; swap the line if they open a different one
+                var card = btn && btn.closest ? btn.closest('article, .card, .rig-card') : null;
+                var h = card && card.querySelector('h4, h3'), name = h ? h.textContent.trim() : '';
+                var line = name ? (FR ? 'Je suis intéressé par : ' : "I'm interested in: ") + name + '\n' : '';
+                if (autoLine && MSG.value.indexOf(autoLine) === 0) MSG.value = MSG.value.slice(autoLine.length);
+                if (line && MSG.value.indexOf(line) !== 0) MSG.value = line + MSG.value;
+                autoLine = line;
+                M.hidden = false; document.body.classList.add('qm-open');
+                document.addEventListener('keydown', onKey);
+                M.querySelector('.qm-body').scrollTop = 0;
+                setTimeout(function () {
+                    var target = SEL.value ? (line ? MSG : (DEV.hidden ? MSG : document.getElementById('client-device'))) : M.querySelector('.qm-tile');
+                    if (window.matchMedia('(pointer:fine)').matches) target.focus(); else M.querySelector('.qm-x').focus();
+                    if (target === MSG) MSG.setSelectionRange(MSG.value.length, MSG.value.length);
+                }, 60);
+            };
+            [].forEach.call(M.querySelectorAll('[data-close]'), function (el) { el.addEventListener('click', closeModal); });
+
+            function check() {
+                var ok = true, first = null;
+                function mark(el, bad) { el.classList.toggle('bad', bad); if (bad) { ok = false; first = first || el; } }
+                mark(M.querySelector('.qm-step'), !SEL.value);
+                var n = document.getElementById('client-name'), e = document.getElementById('client-email');
+                mark(MSG.closest('.qm-f'), (MSG.value.replace(autoLine, '').trim().length < 3));
+                mark(n.closest('.qm-f'), !n.value.trim());
+                mark(e.closest('.qm-f'), !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(e.value.trim()));
+                if (first) { first.scrollIntoView({ block: 'center', behavior: 'smooth' }); var i = first.querySelector('input,textarea,.qm-tile'); if (i) i.focus({ preventScroll: true }); }
+                return ok;
+            }
+            [].forEach.call(F.querySelectorAll('input,textarea'), function (el) {
+                el.addEventListener('input', function () { var f = el.closest('.qm-f'); if (f) f.classList.remove('bad'); });
+            });
+            F.addEventListener('submit', function (e) {
                 e.preventDefault();
-                var sel = document.getElementById('modal-select'), btn = document.getElementById('q-send'), err = document.getElementById('q-err');
-                document.getElementById('q-subject').value = 'H7K3R enquiry: ' + (sel.options[sel.selectedIndex] ? sel.options[sel.selectedIndex].text : 'General');
+                if (BTN.disabled || !check()) return;
+                var opt = SEL.options[SEL.selectedIndex];
+                document.getElementById('q-subject').value = 'H7K3R enquiry: ' + (opt ? opt.text : 'General');
                 document.getElementById('q-page').value = location.pathname + location.hash;
-                err.hidden = true; btn.disabled = true; var label = btn.textContent; btn.textContent = '…';
-                fetch(f.action, { method: 'POST', body: new FormData(f), headers: { Accept: 'application/json' } })
-                    .then(function (r) { if (!r.ok) throw new Error(r.status); f.reset(); f.hidden = true; document.getElementById('q-done').hidden = false; })
-                    .catch(function () { err.hidden = false; })
-                    .then(function () { btn.disabled = false; btn.textContent = label; });
+                ERR.hidden = true; BTN.disabled = true; BTN.classList.add('is-busy');
+                var ctl = window.AbortController ? new AbortController() : null, timer = setTimeout(function () { if (ctl) ctl.abort(); }, 20000);
+                fetch(F.action, { method: 'POST', body: new FormData(F), headers: { Accept: 'application/json' }, signal: ctl ? ctl.signal : undefined })
+                    .then(function (r) { if (!r.ok) throw new Error(r.status); F.reset(); autoLine = ''; clearPick(); F.hidden = true; DONE.hidden = false; DONE.focus(); })
+                    .catch(function () { ERR.hidden = false; })
+                    .then(function () { clearTimeout(timer); BTN.disabled = false; BTN.classList.remove('is-busy'); });
             });
         })();
 

@@ -15,8 +15,6 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 BASE = "https://h7k3r.com"
-PHONE_TEL = "+447732423474"
-PHONE_TXT = "07732 423474"
 FORM = "https://formspree.io/f/mnjblgln"
 GOOGLE = ("https://www.google.com/maps/place/Game+On/@51.3736532,-0.0998115,17z/data=!3m1!4b1!4m6!3m5!1s0x4876073151b74c2f"
           ":0xebac085c7d7653ff!8m2!3d51.3736532!4d-0.0998115!16s%2Fg%2F11c45tfxzj")
@@ -57,13 +55,13 @@ def page_repair(area, slug, intro, places, extra):
         path=f"repair/{slug}/",
         title=f"Phone & Laptop Repair in {area} | H7K3R Systems",
         desc=(f"Phone, laptop, tablet and console repair in {area}. Collection, home visits or post-in, "
-              f"free fixed quote, most screens and batteries in 24 to 48 hours. Call {PHONE_TXT}."),
+              f"free fixed quote, most screens and batteries in 24 to 48 hours. Free quote online."),
         h1=f"Phone &amp; laptop repair in {html.escape(area)}",
         kicker=f"{html.escape(area)} · collection, visits or post-in",
         lead=intro,
         service="REPAIR_EVERYDAY",
         how=[
-            ("Tell us what's wrong", "Send the form or call. You get a free, fixed quote, usually the same day."),
+            ("Tell us what's wrong", "Send the form. You get a free, fixed quote, usually the same day."),
             ("We collect or you post it", f"We collect from home or work in {html.escape(area)}, visit you, or you post the device to us."),
             ("Fixed and returned", "Most screens, batteries and ports are done in 24 to 48 hours, then it comes straight back to you."),
         ],
@@ -97,7 +95,7 @@ PAGES = [
         path="data-recovery/",
         title="Data Recovery: Dead Drives & Water-Damaged Phones | H7K3R Systems",
         desc=("Laboratory data recovery for clicking hard drives, dead SSDs and water-damaged phones. Clean bench, board-level "
-              f"repair under a microscope, UK-wide post-in, collection in Croydon and Kingston. Call {PHONE_TXT}."),
+              f"repair under a microscope, UK-wide post-in, collection in Croydon and Kingston. Free quote online."),
         h1="Data recovery for drives and phones others gave up on",
         kicker="Croydon · Kingston · post-in from anywhere in the UK",
         lead=("When a hard drive clicks or a phone is completely dead from water damage, software isn't enough. We take devices apart on a "
@@ -135,7 +133,7 @@ PAGES = [
         path="custom-pc/",
         title="Custom Gaming PCs Built in Croydon | H7K3R Systems",
         desc=("Custom gaming and workstation PCs designed and built by hand in Croydon, from £449. Tuned, stress-tested and ready to play. "
-              f"Call {PHONE_TXT} or send your spec."),
+              "Send your spec for a free quote."),
         h1="Custom gaming PCs, built by hand in Croydon",
         kicker="From £449 · tuned and stress-tested",
         lead=("Every build is planned around what you play or render, assembled by the same engineer who ranks on the HWBOT overclocking boards, "
@@ -233,7 +231,7 @@ def render(p):
     url = BASE + "/" + p["path"]
     biz = {
         "@type": "LocalBusiness", "@id": BASE + "/#business", "name": "H7K3R Systems", "url": BASE + "/",
-        "telephone": PHONE_TEL, "image": BASE + "/apple-touch-icon.png",
+        "image": BASE + "/apple-touch-icon.png",
         "areaServed": [{"@type": "City", "name": "Croydon"}, {"@type": "City", "name": "Kingston upon Thames"},
                        {"@type": "Country", "name": "United Kingdom"}],
     }
@@ -281,7 +279,6 @@ def render(p):
 <body>
 <header><div class="wrap hd">
   <a class="brand" href="/"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 14h6l-1 8 9-12h-6z" fill="none" stroke="#22d3ee" stroke-width="1.9" stroke-linejoin="round"/></svg><b>H7K3R</b><span>SYSTEMS</span></a>
-  <a class="call" href="tel:{PHONE_TEL}">{PHONE_TXT}</a>
   <a class="btn btn-p" href="#quote">Free quote</a>
 </div></header>
 <main>
@@ -289,9 +286,9 @@ def render(p):
   <div class="kick">{p['kicker']}</div>
   <h1>{p['h1']}</h1>
   <p class="lead">{e(p['lead'])}</p>
-  <div class="ctas"><a class="btn btn-p" href="#quote">Get a free quote</a><a class="btn btn-g" href="tel:{PHONE_TEL}">Call or text {PHONE_TXT}</a></div>
+  <div class="ctas"><a class="btn btn-p" href="#quote">Get a free quote</a><a class="btn btn-g" href="#how">How it works</a></div>
 </div>
-<section><div class="wrap"><h2>How it works</h2><div class="steps">{how}</div></div></section>
+<section id="how"><div class="wrap"><h2>How it works</h2><div class="steps">{how}</div></div></section>
 {blocks}
 <section><div class="wrap"><h2>Why people choose us</h2><div class="proof">{proof}</div><p class="note">{e(p['extra'])}</p></div></section>
 <section><div class="wrap"><h2>Areas we cover</h2><ul class="places">{places}</ul></div></section>
@@ -306,13 +303,13 @@ def render(p):
     <label>Email<input type="email" name="email" required autocomplete="email"></label>
     <label class="full">Phone (optional)<input type="tel" name="phone" autocomplete="tel"></label>
     <label class="full">What's going on?<textarea name="msg" placeholder="Device, model and what happened"></textarea></label>
-    <div class="full"><button class="btn btn-p" type="submit" id="qs">Send</button> <span class="err" id="qe">Sorry, that didn't send. Call or text <a href="tel:{PHONE_TEL}">{PHONE_TXT}</a>, or try again.</span></div>
+    <div class="full"><button class="btn btn-p" type="submit" id="qs">Send</button> <span class="err" id="qe">Sorry, that didn't send. Check your connection and try again in a moment.</span></div>
   </form>
-  <div class="ok" id="qo"><h3>Message received</h3><p>Thanks, we'll reply within 24 hours. Urgent? Call or text <a href="tel:{PHONE_TEL}">{PHONE_TXT}</a>.</p></div>
+  <div class="ok" id="qo"><h3>Message received</h3><p>Thanks, we'll reply by email within 24 hours.</p></div>
 </div></section>
 <section><div class="wrap"><h2>More from H7K3R</h2><div class="links">{others}</div></div></section>
 </main>
-<footer><div class="wrap">H7K3R Systems · Croydon &amp; Kingston upon Thames · <a href="tel:{PHONE_TEL}">{PHONE_TXT}</a> · <a href="/">h7k3r.com</a></div></footer>
+<footer><div class="wrap">H7K3R Systems · Croydon &amp; Kingston upon Thames · <a href="/">h7k3r.com</a></div></footer>
 <script>
 (function(){{var f=document.getElementById('qf');f.addEventListener('submit',function(e){{e.preventDefault();var b=document.getElementById('qs'),er=document.getElementById('qe');er.style.display='none';b.disabled=true;
 fetch(f.action,{{method:'POST',body:new FormData(f),headers:{{Accept:'application/json'}}}}).then(function(r){{if(!r.ok)throw 0;f.style.display='none';document.getElementById('qo').style.display='block';}})
