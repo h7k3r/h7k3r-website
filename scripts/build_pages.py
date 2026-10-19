@@ -19,11 +19,12 @@ FORM = "https://formspree.io/f/mnjblgln"
 GOOGLE = ("https://www.google.com/maps/place/Game+On/@51.3736532,-0.0998115,17z/data=!3m1!4b1!4m6!3m5!1s0x4876073151b74c2f"
           ":0xebac085c7d7653ff!8m2!3d51.3736532!4d-0.0998115!16s%2Fg%2F11c45tfxzj")
 EBAY = "https://www.ebay.co.uk/fdbk/feedback_profile/h7k3r-0"
-TODAY = "2026-10-18"
+TODAY = "2026-10-20"
 
 PROOF = [
     ("37 five-star Google reviews name me personally.", GOOGLE, "Read them on Google"),
     ("10 years running the repair desk at Game On, Croydon.", None, None),
+    ("670 repair technicians trained for the WeFix network in France.", None, None),
     ("100% positive on eBay since 2017.", EBAY, "eBay feedback profile"),
 ]
 
@@ -45,7 +46,8 @@ FAQ_REPAIR = [
     ("How much will it cost?",
      "Every device and fault is different, so you get a free, fixed quote before any work starts. If you say no, you pay nothing."),
     ("Who will repair my device?",
-     "The same engineer who ran the repair desk at Game On in Croydon for ten years. Your device isn't passed around a chain."),
+     "The same engineer who ran the repair desk at Game On in Croydon for ten years and trained 670 repair technicians for the WeFix network in France. "
+     "Your device isn't passed around a chain."),
 ]
 
 
@@ -231,7 +233,7 @@ def render(p):
     url = BASE + "/" + p["path"]
     biz = {
         "@type": "LocalBusiness", "@id": BASE + "/#business", "name": "H7K3R Systems", "url": BASE + "/",
-        "image": BASE + "/apple-touch-icon.png",
+        "image": BASE + "/og-image.jpg", "logo": BASE + "/apple-touch-icon.png",
         "areaServed": [{"@type": "City", "name": "Croydon"}, {"@type": "City", "name": "Kingston upon Thames"},
                        {"@type": "Country", "name": "United Kingdom"}],
     }
@@ -267,6 +269,11 @@ def render(p):
 <meta property="og:url" content="{url}">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="en_GB">
+<meta property="og:site_name" content="H7K3R Systems">
+<meta property="og:image" content="{BASE}/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#05060c">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
@@ -305,11 +312,12 @@ def render(p):
     <label class="full">What's going on?<textarea name="msg" placeholder="Device, model and what happened"></textarea></label>
     <div class="full"><button class="btn btn-p" type="submit" id="qs">Send</button> <span class="err" id="qe">Sorry, that didn't send. Check your connection and try again in a moment.</span></div>
   </form>
+  <p class="note">We only use your details to reply to this enquiry. <a href="/privacy/">Privacy notice</a></p>
   <div class="ok" id="qo"><h3>Message received</h3><p>Thanks, we'll reply by email within 24 hours.</p></div>
 </div></section>
 <section><div class="wrap"><h2>More from H7K3R</h2><div class="links">{others}</div></div></section>
 </main>
-<footer><div class="wrap">H7K3R Systems · Croydon &amp; Kingston upon Thames · <a href="/">h7k3r.com</a></div></footer>
+<footer><div class="wrap">H7K3R Systems · Croydon &amp; Kingston upon Thames · <a href="/">h7k3r.com</a> · <a href="/privacy/">Privacy notice</a></div></footer>
 <script>
 (function(){{var f=document.getElementById('qf');f.addEventListener('submit',function(e){{e.preventDefault();var b=document.getElementById('qs'),er=document.getElementById('qe');er.style.display='none';b.disabled=true;
 fetch(f.action,{{method:'POST',body:new FormData(f),headers:{{Accept:'application/json'}}}}).then(function(r){{if(!r.ok)throw 0;f.style.display='none';document.getElementById('qo').style.display='block';}})
