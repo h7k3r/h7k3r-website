@@ -425,6 +425,90 @@
         .proof-banner:focus-visible { outline: 2px solid #22d3ee; outline-offset: -2px; }
 
         /* MODERN SECURE MODAL */
+        /* --- PRO PORTAL --- */
+        .pp-head{text-align:center;margin-bottom:26px}
+        .pp-head h2{margin:10px 0 12px}
+        .pp-kick{display:inline-block;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:#67e8f9;padding:5px 11px;border:1px solid rgba(34,211,238,.3);border-radius:999px;background:rgba(34,211,238,.06)}
+        .pp-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:0 auto 38px;max-width:900px}
+        .pp-tab{--c:#38bdf8;position:relative;text-align:left;padding:16px 18px;border-radius:14px;background:rgba(12,12,15,.75);border:1px solid #2e2e33;display:grid;grid-template-columns:auto 1fr;column-gap:12px;row-gap:2px;align-items:center;transition:border-color .2s,transform .2s,box-shadow .2s;overflow:hidden}
+        .pp-tab::after{content:"";position:absolute;inset:0;background:radial-gradient(120% 100% at 0 0,color-mix(in srgb,var(--c) 18%,transparent),transparent 60%);opacity:0;transition:opacity .25s;pointer-events:none}
+        .pp-tab:hover{transform:translateY(-2px);border-color:color-mix(in srgb,var(--c) 50%,#2e2e33)}
+        .pp-tab[aria-selected="true"]{border-color:var(--c);box-shadow:0 14px 34px -18px var(--c),inset 0 0 0 1px color-mix(in srgb,var(--c) 35%,transparent)}
+        .pp-tab[aria-selected="true"]::after{opacity:1}
+        .pp-tab:focus-visible{outline:none;box-shadow:0 0 0 2px var(--c)}
+        .pp-n{grid-row:span 2;font-size:12px;color:var(--c);padding:5px 8px;border:1px solid color-mix(in srgb,var(--c) 45%,transparent);border-radius:8px}
+        .pp-tab b{font-family:'Orbitron',sans-serif;font-size:14px;letter-spacing:.06em;color:#fafafa;position:relative;z-index:1}
+        .pp-tab small{font-size:11.5px;color:#8a8a93;position:relative;z-index:1}
+        .pp-new{position:absolute;top:10px;right:10px;font-family:'JetBrains Mono',monospace;font-size:8.5px;font-weight:700;letter-spacing:.14em;color:#04130c;background:#34d399;padding:3px 7px;border-radius:999px;z-index:2}
+        .pp-panel{animation:qmFade .3s ease}
+        .pp-panel[hidden]{display:none}
+        .pp-steps{list-style:none;counter-reset:pps;display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin:0 0 40px;padding:0}
+        .pp-steps li{counter-increment:pps;position:relative;padding:16px 16px 16px 16px;border-radius:12px;background:rgba(12,12,15,.7);border:1px solid #27272a}
+        .pp-steps li::before{content:counter(pps,decimal-leading-zero);display:block;font-family:'JetBrains Mono',monospace;font-size:11px;color:#22d3ee;margin-bottom:8px}
+        .pp-steps b{display:block;color:#fff;font-size:14px;margin-bottom:4px}
+        .pp-steps span{font-size:12.5px;color:#a1a1aa;line-height:1.45}
+        .rec-steps li::before{color:#34d399}
+        .rec-hero{position:relative;border-radius:18px;overflow:hidden;border:1px solid rgba(52,211,153,.35);margin-bottom:28px;background:#07080c}
+        .rec-hero-img{position:relative;aspect-ratio:16/6;overflow:hidden}
+        .rec-hero-img img{width:100%;height:100%;object-fit:cover;display:block;transform:scale(1.12) translateX(16%)}
+        .rec-hero-img::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(5,6,12,.95) 0%,rgba(5,6,12,.75) 45%,rgba(5,6,12,.1) 80%)}
+        .rec-hero-txt{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;gap:12px;padding:32px 36px;max-width:560px}
+        .rec-hero-txt h3{line-height:1.25}
+        .rec-hero-txt .pp-kick{align-self:flex-start}
+        .rec-ctas{display:flex;flex-wrap:wrap;gap:10px;margin-top:4px}
+        .rec-btn{display:inline-flex;align-items:center;padding:12px 18px;border-radius:10px;background:#10b981;color:#04130c;font-weight:700;font-size:13.5px;transition:background .15s,transform .15s}
+        .rec-btn:hover{background:#34d399;transform:translateY(-1px)}
+        .rec-btn-g{background:transparent;color:#d1fae5;border:1px solid rgba(52,211,153,.5)}
+        .rec-btn-g:hover{background:rgba(52,211,153,.12)}
+        .rec-price{border-radius:16px;border:1px solid #27272a;background:rgba(12,12,15,.7);padding:26px;margin-bottom:28px}
+        .rec-price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+        .rec-pc{--c:#34d399;padding:16px;border-radius:12px;border:1px solid color-mix(in srgb,var(--c) 35%,#27272a);background:color-mix(in srgb,var(--c) 6%,transparent)}
+        .rec-pc b{display:block;color:var(--c);font-size:15px;margin-bottom:6px}
+        .rec-pc span{font-size:13px;color:#a1a1aa;line-height:1.5}
+        .rec-small{margin-top:14px;font-size:12.5px;color:#8a8a93}
+        .rec-two{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;margin-bottom:28px;align-items:start}
+        .rec-check{border-radius:16px;border:1px solid #27272a;background:rgba(12,12,15,.7);padding:26px}
+        .rec-check ul{list-style:none;padding:0;margin:0;display:grid;gap:14px}
+        .rec-check li{padding-left:28px;position:relative}
+        .rec-check li::before{content:"✓";position:absolute;left:0;top:1px;width:18px;height:18px;border-radius:50%;display:grid;place-items:center;font-size:10px;font-weight:700;color:#04130c;background:#34d399}
+        .rec-check b{display:block;color:#fff;font-size:14px;margin-bottom:2px}
+        .rec-check span{font-size:13px;color:#a1a1aa;line-height:1.5}
+        .rec-cert{position:relative;overflow:hidden;border-radius:14px;padding:22px 22px 18px;background:linear-gradient(160deg,#f8fafc,#e2e8f0);color:#0f172a;box-shadow:0 24px 60px -24px rgba(52,211,153,.45),0 0 0 1px rgba(255,255,255,.4);transform:rotate(-1.2deg)}
+        .rec-cert::before{content:"";position:absolute;inset:8px;border:1.5px solid #0f172a22;border-radius:9px;pointer-events:none}
+        .rc-top{display:flex;justify-content:space-between;align-items:center;font-size:11px;letter-spacing:.14em;color:#0f172a}
+        .rc-no{font-size:10px;color:#475569;letter-spacing:.04em}
+        .rc-title{font-size:15px;letter-spacing:.08em;text-transform:uppercase;margin:12px 0 12px;padding-bottom:10px;border-bottom:2px solid #10b981}
+        .rec-cert dl{display:grid;gap:7px;margin:0}
+        .rec-cert dl div{display:flex;justify-content:space-between;gap:10px;font-size:12.5px;border-bottom:1px dashed #cbd5e1;padding-bottom:5px}
+        .rec-cert dt{color:#64748b}.rec-cert dd{margin:0;font-weight:600;text-align:right}
+        .rc-ok{color:#047857}
+        .rc-foot{display:flex;justify-content:space-between;align-items:center;margin-top:12px;font-size:11px;color:#475569}
+        .rc-seal{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:700;background:radial-gradient(circle,#10b981 55%,#047857 56%);box-shadow:0 0 0 3px #10b98133}
+        .rc-sample{position:absolute;top:44%;left:50%;transform:translate(-50%,-50%) rotate(-18deg);font-family:'Orbitron',sans-serif;font-size:44px;font-weight:700;letter-spacing:.2em;color:#10b98126;pointer-events:none}
+        .rec-form{border-radius:18px;border:1px solid rgba(52,211,153,.35);background:radial-gradient(120% 60% at 50% -10%,rgba(52,211,153,.08),transparent 60%),rgba(12,12,15,.8);padding:28px;scroll-margin-top:140px}
+        .rf-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px 16px}
+        .rf-full{grid-column:1/-1}
+        .rec-form .qm-f{font-size:11.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#d4d4d8}
+        .rec-form .qm-f input,.rec-form .qm-f select,.rec-form .qm-f textarea{text-transform:none;letter-spacing:0;font-weight:400}
+        .rec-form .qm-f.bad input,.rec-form .qm-f.bad textarea{border-color:#f87171}
+        .rec-form .rec-send{background:linear-gradient(90deg,#059669,#34d399);max-width:320px;box-shadow:0 10px 26px -10px rgba(16,185,129,.7)}
+        .rec-form .rec-send:hover{background:linear-gradient(90deg,#10b981,#6ee7b7)}
+        .rf-ok{margin-top:14px;padding:14px 16px;border-radius:12px;background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.4);color:#d1fae5;font-size:14px}
+        .rf-ok b{color:#6ee7b7}
+        @media (max-width:860px){.rec-two{grid-template-columns:1fr}.rec-cert{transform:none}}
+        @media (max-width:700px){
+          .pp-tabs{grid-template-columns:1fr;gap:8px}
+          .pp-tab{padding:12px 14px}
+          .rec-hero-img{aspect-ratio:16/9}
+          .rec-hero-img img{transform:scale(1.25)}
+          .rec-hero-img::after{background:linear-gradient(0deg,rgba(7,8,12,1) 0%,rgba(7,8,12,0) 45%)}
+          .rec-hero-txt{position:static;padding:4px 20px 22px;max-width:none}
+          .rec-ctas .rec-btn{flex:1;justify-content:center}
+          .rec-hero-txt h3{font-size:18px}
+          .rec-price-grid,.rf-grid{grid-template-columns:1fr}
+          .pp-steps{grid-template-columns:1fr 1fr;gap:8px}.pp-steps li{padding:12px}.pp-steps b{font-size:13px}.pp-steps span{font-size:11.5px}
+          .rec-price,.rec-check,.rec-form{padding:20px}
+        }
         .qm[hidden]{display:none}
         .qm{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;padding:16px}
         .qm-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.78);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);animation:qmFade .2s ease}
@@ -614,12 +698,12 @@
                     <input type="hidden" name="_subject" id="q-subject" value="H7K3R enquiry">
                     <input type="hidden" name="page" id="q-page" value="">
                     <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" class="qm-trap">
-                    <select id="modal-select" name="interest" class="qm-native" tabindex="-1" aria-hidden="true"><option value="REPAIR_EVERYDAY" data-cat="repair">Phone, laptop, tablet or console repair</option><option value="DATA_RECOVERY" data-cat="recovery">Data recovery (dead drive or phone)</option><option value="HELP_HACKED" data-cat="security">I think I've been hacked or tracked</option><option value="VENO" data-cat="pcs">Buy a PC: VENO_KILLER (£449)</option><option value="PROJECT_P" data-cat="pcs">Buy a PC: PROJECT_P (£850)</option><option value="XPROTO" data-cat="pcs">Buy a PC: XPROTO_STEALTH (£1,850)</option><option value="APEX" data-cat="pcs">Buy a PC: APEX_NODE (£2,100)</option><option value="TRIDENT" data-cat="pcs">Buy a PC: TRIDENT APEX (£8,610)</option><option value="CUSTOM_RIG" data-cat="pcs">Buy a PC: Custom build</option><option value="PRIVACY_GEAR" data-cat="gear">Privacy gear: Faraday bags &amp; privacy gear</option><option value="SECURITY_HW" data-cat="gear">Privacy gear: Security testing hardware (pros)</option><option value="CONSULTING" data-cat="consult">IT consulting: General IT</option><option value="CONSULTING_ASSEMBLY" data-cat="consult">IT consulting: Assembly & sourcing</option><option value="CONSULTING_DEPLOY" data-cat="consult">IT consulting: Node deployment</option><option value="CONSULTING_NETWORK" data-cat="consult">IT consulting: Network infrastructure</option><option value="CONSULTING_AUDIT" data-cat="consult">IT consulting: Security audit</option></select>
+                    <select id="modal-select" name="interest" class="qm-native" tabindex="-1" aria-hidden="true"><option value="REPAIR_EVERYDAY" data-cat="repair">Phone, laptop, tablet or console repair</option><option value="DATA_RECOVERY" data-cat="recovery">Data recovery (dead drive or phone)</option><option value="HELP_HACKED" data-cat="security">I think I've been hacked or tracked</option><option value="VENO" data-cat="pcs">Buy a PC: VENO_KILLER (£449)</option><option value="PROJECT_P" data-cat="pcs">Buy a PC: PROJECT_P (£850)</option><option value="XPROTO" data-cat="pcs">Buy a PC: XPROTO_STEALTH (£1,850)</option><option value="APEX" data-cat="pcs">Buy a PC: APEX_NODE (£2,100)</option><option value="TRIDENT" data-cat="pcs">Buy a PC: TRIDENT APEX (£8,610)</option><option value="CUSTOM_RIG" data-cat="pcs">Buy a PC: Custom build</option><option value="PRIVACY_GEAR" data-cat="gear">Privacy gear: Faraday bags &amp; privacy gear</option><option value="SECURITY_HW" data-cat="gear">Privacy gear: Security testing hardware (pros)</option><option value="CONSULTING" data-cat="consult">IT consulting: General IT</option><option value="CONSULTING_ASSEMBLY" data-cat="consult">IT consulting: Assembly & sourcing</option><option value="CONSULTING_DEPLOY" data-cat="consult">IT consulting: Node deployment</option><option value="CONSULTING_NETWORK" data-cat="consult">IT consulting: Network infrastructure</option><option value="CONSULTING_AUDIT" data-cat="consult">IT consulting: Security audit</option><option value="DATACENTER" data-cat="consult">Pro: Data centre deployment</option><option value="RECYCLING" data-cat="consult">Pro: IT recycling &amp; data erasure</option></select>
 
                     <fieldset class="qm-step">
                         <legend><span class="qm-n">01</span>Service</legend>
-                        <div class="qm-tiles" role="radiogroup" aria-label="Service"><button type="button" class="qm-tile" role="radio" aria-checked="false" data-cat="repair" style="--c:#34d399"><span class="qm-ti"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="2.5" width="10" height="19" rx="2"/><path d="M11 18.5h2M9.5 7l2.5 3-1.5 2 2.5 3"/></svg></span><b>Repair</b><small>Phone, laptop, console</small></button><button type="button" class="qm-tile" role="radio" aria-checked="false" data-cat="recovery" style="--c:#f87171"><span class="qm-ti"><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="6" rx="7" ry="2.8"/><path d="M5 6v12c0 1.5 3.1 2.8 7 2.8s7-1.3 7-2.8V6M5 12c0 1.5 3.1 2.8 7 2.8s7-1.3 7-2.8"/></svg></span><b>Data recovery</b><small>Dead drive or phone</small></button><button type="button" class="qm-tile" role="radio" aria-checked="false" data-cat="security" style="--c:#38bdf8"><span class="qm-ti"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l7.5 3v5.5c0 4.6-3.2 8.6-7.5 10-4.3-1.4-7.5-5.4-7.5-10V5.5z"/><path d="M12 8v5M12 16h.01"/></svg></span><b>Hacked or tracked</b><small>Urgent security help</small></button><button type="button" class="qm-tile" role="radio" aria-checked="false" data-cat="pcs" style="--c:#fbbf24"><span class="qm-ti"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="2.5" width="12" height="19" rx="2"/><circle cx="12" cy="9" r="3"/><path d="M9.5 16h5M9.5 18.5h5"/></svg></span><b>Buy a PC</b><small>Ready builds or custom</small></button><button type="button" class="qm-tile" role="radio" aria-checked="false" data-cat="gear" style="--c:#a78bfa"><span class="qm-ti"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="7" width="16" height="13" rx="2"/><path d="M8 7V5.5a4 4 0 0 1 8 0V7M12 12v3"/></svg></span><b>Privacy gear</b><small>Faraday & pro hardware</small></button><button type="button" class="qm-tile" role="radio" aria-checked="false" data-cat="consult" style="--c:#22d3ee"><span class="qm-ti"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4M7 9l2.5 2L7 13M12 13h4"/></svg></span><b>IT consulting</b><small>Networks, audits, setup</small></button></div>
-                        <div class="qm-chips" data-for="pcs" style="--c:#fbbf24" hidden><button type="button" class="qm-chip" data-v="VENO">VENO_KILLER · £449</button><button type="button" class="qm-chip" data-v="PROJECT_P">PROJECT_P · £850</button><button type="button" class="qm-chip" data-v="XPROTO">XPROTO_STEALTH · £1,850</button><button type="button" class="qm-chip" data-v="APEX">APEX_NODE · £2,100</button><button type="button" class="qm-chip" data-v="TRIDENT">TRIDENT APEX · £8,610</button><button type="button" class="qm-chip" data-v="CUSTOM_RIG">Custom build</button></div><div class="qm-chips" data-for="gear" style="--c:#a78bfa" hidden><button type="button" class="qm-chip" data-v="PRIVACY_GEAR">Faraday bags &amp; privacy gear</button><button type="button" class="qm-chip" data-v="SECURITY_HW">Security testing hardware (pros)</button></div><div class="qm-chips" data-for="consult" style="--c:#22d3ee" hidden><button type="button" class="qm-chip" data-v="CONSULTING">General IT</button><button type="button" class="qm-chip" data-v="CONSULTING_ASSEMBLY">Assembly & sourcing</button><button type="button" class="qm-chip" data-v="CONSULTING_DEPLOY">Node deployment</button><button type="button" class="qm-chip" data-v="CONSULTING_NETWORK">Network infrastructure</button><button type="button" class="qm-chip" data-v="CONSULTING_AUDIT">Security audit</button></div>
+                        <div class="qm-tiles" role="radiogroup" aria-label="Service"><button type="button" class="qm-tile" role="radio" aria-checked="false" data-cat="repair" style="--c:#34d399"><span class="qm-ti"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="2.5" width="10" height="19" rx="2"/><path d="M11 18.5h2M9.5 7l2.5 3-1.5 2 2.5 3"/></svg></span><b>Repair</b><small>Phone, laptop, console</small></button><button type="button" class="qm-tile" role="radio" aria-checked="false" data-cat="recovery" style="--c:#f87171"><span class="qm-ti"><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="6" rx="7" ry="2.8"/><path d="M5 6v12c0 1.5 3.1 2.8 7 2.8s7-1.3 7-2.8V6M5 12c0 1.5 3.1 2.8 7 2.8s7-1.3 7-2.8"/></svg></span><b>Data recovery</b><small>Dead drive or phone</small></button><button type="button" class="qm-tile" role="radio" aria-checked="false" data-cat="security" style="--c:#38bdf8"><span class="qm-ti"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l7.5 3v5.5c0 4.6-3.2 8.6-7.5 10-4.3-1.4-7.5-5.4-7.5-10V5.5z"/><path d="M12 8v5M12 16h.01"/></svg></span><b>Hacked or tracked</b><small>Urgent security help</small></button><button type="button" class="qm-tile" role="radio" aria-checked="false" data-cat="pcs" style="--c:#fbbf24"><span class="qm-ti"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="2.5" width="12" height="19" rx="2"/><circle cx="12" cy="9" r="3"/><path d="M9.5 16h5M9.5 18.5h5"/></svg></span><b>Buy a PC</b><small>Ready builds or custom</small></button><button type="button" class="qm-tile" role="radio" aria-checked="false" data-cat="gear" style="--c:#a78bfa"><span class="qm-ti"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="7" width="16" height="13" rx="2"/><path d="M8 7V5.5a4 4 0 0 1 8 0V7M12 12v3"/></svg></span><b>Privacy gear</b><small>Faraday & pro hardware</small></button><button type="button" class="qm-tile" role="radio" aria-checked="false" data-cat="consult" style="--c:#22d3ee"><span class="qm-ti"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4M7 9l2.5 2L7 13M12 13h4"/></svg></span><b>Pro Portal</b><small>Consulting, data centre, recycling</small></button></div>
+                        <div class="qm-chips" data-for="pcs" style="--c:#fbbf24" hidden><button type="button" class="qm-chip" data-v="VENO">VENO_KILLER · £449</button><button type="button" class="qm-chip" data-v="PROJECT_P">PROJECT_P · £850</button><button type="button" class="qm-chip" data-v="XPROTO">XPROTO_STEALTH · £1,850</button><button type="button" class="qm-chip" data-v="APEX">APEX_NODE · £2,100</button><button type="button" class="qm-chip" data-v="TRIDENT">TRIDENT APEX · £8,610</button><button type="button" class="qm-chip" data-v="CUSTOM_RIG">Custom build</button></div><div class="qm-chips" data-for="gear" style="--c:#a78bfa" hidden><button type="button" class="qm-chip" data-v="PRIVACY_GEAR">Faraday bags &amp; privacy gear</button><button type="button" class="qm-chip" data-v="SECURITY_HW">Security testing hardware (pros)</button></div><div class="qm-chips" data-for="consult" style="--c:#22d3ee" hidden><button type="button" class="qm-chip" data-v="CONSULTING">General IT</button><button type="button" class="qm-chip" data-v="CONSULTING_ASSEMBLY">Assembly & sourcing</button><button type="button" class="qm-chip" data-v="CONSULTING_DEPLOY">Node deployment</button><button type="button" class="qm-chip" data-v="CONSULTING_NETWORK">Network infrastructure</button><button type="button" class="qm-chip" data-v="CONSULTING_AUDIT">Security audit</button><button type="button" class="qm-chip" data-v="DATACENTER">Data centre build</button><button type="button" class="qm-chip" data-v="RECYCLING">IT recycling &amp; erasure</button></div>
                         <small class="qm-e qm-e-svc" id="e-svc">Choose a service to continue.</small>
                     </fieldset>
 
@@ -686,7 +770,7 @@
                 <button type="button" onclick="showTab('gear')" class="nav-btn" data-sub="Privacy gear" id="btn-gear">Gear</button>
                 <button type="button" onclick="showTab('repair')" class="nav-btn" data-sub="Phones, consoles, data" id="btn-repair">Repair</button>
                 <button type="button" onclick="showTab('gallery')" class="nav-btn" data-sub="Builds and repairs" id="btn-gallery">Gallery</button>
-                <button type="button" onclick="showTab('consulting')" class="nav-btn" data-sub="Expert advice" id="btn-consulting">Consulting</button>
+                <button type="button" onclick="showTab('consulting')" class="nav-btn" data-sub="Consulting, data centre, recycling" id="btn-consulting">Pro Portal</button>
                 <button type="button" onclick="showTab('files')" class="nav-btn" data-sub="OS and firmware archive" id="btn-files">Files</button>
                 <button type="button" onclick="showTab('games')" class="nav-btn" data-sub="Play in your browser" style="color: #fbbf24;" id="btn-games">Games</button>
             <a href="/fr/" class="nav-btn" id="lang-switch" data-lang="fr" aria-label="Version française" style="border-color:#3f3f46;color:#fff">FR</a>
@@ -1105,9 +1189,21 @@
             </div>
         </section>
 
-        <section id="tab-consulting" class="tab-content px-6 max-w-6xl mx-auto" aria-label="Consulting Section">
-            <div class="text-center mb-12">
-                <h2 class="font-cyber text-3xl text-white mb-4 uppercase tracking-widest">IT Consulting & Architecture</h2>
+        <section id="tab-consulting" class="tab-content px-6 max-w-6xl mx-auto" aria-label="Pro Portal">
+            <div class="pp-head">
+                <span class="pp-kick font-mono">For companies, schools &amp; offices</span>
+                <h2 class="font-cyber text-3xl text-white uppercase tracking-widest">Pro Portal</h2>
+                <p class="font-sans text-sm text-zinc-400 leading-relaxed max-w-2xl mx-auto">IT consulting, data centre builds and certified recycling of your old devices, handled by one engineer from first visit to final report.</p>
+            </div>
+            <div class="pp-tabs" role="tablist" aria-label="Pro services">
+                <button type="button" role="tab" class="pp-tab" data-pp="consult" aria-selected="true" aria-controls="pp-consult" style="--c:#38bdf8"><span class="pp-n font-mono">01</span><b>Consulting</b><small>Builds, imaging, networks, audits</small></button>
+                <button type="button" role="tab" class="pp-tab" data-pp="dc" aria-selected="false" aria-controls="pp-dc" style="--c:#a78bfa"><span class="pp-n font-mono">02</span><b>Data centre</b><small>Racks, cabling, power, servers</small></button>
+                <button type="button" role="tab" class="pp-tab" data-pp="rec" aria-selected="false" aria-controls="pp-rec" style="--c:#34d399"><span class="pp-n font-mono">03</span><b>Recycling</b><small>Collection, erasure, certificates</small><span class="pp-new">NEW</span></button>
+            </div>
+
+            <div class="pp-panel" id="pp-consult" role="tabpanel">
+            <div class="text-center mb-10">
+                <h3 class="font-cyber text-xl text-white mb-3 uppercase tracking-widest">IT Consulting & Architecture</h3>
                 <p class="font-sans text-sm text-zinc-400 leading-relaxed max-w-2xl mx-auto">
                     Bespoke technology solutions. From corporate infrastructure auditing to specialized hardware deployment and secure network design.
                 </p>
@@ -1146,6 +1242,140 @@
 
             <div class="text-center">
                 <button type="button" onclick="openModal('CONSULTING', this)" class="px-10 py-4 bg-sky-600 text-white rounded-lg font-bold text-sm hover:bg-sky-500 transition shadow-lg shadow-sky-500/20">Request a Consultation</button>
+            </div>
+            </div>
+
+            <div class="pp-panel" id="pp-dc" role="tabpanel" hidden>
+            <div class="text-center mb-10">
+                <h3 class="font-cyber text-xl text-white mb-3 uppercase tracking-widest">Data Centre Deployment & Infrastructure</h3>
+                <p class="font-sans text-sm text-zinc-400 leading-relaxed max-w-2xl mx-auto">From a single comms cabinet to a full server room: planned, built, cabled, powered and handed over with documentation.</p>
+            </div>
+            <div class="grid md:grid-cols-2 gap-6 mb-10">
+                <article class="card p-8 border-t-2 border-violet-500">
+                    <div class="consult-illus pic"><img src="gear/p/dc-racks-1000.webp" srcset="gear/p/dc-racks-640.webp 640w, gear/p/dc-racks-1000.webp 1000w, gear/p/dc-racks-1536.webp 1536w" sizes="(min-width:1024px) 40vw, 92vw" width="1600" height="600" alt="" aria-hidden="true" loading="lazy" decoding="async"><span class="prod-tag">Illustration</span></div>
+                    <h3 class="text-lg font-bold text-white mb-2">Rack & stack</h3>
+                    <p class="text-sm font-sans text-zinc-400 leading-relaxed">Cabinets assembled, levelled and earthed, then servers, switches and storage mounted on rails, labelled and documented so anyone can find their way around later.</p>
+                </article>
+                <article class="card p-8 border-t-2 border-violet-500">
+                    <div class="consult-illus pic"><img src="gear/p/dc-cabling-1000.webp" srcset="gear/p/dc-cabling-640.webp 640w, gear/p/dc-cabling-1000.webp 1000w, gear/p/dc-cabling-1536.webp 1536w" sizes="(min-width:1024px) 40vw, 92vw" width="1600" height="600" alt="" aria-hidden="true" loading="lazy" decoding="async"><span class="prod-tag">Illustration</span></div>
+                    <h3 class="text-lg font-bold text-white mb-2">Structured cabling</h3>
+                    <p class="text-sm font-sans text-zinc-400 leading-relaxed">Copper and fibre runs, patch panels and cable management dressed properly, tested end to end, with a port map handed over at the end.</p>
+                </article>
+                <article class="card p-8 border-t-2 border-violet-500">
+                    <div class="consult-illus pic"><img src="gear/p/dc-power-1000.webp" srcset="gear/p/dc-power-640.webp 640w, gear/p/dc-power-1000.webp 1000w, gear/p/dc-power-1536.webp 1536w" sizes="(min-width:1024px) 40vw, 92vw" width="1600" height="600" alt="" aria-hidden="true" loading="lazy" decoding="async"><span class="prod-tag">Illustration</span></div>
+                    <h3 class="text-lg font-bold text-white mb-2">Power & cooling</h3>
+                    <p class="text-sm font-sans text-zinc-400 leading-relaxed">UPS and battery sizing, metered PDUs and A/B power feeds, plus airflow planning with blanking panels and hot and cold aisles so kit runs cool.</p>
+                </article>
+                <article class="card p-8 border-t-2 border-violet-500">
+                    <div class="consult-illus pic"><img src="gear/p/dc-servers-1000.webp" srcset="gear/p/dc-servers-640.webp 640w, gear/p/dc-servers-1000.webp 1000w, gear/p/dc-servers-1536.webp 1536w" sizes="(min-width:1024px) 40vw, 92vw" width="1600" height="600" alt="" aria-hidden="true" loading="lazy" decoding="async"><span class="prod-tag">Illustration</span></div>
+                    <h3 class="text-lg font-bold text-white mb-2">Servers, storage & migration</h3>
+                    <p class="text-sm font-sans text-zinc-400 leading-relaxed">Server and NAS builds, virtualisation hosts, backups and moving your workloads across, with the old hardware wiped and recycled through our Recycling service.</p>
+                </article>
+            </div>
+            <ol class="pp-steps">
+                <li><b>Site survey</b><span>Space, power, cooling and network checked on site</span></li>
+                <li><b>Design &amp; quote</b><span>Rack layout, bill of materials and a fixed price</span></li>
+                <li><b>Build</b><span>Installed, cabled and tested, out of hours if needed</span></li>
+                <li><b>Handover</b><span>Port maps, photos, passwords and a walkthrough</span></li>
+            </ol>
+            <div class="text-center">
+                <button type="button" onclick="openModal('DATACENTER', this)" class="px-10 py-4 bg-violet-600 text-white rounded-lg font-bold text-sm hover:bg-violet-500 transition shadow-lg shadow-violet-500/20">Book a site survey</button>
+            </div>
+            </div>
+
+            <div class="pp-panel" id="pp-rec" role="tabpanel" hidden>
+            <div class="rec-hero">
+                <div class="rec-hero-img"><img src="gear/p/rec-hero-1000.webp" srcset="gear/p/rec-hero-640.webp 640w, gear/p/rec-hero-1000.webp 1000w, gear/p/rec-hero-1536.webp 1536w" sizes="(min-width:1024px) 40vw, 92vw" width="1600" height="600" alt="" aria-hidden="true" loading="lazy" decoding="async"><span class="prod-tag">Illustration</span></div>
+                <div class="rec-hero-txt">
+                    <span class="pp-kick font-mono">IT asset recycling</span>
+                    <h3 class="font-cyber text-2xl text-white uppercase tracking-widest">Old devices out. Data gone. Certificate in hand.</h3>
+                    <p class="text-sm text-zinc-300 leading-relaxed">We collect your company's old tablets, phones, laptops and computers, erase every one of them, give a second life to whatever still works and recycle the rest responsibly. Each device gets its own data erasure certificate.</p>
+                    <div class="rec-ctas"><a href="#rec-form" class="rec-btn">Request a collection</a><a href="#rec-cert" class="rec-btn rec-btn-g">See a sample certificate</a></div>
+                </div>
+            </div>
+
+            <ol class="pp-steps rec-steps">
+                <li><b>Send your list</b><span>Device types, rough quantities and condition</span></li>
+                <li><b>Fixed offer</b><span>We pay, collect free, or quote a clearance fee</span></li>
+                <li><b>Sealed collection</b><span>Signed collection note and tamper-sealed crates</span></li>
+                <li><b>Erase &amp; check</b><span>Every device wiped, verified and logged by serial</span></li>
+                <li><b>Certificates</b><span>One per device, issued once it has been cleared</span></li>
+            </ol>
+
+            <div class="grid md:grid-cols-3 gap-6 mb-10">
+                <article class="card p-6 border-t-2 border-emerald-500">
+                    <div class="consult-illus pic"><img src="gear/p/rec-erase-1000.webp" srcset="gear/p/rec-erase-640.webp 640w, gear/p/rec-erase-1000.webp 1000w, gear/p/rec-erase-1536.webp 1536w" sizes="(min-width:1024px) 40vw, 92vw" width="1600" height="600" alt="" aria-hidden="true" loading="lazy" decoding="async"><span class="prod-tag">Illustration</span></div>
+                    <h3 class="text-base font-bold text-white mb-2">Secure data erasure</h3>
+                    <p class="text-sm font-sans text-zinc-400 leading-relaxed">iPads and iPhones are cryptographically erased, computers and drives are wiped and verified. Storage that can't be erased is physically destroyed, never resold.</p>
+                </article>
+                <article class="card p-6 border-t-2 border-emerald-500">
+                    <div class="consult-illus pic"><img src="gear/p/rec-grade-1000.webp" srcset="gear/p/rec-grade-640.webp 640w, gear/p/rec-grade-1000.webp 1000w, gear/p/rec-grade-1536.webp 1536w" sizes="(min-width:1024px) 40vw, 92vw" width="1600" height="600" alt="" aria-hidden="true" loading="lazy" decoding="async"><span class="prod-tag">Illustration</span></div>
+                    <h3 class="text-base font-bold text-white mb-2">Reuse first</h3>
+                    <p class="text-sm font-sans text-zinc-400 leading-relaxed">Working devices are tested, graded and refurbished for a second life. Only what can't be saved goes to recycling, keeping as much as possible out of landfill.</p>
+                </article>
+                <article class="card p-6 border-t-2 border-emerald-500">
+                    <div class="consult-illus pic"><img src="gear/p/rec-box-1000.webp" srcset="gear/p/rec-box-640.webp 640w, gear/p/rec-box-1000.webp 1000w, gear/p/rec-box-1536.webp 1536w" sizes="(min-width:1024px) 40vw, 92vw" width="1600" height="600" alt="" aria-hidden="true" loading="lazy" decoding="async"><span class="prod-tag">Illustration</span></div>
+                    <h3 class="text-base font-bold text-white mb-2">Paper trail you can audit</h3>
+                    <p class="text-sm font-sans text-zinc-400 leading-relaxed">Collection note on the day, then a certificate per device and one summary report listing every serial number, ready for your records or your auditor.</p>
+                </article>
+            </div>
+
+            <div class="rec-price">
+                <h3 class="font-cyber text-lg text-white uppercase tracking-widest mb-4">How pricing works</h3>
+                <div class="rec-price-grid">
+                    <div class="rec-pc" style="--c:#34d399"><b>We pay you</b><span>Recent, working devices with resale value: you get an offer per device or for the batch.</span></div>
+                    <div class="rec-pc" style="--c:#38bdf8"><b>Free clearance</b><span>A mix of working and older kit: we collect, erase and certify at no cost.</span></div>
+                    <div class="rec-pc" style="--c:#fbbf24"><b>Clearance fee</b><span>Mostly broken or very old equipment: a fixed fee agreed before we collect.</span></div>
+                </div>
+                <p class="rec-small">Tablets, phones, laptops, desktops, monitors, servers, network kit and loose hard drives or SSDs.</p>
+            </div>
+
+            <div class="rec-two">
+                <div class="rec-check">
+                    <h3 class="font-cyber text-lg text-white uppercase tracking-widest mb-4">Before we collect</h3>
+                    <ul>
+                        <li><b>Release company devices</b><span>Remove iPads and iPhones from Apple Business Manager or your MDM, and turn off Activation Lock. Locked devices can still be erased but can't be reused.</span></li>
+                        <li><b>Sign out of accounts</b><span>Apple ID, Google and Microsoft accounts, where staff can still do it.</span></li>
+                        <li><b>Keep chargers together</b><span>Devices with their chargers are worth more to you.</span></li>
+                        <li><b>Your asset list</b><span>If you have one, send it. We match every serial against it.</span></li>
+                    </ul>
+                </div>
+                <div class="rec-cert" id="rec-cert" aria-label="Sample data erasure certificate">
+                    <div class="rc-top"><span class="font-cyber">H7K3R SYSTEMS</span><span class="rc-no font-mono">CERT H7K-2026-000124</span></div>
+                    <p class="rc-title font-cyber">Certificate of Data Erasure</p>
+                    <dl>
+                        <div><dt>Device</dt><dd>Apple iPad (9th gen) · A2602</dd></div>
+                        <div><dt>Serial number</dt><dd class="font-mono">DMPXXXXXXXXX</dd></div>
+                        <div><dt>Storage</dt><dd>64 GB</dd></div>
+                        <div><dt>Method</dt><dd>Cryptographic erase</dd></div>
+                        <div><dt>Verified</dt><dd class="rc-ok">Passed</dd></div>
+                        <div><dt>Outcome</dt><dd>Refurbished for reuse</dd></div>
+                    </dl>
+                    <div class="rc-foot"><span>Erased and checked by H7K3R Systems</span><span class="rc-seal" aria-hidden="true">✓</span></div>
+                    <span class="rc-sample" aria-hidden="true">SAMPLE</span>
+                </div>
+            </div>
+
+            <form class="rec-form" id="rec-form" action="https://formspree.io/f/mnjblgln" method="POST" novalidate>
+                <h3 class="font-cyber text-lg text-white uppercase tracking-widest mb-1">Request a collection</h3>
+                <p class="text-sm text-zinc-400 mb-5">Tell us what you have. You'll get an offer by email, usually within 48 hours.</p>
+                <input type="hidden" name="_subject" value="H7K3R recycling request">
+                <input type="hidden" name="interest" value="RECYCLING">
+                <input type="hidden" name="page" value="/#recycling">
+                <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" class="qm-trap">
+                <div class="rf-grid">
+                    <label class="qm-f">Company<input name="company" required autocomplete="organization" maxlength="120"></label>
+                    <label class="qm-f">Your name<input name="name" required autocomplete="name" maxlength="80"></label>
+                    <label class="qm-f">Work email<input type="email" name="email" required autocomplete="email" maxlength="120"></label>
+                    <label class="qm-f">Collection postcode<input name="postcode" required autocomplete="postal-code" maxlength="12"></label>
+                    <label class="qm-f rf-full">What do you have?<textarea name="devices" required rows="4" maxlength="3000" placeholder="e.g. 40 x iPad 9th gen, 12 x Dell laptops, 3 x desktops, 1 x server"></textarea></label>
+                    <label class="qm-f">Condition<select name="condition"><option>Mostly working</option><option>Mixed</option><option>Mostly not working</option><option>Not sure</option></select></label>
+                    <label class="qm-f">iPads / iPhones released from MDM?<select name="mdm"><option>Yes, already released</option><option>Not yet</option><option>Not sure</option><option>No Apple devices</option></select></label>
+                </div>
+                <button type="submit" class="qm-send rec-send"><span>Send request</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></button>
+                <p class="qm-err" id="rf-err" role="alert" data-net="Sorry, that didn't send. Check your connection and try again in a moment." hidden>Please fill in the highlighted fields, then try again.</p>
+                <div class="rf-ok" id="rf-ok" hidden tabindex="-1"><b>Request received.</b> We'll email you an offer within 48 hours.</div>
+            </form>
             </div>
         </section>
 
@@ -1648,6 +1878,44 @@
                     .then(function (r) { if (!r.ok) throw new Error(r.status); F.reset(); autoLine = ''; clearPick(); F.hidden = true; DONE.hidden = false; DONE.focus(); })
                     .catch(function () { ERR.hidden = false; })
                     .then(function () { clearTimeout(timer); BTN.disabled = false; BTN.classList.remove('is-busy'); });
+            });
+        })();
+
+        // --- PRO PORTAL sub-sections + recycling form ---
+        (function () {
+            var tabs = [].slice.call(document.querySelectorAll('.pp-tab')); if (!tabs.length) return;
+            function pp(k, focus) {
+                tabs.forEach(function (t) { var on = t.getAttribute('data-pp') === k; t.setAttribute('aria-selected', on ? 'true' : 'false'); t.tabIndex = on ? 0 : -1; document.getElementById('pp-' + t.getAttribute('data-pp')).hidden = !on; if (on && focus) t.focus(); });
+            }
+            tabs.forEach(function (t, i) {
+                t.addEventListener('click', function () { pp(t.getAttribute('data-pp')); });
+                t.addEventListener('keydown', function (e) { var d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0; if (d) { e.preventDefault(); pp(tabs[(i + d + tabs.length) % tabs.length].getAttribute('data-pp'), true); } });
+            });
+            var ALIAS = { recycling: 'rec', datacentre: 'dc', datacenter: 'dc', pro: 'consult' };
+            var base = window.showTab;
+            window.showTab = function (id, push) {
+                if (ALIAS[id]) { base('consulting', false); pp(ALIAS[id]); if (push !== false) history.pushState({ tabId: id }, '', '#' + id); return; }
+                return base(id, push);
+            };
+            var h = (location.hash || '').slice(1); if (ALIAS[h]) setTimeout(function () { window.showTab(h, false); }, 0);
+            [].forEach.call(document.querySelectorAll('.rec-ctas a'), function (a) { a.addEventListener('click', function (e) { var t = document.querySelector(a.getAttribute('href')); if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth', block: 'start' }); } }); });
+
+            var f = document.getElementById('rec-form'); if (!f) return;
+            var err = document.getElementById('rf-err'), ok = document.getElementById('rf-ok'), btn = f.querySelector('.rec-send');
+            f.addEventListener('input', function (e) { var l = e.target.closest('.qm-f'); if (l) l.classList.remove('bad'); });
+            f.addEventListener('submit', function (e) {
+                e.preventDefault(); if (btn.disabled) return;
+                var bad = [];
+                [].forEach.call(f.querySelectorAll('[required]'), function (el) {
+                    var v = el.value.trim(), b = !v || (el.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v));
+                    el.closest('.qm-f').classList.toggle('bad', b); if (b) bad.push(el);
+                });
+                if (bad.length) { err.hidden = false; bad[0].focus(); return; }
+                err.hidden = true; btn.disabled = true; btn.classList.add('is-busy');
+                fetch(f.action, { method: 'POST', body: new FormData(f), headers: { Accept: 'application/json' } })
+                    .then(function (r) { if (!r.ok) throw 0; f.reset(); [].forEach.call(f.querySelectorAll('.rf-grid, .rec-send'), function (el) { el.hidden = true; }); ok.hidden = false; ok.focus(); })
+                    .catch(function () { err.textContent = err.getAttribute('data-net') || "Sorry, that didn't send. Check your connection and try again in a moment."; err.hidden = false; })
+                    .then(function () { btn.disabled = false; btn.classList.remove('is-busy'); });
             });
         })();
 

@@ -23,7 +23,7 @@ OUT_DIR = ROOT / "fr"
 BASE_URL = "https://h7k3r.com"
 
 GROUPS = [M.HEAD, M.MODAL, M.HEADER, M.HOME, M.HARDWARE, M.GEAR,
-          M.REPAIR, M.GALLERY, M.CONSULTING, M.FILES, M.GAMES, M.NAV, M.A11Y]
+          M.REPAIR, M.GALLERY, M.CONSULTING, M.PRO, M.FILES, M.GAMES, M.NAV, M.A11Y]
 
 GAME_SRC = ROOT / "games" / "purrgress" / "index.html"
 GAME_OUT = ROOT / "fr" / "games" / "purrgress" / "index.html"
