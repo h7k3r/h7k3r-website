@@ -13,6 +13,8 @@ import html
 import json
 from pathlib import Path
 
+from gear_data import PRODUCTS as GEAR
+
 ROOT = Path(__file__).resolve().parent.parent
 BASE = "https://h7k3r.com"
 FORM = "https://formspree.io/f/mnjblgln"
@@ -331,7 +333,7 @@ fetch(f.action,{{method:'POST',body:new FormData(f),headers:{{Accept:'applicatio
 def sitemap():
     rows = [
         ("/", True), ("/fr/", True),
-    ] + [("/" + p["path"], False) for p in PAGES]
+    ] + [("/" + p["path"], False) for p in PAGES] + [("/gear/%s/" % g["slug"], False) for g in GEAR]
     out = ['<?xml version="1.0" encoding="UTF-8"?>',
            '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">']
     for loc, alt in rows:

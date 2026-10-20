@@ -183,6 +183,8 @@
         .prod-media img { display: block; width: 100%; height: 100%; object-fit: cover; transform: scale(1.02); transition: transform .8s cubic-bezier(.22,1,.36,1), filter .5s; }
         .card:hover .prod-media img { transform: scale(1.08); filter: brightness(1.08); }
         .prod-media::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 55%, rgba(10,12,20,.55)); pointer-events: none; }
+        .prod-link { color: inherit; text-decoration: none; }
+        .prod-link:hover, .prod-link:focus-visible { color: #22d3ee; text-decoration: underline; text-underline-offset: 3px; }
         .prod-tag { position: absolute; z-index: 1; right: 8px; bottom: 7px; font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: .12em; text-transform: uppercase; color: rgba(228,228,231,.55); }
         @media (max-width: 639px) {
             .gear-grid .card .p-5 { padding: 12px 10px 12px; }
@@ -1032,7 +1034,7 @@
                 <article class="card">
                     <div class="prod-media"><img src="gear/p/pouch-800.webp" srcset="gear/p/pouch-480.webp 480w, gear/p/pouch-800.webp 800w, gear/p/pouch-1280.webp 1280w" sizes="(min-width:1024px) 22vw, 48vw" width="1280" height="768" alt="Pochette Faraday" loading="lazy" decoding="async"><span class="prod-tag">Illustration</span></div>
                     <div class="p-5 flex flex-col flex-grow text-center">
-                        <h4 class="font-bold text-white mb-1">Pochette Faraday</h4>
+                        <h4 class="font-bold text-white mb-1"><a class="prod-link" href="/gear/faraday-pouch/">Pochette Faraday</a></h4>
                         <p class="font-sans text-xs text-zinc-400 mb-4">Bloque le traçage du téléphone et le vol de voiture sans clé.</p>
                         <span class="font-mono text-white text-sm mb-4 mt-auto">25,00 £</span>
                         <button type="button" onclick="openModal('PRIVACY_GEAR', this)" class="w-full py-2.5 bg-zinc-800 text-white rounded-lg text-xs font-semibold hover:bg-sky-500 transition">Acheter</button>
@@ -1041,7 +1043,7 @@
                 <article class="card">
                     <div class="prod-media"><img src="gear/p/usb-blocker-800.webp" srcset="gear/p/usb-blocker-480.webp 480w, gear/p/usb-blocker-800.webp 800w, gear/p/usb-blocker-1280.webp 1280w" sizes="(min-width:1024px) 22vw, 48vw" width="1280" height="768" alt="Bloqueur de données USB" loading="lazy" decoding="async"><span class="prod-tag">Illustration</span></div>
                     <div class="p-5 flex flex-col flex-grow text-center">
-                        <h4 class="font-bold text-white mb-1">Bloqueur de données USB</h4>
+                        <h4 class="font-bold text-white mb-1"><a class="prod-link" href="/gear/usb-data-blocker/">Bloqueur de données USB</a></h4>
                         <p class="font-sans text-xs text-zinc-400 mb-4">Recharge publique sans risque. Bloque les broches de données.</p>
                         <span class="font-mono text-white text-sm mb-4 mt-auto">15,00 £</span>
                         <button type="button" onclick="openModal('PRIVACY_GEAR', this)" class="w-full py-2.5 bg-zinc-800 text-white rounded-lg text-xs font-semibold hover:bg-sky-500 transition">Acheter</button>
@@ -1050,7 +1052,7 @@
                 <article class="card">
                     <div class="prod-media"><img src="gear/p/sleeve-800.webp" srcset="gear/p/sleeve-480.webp 480w, gear/p/sleeve-800.webp 800w, gear/p/sleeve-1280.webp 1280w" sizes="(min-width:1024px) 22vw, 48vw" width="1280" height="768" alt="Housse Faraday" loading="lazy" decoding="async"><span class="prod-tag">Illustration</span></div>
                     <div class="p-5 flex flex-col flex-grow text-center">
-                        <h4 class="font-bold text-white mb-1">Housse Faraday</h4>
+                        <h4 class="font-bold text-white mb-1"><a class="prod-link" href="/gear/faraday-sleeve/">Housse Faraday</a></h4>
                         <p class="font-sans text-xs text-zinc-400 mb-4">Isolement total du PC portable, hors ligne.</p>
                         <span class="font-mono text-white text-sm mb-4 mt-auto">45,00 £</span>
                         <button type="button" onclick="openModal('PRIVACY_GEAR', this)" class="w-full py-2.5 bg-zinc-800 text-white rounded-lg text-xs font-semibold hover:bg-sky-500 transition">Acheter</button>
@@ -1059,7 +1061,7 @@
                 <article class="card">
                     <div class="prod-media"><img src="gear/p/hat-800.webp" srcset="gear/p/hat-480.webp 480w, gear/p/hat-800.webp 800w, gear/p/hat-1280.webp 1280w" sizes="(min-width:1024px) 22vw, 48vw" width="1280" height="768" alt="Casquette anti-signal" loading="lazy" decoding="async"><span class="prod-tag">Illustration</span></div>
                     <div class="p-5 flex flex-col flex-grow text-center">
-                        <h4 class="font-bold text-white mb-1">Casquette anti-signal</h4>
+                        <h4 class="font-bold text-white mb-1"><a class="prod-link" href="/gear/signal-proof-hat/">Casquette anti-signal</a></h4>
                         <p class="font-sans text-xs text-zinc-400 mb-4">Protection électromagnétique doublée d'argent.</p>
                         <span class="font-mono text-white text-sm mb-4 mt-auto">35,00 £</span>
                         <button type="button" onclick="openModal('PRIVACY_GEAR', this)" class="w-full py-2.5 bg-zinc-800 text-white rounded-lg text-xs font-semibold hover:bg-sky-500 transition">Acheter</button>
@@ -1068,7 +1070,7 @@
                 <article class="card">
                     <div class="prod-media"><img src="gear/p/backpack-800.webp" srcset="gear/p/backpack-480.webp 480w, gear/p/backpack-800.webp 800w, gear/p/backpack-1280.webp 1280w" sizes="(min-width:1024px) 22vw, 48vw" width="1280" height="768" alt="Sac à dos furtif" loading="lazy" decoding="async"><span class="prod-tag">Illustration</span></div>
                     <div class="p-5 flex flex-col flex-grow text-center">
-                        <h4 class="font-bold text-white mb-1">Sac à dos furtif</h4>
+                        <h4 class="font-bold text-white mb-1"><a class="prod-link" href="/gear/stealth-backpack/">Sac à dos furtif</a></h4>
                         <p class="font-sans text-xs text-zinc-400 mb-4">Compartiments Faraday intégrés.</p>
                         <span class="font-mono text-white text-sm mb-4 mt-auto">120,00 £</span>
                         <button type="button" onclick="openModal('PRIVACY_GEAR', this)" class="w-full py-2.5 bg-zinc-800 text-white rounded-lg text-xs font-semibold hover:bg-sky-500 transition">Acheter</button>
@@ -1077,7 +1079,7 @@
                 <article class="card border-t-2 border-t-sky-500">
                     <div class="prod-media"><img src="gear/p/parka-800.webp" srcset="gear/p/parka-480.webp 480w, gear/p/parka-800.webp 800w, gear/p/parka-1280.webp 1280w" sizes="(min-width:1024px) 22vw, 48vw" width="1280" height="768" alt="Parka Faraday" loading="lazy" decoding="async"><span class="prod-tag">Illustration</span></div>
                     <div class="p-5 flex flex-col flex-grow text-center">
-                        <h4 class="font-bold text-white mb-1">Parka Faraday</h4>
+                        <h4 class="font-bold text-white mb-1"><a class="prod-link" href="/gear/faraday-parka/">Parka Faraday</a></h4>
                         <p class="font-sans text-xs text-zinc-400 mb-4">Veste de blindage électromagnétique intégral.</p>
                         <span class="font-mono text-white text-sm mb-4 mt-auto">185,00 £</span>
                         <button type="button" onclick="openModal('PRIVACY_GEAR', this)" class="w-full py-2.5 bg-sky-600 text-white rounded-lg text-xs font-semibold hover:bg-sky-500 transition">Acheter</button>
@@ -1086,7 +1088,7 @@
                 <article class="card">
                     <div class="prod-media"><img src="gear/p/hoodie-800.webp" srcset="gear/p/hoodie-480.webp 480w, gear/p/hoodie-800.webp 800w, gear/p/hoodie-1280.webp 1280w" sizes="(min-width:1024px) 22vw, 48vw" width="1280" height="768" alt="Sweat à capuche Operator" loading="lazy" decoding="async"><span class="prod-tag">Illustration</span></div>
                     <div class="p-5 flex flex-col flex-grow text-center">
-                        <h4 class="font-bold text-white mb-1">Sweat à capuche Operator</h4>
+                        <h4 class="font-bold text-white mb-1"><a class="prod-link" href="/gear/operator-hoodie/">Sweat à capuche Operator</a></h4>
                         <p class="font-sans text-xs text-zinc-400 mb-4">Coton tactique épais.</p>
                         <span class="font-mono text-white text-sm mb-4 mt-auto">65,00 £</span>
                         <button type="button" onclick="openModal('PRIVACY_GEAR', this)" class="w-full py-2.5 bg-zinc-800 text-white rounded-lg text-xs font-semibold hover:bg-sky-500 transition">Acheter</button>
@@ -1095,7 +1097,7 @@
                 <article class="card">
                     <div class="prod-media"><img src="gear/p/bits-800.webp" srcset="gear/p/bits-480.webp 480w, gear/p/bits-800.webp 800w, gear/p/bits-1280.webp 1280w" sizes="(min-width:1024px) 22vw, 48vw" width="1280" height="768" alt="Kit d'embouts de précision" loading="lazy" decoding="async"><span class="prod-tag">Illustration</span></div>
                     <div class="p-5 flex flex-col flex-grow text-center">
-                        <h4 class="font-bold text-white mb-1">Kit d'embouts de précision</h4>
+                        <h4 class="font-bold text-white mb-1"><a class="prod-link" href="/gear/precision-bit-set/">Kit d'embouts de précision</a></h4>
                         <p class="font-sans text-xs text-zinc-400 mb-4">Kit de démontage en acier S2.</p>
                         <span class="font-mono text-white text-sm mb-4 mt-auto">45,00 £</span>
                         <button type="button" onclick="openModal('PRIVACY_GEAR', this)" class="w-full py-2.5 bg-zinc-800 text-white rounded-lg text-xs font-semibold hover:bg-sky-500 transition">Acheter</button>
