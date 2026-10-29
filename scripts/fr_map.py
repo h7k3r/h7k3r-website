@@ -9,19 +9,19 @@ NB = " "  # thin non-breaking space before : ; ! ?
 
 HEAD = [
     ('<html lang="en">', '<html lang="fr">'),
-    ("<title>H7K3R Systems | Phone, Laptop & Console Repair in Croydon & Kingston</title>",
-     "<title>H7K3R Systems | Réparation de téléphones, PC portables et consoles à Croydon et Kingston</title>"),
-    ('content="Phone, laptop and console repair in Croydon and Kingston, collected from your door or posted in from anywhere in the UK. Data recovery, custom PCs and privacy gear."',
-     'content="Réparation de téléphones, PC portables et consoles à Croydon et Kingston, récupérés chez vous ou envoyés par la poste de tout le Royaume-Uni. Récupération de données, PC sur mesure et protection."'),
+    ("<title>H7K3R Systems | Phone, Laptop & Console Repair in London, Paris & Casablanca</title>",
+     "<title>H7K3R Systems | Réparation de téléphones, PC portables et consoles à Londres, Paris et Casablanca</title>"),
+    ('content="Phone, laptop and console repair across London, Paris and Casablanca, collected from your door or posted in from anywhere in the UK. Data recovery, custom PCs and privacy gear."',
+     'content="Réparation de téléphones, PC portables et consoles à Londres, Paris et Casablanca, récupérés chez vous ou envoyés par la poste de tout le Royaume-Uni. Récupération de données, PC sur mesure et protection."'),
     ('<link rel="canonical" href="https://h7k3r.com/">', '<link rel="canonical" href="https://h7k3r.com/fr/">'),
-    ('<meta property="og:title" content="H7K3R Systems | Phone, Laptop & Console Repair in Croydon & Kingston">',
-     '<meta property="og:title" content="H7K3R Systems | Réparation de téléphones, PC portables et consoles à Croydon et Kingston">'),
-    ('<meta property="og:description" content="Collected from your door in Croydon and Kingston, or posted in from anywhere in the UK. Free fixed quote before any work.">',
-     '<meta property="og:description" content="Récupéré chez vous à Croydon et Kingston, ou envoyé par la poste de tout le Royaume-Uni. Devis fixe et gratuit avant toute intervention.">'),
+    ('<meta property="og:title" content="H7K3R Systems | Phone, Laptop & Console Repair in London, Paris & Casablanca">',
+     '<meta property="og:title" content="H7K3R Systems | Réparation de téléphones, PC portables et consoles à Londres, Paris et Casablanca">'),
+    ('<meta property="og:description" content="Collected from your door across London, or posted in from anywhere in the UK. Now also in Paris and Casablanca. Free fixed quote before any work.">',
+     '<meta property="og:description" content="Récupéré chez vous à Londres, Paris et Casablanca, ou envoyé par la poste de tout le Royaume-Uni. Devis fixe et gratuit avant toute intervention.">'),
     ('<meta property="og:url" content="https://h7k3r.com/">', '<meta property="og:url" content="https://h7k3r.com/fr/">'),
     ('<meta property="og:locale" content="en_GB">', '<meta property="og:locale" content="fr_FR">'),
-    ('<meta property="og:image:alt" content="H7K3R Systems: phone, laptop and console repair in Croydon and Kingston">',
-     '<meta property="og:image:alt" content="H7K3R Systems : réparation de téléphones, PC portables et consoles à Croydon et Kingston">'),
+    ('<meta property="og:image:alt" content="H7K3R Systems: phone, laptop and console repair in London, Paris and Casablanca">',
+     '<meta property="og:image:alt" content="H7K3R Systems : réparation de téléphones, PC portables et consoles à Londres, Paris et Casablanca">'),
 ]
 
 MODAL = [
@@ -411,8 +411,10 @@ GAMES = [
     # quote form
     # footer
     ('aria-label="Services and contact"', 'aria-label="Services et contact"'),
-    ("Repairs, data recovery and custom PCs in Croydon &amp; Kingston upon Thames. Collection, visits or post-in.",
-     "Réparations, récupération de données et PC sur mesure à Croydon et Kingston upon Thames. Collecte, déplacement ou envoi postal."),
+    ('<span class="cmd-sig">H7K3R SYSTEMS · LONDON</span>', '<span class="cmd-sig">H7K3R SYSTEMS · LONDRES</span>'),
+    ('<a href="/repair/london/">Phone &amp; laptop repair in London</a>', '<a href="/repair/london/">Réparation de téléphones et PC portables à Londres</a>'),
+    ("Repairs, data recovery and custom PCs in London, Paris and Casablanca. Collection, visits or post-in.",
+     "Réparations, récupération de données et PC sur mesure à Londres, Paris et Casablanca. Collecte, déplacement ou envoi postal."),
     ('aria-label="Service pages"', 'aria-label="Pages services"'),
     ('<p class="sf-h">Services</p>', '<p class="sf-h">Services (en anglais)</p>'),
     # nav: subtitles in the phone/tablet menu
